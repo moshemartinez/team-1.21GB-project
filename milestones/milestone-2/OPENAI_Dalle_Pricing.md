@@ -7,4 +7,5 @@
 | 256 x 256   | $0.016                |
 
 [OpenAI API pricing](https://openai.com/api/pricing/)
+
 [OpenAI DALLE GUIDE](https://beta.openai.com/docs/guides/images/usage)
