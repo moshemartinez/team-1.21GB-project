@@ -1,4 +1,4 @@
-Project Inception Worksheet
+Project Inception 
 =====================================
 
 ## Summary of Our Approach to Software Development
