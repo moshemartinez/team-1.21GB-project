@@ -34,6 +34,9 @@ Project Inception
 
 ## Initial Modeling
 
+1. [Mind Map](https://miro.com/app/board/uXjVPwvmTog=/?share_link_id=315460458930)
+2. [Initial Architecture](https://miro.com/app/board/uXjVPwvelpU=/?share_link_id=590067226869)
+
 ### Use Case Diagrams
     Diagrams
 
