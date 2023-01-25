@@ -1,4 +1,4 @@
-Project Inception Worksheet
+Project Inception 
 =====================================
 
 ## Summary of Our Approach to Software Development
@@ -33,6 +33,9 @@ Project Inception Worksheet
     3. ...
 
 ## Initial Modeling
+
+1. [Mind Map](https://miro.com/app/board/uXjVPwvmTog=/?share_link_id=315460458930)
+2. [Initial Architecture](https://miro.com/app/board/uXjVPwvelpU=/?share_link_id=590067226869)
 
 ### Use Case Diagrams
     Diagrams
