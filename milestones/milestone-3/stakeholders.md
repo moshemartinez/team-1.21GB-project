@@ -1,6 +1,6 @@
-# Steakholders
+# Stakeholders
 
-**Internal Steakholders**
+**Internal Stakeholders**
 
 - Team Members / Developers
     - Cole
@@ -9,9 +9,9 @@
     - Nathaniel
 - Advisor
     - Scot Morse
-- Class mates
+- Classmates
 
-**External Steakholders**
+**External Stakeholders**
 
 - Customers
     - People that would want to use the website
