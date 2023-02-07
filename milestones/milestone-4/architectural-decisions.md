@@ -1,6 +1,6 @@
 ## Architectural Decisions
 
-Updated 2/5/23
+Updated 2/6/23
 
 ### **What folder structure and naming convention will you use for your project source code?**
 
@@ -18,7 +18,6 @@ ASP.NET Core 7
 ### **What front-end CSS library and version are you going to use?**
 
 - Bootstrap v5
-- [Tailwind CSS v3](https://tailwindcss.com/)
 
 ### **How will you use JavaScript**
 
@@ -28,7 +27,7 @@ ASP.NET Core 7
 
 ### **How will you name your Git branches?**
 
-S-[*Sprint #*]-GP-[*GP # on Jira*]-[Task]
+S-[*Sprint #*]-GP-[*GP # on Jira*]-[Description]
 
 ### **How will you write your database scripts, table names, PK and FK names?**
 
