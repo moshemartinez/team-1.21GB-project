@@ -20,7 +20,14 @@ public partial class GPDbContext : DbContext
     public virtual DbSet<Person> People { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=GPConnection");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder
+                .UseLazyLoadingProxies()        // <-- add this line
+                .UseSqlServer("Name=GPConnection");
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
