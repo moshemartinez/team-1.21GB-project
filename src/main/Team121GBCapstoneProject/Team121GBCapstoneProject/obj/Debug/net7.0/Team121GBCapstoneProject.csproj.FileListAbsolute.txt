@@ -283,3 +283,6 @@ C:\Users\Cyber\source\repos\Team-1.21GB-Project\src\main\Team121GBCapstoneProjec
 C:\Users\Cyber\source\repos\Team-1.21GB-Project\src\main\Team121GBCapstoneProject\Team121GBCapstoneProject\obj\Debug\net7.0\Team121GBCapstoneProject.pdb
 C:\Users\Cyber\source\repos\Team-1.21GB-Project\src\main\Team121GBCapstoneProject\Team121GBCapstoneProject\obj\Debug\net7.0\Team121GBCapstoneProject.genruntimeconfig.cache
 C:\Users\Cyber\source\repos\Team-1.21GB-Project\src\main\Team121GBCapstoneProject\Team121GBCapstoneProject\obj\Debug\net7.0\ref\Team121GBCapstoneProject.dll
+C:\Users\Cyber\source\repos\Team-1.21GB-Project\src\main\Team121GBCapstoneProject\Team121GBCapstoneProject\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.LazyLoading.dll
+C:\Users\Cyber\source\repos\Team-1.21GB-Project\src\main\Team121GBCapstoneProject\Team121GBCapstoneProject\bin\Debug\net7.0\Castle.Core.dll
+C:\Users\Cyber\source\repos\Team-1.21GB-Project\src\main\Team121GBCapstoneProject\Team121GBCapstoneProject\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Proxies.dll

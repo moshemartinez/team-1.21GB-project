@@ -1,4 +1,4 @@
-namespace Team121GBNUnitTests
+namespace Team121GBNUinitTest
 {
     public class Tests
     {
