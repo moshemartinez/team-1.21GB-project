@@ -1,1 +1,0 @@
-This folder will contain the test project for BDD testing in the future.
