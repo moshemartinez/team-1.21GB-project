@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Team121GBCapstoneProject;
 
-namespace Team121GBNUnitTests;
+namespace Team121GBNUinitTests;
 
 public class AccountRegistrationCAPTCHATests
 {
