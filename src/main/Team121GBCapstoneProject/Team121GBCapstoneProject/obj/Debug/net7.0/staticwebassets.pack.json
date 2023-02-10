@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo15Percent.png",
+      "PackagePath": "staticwebassets\\images\\logo15Percent.png"
+    },
+    {
       "Id": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

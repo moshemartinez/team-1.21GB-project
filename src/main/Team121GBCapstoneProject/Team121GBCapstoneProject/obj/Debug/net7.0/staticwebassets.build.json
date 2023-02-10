@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "w/RCqkVh0MogF0lEFxQmH2zlECDTW9r/3Zr+uiQPvPo=",
+  "Hash": "Sksh/GMojCR3+zx0cQs2yuEESdzx4qN29XGwmyxUOaE=",
   "Source": "Team121GBCapstoneProject",
   "BasePath": "_content/Team121GBCapstoneProject",
   "Mode": "Default",
@@ -1103,6 +1103,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo15Percent.png",
+      "SourceId": "Team121GBCapstoneProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\",
+      "BasePath": "_content/Team121GBCapstoneProject",
+      "RelativePath": "images/logo15Percent.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo15Percent.png"
     },
     {
       "Identity": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\js\\site.js",
