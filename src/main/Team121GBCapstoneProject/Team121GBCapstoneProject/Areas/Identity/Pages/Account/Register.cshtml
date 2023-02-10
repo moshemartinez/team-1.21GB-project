@@ -2,12 +2,7 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
-    var t = "6Lef7WkkAAAAAMBDXNGuo2Qw42Zp75JFaovpPlF5";
 }
-@using Microsoft.Extensions.Configuration
-@using Microsoft.Extensions.Options
-@using Team121GBCapstoneProject.reCAPTCHA;
-@inject             IOptions<Team121GBCapstoneProject.reCAPTCHA.ReCaptcha> ReCaptchaHelper;
 
 <h1>@ViewData["Title"]</h1>
 
@@ -71,18 +66,6 @@
         </section>
     </div>
 </div>
-
-@*<script src="https://www.google.com/recaptcha/api.js?render=@ReCaptchaHelper.Value.SiteKey"></script>
-<script>
-    function onClick(e) {
-        e.preventDefault();
-        grecaptcha.ready(function () {
-            grecaptcha.execute('@ReCaptchaHelper.Value.SiteKey', { action: 'submit' }).then(function (token) {
-                // Add your logic to submit to your backend server here.
-            });
-        });
-    }
-</script>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
