@@ -1,10 +1,21 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Team121GBCapstoneProject.Data;
+using Team121GBCapstoneProject.Services;//reCAPTCHA;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+string reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
+var reCAPTCHASiteKey = builder.Configuration["GamingPlatform:reCAPTCHASiteKey"];
+
 // Add services to the container.
+
+builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey));
+//builder.Services.AddScoped<ReCaptcha>(r => new ReCaptcha(reCAPTCHASecretKey));
+//builder.Services.AddHttpClient<ReCaptcha>(r => { r.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify"); }); 
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -41,3 +52,6 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+//builder.Services.AddScoped<ReCaptcha>(r => new ReCaptcha(reCAPTCHASiteKey, reCAPTCHASecretKey));
+//builder.Services.Configure<ReCaptchaHelper>(builder.Configuration.)
