@@ -13,24 +13,8 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo.png",
-      "PackagePath": "staticwebassets\\images\\logo.png"
-    },
-    {
       "Id": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo15Percent.png",
       "PackagePath": "staticwebassets\\images\\logo15Percent.png"
-    },
-    {
-      "Id": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo50PercentSmaller.png",
-      "PackagePath": "staticwebassets\\images\\logo50PercentSmaller.png"
-    },
-    {
-      "Id": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo75PercentSmaller.png",
-      "PackagePath": "staticwebassets\\images\\logo75PercentSmaller.png"
-    },
-    {
-      "Id": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo_3_85.png",
-      "PackagePath": "staticwebassets\\images\\logo_3_85.png"
     },
     {
       "Id": "C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\js\\site.js",
