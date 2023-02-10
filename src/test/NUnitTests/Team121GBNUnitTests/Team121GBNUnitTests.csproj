@@ -16,4 +16,8 @@
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\main\Team121GBCapstoneProject\Team121GBCapstoneProject\Team121GBCapstoneProject.csproj" />
+  </ItemGroup>
+
 </Project>
