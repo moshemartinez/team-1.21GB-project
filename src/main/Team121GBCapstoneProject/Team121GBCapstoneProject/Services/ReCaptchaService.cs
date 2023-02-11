@@ -26,7 +26,6 @@ public class ReCaptchaService : IReCaptchaService
         }
         catch (Exception e)
         {
-            // TODO: log this (in elmah.io maybe?)
             Debug.WriteLine(e.ToString());
             return false;
         }
