@@ -12,7 +12,6 @@ public class ReCaptchaService : IReCaptchaService
     {
         _secretKey = secretKey;
         _captchaClient = httpClient;
-        // _captchaClient.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
     }
     
     public async Task<bool> IsValid(string captcha)
