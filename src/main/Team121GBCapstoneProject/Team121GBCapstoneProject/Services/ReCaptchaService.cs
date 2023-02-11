@@ -1,17 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 using static System.Net.WebRequestMethods;
 
 namespace Team121GBCapstoneProject.Services;
 
 public class ReCaptchaService : IReCaptchaService
 {
-    private readonly HttpClient _captchaClient = new HttpClient();
+    private readonly HttpClient _captchaClient;
     private string _secretKey;
-    public ReCaptchaService(string secretKey)
+    public ReCaptchaService(string secretKey, HttpClient httpClient)
     {
         _secretKey = secretKey;
-        _captchaClient.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
+        _captchaClient = httpClient;
+        // _captchaClient.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
     }
+    
     public async Task<bool> IsValid(string captcha)
     {
         try
@@ -25,7 +28,7 @@ public class ReCaptchaService : IReCaptchaService
         catch (Exception e)
         {
             // TODO: log this (in elmah.io maybe?)
-            Console.WriteLine(e);
+            Debug.WriteLine(e.ToString());
             return false;
         }
     }

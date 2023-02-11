@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Team121GBCapstoneProject;
-
+﻿using Team121GBCapstoneProject.Services;
+using Moq;
+using Moq.Protected;
+using System.Net;
 namespace Team121GBNUinitTests;
+
 
 public class AccountRegistrationCAPTCHATests
 {
@@ -17,23 +15,57 @@ public class AccountRegistrationCAPTCHATests
     [Test]
     public void reCAPTCHAisPassed()
     {
-        //setup
-        var reCAPTCHAvalue = false;
+        // Arrange
+        var secretKey = "secret_key";
+        var captcha = "captcha_response";
+        var responseJson = "{\"success\": true}";
+        var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+        mockHttpMessageHandler.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(responseJson),
+            });
+        var httpClient = new HttpClient(mockHttpMessageHandler.Object)
+        {
+            BaseAddress = new Uri("http://test.com")
+        };
+        var reCaptchaService = new ReCaptchaService(secretKey, httpClient);
 
-        //arrange
+        // Act
+        var result = reCaptchaService.IsValid(captcha).Result;
 
-        //assert
-        Assert.That(reCAPTCHAvalue, Is.EqualTo(true));
+        // Assert
+        Assert.AreEqual(true, result);
     }
+
     [Test]
     public void reCAPTCHAisNOTPassed()
     {
         //setup
-        var reCAPTCHAvalue = false;
+         // Arrange
+        var secretKey = "secret_key";
+        var captcha = "captcha_response";
+        var responseJson = "{\"success\": false}";
+        var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+        mockHttpMessageHandler.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(responseJson),
+            });
+        var httpClient = new HttpClient(mockHttpMessageHandler.Object)
+        {
+            BaseAddress = new Uri("http://test.com")
+        };
+        var reCaptchaService = new ReCaptchaService(secretKey, httpClient);
 
-        //arrange
-        reCAPTCHAvalue = true; //temporary
-        //assert
-        Assert.That(reCAPTCHAvalue, Is.EqualTo(false));
+        // Act
+        var result = reCaptchaService.IsValid(captcha).Result;
+
+        // Assert
+        Assert.AreEqual(false, result);
     }
 }
