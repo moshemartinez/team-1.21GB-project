@@ -58,12 +58,21 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            
+            [StringLength(50, ErrorMessage = "Profile Username is too long")]
+            [Display(Name = "Profile Username")]
+            public string ProfileUsername { get; set; }
+            
+            [StringLength(250, ErrorMessage = "Bio is too long")]
+            [Display(Name = "Profile Bio")]
+            public string ProfileBio { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            //var ProfileBio = await _userManager.GetProfileBioAsync(user);
 
             Username = userName;
 
