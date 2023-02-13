@@ -1,1 +1,0 @@
-This folder will contain a project for running Jest Tests for Javascript in the future.
