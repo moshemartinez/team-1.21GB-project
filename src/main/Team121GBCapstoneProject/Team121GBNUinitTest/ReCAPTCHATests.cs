@@ -68,4 +68,5 @@ public class AccountRegistrationCAPTCHATests
         // Assert
         Assert.AreEqual(false, result);
     }
+    //check what happens when given a bad input
 }
