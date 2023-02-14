@@ -13,7 +13,7 @@ public class AccountRegistrationCAPTCHATests
     }
 
     [Test]
-    public void reCAPTCHAisPassed()
+    public void ReCaptchaService_IsValid_ValidInput_ShouldReturnTrue()
     {
         // Arrange
         var secretKey = "secret_key";
@@ -41,10 +41,9 @@ public class AccountRegistrationCAPTCHATests
     }
 
     [Test]
-    public void reCAPTCHAisNOTPassed()
+    public void ReCaptchaService_IsValid_InvalidInput_ShouldReturnFalse()
     {
-        //setup
-         // Arrange
+        // Arrange
         var secretKey = "secret_key";
         var captcha = "captcha_response";
         var responseJson = "{\"success\": false}";
@@ -68,5 +67,32 @@ public class AccountRegistrationCAPTCHATests
         // Assert
         Assert.AreEqual(false, result);
     }
-    //check what happens when given a bad input
+    // !Write one more unit test to check what happens when given a bad input
+    [Test]
+    public void ReCaptchaService_IsValid_CaptchaSetToNULL_ShouldReturnFalse()
+    {
+        // Arrange
+        string secretKey = "secret_key";;
+        string captcha = null;
+        var responseJson = "{\"success\": false}";
+        var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+        mockHttpMessageHandler.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(responseJson),
+            });
+        var httpClient = new HttpClient(mockHttpMessageHandler.Object)
+        {
+            BaseAddress = new Uri("http://test.com")
+        };
+        var reCaptchaService = new ReCaptchaService(secretKey, httpClient);
+
+        // Act
+        var result = reCaptchaService.IsValid(captcha).Result;
+
+        // Assert
+        Assert.AreEqual(false, result);
+    }
 }
