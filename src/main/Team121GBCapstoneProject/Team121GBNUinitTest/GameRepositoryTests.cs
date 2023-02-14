@@ -47,7 +47,7 @@ namespace Team121GBNUinitTest
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             var expected = 10;
 
-            var listGames = gameRepository.GetTrendingGames();
+            var listGames = gameRepository.GetTrendingGames(10);
 
             int gameCount = listGames.Count();
 
@@ -61,7 +61,7 @@ namespace Team121GBNUinitTest
             var expected = true;
             var actual = true;
 
-            var listGames = gameRepository.GetTrendingGames();
+            var listGames = gameRepository.GetTrendingGames(10);
 
             for (int i = 0; i < 10; i++)
             {
