@@ -4,6 +4,6 @@ namespace Team121GBCapstoneProject.DAL.Abstract
 {
     public interface IGameRepository : IRepository<Game>
     {
-        public List<Game> GetTrendingGames();
+        public List<Game> GetTrendingGames(int numberOfGames);
     }
 }

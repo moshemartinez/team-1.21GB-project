@@ -48,9 +48,9 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             throw new NotImplementedException();
         }
 
-        public List<Game> GetTrendingGames()
+        public List<Game> GetTrendingGames(int numberOfGames)
         {
-            var gamesReturn = _game.OrderByDescending(g => g.AverageRating).Take(10).ToList();
+            var gamesReturn = _game.OrderByDescending(g => g.AverageRating).Take(numberOfGames).ToList();
             return gamesReturn;
         }
     }
