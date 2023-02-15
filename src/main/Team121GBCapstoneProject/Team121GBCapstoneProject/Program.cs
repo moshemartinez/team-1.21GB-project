@@ -18,11 +18,12 @@ builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new
                                                                              new HttpClient()
                                                                              { BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
+// Allows for Razor page editing without needing to rebuild
+//builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
