@@ -66,6 +66,7 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
             [StringLength(250, ErrorMessage = "Bio is too long")]
             [Display(Name = "Profile Bio")]
             public string ProfileBio { get; set; }
+            public byte[] ProfilePicture { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
