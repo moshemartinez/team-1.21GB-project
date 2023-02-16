@@ -12,8 +12,8 @@ using Team121GBCapstoneProject.Data;
 namespace Team121GBCapstoneProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230216050458_CustomUserData")]
-    partial class CustomUserData
+    [Migration("20230216230737_UserDataIdentity")]
+    partial class UserDataIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
