@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Data;
 using Team121GBCapstoneProject.Services;
 
@@ -25,7 +26,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 // Allows for Razor page editing without needing to rebuild
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
