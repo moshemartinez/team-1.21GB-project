@@ -22,6 +22,9 @@ GO
 
 CREATE TABLE [AspNetUsers] (
     [Id] nvarchar(450) NOT NULL,
+    [FirstName] nvarchar(max) NOT NULL,
+    [LastName] nvarchar(max) NOT NULL,
+    [ProfilePicture] varbinary(max) NOT NULL,
     [UserName] nvarchar(256) NULL,
     [NormalizedUserName] nvarchar(256) NULL,
     [Email] nvarchar(256) NULL,
@@ -111,7 +114,7 @@ CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHER
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20230216230737_UserDataIdentity', N'7.0.2');
+VALUES (N'20230217003646_AddUserDataIdentity', N'7.0.2');
 GO
 
 COMMIT;

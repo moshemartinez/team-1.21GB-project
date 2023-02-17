@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Team121GBCapstoneProject-2a9a4c42-7ba0-4545-8bdf-c3e8beaf9250</UserSecretsId>
   </PropertyGroup>
