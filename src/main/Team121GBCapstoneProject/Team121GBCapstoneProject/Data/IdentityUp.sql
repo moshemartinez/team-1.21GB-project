@@ -22,9 +22,6 @@ GO
 
 CREATE TABLE [AspNetUsers] (
     [Id] nvarchar(450) NOT NULL,
-    [FirstName] nvarchar(max) NOT NULL,
-    [LastName] nvarchar(max) NOT NULL,
-    [ProfilePicture] varbinary(max) NOT NULL,
     [UserName] nvarchar(256) NULL,
     [NormalizedUserName] nvarchar(256) NULL,
     [Email] nvarchar(256) NULL,
@@ -114,7 +111,46 @@ CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHER
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20230217003646_AddUserDataIdentity', N'7.0.2');
+VALUES (N'00000000000000_CreateIdentitySchema', N'7.0.2');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20230217014244_ApplicationUser', N'7.0.2');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+ALTER TABLE [AspNetUsers] ADD [FirstName] nvarchar(max) NULL DEFAULT N'';
+GO
+
+ALTER TABLE [AspNetUsers] ADD [LastName] nvarchar(max) NULL DEFAULT N'';
+GO
+
+ALTER TABLE [AspNetUsers] ADD [ProfilePicture] varbinary(max) NULL DEFAULT 0x;
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20230217021139_ApplicationUser2', N'7.0.2');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20230217021822_ApplicationUser3', N'7.0.2');
 GO
 
 COMMIT;
