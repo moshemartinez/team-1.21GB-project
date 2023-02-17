@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Data;
 using Team121GBCapstoneProject.Services;
 
@@ -8,6 +9,7 @@ using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 
 using Team121GBCapstoneProject.Models;
+using Team121GBCapstoneProject.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,13 +20,14 @@ builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new
                                                                              new HttpClient()
                                                                              { BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+// Allows for Razor page editing without needing to rebuild
+//builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -55,6 +58,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// If program says "Index Not Found" run: dotnet watch run (only on VS 2022)
 
 app.MapControllerRoute(
     name: "default",
