@@ -4,7 +4,8 @@
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
-
+@*Place the profile picture centered here.*@
+<img src="https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg" alt="">
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 
@@ -42,7 +43,7 @@
                 </div>
                 <div class="card-body">
                     <input asp-for="Input.ProfileBio" class="form-control"
-                        placeholder="" />
+                        placeholder="@Model.Username" />
                     <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
                 </div>
             </div>
@@ -50,9 +51,11 @@
         </form>
     </div>
 </div>
-<div class="row">
+@* <div class="row">
     @Model.Username;
 </div>
+<img src="C:\Users\natel\Downloads\Solid_red.png" alt=""> *@
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
