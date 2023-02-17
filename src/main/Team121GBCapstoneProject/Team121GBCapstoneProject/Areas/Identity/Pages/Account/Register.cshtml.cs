@@ -113,7 +113,7 @@ public class RegisterModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
     {
-        returnUrl ??= Url.Content("~/"); //What????
+        returnUrl ??= Url.Content("~/");
         ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         if (ModelState.IsValid)
         {
@@ -123,9 +123,7 @@ public class RegisterModel : PageModel
             if (!await _reCaptchaService.IsValid(captcha)) return Page();
 
             var user = CreateUser();
-            user.FirstName = "BS";
-            user.LastName = "SB";
-            user.ProfilePicture = null;
+ 
 
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
