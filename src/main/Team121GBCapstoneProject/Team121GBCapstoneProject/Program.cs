@@ -8,6 +8,7 @@ using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 
 using Team121GBCapstoneProject.Models;
+using Team121GBCapstoneProject.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
