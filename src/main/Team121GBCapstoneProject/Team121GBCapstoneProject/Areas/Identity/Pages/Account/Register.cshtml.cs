@@ -100,6 +100,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
+            //var user = CreateUser();
+ 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
