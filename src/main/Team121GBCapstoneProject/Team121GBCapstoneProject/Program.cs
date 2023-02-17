@@ -25,7 +25,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 // Allows for Razor page editing without needing to rebuild
-// BUG: If this code is commented out, the Index page won't load
 //builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -59,6 +58,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// If program says "Index Not Found" run: dotnet watch run (only on VS 2022)
 
 app.MapControllerRoute(
     name: "default",
