@@ -81,8 +81,7 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
             {
                 PhoneNumber = phoneNumber,
                 FirstName = firstName,
-                LastName = lastName
-                PhoneNumber = phoneNumber,
+                LastName = lastName,
                 ProfilePicture = profilePicture
             };
         }
