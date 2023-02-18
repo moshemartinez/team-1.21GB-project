@@ -20,7 +20,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         GameInfo gameList = new GameInfo();
-        gameList.games = _gameRepository.GetTrendingGames();
+        gameList.games = _gameRepository.GetTrendingGames(10);
         return View("Index", gameList);
     }
 
