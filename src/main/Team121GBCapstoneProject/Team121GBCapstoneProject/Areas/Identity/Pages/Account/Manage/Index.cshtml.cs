@@ -74,12 +74,16 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
+            //var ProfilePicture = await _userManager.U
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                ProfilePicture = user.ProfilePicture,
+                ProfileUsername = user.UserName,
+                ProfileBio  = user.ProfileBio
+                //ProfileBio = user.
             };
         }
 
