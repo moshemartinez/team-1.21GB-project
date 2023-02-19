@@ -74,7 +74,6 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            //var ProfilePicture = await _userManager.U
             Username = userName;
 
             Input = new InputModel
@@ -83,7 +82,6 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
                 ProfilePicture = user.ProfilePicture,
                 ProfileUsername = user.UserName,
                 ProfileBio  = user.ProfileBio
-                //ProfileBio = user.
             };
         }
 
@@ -124,6 +122,10 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if(Input.ProfileBio != user.ProfileBio) user.ProfileBio = Input.ProfileBio;
+
+            await _userManager.UpdateAsync(user);
+            
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
