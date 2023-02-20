@@ -26,7 +26,14 @@
                     <span asp-validation-for="Input.ProfileUsername" class="text-danger"></span>
                 </div>
             </div>
-            <br>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-bio-form" method="post">
             <div class="card">
                 <div class="card-title">
                     <div class="card-header">
@@ -35,11 +42,11 @@
                 </div>
                 <div class="card-body">
                     <input asp-for="Input.ProfileBio" class="form-control"
-                        placeholder="@Model.Input.ProfileBio" />
+                        placeholder="@Model.Input.ProfileBio" maxlength="501" />
                     <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
                 </div>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>
 </div>
