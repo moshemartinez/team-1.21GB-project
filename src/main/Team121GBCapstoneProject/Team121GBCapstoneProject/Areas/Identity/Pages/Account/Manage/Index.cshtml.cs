@@ -59,11 +59,11 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
-            
+
             [StringLength(50, ErrorMessage = "Profile Username is too long")]
             [Display(Name = "Profile Username")]
             public string ProfileUsername { get; set; }
-            
+
             [StringLength(500, ErrorMessage = "Bio is too long")]
             [Display(Name = "Profile Bio")]
             public string ProfileBio { get; set; }
@@ -76,13 +76,28 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             Username = userName;
 
-            Input = new InputModel
+            // ! This handles when a user does not have a profile picture set 
+            if (user.ProfilePicture == null)
             {
-                PhoneNumber = phoneNumber,
-                ProfilePicture = user.ProfilePicture,
-                ProfileUsername = user.UserName,
-                ProfileBio  = user.ProfileBio
-            };
+
+                Input = new InputModel
+                {
+                    PhoneNumber = phoneNumber,
+                    ProfilePicture = new byte[1],
+                    ProfileUsername = user.UserName,
+                    ProfileBio = user.ProfileBio
+                };
+            }
+            else
+            {
+                Input = new InputModel
+                {
+                    PhoneNumber = phoneNumber,
+                    ProfilePicture = user.ProfilePicture,
+                    ProfileUsername = user.UserName,
+                    ProfileBio = user.ProfileBio
+                };
+            }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -122,10 +137,10 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if(Input.ProfileBio != user.ProfileBio) user.ProfileBio = Input.ProfileBio;
+            if (Input.ProfileBio != user.ProfileBio) user.ProfileBio = Input.ProfileBio;
 
             await _userManager.UpdateAsync(user);
-            
+
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
