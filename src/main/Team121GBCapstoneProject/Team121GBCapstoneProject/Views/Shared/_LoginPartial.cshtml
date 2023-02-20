@@ -35,7 +35,6 @@
                 </li>
             </ul>
         </li>*@
-        <li>
             @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
             {
                 <li class="nav-item dropdown">
@@ -99,7 +98,6 @@
                 </div>*@
 
             }
-        </li>
     }
     else
     {
