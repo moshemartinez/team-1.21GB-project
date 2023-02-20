@@ -10,4 +10,6 @@ public class ApplicationUser : IdentityUser
     public string LastName { get; set; }
     [PersonalData]
     public byte[] ProfilePicture { get; set; }
+    [PersonalData]
+    public string ProfileBio { get; set; }
 }
