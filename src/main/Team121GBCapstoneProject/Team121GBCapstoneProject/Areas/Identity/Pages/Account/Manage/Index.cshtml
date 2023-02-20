@@ -42,7 +42,7 @@
                 </div>
                 <div class="card-body">
                     <input asp-for="Input.ProfileBio" class="form-control"
-                        placeholder="@Model.Input.ProfileBio" />
+                        placeholder="@Model.Input.ProfileBio" maxlength="501" />
                     <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
                 </div>
             </div>

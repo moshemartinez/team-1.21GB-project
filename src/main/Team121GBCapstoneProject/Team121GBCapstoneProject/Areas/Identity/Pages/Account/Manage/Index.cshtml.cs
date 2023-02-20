@@ -64,7 +64,7 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Profile Username")]
             public string ProfileUsername { get; set; }
             
-            [StringLength(250, ErrorMessage = "Bio is too long")]
+            [StringLength(500, ErrorMessage = "Bio is too long")]
             [Display(Name = "Profile Bio")]
             public string ProfileBio { get; set; }
             public byte[] ProfilePicture { get; set; }
