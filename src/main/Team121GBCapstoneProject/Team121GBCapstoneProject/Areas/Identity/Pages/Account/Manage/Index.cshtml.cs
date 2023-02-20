@@ -63,11 +63,11 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
-            
+
             [StringLength(50, ErrorMessage = "Profile Username is too long")]
             [Display(Name = "Profile Username")]
             public string ProfileUsername { get; set; }
-            
+
             [StringLength(500, ErrorMessage = "Bio is too long")]
             [Display(Name = "Profile Bio")]
             public string ProfileBio { get; set; }
@@ -85,15 +85,18 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
+
+
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
+                FirstName = firstName,
+                LastName = lastName,
                 ProfilePicture = user.ProfilePicture,
                 ProfileUsername = user.UserName,
-                ProfileBio  = user.ProfileBio,
-                FirstName = firstName,
-                LastName = lastName
+                ProfileBio = user.ProfileBio
             };
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -133,10 +136,12 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if(Input.ProfileBio != user.ProfileBio) user.ProfileBio = Input.ProfileBio;
+            if (Input.ProfileBio != user.ProfileBio) user.ProfileBio = Input.ProfileBio;
 
             await _userManager.UpdateAsync(user);
-            
+
+            await _userManager.UpdateAsync(user);
+
             var firstName = user.FirstName;
             var lastName = user.LastName;
             if (Input.FirstName != firstName)
