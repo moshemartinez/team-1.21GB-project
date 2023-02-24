@@ -6,6 +6,7 @@
 <div class="text-center">
     <h1 class="display-4" style="font-weight: bolder; margin-top: 5%;">Top 100 Games</h1>
     <h3>Last Updated: February 23, 2023</h3>
+    <p>Rating were collected from IGN.com and the title, description, and cover photo were collected from wikipedia</p>
 
     <table class="table">
         <thead>
@@ -25,8 +26,8 @@
                 {
                     <tr>
                         <th scope="row">@j</th>
-                        <td><img src=@($"{Model.games[i].CoverPicture}") width="100px" height="100px" /></td>
-                        <td>@Model.games[i].Title</td>
+                        <td><img src=@($"{Model.games[i].CoverPicture}") width="200px" height="200px" /></td>
+                        <td style="font-weight: bold;">@Model.games[i].Title</td>
                         <td>@Model.games[i].Description</td>
                         <td style="background-color: @Model.backgroundColor[i]; color: white; font-weight: bolder; text-align: center; font-size: larger">@Model.games[i].AverageRating</td>
                     </tr>
