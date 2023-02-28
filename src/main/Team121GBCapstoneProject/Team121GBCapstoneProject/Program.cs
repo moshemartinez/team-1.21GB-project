@@ -3,18 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Data;
-using Team121GBCapstoneProject.Services;
-
+using Team121GBCapstoneProject.Services.Abstract;
+using Team121GBCapstoneProject.Services.Concrete;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 
 using Team121GBCapstoneProject.Models;
-using Team121GBCapstoneProject.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
 
+builder.Services.AddHttpClient();
 // Add services to the container.
 builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey,
                                                                              new HttpClient()
