@@ -33,15 +33,15 @@ public class EmailSender : IEmailSender
         var newmessage = "<h1 style=\"text-align: inherit; font-family: inherit\"><span style=\"font-family: &quot;arial black&quot;, helvetica, sans-serif; font-size: 40px; color: #d89816\">Welcome to the Gaming Platform!</span></h1>"
                + "<div style=\"font-family: inherit; text-align: inherit\"><span style=\"font-family: &quot;times new roman&quot;, times, serif; font-size: 18px\">Thank you for creating a account.</span></div>"
                + message;
-        subject = "Welcome to Gaming Platform!: Please Confirm your email";
+        //subject = "Welcome to Gaming Platform!: Please Confirm your email";
 
         var client = new SendGridClient(apiKey);
         var msg = new SendGridMessage()
         {
             From = new EmailAddress("team121gb@gmail.com", "Account Confirmation"),
             Subject = subject,
-            PlainTextContent = newmessage,
-            HtmlContent = newmessage
+            PlainTextContent = message,
+            HtmlContent = message
         };
         msg.AddTo(new EmailAddress(toEmail));
 
