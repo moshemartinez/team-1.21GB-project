@@ -147,8 +147,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Welcome to the Gaming Platform!: Please confirm your email",
+                        $"<h1 style=\"text-align: inherit; font-family: inherit\"><span style=\"font-family: &quot;arial black&quot;, helvetica, sans-serif; font-size: 40px; color: #d89816\">Welcome to the Gaming Platform!</span></h1> Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' style=\"background-color:#ffffff; border:1px solid #939598; border-color:#939598; border-radius:0px; border-width:1px; color:#D89816; display:inline-block; font-size:15px; font-weight:normal; letter-spacing:1px; line-height:normal; padding:16px 20px 16px 20px; text-align:center; text-decoration:none; border-style:solid; font-family:times new roman,times,serif;\">clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
