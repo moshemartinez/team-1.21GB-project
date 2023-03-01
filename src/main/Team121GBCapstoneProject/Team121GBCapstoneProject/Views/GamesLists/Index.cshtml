@@ -1,0 +1,75 @@
+@model Team121GBCapstoneProject.Models.GameInfo;
+
+@{
+    ViewData["Title"] = "Games Lists";
+}
+
+
+<div id="carouselExampleControls" class="carousel slide text-center" style="background-color: #961717" data-bs-ride="carousel">
+  <div class="carousel-inner">
+        
+            @{int i = 1;}
+
+            @foreach (var game in Model.games)
+            {
+                
+                <div class="carousel-item @(i == 1? "active": "")">
+                    <img src="@game.CoverPicture" style="width: 200px; height: 200px; margin-bottom: 175px; margin-top: 30px;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 style="color: black; font-weight: bold;">@($"#{i++} - {game.Title}")</h5>
+                        <p style="color: black; font-weight: bold;">@game.Description</p>
+                    </div>
+                </div>
+            
+            }
+    
+        
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+
+@* <div id="carouselExampleControls" class="carousel slide text-center" style="background-color: #961717"
+    data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+        @{
+            int i = 1;
+            var t = new List<int>
+        {
+        1,
+        2,
+        3
+        };
+        }
+
+        @foreach (var j in t)
+        {
+
+            <div class="carousel-item @(i == 1? "active": "")">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>YO @j </h1>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div> *@
