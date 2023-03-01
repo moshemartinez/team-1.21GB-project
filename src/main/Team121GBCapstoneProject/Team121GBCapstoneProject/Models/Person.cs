@@ -17,24 +17,6 @@ public partial class Person
     [StringLength(450)]
     public string AuthorizationId { get; set; }
 
-    [StringLength(64)]
-    public string FirstName { get; set; }
-
-    [StringLength(64)]
-    public string LastName { get; set; }
-
-    [StringLength(64)]
-    public string Username { get; set; }
-
-    [StringLength(64)]
-    public string Email { get; set; }
-
-    [StringLength(256)]
-    public string ProfilePicture { get; set; }
-
-    [StringLength(526)]
-    public string ProfileBio { get; set; }
-
     [Column("RoleID")]
     public int? RoleId { get; set; }
 

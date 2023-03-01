@@ -1,22 +1,16 @@
 --Note: Only Run The create database once and then comment it again. 
 --Uncomment, highight create database, then comment over and run query
-
---CREATE DATABASE [GamingPlatform]
+--  DROP DATABASE [GamingPlatform]
+--  CREATE DATABASE [GamingPlatform]
 
 --Creating Person Table
 CREATE TABLE [Person] (
     [ID]              INT           PRIMARY KEY IDENTITY(1, 1),
     [AuthorizationID] NVARCHAR(450),
-    [FirstName]       NVARCHAR(64),
-    [LastName]        NVARCHAR(64),
-    [Username]        NVARCHAR(64),
-    [Email]           NVARCHAR(64),
-    [ProfilePicture]  NVARCHAR(256),
-    [ProfileBio]      NVARCHAR(526),
     [RoleID]          INT,
     [CurrentlyPlayingListID] INT,
     [CompletedListID] INT,
-    [PlayLaterListID] INT
+    [WantToPlayListID] INT
 );
 
 CREATE TABLE [Game] (
