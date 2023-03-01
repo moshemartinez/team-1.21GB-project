@@ -14,7 +14,8 @@ public partial class Person
     public int Id { get; set; }
 
     [Column("AuthorizationID")]
-    public int? AuthorizationId { get; set; }
+    [StringLength(450)]
+    public string AuthorizationId { get; set; }
 
     [StringLength(64)]
     public string FirstName { get; set; }

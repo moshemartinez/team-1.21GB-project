@@ -6,7 +6,7 @@
 --Creating Person Table
 CREATE TABLE [Person] (
     [ID]              INT           PRIMARY KEY IDENTITY(1, 1),
-    [AuthorizationID] INT,
+    [AuthorizationID] NVARCHAR(450),
     [FirstName]       NVARCHAR(64),
     [LastName]        NVARCHAR(64),
     [Username]        NVARCHAR(64),
