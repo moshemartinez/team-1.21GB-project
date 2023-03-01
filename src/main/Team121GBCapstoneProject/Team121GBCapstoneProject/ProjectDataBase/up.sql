@@ -13,7 +13,10 @@ CREATE TABLE [Person] (
     [Email]           NVARCHAR(64),
     [ProfilePicture]  NVARCHAR(256),
     [ProfileBio]      NVARCHAR(526),
-    [RoleID]          INT     
+    [RoleID]          INT,
+    [CurrentlyPlayingListID] INT,
+    [CompletedListID] INT,
+    [PlayLaterListID] INT
 );
 
 CREATE TABLE [Game] (
@@ -25,3 +28,22 @@ CREATE TABLE [Game] (
     [AverageRating]   FLOAT,
     [CoverPicture]    NVARCHAR(526)  
 );
+
+CREATE TABLE [List] (
+    [ID] INT PRIMARY KEY IDENTITY(1,1),
+    [Title] NVARCHAR(64),
+    [PersonId] INT NOT NULL,
+    CONSTRAINT [FK_GameList_Person] FOREIGN KEY ([PersonId]) REFERENCES [Person]([ID])
+);
+
+CREATE TABLE [GameList] (
+    [ListID] INT,
+    [GameID] INT,
+    CONSTRAINT [FK_GameList_List] FOREIGN KEY ([ListID]) REFERENCES [List]([ID]),
+    CONSTRAINT [FK_GameList_Game] FOREIGN KEY ([GameID]) REFERENCES [Game]([ID]),
+    CONSTRAINT [PK_GameList] PRIMARY KEY CLUSTERED ([ListID] ASC, [GameID] ASC)
+);
+
+ALTER TABLE [Person] ADD CONSTRAINT [FK_CurrentlyPlayingList] FOREIGN KEY ([CurrentlyPlayingListID]) REFERENCES [List]([ID]);
+ALTER TABLE [Person] ADD CONSTRAINT [FK_CompletedList] FOREIGN KEY ([CompletedListID]) REFERENCES [List]([ID]);
+ALTER TABLE [Person] ADD CONSTRAINT [FK_WantToPlayList] FOREIGN KEY ([WantToPlayListID]) REFERENCES [List]([ID]);
