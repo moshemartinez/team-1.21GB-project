@@ -9,6 +9,8 @@ using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Http;
+using Team121GBCapstoneProject.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,9 @@ builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new
                                                                              new HttpClient()
                                                                              { BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
+
+builder.Services.AddScoped<IIgdbService, IgdbService>();
+
 var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -34,15 +39,17 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var GPconnectionString = builder.Configuration.GetConnectionString("GPConnection");
 builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
                             .UseSqlServer(GPconnectionString));
+
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 
-
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
