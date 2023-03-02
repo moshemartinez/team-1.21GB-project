@@ -160,19 +160,20 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
                     _dbContext.Add(GPPerson);
                     await _dbContext.SaveChangesAsync();
                     
-                    //Create default user lists
-                    UserList currentlyPlaying = new UserList
-                    {
-                        Title = "Currently Playing",
-                        PersonId = GPPerson.Id    
-                    };
+                    // * updating data model to Scot recommendation so this is not necessary
+                    // //Create default user lists
+                    // UserList currentlyPlaying = new UserList
+                    // {
+                    //     Title = "Currently Playing",
+                    //     PersonId = GPPerson.Id    
+                    // };
 
-                    _dbContext.Add(currentlyPlaying);
-                    await _dbContext.SaveChangesAsync();
+                    // _dbContext.Add(currentlyPlaying);
+                    // await _dbContext.SaveChangesAsync();
 
-                    GPPerson.CurrentlyPlayingListId = currentlyPlaying.Id;
-                    _dbContext.Update(GPPerson);
-                    await _dbContext.SaveChangesAsync();
+                    // GPPerson.CurrentlyPlayingListId = currentlyPlaying.Id;
+                    // _dbContext.Update(GPPerson);
+                    // await _dbContext.SaveChangesAsync();
 
                     _logger.LogInformation("User created a new account with password.");
 

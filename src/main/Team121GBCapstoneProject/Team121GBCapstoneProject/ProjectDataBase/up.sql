@@ -1,15 +1,12 @@
 --Note: Only Run The create database once and then comment it again. 
 --Uncomment, highight create database, then comment over and run query
---   DROP DATABASE [GamingPlatform]
---   CREATE DATABASE [GamingPlatform]
+    -- DROP DATABASE [GamingPlatform]
+    -- CREATE DATABASE [GamingPlatform]
 
 --Creating Person Table
 CREATE TABLE [Person] (
     [ID]              INT           PRIMARY KEY IDENTITY(1, 1),
-    [AuthorizationID] NVARCHAR(450),
-    [CurrentlyPlayingListID] INT,
-    [CompletedListID] INT,
-    [WantToPlayListID] INT
+    [AuthorizationID] NVARCHAR(450)
 );
 
 CREATE TABLE [Game] (
@@ -21,23 +18,17 @@ CREATE TABLE [Game] (
     [AverageRating]   FLOAT,
     [CoverPicture]    NVARCHAR(526)  
 );
-
---Table has to be called UserList and not List because List is a C# reserved word
-CREATE TABLE [UserList] (
+CREATE TABLE [GamePlayListType] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [Title] NVARCHAR(64),
-    [PersonId] INT NOT NULL,
-    CONSTRAINT [FK_GameList_Person] FOREIGN KEY ([PersonId]) REFERENCES [Person]([ID])
+    [ListKind] NVARCHAR(64)
 );
 
-CREATE TABLE [GameList] (
-    [UserListID] INT,
-    [GameID] INT,
-    CONSTRAINT [FK_GameList_List] FOREIGN KEY ([UserListID]) REFERENCES [UserList]([ID]),
-    CONSTRAINT [FK_GameList_Game] FOREIGN KEY ([GameID]) REFERENCES [Game]([ID]),
-    CONSTRAINT [PK_GameList] PRIMARY KEY CLUSTERED ([UserListID] ASC, [GameID] ASC)
+CREATE TABLE [PersonGameList] (
+    [ID] INT PRIMARY KEY IDENTITY(1,1),
+    [PersonID] INT NOT NULL,
+    [GameID] INT NOT NULL,
+    [ListKindID] INT NOT NULL,
+    CONSTRAINT [FK_PersonID] FOREIGN KEY ([PersonId]) REFERENCES [Person]([ID]),
+    CONSTRAINT [FK_GameID] FOREIGN KEY ([GameID]) REFERENCES [Game]([ID]),
+    CONSTRAINT [FK_ListKindID] FOREIGN KEY ([ListKindID]) REFERENCES [GamePlayListType]([ID])
 );
-
-ALTER TABLE [Person] ADD CONSTRAINT [FK_CurrentlyPlayingList] FOREIGN KEY ([CurrentlyPlayingListID]) REFERENCES [UserList]([ID]);
-ALTER TABLE [Person] ADD CONSTRAINT [FK_CompletedList] FOREIGN KEY ([CompletedListID]) REFERENCES [UserList]([ID]);
-ALTER TABLE [Person] ADD CONSTRAINT [FK_WantToPlayList] FOREIGN KEY ([WantToPlayListID]) REFERENCES [UserList]([ID]);

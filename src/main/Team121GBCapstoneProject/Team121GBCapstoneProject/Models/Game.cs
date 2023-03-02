@@ -29,7 +29,6 @@ public partial class Game
     [StringLength(526)]
     public string CoverPicture { get; set; }
 
-    [ForeignKey("GameId")]
-    [InverseProperty("Games")]
-    public virtual ICollection<UserList> UserLists { get; } = new List<UserList>();
+    [InverseProperty("Game")]
+    public virtual ICollection<PersonGameList> PersonGameLists { get; } = new List<PersonGameList>();
 }

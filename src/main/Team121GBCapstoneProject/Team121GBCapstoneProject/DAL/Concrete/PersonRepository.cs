@@ -5,46 +5,17 @@ using Team121GBCapstoneProject.Models;
 
 namespace Team121GBCapstoneProject.DAL.Concrete;
 
-public class PersonRepository : IPersonRepository
+public class PersonRepository : Repository<Person>, IPersonRepository
 {
-    public Person AddOrUpdate(Person entity)
+    public PersonRepository(GPDbContext ctx) : base(ctx)
     {
-        throw new NotImplementedException();
+
     }
 
-    //! Commenting this out to see if I can accomplish the same with AddOrUpdate
-    // public bool AddPersonToProjectDb(string authorizationId)
-    // {
-    //     throw new NotImplementedException();
-    // }
-
-    public void Delete(Person entity)
+    public bool AddPersonToProjectDb(string authorizationID)
     {
-        throw new NotImplementedException();
-    }
+        //create the default lists
 
-    public void DeleteById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool Exists(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Person FindById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IQueryable<Person> GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public IQueryable<Person> GetAll(params Expression<Func<Person, object>>[] includes)
-    {
         throw new NotImplementedException();
     }
 }
