@@ -39,7 +39,7 @@ builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
                             .UseSqlServer(GPconnectionString));
 builder.Services.AddScoped<IGameRepository, GameRepository>();
-
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 
 var app = builder.Build();
