@@ -17,9 +17,6 @@ public partial class Person
     [StringLength(450)]
     public string AuthorizationId { get; set; }
 
-    [Column("RoleID")]
-    public int? RoleId { get; set; }
-
     [Column("CurrentlyPlayingListID")]
     public int? CurrentlyPlayingListId { get; set; }
 
@@ -31,16 +28,16 @@ public partial class Person
 
     [ForeignKey("CompletedListId")]
     [InverseProperty("PersonCompletedLists")]
-    public virtual List CompletedList { get; set; }
+    public virtual UserList CompletedList { get; set; }
 
     [ForeignKey("CurrentlyPlayingListId")]
     [InverseProperty("PersonCurrentlyPlayingLists")]
-    public virtual List CurrentlyPlayingList { get; set; }
+    public virtual UserList CurrentlyPlayingList { get; set; }
 
     [InverseProperty("Person")]
-    public virtual ICollection<List> Lists { get; } = new List<List>();
+    public virtual ICollection<UserList> UserLists { get; } = new List<UserList>();
 
     [ForeignKey("WantToPlayListId")]
     [InverseProperty("PersonWantToPlayLists")]
-    public virtual List WantToPlayList { get; set; }
+    public virtual UserList WantToPlayList { get; set; }
 }

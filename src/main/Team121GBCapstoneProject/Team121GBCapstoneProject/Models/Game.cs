@@ -31,5 +31,5 @@ public partial class Game
 
     [ForeignKey("GameId")]
     [InverseProperty("Games")]
-    public virtual ICollection<List> Lists { get; } = new List<List>();
+    public virtual ICollection<UserList> UserLists { get; } = new List<UserList>();
 }

@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Team121GBCapstoneProject.Models;
 
-[Table("List")]
-public partial class List
+[Table("UserList")]
+public partial class UserList
 {
     [Key]
     [Column("ID")]
@@ -19,7 +19,7 @@ public partial class List
     public int PersonId { get; set; }
 
     [ForeignKey("PersonId")]
-    [InverseProperty("Lists")]
+    [InverseProperty("UserLists")]
     public virtual Person Person { get; set; }
 
     [InverseProperty("CompletedList")]
@@ -31,7 +31,7 @@ public partial class List
     [InverseProperty("WantToPlayList")]
     public virtual ICollection<Person> PersonWantToPlayLists { get; } = new List<Person>();
 
-    [ForeignKey("ListId")]
-    [InverseProperty("Lists")]
+    [ForeignKey("UserListId")]
+    [InverseProperty("UserLists")]
     public virtual ICollection<Game> Games { get; } = new List<Game>();
 }
