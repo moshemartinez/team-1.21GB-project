@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Services;
+using Team121GBCapstoneProject.Models;
 
 namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
 {
@@ -32,13 +33,17 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IReCaptchaService _reCaptchaService;
+        // Todo: Figure out if I need line 37
+        private readonly GPDbContext _dbContext;
+
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IReCaptchaService captchaService)
+            IReCaptchaService captchaService,
+            GPDbContext dbContext)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -47,6 +52,7 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _reCaptchaService = captchaService;
+            _dbContext = dbContext;
         }
 
         /// <summary>
@@ -133,6 +139,7 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
                 if (!Request.Form.ContainsKey("g-recaptcha-response")) return Page();
                 var captcha = Request.Form["g-recaptcha-response"].ToString();
                 if (!await _reCaptchaService.IsValid(captcha)) return Page();
+
                 // Added code to add First Name and Last Name
                 var user = CreateUser();
                 user.FirstName = Input.FirstName;
@@ -144,6 +151,29 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    //create user in gamingPlatform db
+                    Person GPPerson = new Person
+                    {
+                        AuthorizationId = user.Id,
+                    };
+
+                    _dbContext.Add(GPPerson);
+                    await _dbContext.SaveChangesAsync();
+                    
+                    //Create default user lists
+                    UserList currentlyPlaying = new UserList
+                    {
+                        Title = "Currently Playing",
+                        PersonId = GPPerson.Id    
+                    };
+
+                    _dbContext.Add(currentlyPlaying);
+                    await _dbContext.SaveChangesAsync();
+
+                    GPPerson.CurrentlyPlayingListId = currentlyPlaying.Id;
+                    _dbContext.Update(GPPerson);
+                    await _dbContext.SaveChangesAsync();
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
