@@ -24,7 +24,9 @@ public class GamesListsController : Controller
     public IActionResult Index()
     {
         var id = _userManager.GetUserId(User);
+        var temp = _personRepository.GetAll().Where(i => i.AuthorizationId == id);
         UserListsViewModel uservm = new UserListsViewModel();
+        uservm.LoggedInUser = temp.First();
         //uservm.LoggedInUser = _personRepository.FindById(userId);
         
 
