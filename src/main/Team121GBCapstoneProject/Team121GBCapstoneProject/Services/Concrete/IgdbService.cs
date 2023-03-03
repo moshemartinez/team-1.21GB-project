@@ -28,7 +28,7 @@ public class IgdbService : IIgdbService
 
         HttpClient httpClient = _httpClientFactory.CreateClient();
 
-        // AddHeaders
+        // Add Headers
         httpClient.BaseAddress = new Uri(uri);
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -61,7 +61,7 @@ public class IgdbService : IIgdbService
 
 
 
-    public async Task<IEnumerable<GameJsonDTO>> SearchGames(string query = "")
+    public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
         // TODO: Implement using the query variable
         // This is manual data entry, do it somewhere else in the future
@@ -82,8 +82,12 @@ public class IgdbService : IIgdbService
             gamesJsonDTO = null;
         }
 
-        // TODO: Convert gamesJsonDTO into a List<IgdbGame>
+        if (gamesJsonDTO != null)
+        {
+            return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover.url.ToString(), g.url));
+        }
 
-        return gamesJsonDTO ?? Enumerable.Empty<GameJsonDTO>();
+
+        return Enumerable.Empty<IgdbGame>();
     }
 }

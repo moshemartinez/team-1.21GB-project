@@ -6,6 +6,6 @@ namespace Team121GBCapstoneProject.Services.Abstract;
 public interface IIgdbService
 {
     void SetCredentials(string clientId, string token);
-    Task<IEnumerable<GameJsonDTO>> SearchGames(string query);
+    Task<IEnumerable<IgdbGame>> SearchGames(string query);
 
 }

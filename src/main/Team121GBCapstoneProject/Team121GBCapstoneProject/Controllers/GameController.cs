@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using Team121GBCapstoneProject.Services;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Services.Abstract;
@@ -19,7 +20,7 @@ namespace Team121GBCapstoneProject.Controllers
             _igdbService = igdbService;
         }
 
-        //[HttpPost]
+        [HttpPost]
         public ActionResult<IEnumerable<IgdbGame>> GameSearch()
         {
             // TODO: Move these somewhere else
@@ -30,8 +31,15 @@ namespace Team121GBCapstoneProject.Controllers
 
             // User temp string for testing with a manual search
             var temp = "";
+            var searchResult = _igdbService.SearchGames(temp);
 
-            return Ok(_igdbService.SearchGames(temp));
+            if (searchResult is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(searchResult);
+
         }
 
 
