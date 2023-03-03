@@ -1,18 +1,11 @@
 @*@model Team121GBCapstoneProject.Models.GameInfo;*@
 
 @model Team121GBCapstoneProject.ViewModels.UserListsViewModel;
-@*@using Microsoft.AspNetCore.Identity
-@using Team121GBCapstoneProject.Areas.Identity.Data
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager*@
+
 @{
     ViewData["Title"] = "Games Lists";
 }
 
-
-@*@if (SignInManager.IsSignedIn(User))
-{
-*@    
 <div style="float: right">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddListForm">Add List</button>
 </div>
@@ -38,7 +31,13 @@
                                 <option value="1">Currently Playing</option>
                                 <option value="2">Complete</option>
                                 <option value="3">Want to Play</option>
+                                <option value="4">Custom</option>
                             </select>
+                        </div>
+                        <div>
+                            <label for="customListName">Custom List name</label>
+                            <br />
+                            <input id="customListName" type="text" value="" minlength="5" maxlength="64" />
                         </div>
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id"/>
                         <input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary" data-bs-dismiss="modal" value="Add List" />
@@ -75,7 +74,7 @@
     </table>
     @*}*@
 </div>   
-}
+
 @*<select id="listType" asp-for="selectListItems" asp-items="@Model.selectListItems"></select>
                             @*<input id="listType" type="d"/>
 
