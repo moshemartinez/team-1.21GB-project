@@ -24,6 +24,11 @@ public class HomeController : Controller
         return View("Index", gameList);
     }
 
+    public IActionResult GenerateImage()
+    {
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();

@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model DalleVM
 @{
+    ViewData["Title"] = "Dalle Page";
+}
+<div class="row">
+    <form id="promptForm">
+        <div class="form-floating mb-3">
+            <input id="userPrompt" asp-for="@Model.Prompt" class="form-control" placeholder="Please enter your profile image prompt" required/>
+            <label asp-for="@Model.Prompt" class="form-label"></label>
+            <span asp-validation-for="@Model.Prompt" class="text-danger"></span>
+        </div>
+        <div>
+            <button id="submitPromptButton" type="submit" class="w-100 btn btn-lg btn-primary">Generate Images</button>
+        </div>
+    </form>
+</div>
+
+@if (@Model != null)
+{
+    <div class="row">
+        <div class="col">
+            <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="@Model.Images[0]">
+        </div>
+        <div class="col">
+            <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="@Model.Images[1]">
+        </div>
+        <div class="col">
+            <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="@Model.Images[2]">
+        </div>
+    </div>
+}
+
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/Dalle.js"></script>
 }

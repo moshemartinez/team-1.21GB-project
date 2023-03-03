@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI.GPT3.Extensions;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Data;
 using Team121GBCapstoneProject.Services;
@@ -10,10 +11,16 @@ using Team121GBCapstoneProject.DAL.Concrete;
 
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Areas.Identity.Data;
+using OpenAI.GPT3.Interfaces;
+using System;
+using OpenAI.GPT3.Managers;
+using OpenAI.GPT3.ObjectModels;
+using OpenAI.GPT3;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
+var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
 
 // Add services to the container.
 builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey,
@@ -36,6 +43,13 @@ builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
                             .UseSqlServer(GPconnectionString));
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+
+builder.Services.AddOpenAIService(settings =>
+{
+    settings.ApiKey = DalleSecretKey;
+});
+//var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
+//openAiService.SetDefaultModelId(Models.Davinci);
 
 
 var app = builder.Build();
