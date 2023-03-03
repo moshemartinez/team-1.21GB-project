@@ -37,9 +37,9 @@ public class PersonRepository : Repository<Person>, IPersonRepository
             }
         }
     }
-    public bool AddList(Person user, int listType)
+    public bool AddList(Person user, int listType, string listName)
     {
-        
+
         return false;
     }
 }

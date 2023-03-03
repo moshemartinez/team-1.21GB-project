@@ -24,7 +24,7 @@
                         <div>
                             <label for="listType">List Type</label>
                             <br />
-                            <select>
+                            <select id="listType" name="listType">
                                 <option value="1">Currently Playing</option>
                                 <option value="2">Complete</option>
                                 <option value="3">Want to Play</option>
@@ -34,7 +34,7 @@
                         <div>
                             <label for="customListName">Custom List name</label>
                             <br />
-                            <input id="customListName" type="text" value="" maxlength="64" />
+                            <input id="customListName" name="customListName" type="text" value="" maxlength="64" />
                         </div>
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id"/>
                         <input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary" data-bs-dismiss="modal" value="Add List" />

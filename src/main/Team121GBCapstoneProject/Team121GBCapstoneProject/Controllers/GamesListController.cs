@@ -47,10 +47,15 @@ public class GamesListsController : Controller
 
         foreach(var checklist in userLists)
         {
-            //If it is a custom list let them create it.
+            // * If it is a custom list 
+            // * check to see if they have one of the same name 
+            // * already and don't let them have duplicates.
             if(checklist.ListKindId == 4)
             {
-                break;
+                //List<string> listNames = person.PersonGameLists.ToList();
+                var listNames = person.PersonGameLists.ToList();
+                
+                                                          
             }
             if(checklist.ListKindId == listType)
             {
