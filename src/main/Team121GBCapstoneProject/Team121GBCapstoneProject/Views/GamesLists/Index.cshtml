@@ -1,18 +1,111 @@
-@model Team121GBCapstoneProject.Models.GameInfo;
+@*@model Team121GBCapstoneProject.Models.GameInfo;*@
 
+@model Team121GBCapstoneProject.ViewModels.UserListsViewModel;
+@*@using Microsoft.AspNetCore.Identity
+@using Team121GBCapstoneProject.Areas.Identity.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager*@
 @{
     ViewData["Title"] = "Games Lists";
 }
 
 
-<div id="carouselExampleControls" class="carousel slide text-center" style="background-color: #961717" data-bs-ride="carousel">
+@*@if (SignInManager.IsSignedIn(User))
+{
+*@    
+<div style="float: right">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddListForm">Add List</button>
+</div>
+@*<button id="@itemButtonId" type="button" class="itemButton" data-bs-toggle="modal"
+        data-bs-target="#jobForm">
+    Add job!
+</button>*@
+
+<div class="modal fade" id="AddListForm" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jobFormModalLabel">Add List!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <form>
+                        <div>
+                            <label for="listType">List Type</label>
+                            <br />
+                            <select>
+                                <option value="1">Currently Playing</option>
+                                <option value="2">Complete</option>
+                                <option value="3">Want to Play</option>
+                            </select>
+                        </div>
+                        <input type="hidden" value="@User.Identity"/>
+                        @*<input type="hidden" value="@Model.LoggedInUser.Id"/>*@
+                        <input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary" data-bs-dismiss="modal" value="Add List" />
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                @*<button id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div id="userLists">
+    @*@foreach(var list in Model.UsersLists)
+    {*@
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    <h1>List Name</h1>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <h5>Game info</h5>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    @*}*@
+</div>   
+}
+@*<select id="listType" asp-for="selectListItems" asp-items="@Model.selectListItems"></select>
+                            @*<input id="listType" type="d"/>
+
+                        @*<div>
+                            <label for="jobName">Job Name</label>
+                            <br />
+                            <input id="jobName" type="text" required />
+                        </div>
+                        <div>
+                            <label for="startDate">Start Date</label>
+                            <br />
+                            <input id="startDate" type="date" required />
+                        </div>
+                        <div>
+                            <label for="interval">Frequency in number of Days</label>
+                            <br />
+                            <input id="interval" type="number" required />
+                        </div>
+                        <input id="itemIdInput" type="hidden" asp-for="User.Items" value="" />
+                        <input id="itemInput" type="hidden" asp-for="User.Items" value="" />*@
+
+@*<div id="carouselExampleControls" class="carousel slide text-center" style="background-color: #961717" data-bs-ride="carousel">
   <div class="carousel-inner">
-        
+
             @{int i = 1;}
 
             @foreach (var game in Model.games)
             {
-                
+
                 <div class="carousel-item @(i == 1? "active": "")">
                     <img src="@game.CoverPicture" style="width: 200px; height: 200px; margin-bottom: 175px; margin-top: 30px;">
                     <div class="carousel-caption d-none d-md-block">
@@ -20,10 +113,10 @@
                         <p style="color: black; font-weight: bold;">@game.Description</p>
                     </div>
                 </div>
-            
+
             }
-    
-        
+
+
   </div>
 
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -34,7 +127,7 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-</div>
+</div>*@
 
 
 

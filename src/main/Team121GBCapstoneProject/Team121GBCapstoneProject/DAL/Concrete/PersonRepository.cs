@@ -37,4 +37,9 @@ public class PersonRepository : Repository<Person>, IPersonRepository
             }
         }
     }
+    public bool AddList(Person user, int listType)
+    {
+        Console.WriteLine(user);
+        return false;
+    }
 }

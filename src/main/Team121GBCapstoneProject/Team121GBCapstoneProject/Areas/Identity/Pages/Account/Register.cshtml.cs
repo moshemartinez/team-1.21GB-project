@@ -34,8 +34,6 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IReCaptchaService _reCaptchaService;
-        //  Todo: Figure out if I need line 37
-        // private readonly GPDbContext _dbContext;
         private readonly IPersonRepository _personRepository;
 
         public RegisterModel(
