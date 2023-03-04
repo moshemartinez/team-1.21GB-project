@@ -1,8 +1,4 @@
-@*@model Team121GBCapstoneProject.Models.GameInfo;*@
-
 @model Team121GBCapstoneProject.ViewModels.UserListsViewModel;
-
-@* @model Team121GBCapstoneProject.Models.Person; *@
 
 @{
     ViewData["Title"] = "Games Lists";
@@ -79,44 +75,35 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
 </div>
 <br />
 <div id="userLists">
-    <!--Need to add 2d list structure to model or some way to tell lists appart easily.-->
     @if (Model.UsersLists.Count != 0)
     {
-        @* @int count = @Model.UsersLists.Count(); *@
-        @* @foreach (List<PersonGameList> list in @Model.UsersLists)  *@
         @for (int i = 0; i < @Model.Count; ++i)
         {
-            @* @foreach (var listName in @Model.ListNames) *@
-            @* { *@
-                <h1>@Model.ListNames[i]</h1>
-                <table class="table">
-                    <thead class="thead-dark">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            <h3>@Model.ListNames[i]</h3>
+                        </th>
+                        <th>
+                            <button class="btn btn-danger" id="deleteList@list.ListName.NameOfList" data-bs-toggle="modal"
+                                data-bs-target="#deleteListFormModal">Delete List</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var game in @Model.UsersLists[i])
+                    {
                         <tr>
-                            <th>
-                                <h3>@Model.ListNames[i]</h3>
-                            </th>
-                            <th>
-                                <button class="btn btn-danger" id="deleteList@list.ListName.NameOfList" data-bs-toggle="modal"
-                                    data-bs-target="#deleteListFormModal">Delete List</button>
-                            </th>
+                            <td>@game.Game.Title;</td>
+                            <td>@game.Game.Description</td>
+                            <td>@game.Game.YearPublished</td>
+                            <td>@game.Game.EsrbratingId</td>
+                            <td>@game.Game.AverageRating</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var game in @Model.UsersLists[i])
-                        @* @foreach (var game in list) *@
-                        {
-                            @* @game.ListName.NameOfList *@
-                            <tr>
-                                <td>@game.Game.Title;</td>
-                                <td>@game.Game.Description</td>
-                                <td>@game.Game.YearPublished</td>
-                                <td>@game.Game.EsrbratingId</td>
-                                <td>@game.Game.AverageRating</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            @* } *@
+                    }
+                </tbody>
+            </table>
         }
     }
 </div>
@@ -134,8 +121,13 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                     <form id="deleteListForm" method="post">
                         <div>
                             <h3 class="text-danger">Are you sure you want to permanently delete this list? </h3>
+                            <h5>Please type the name of the list you would like to delete below to Confirm.</h5>
+                            <br>
+                            <input id="deleteListName" type="text" name="listName" value="" maxLength="64">
                         </div>
+
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
+                        
                         @* <input type="hidden" name="listId" value="@Model.UsersLists" /> *@
                         <input id="formSubmit" type="submit" asp-action="DeleteList" class="btn btn-danger"
                             data-bs-dismiss="modal" value="Delete List" />
