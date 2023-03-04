@@ -7,6 +7,6 @@ public interface IPersonGameListRepository : IRepository<PersonGameList>
     public bool CheckIfUserHasCustomListWithSameName (Person user, string listName);
     public bool CheckIfUserHasDefaultListAlready (Person user, int listType);
     public bool AddDefaultList(Person user, int listType, string listName);
-    public bool AddCustomList(Person user, int listType, string listName);
+    public void AddCustomList(Person user, GamePlayListType listType, ListName listName);
 
 }

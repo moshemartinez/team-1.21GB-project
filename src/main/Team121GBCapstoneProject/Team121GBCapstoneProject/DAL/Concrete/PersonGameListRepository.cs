@@ -1,6 +1,7 @@
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.DAL.Abstract;
 using System.Linq.Expressions;
+using System.Diagnostics;
 
 namespace Team121GBCapstoneProject.DAL.Concrete;
 
@@ -53,23 +54,25 @@ public class PersonGameListRepository : Repository<PersonGameList>, IPersonGameL
         return false;
     }
 
-    public bool AddCustomList(Person user, int listType, string listName)
+    public void AddCustomList(Person user, GamePlayListType listType, ListName listName)
     {
-        bool status = false;
-        PersonGameList newList = new PersonGameList();
-        ListName listNameObj = new ListName();
-        GamePlayListType listKind = new GamePlayListType();
-
-        listKind.Id = listType;
-        listKind.ListKind = ""; // ! How do I put the list kind here? or do I need to...
-        listNameObj.NameOfList = listName;
-
-        newList.ListName = listNameObj;
-        newList.Person = user;
-        newList.ListKind = listKind;
-
-        //user.PersonGameLists.Add
-        //AddOrUpdate();
-        return status;
+        PersonGameList newList = new PersonGameList
+        {
+            Person = user,
+            PersonId = user.Id,
+            ListKind = listType,
+            ListKindId = listType.Id,
+            ListName = listName,
+            ListNameId = listName.Id
+        };
+        try
+        {
+            AddOrUpdate(newList);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+            throw e;
+        }
     }
 }
