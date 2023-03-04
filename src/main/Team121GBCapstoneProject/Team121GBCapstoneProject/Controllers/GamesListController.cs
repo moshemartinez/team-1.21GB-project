@@ -6,14 +6,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using System.Diagnostics;
+using Team121GBCapstoneProject.DAL.Concrete;
 
 namespace Team121GBCapstoneProjects.Controllers;
 
 public class GamesListsController : Controller
 {
-    /*
-        private IREpository<TItem> _item
-    */
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<GamesListsController> _logger;
     private IPersonRepository _personRepository;
@@ -39,12 +37,22 @@ public class GamesListsController : Controller
     [Authorize]
     public IActionResult Index()
     {
-        var id = _userManager.GetUserId(User);
-        var temp = _personRepository.GetAll().Where(i => i.AuthorizationId == id);
-        UserListsViewModel uservm = new UserListsViewModel();
-        uservm.LoggedInUser = temp.First();
+        var loggedInUser = _personRepository.GetAll()
+                                               .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
+                                               .First();
+        //var temp = _personGameListRepository.GetAll()
+        //                                    .Where(lists => lists.PersonId == userVM.LoggedInUser.Id &&
+        //                                    lists.GameId != null)
+        //                                    .ToList();
 
-        return View("Index", uservm);
+        var usersLists = _personGameListRepository.GetAll()
+                                                     .Where(lists => lists.PersonId == loggedInUser.Id &&
+                                                      lists.GameId != null)
+                                                     .ToList();
+
+        UserListsViewModel userVM = new UserListsViewModel(loggedInUser, usersLists);
+        
+        return View("Index", userVM);
     }
 
     [HttpPost]

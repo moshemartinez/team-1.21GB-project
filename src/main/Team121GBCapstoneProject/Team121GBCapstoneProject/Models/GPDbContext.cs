@@ -26,7 +26,15 @@ public partial class GPDbContext : DbContext
     public virtual DbSet<PersonGameList> PersonGameLists { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=GPConnection");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Name=GPConnection");
+        }
+        optionsBuilder.UseLazyLoadingProxies();
+
+    }
+    // => optionsBuilder.UseSqlServer("Name=GPConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
