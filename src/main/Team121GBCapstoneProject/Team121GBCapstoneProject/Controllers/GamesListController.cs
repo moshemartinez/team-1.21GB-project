@@ -35,14 +35,19 @@ public class GamesListsController : Controller
     }
 
     [Authorize]
+    [HttpGet]
     public IActionResult Index()
     {
         var loggedInUser = _personRepository.GetAll()
                                                .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
                                                .First();
+        // var usersLists = _personGameListRepository.GetAll()
+        //                                          .Where(lists => lists.PersonId == loggedInUser.Id &&
+        //                                          lists.GameId != null)
+        //                                          .ToList();
+        
         var usersLists = _personGameListRepository.GetAll()
-                                                 .Where(lists => lists.PersonId == loggedInUser.Id &&
-                                                 lists.GameId != null)
+                                                 .Where(lists => lists.PersonId == loggedInUser.Id)
                                                  .ToList();
         UserListsViewModel userVM = new UserListsViewModel(loggedInUser, usersLists);
         return View("Index", userVM);
