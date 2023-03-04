@@ -52,8 +52,11 @@ public class GamesListsController : Controller
     public IActionResult AddList(int userId, int listType, string listName)
     {
         Person person = _personRepository.FindById(userId);
-        UserListsViewModel userVM = new UserListsViewModel();
-        userVM.LoggedInUser = person;
+        List<PersonGameList> gameLists = _personGameListRepository.GetAll()
+                                                                    .Where(l => l.PersonId == userId
+                                                                    && l.Game != null)
+                                                                    .ToList();
+        UserListsViewModel userVM = new UserListsViewModel(person, gameLists);
 
         if (person == null)
         {
@@ -97,6 +100,15 @@ public class GamesListsController : Controller
                     ListName listNameObj = new ListName { NameOfList = listName };
                     listNameObj = _listNameRepository.AddOrUpdate(listNameObj);
                     _personGameListRepository.AddCustomList(person, gamePlayListType, listNameObj);
+                    person = _personRepository.FindById(userId);
+                    gameLists = _personGameListRepository.GetAll()
+                                                        .Where(l => l.PersonId == userId)
+                                                        .ToList();
+                                                        //  && l.Game != null)
+                                                        //.ToList();
+                    userVM = new UserListsViewModel(person, gameLists);
+                    ViewBag.Message = "Success!";
+                    return View("Index", userVM);
                 }
                 catch (Exception e)
                 {
@@ -106,8 +118,6 @@ public class GamesListsController : Controller
                 }
             }
         }
-
-        userVM.LoggedInUser = person;
         ViewBag.Message = "Success!";
         return View("Index", userVM);
     }
@@ -134,7 +144,7 @@ public class GamesListsController : Controller
         catch (Exception e)
         {
             Debug.WriteLine(e);
-            ViewBag.ErrorMessage =  $"You do not have a list called {listName}";
+            ViewBag.ErrorMessage = $"You do not have a list called {listName}";
             return View("Index", userVM);
         }
         // var list = _listNameRepository.GetAll()

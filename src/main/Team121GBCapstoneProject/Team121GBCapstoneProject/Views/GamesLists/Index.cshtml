@@ -77,13 +77,15 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
 <div id="userLists">
     @if (Model.UsersLists.Count != 0)
     {
-        @for (int i = 0; i < @Model.Count; ++i)
+        @* @for (int i = 0; i < @Model.Count; ++i) *@
+        @foreach(var list in @Model.UsersLists)
         {
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            <h3>@Model.ListNames[i]</h3>
+                            @list.First().ListName.NameOfList
+                            @* <h3>@Model.ListNames[i]</h3> *@
                         </th>
                         <th>
                             <button class="btn btn-danger" id="deleteList@list.ListName.NameOfList" data-bs-toggle="modal"
@@ -92,15 +94,19 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var game in @Model.UsersLists[i])
+                    @* @foreach (var game in @Model.UsersLists[i]) *@
+                    @foreach(var game in list)
                     {
-                        <tr>
-                            <td>@game.Game.Title;</td>
-                            <td>@game.Game.Description</td>
-                            <td>@game.Game.YearPublished</td>
-                            <td>@game.Game.EsrbratingId</td>
-                            <td>@game.Game.AverageRating</td>
-                        </tr>
+                        if (Model.UsersLists.Count != 0 && game.Game != null)
+                        {
+                            <tr>
+                                <td>@game.Game.Title;</td>
+                                <td>@game.Game.Description</td>
+                                <td>@game.Game.YearPublished</td>
+                                <td>@game.Game.EsrbratingId</td>
+                                <td>@game.Game.AverageRating</td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -127,7 +133,7 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                         </div>
 
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
-                        
+
                         @* <input type="hidden" name="listId" value="@Model.UsersLists" /> *@
                         <input id="formSubmit" type="submit" asp-action="DeleteList" class="btn btn-danger"
                             data-bs-dismiss="modal" value="Delete List" />
