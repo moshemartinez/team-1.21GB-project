@@ -40,18 +40,11 @@ public class GamesListsController : Controller
         var loggedInUser = _personRepository.GetAll()
                                                .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
                                                .First();
-        //var temp = _personGameListRepository.GetAll()
-        //                                    .Where(lists => lists.PersonId == userVM.LoggedInUser.Id &&
-        //                                    lists.GameId != null)
-        //                                    .ToList();
-
-        var usersLists = _personGameListRepository.GetAll()
-                                                     .Where(lists => lists.PersonId == loggedInUser.Id &&
-                                                      lists.GameId != null)
-                                                     .ToList();
-
+       var usersLists = _personGameListRepository.GetAll()
+                                                .Where(lists => lists.PersonId == loggedInUser.Id &&
+                                                lists.GameId != null)
+                                                .ToList();
         UserListsViewModel userVM = new UserListsViewModel(loggedInUser, usersLists);
-        
         return View("Index", userVM);
     }
 
