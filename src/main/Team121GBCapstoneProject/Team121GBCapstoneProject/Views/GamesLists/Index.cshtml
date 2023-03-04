@@ -80,40 +80,49 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
 <br />
 <div id="userLists">
     <!--Need to add 2d list structure to model or some way to tell lists appart easily.-->
-    @* @if (Model.UsersLists.Count != 0)
+    @if (Model.UsersLists.Count != 0)
     {
-        <h1>Print out the lists</h1>
-        @foreach (var list in @Model.UsersLists)
+        @* @int count = @Model.UsersLists.Count(); *@
+        @* @foreach (List<PersonGameList> list in @Model.UsersLists)  *@
+        @for (int i = 0; i < @Model.Count; ++i)
         {
-
-
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="row">@list.ListName.NameOfList</th>
-                        <th>
-                            <button class="btn btn-danger" id="deleteList@list.ListName.NameOfList" data-bs-toggle="modal" data-bs-target="#deleteListFormModal">Delete List</button>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var game in @Model.UsersLists)
-                    {
+            @* @foreach (var listName in @Model.ListNames) *@
+            @* { *@
+                <h1>@Model.ListNames[i]</h1>
+                <table class="table">
+                    <thead class="thead-dark">
                         <tr>
-                            <td>@game.Game.Title;</td>
-                            <td>@game.Game.Description</td>
-                            <td>@game.Game.YearPublished</td>
-                            <td>@game.Game.EsrbratingId</td>
-                            <td>@game.Game.AverageRating</td>
+                            <th>
+                                <h3>@Model.ListNames[i]</h3>
+                            </th>
+                            <th>
+                                <button class="btn btn-danger" id="deleteList@list.ListName.NameOfList" data-bs-toggle="modal"
+                                    data-bs-target="#deleteListFormModal">Delete List</button>
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var game in @Model.UsersLists[i])
+                        @* @foreach (var game in list) *@
+                        {
+                            @* @game.ListName.NameOfList *@
+                            <tr>
+                                <td>@game.Game.Title;</td>
+                                <td>@game.Game.Description</td>
+                                <td>@game.Game.YearPublished</td>
+                                <td>@game.Game.EsrbratingId</td>
+                                <td>@game.Game.AverageRating</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            @* } *@
         }
-    } *@
+    }
 </div>
 
-<div class="modal fade" id="deleteListFormModal" tabindex="-1" aria-labelledby="deleteListFormModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteListFormModal" tabindex="-1" aria-labelledby="deleteListFormModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
