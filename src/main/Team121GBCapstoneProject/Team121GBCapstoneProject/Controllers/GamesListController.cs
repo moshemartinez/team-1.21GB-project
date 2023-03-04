@@ -40,10 +40,10 @@ public class GamesListsController : Controller
         var loggedInUser = _personRepository.GetAll()
                                                .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
                                                .First();
-       var usersLists = _personGameListRepository.GetAll()
-                                                .Where(lists => lists.PersonId == loggedInUser.Id &&
-                                                lists.GameId != null)
-                                                .ToList();
+        var usersLists = _personGameListRepository.GetAll()
+                                                 .Where(lists => lists.PersonId == loggedInUser.Id &&
+                                                 lists.GameId != null)
+                                                 .ToList();
         UserListsViewModel userVM = new UserListsViewModel(loggedInUser, usersLists);
         return View("Index", userVM);
     }
@@ -107,10 +107,88 @@ public class GamesListsController : Controller
             }
         }
 
-        //_personRepository.AddList(person, listType, listName);
-
         userVM.LoggedInUser = person;
         ViewBag.Message = "Success!";
+        return View("Index", userVM);
+    }
+
+    [HttpPost]
+    public IActionResult DeleteList(int userId, string listName)
+    {
+        var loggedInUser = _personRepository.GetAll()
+                                             .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
+                                             .First();
+        var usersLists = _personGameListRepository.GetAll()
+                                                 .Where(lists => lists.PersonId == loggedInUser.Id &&
+                                                 lists.GameId != null)
+                                                 .ToList();
+        UserListsViewModel userVM = new UserListsViewModel(loggedInUser, usersLists);
+        // * check if the list exists
+        try
+        {
+            PersonGameList list = _personGameListRepository.GetAll()
+                                                            .Where(l => l.PersonId == userId &&
+                                                            l.ListName.NameOfList == listName)
+                                                            .First();
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+            ViewBag.ErrorMessage =  $"You do not have a list called {listName}";
+            return View("Index", userVM);
+        }
+        // var list = _listNameRepository.GetAll()
+        //                                 .Where(l => l.NameOfList == listName)
+        //                                 .First();
+
+        // var list = _personGameListRepository.GetAll()
+        //                                     .Where(l => l.ListKindId == 4 &&
+        //                                     l.PersonId == userId &&
+        //                                     l.ListName.NameOfList == listName)
+        //                                     .First();
+        // *Prevent deletion of a default list
+        try
+        {
+            var list = _personGameListRepository.GetAll()
+                                                .Where(l => l.PersonId == userId &&
+                                                l.ListName.NameOfList == listName)
+                                                .First();
+            if (list.ListKindId != 4)
+            {
+                ViewBag.ErrorMessage = "You may not delete a default list.";
+                return View("Index", userVM);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+            ViewBag.ErrorMessage = "Something went wrong. Please try again.";
+            return View("Index", userVM);
+        }
+        // var list = _personGameListRepository.GetAll()
+        //                                     .Where(l => l.PersonId == userId &&
+        //                                     l.ListName.NameOfList == listName)
+        //                                     .First();
+        // if (list.ListKindId != 4)
+        // {
+        //     ViewBag.ErrorMessage = "You may not delete a default list.";
+        //     return View("Index", userVM);
+        // }
+        // .Select(l => l);
+        //if( defaultListCheck.PersonGameLists.)
+
+
+        loggedInUser = _personRepository.GetAll()
+                                        .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
+                                        .First();
+        usersLists = _personGameListRepository.GetAll()
+                                                .Where(lists => lists.PersonId == loggedInUser.Id &&
+                                                lists.GameId != null)
+                                                .ToList();
+        userVM = new UserListsViewModel(loggedInUser, usersLists);
+
+
+        ViewBag.Message = $"Deletion of {{insert list name}} successful!";
         return View("Index", userVM);
     }
 }
