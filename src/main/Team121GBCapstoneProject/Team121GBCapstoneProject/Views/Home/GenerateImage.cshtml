@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Dalle Page";
 }
+
 <div class="row">
     <form id="promptForm">
         <div class="form-floating mb-3">
@@ -15,20 +16,13 @@
     </form>
 </div>
 
-@if (@Model != null)
-{
+
     <div class="row">
         <div class="col">
-            <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="@Model.Images[0]">
-        </div>
-        <div class="col">
-            <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="@Model.Images[1]">
-        </div>
-        <div class="col">
-            <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="@Model.Images[2]">
+            <div id="imageHere"></div>
+            <img id="profilePicture" style="width: 350px; height: 350px; object-fit: cover" src="@Model.ImageURL">
         </div>
     </div>
-}
 
 
 @section Scripts

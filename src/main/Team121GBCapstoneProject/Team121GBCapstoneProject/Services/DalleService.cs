@@ -14,22 +14,22 @@ class DalleService : IDalleService
         _openAiService = openAiService;
     }
 
-    public async Task<List<string>> GetImages(string prompt)
+    public async Task<string> GetImages(string prompt)
     {
         try
         {
             var imageResult = await _openAiService.Image.CreateImage(new ImageCreateRequest
             {
                 Prompt = prompt,
-                N = 3,
+                N = 1,
                 Size = StaticValues.ImageStatics.Size.Size256,
                 ResponseFormat = StaticValues.ImageStatics.ResponseFormat.Url
             });
 
-            List<string> images = new List<string>();
+            string finalImage = null;
             foreach (var image in imageResult.Results)
             {
-                images.Add(image.Url);
+                finalImage = image.Url;
             }
 
             if (imageResult.Error == null)
@@ -37,7 +37,7 @@ class DalleService : IDalleService
                 throw new Exception("Error processing result");
             }
 
-            return images;
+            return finalImage;
         }
         catch (Exception e)
         {

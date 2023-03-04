@@ -2,6 +2,6 @@
 {
     public interface IDalleService
     {
-        public Task<List<string>> GetImages(string prompt);
+        public Task<string> GetImages(string prompt);
     }
 }

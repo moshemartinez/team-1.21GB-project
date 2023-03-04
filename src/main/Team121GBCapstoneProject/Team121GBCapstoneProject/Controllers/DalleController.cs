@@ -27,7 +27,7 @@ namespace Team121GBCapstoneProject.Controllers
             if (prompt != null)
             {
                 dalleVM.Prompt = prompt;
-                dalleVM.Images = _dalleService.GetImages(prompt).Result;
+                dalleVM.ImageURL = _dalleService.GetImages(prompt).Result;
             }
             else
             {

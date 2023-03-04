@@ -4,6 +4,6 @@
     {
         public string Prompt { get; set; }
 
-        public List<string> Images { get; set; }
+        public string ImageURL { get; set; }
     }
 }
