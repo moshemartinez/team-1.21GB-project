@@ -37,9 +37,55 @@ public class PersonRepository : Repository<Person>, IPersonRepository
             }
         }
     }
-    public bool AddList(Person user, int listType, string listName)
+    public bool CheckIfUserHasCustomListWithSameName(Person user, string listName)
     {
+        bool check = false;
+        List<PersonGameList> listNames = user.PersonGameLists.ToList();
 
+        // ! check if a list of the same name exists for user.
+        foreach (var list in listNames)
+        {
+            if (list.ListName.NameOfList == listName)
+            {
+                check = false;
+                return check;
+            }
+            else
+            {
+                check = true;
+            }
+        }
+        return check;
+    }
+    public bool CheckIfUserHasDefaultListAlready (Person user, int listType)
+    {
+        bool check = false;
+        List<PersonGameList> listTypes = user.PersonGameLists.ToList();
+        foreach(var list in listTypes)
+        {
+            if (list.ListKindId == listType) return check;
+        }
+        check = true;
+        return check;
+    }
+    
+    public bool AddDefaultList(Person user, int listType, string listName)
+    {
+        PersonGameList newList = new PersonGameList();
+        ListName listNameObj = new ListName();
+        newList.ListKindId = listType;
+        if (listType != 4)
+        {
+
+        }
+        listNameObj.NameOfList = listName;
+
+        //user.PersonGameLists.Add
         return false;
+    }
+
+    public bool AddCustomList(Person user, int listType, string listName)
+    {
+        throw new NotImplementedException();
     }
 }

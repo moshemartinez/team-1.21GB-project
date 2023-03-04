@@ -10,6 +10,28 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddListForm">Add List</button>
 </div>
 
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div id="errorMsg">
+        <div class="card-body text-danger">
+            <span>
+                <h2 style="display: inline-block">@ViewBag.ErrorMessage</h2>
+            </span>
+        </div>
+    </div>
+}
+else if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div id="successMsg">
+        <div class="card-body text-success">
+            <span>
+                <h2 style="display: inline-block">@ViewBag.Message</h2>
+            </span>
+        </div>
+    </div>
+}
+@* @Html.DropDownListFor(m => m.LoggedInUser.PersonGameLists, Model.SelectListItems, "Select a category", new { @class = "form-control" }) *@
+
 
 <div class="modal fade" id="AddListForm" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -20,7 +42,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <form>
+                    <form id="addListForm" method="post">
                         <div>
                             <label for="listType">List Type</label>
                             <br />
@@ -36,8 +58,11 @@
                             <br />
                             <input id="customListName" name="customListName" type="text" value="" maxlength="64" />
                         </div>
-                        <input type="hidden" name="userId" value="@Model.LoggedInUser.Id"/>
-                        <input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary" data-bs-dismiss="modal" value="Add List" />
+                        <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
+
+
+                        <input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary"
+                            data-bs-dismiss="modal" value="Add List" />
 
                     </form>
                 </div>
@@ -69,4 +94,4 @@
         </tbody>
     </table>
     @*}*@
-</div>   
+</div>

@@ -14,6 +14,8 @@ public class GamesListsController : Controller
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<GamesListsController> _logger;
     private IPersonRepository _personRepository;
+    // private readonly List<(int, string)> listTypes = new List<(int id, string name)> {(id: 1, name: "Currently Playing"), (id: 2, name: "Completed"), (id: 3, name: "Want to Play")};
+    private readonly List<string> listTypes = new List<string> {"Currently Playing", "Completed", "Want to Play"};
     public GamesListsController(UserManager<ApplicationUser> userManager, ILogger<GamesListsController> logger, IPersonRepository personRepository)
     {
         _userManager = userManager;
@@ -29,46 +31,58 @@ public class GamesListsController : Controller
         UserListsViewModel uservm = new UserListsViewModel();
         uservm.LoggedInUser = temp.First();
         //uservm.LoggedInUser = _personRepository.FindById(userId);
-        
+
 
         return View("Index", uservm);
     }
 
-    public IActionResult AddList(int userId, int listType, string customListName)
+    [HttpPost]
+    public IActionResult AddList(int userId, int listType, string listName)
     {
-        // call the method in the personrepository to add the list
-        var person = _personRepository.FindById(userId);
+        Person person = _personRepository.FindById(userId);
+        UserListsViewModel userVM = new UserListsViewModel();
+        userVM.LoggedInUser = person;
+
         if (person == null)
         {
             return View("Error");
         }
-        var userLists = person.PersonGameLists.ToList();//.Contains(listType);
-        
 
-        foreach(var checklist in userLists)
+        //! listType == 4 means the list is a custom list.
+        if (listType != 4 && listName != null)
         {
-            // * If it is a custom list 
-            // * check to see if they have one of the same name 
-            // * already and don't let them have duplicates.
-            if(checklist.ListKindId == 4)
-            {
-                //List<string> listNames = person.PersonGameLists.ToList();
-                var listNames = person.PersonGameLists.ToList();
-                
-                                                          
+            ViewBag.ErrorMessage = $"A non custom list may not have a custom name!";
+            return View("Index", userVM);
+        }
+
+        //check if the user already has a default list
+        if (listType != 4)
+        {
+            bool check = _personRepository.CheckIfUserHasDefaultListAlready(person, listType);
+            if (!check)
+            {   // * listType- 1 because indexes are base zero
+                ViewBag.ErrorMessage = $"You already have a {listTypes[listType-1]} List!";
+                return View("Index", userVM);
             }
-            if(checklist.ListKindId == listType)
+            // Set the default list name.
+            listName = listTypes[listType-1];
+             _personRepository.AddDefaultList(person, listType, listName);
+        }
+
+        if (listType == 4)
+        {
+            var check = _personRepository.CheckIfUserHasCustomListWithSameName(person, listName);
+            if (check)
             {
-                Debug.WriteLine("User already has a list of this type");
-                return View("Index");
+                ViewBag.ErrorMessage = $"A list with the name {listName} already exists, try a different one!";
+                return View("Index", userVM);
             }
         }
 
-        _personRepository.AddList(person, listType);
-        
-        var userVM = new UserListsViewModel();
-        userVM.LoggedInUser = person;
+        //_personRepository.AddList(person, listType, listName);
 
+        userVM.LoggedInUser = person;
+        ViewBag.Message = "Success!";
         return View("Index", userVM);
     }
 }
