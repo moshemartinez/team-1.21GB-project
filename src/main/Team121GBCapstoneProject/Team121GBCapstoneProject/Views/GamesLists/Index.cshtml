@@ -56,7 +56,7 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                         <div>
                             <label for="customListName">Custom List name</label>
                             <br />
-                            <input id="customListName" name="customListName" type="text" value="" maxlength="64" />
+                            <input id="customListName" name="listName" type="text" value="" maxlength="64" />
                         </div>
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
 
@@ -75,6 +75,10 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
 </div>
 <br />
 <div id="userLists">
+    @foreach(var list in @Model.LoggedInUser.PersonGameLists)
+    {
+        <h1>@list.ListName.NameOfList</h1>
+    }
     @*@foreach(var list in Model.UsersLists)
     {*@
     <table>
