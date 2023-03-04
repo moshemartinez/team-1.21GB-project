@@ -11,20 +11,29 @@ namespace Team121GBCapstoneProjects.Controllers;
 
 public class GamesListsController : Controller
 {
+    /*
+        private IREpository<TItem> _item
+    */
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<GamesListsController> _logger;
     private IPersonRepository _personRepository;
     private IPersonGameListRepository _personGameListRepository;
-    private readonly List<string> listTypes = new List<string> {"Currently Playing", "Completed", "Want to Play"};
+    private IRepository<ListName> _listNameRepository;
+    private IRepository<GamePlayListType> _gamePlayListType;
+    private readonly List<string> listTypes = new List<string> { "Currently Playing", "Completed", "Want to Play" };
     public GamesListsController(UserManager<ApplicationUser> userManager,
                                  ILogger<GamesListsController> logger,
                                  IPersonRepository personRepository,
-                                 IPersonGameListRepository personGameListRepository)
+                                 IPersonGameListRepository personGameListRepository,
+                                 IRepository<ListName> listNameRepository,
+                                 IRepository<GamePlayListType> gamePlayListType)
     {
         _userManager = userManager;
         _logger = logger;
         _personRepository = personRepository;
         _personGameListRepository = personGameListRepository;
+        _listNameRepository = listNameRepository;
+        _gamePlayListType = gamePlayListType;
     }
 
     [Authorize]
@@ -34,8 +43,6 @@ public class GamesListsController : Controller
         var temp = _personRepository.GetAll().Where(i => i.AuthorizationId == id);
         UserListsViewModel uservm = new UserListsViewModel();
         uservm.LoggedInUser = temp.First();
-        //uservm.LoggedInUser = _personRepository.FindById(userId);
-
 
         return View("Index", uservm);
     }
@@ -65,12 +72,12 @@ public class GamesListsController : Controller
             bool check = _personGameListRepository.CheckIfUserHasDefaultListAlready(person, listType);
             if (!check)
             {   // * listType- 1 because indexes are base zero
-                ViewBag.ErrorMessage = $"You already have a {listTypes[listType-1]} List!";
+                ViewBag.ErrorMessage = $"You already have a {listTypes[listType - 1]} List!";
                 return View("Index", userVM);
             }
             // Set the default list name.
-            listName = listTypes[listType-1];
-             _personGameListRepository.AddDefaultList(person, listType, listName);
+            listName = listTypes[listType - 1];
+            _personGameListRepository.AddDefaultList(person, listType, listName);
         }
 
         if (listType == 4)
@@ -83,7 +90,19 @@ public class GamesListsController : Controller
             }
             else
             {
-                _personGameListRepository.AddCustomList(person, listType, listName);
+                try
+                {
+                    GamePlayListType gamePlayListType = _gamePlayListType.FindById(listType);
+                    ListName listNameObj = new ListName { NameOfList = listName };
+                    listNameObj = _listNameRepository.AddOrUpdate(listNameObj);
+                    _personGameListRepository.AddCustomList(person, gamePlayListType, listNameObj);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                    ViewBag.ErrorMessage = $"Something went wrong, please try again.";
+                    return View("Index", userVM);
+                }
             }
         }
 
