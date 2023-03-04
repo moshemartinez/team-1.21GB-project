@@ -25,7 +25,7 @@ CREATE TABLE [GamePlayListType] (
 
 CREATE TABLE [ListName] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [ListName] NVARCHAR(64)
+    [NameOfList] NVARCHAR(64) 
 )
 
 CREATE TABLE [PersonGameList] (

@@ -110,7 +110,14 @@ INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[Cover
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture]) VALUES ('Kirby''s Return to Dream Land','When a mysterious traveler crash-landed on Planet Popstar, Kirby and his friends rushed to his aid, and an amazing adventure began!', 2011, 9.2, 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Kirbys_return_to_dreamland_boxart.jpg/220px-Kirbys_return_to_dreamland_boxart.jpg');
 
 --seed List Types
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Currently Play');
+INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Currently Playing');
 INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Completed');
 INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Want to Play');
 INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Custom');
+
+--seed default List Names
+INSERT INTO [ListName] ([NameOfList]) VALUES ('Currently Playing');
+INSERT INTO [ListName] ([NameOfList]) VALUES ('Completed');
+INSERT INTO [ListName] ([NameOfList]) VALUES ('Want to Play');
+
+
