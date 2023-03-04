@@ -14,13 +14,17 @@ public class GamesListsController : Controller
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<GamesListsController> _logger;
     private IPersonRepository _personRepository;
-    // private readonly List<(int, string)> listTypes = new List<(int id, string name)> {(id: 1, name: "Currently Playing"), (id: 2, name: "Completed"), (id: 3, name: "Want to Play")};
+    private IPersonGameListRepository _personGameListRepository;
     private readonly List<string> listTypes = new List<string> {"Currently Playing", "Completed", "Want to Play"};
-    public GamesListsController(UserManager<ApplicationUser> userManager, ILogger<GamesListsController> logger, IPersonRepository personRepository)
+    public GamesListsController(UserManager<ApplicationUser> userManager,
+                                 ILogger<GamesListsController> logger,
+                                 IPersonRepository personRepository,
+                                 IPersonGameListRepository personGameListRepository)
     {
         _userManager = userManager;
         _logger = logger;
         _personRepository = personRepository;
+        _personGameListRepository = personGameListRepository;
     }
 
     [Authorize]
@@ -58,7 +62,7 @@ public class GamesListsController : Controller
         //check if the user already has a default list
         if (listType != 4)
         {
-            bool check = _personRepository.CheckIfUserHasDefaultListAlready(person, listType);
+            bool check = _personGameListRepository.CheckIfUserHasDefaultListAlready(person, listType);
             if (!check)
             {   // * listType- 1 because indexes are base zero
                 ViewBag.ErrorMessage = $"You already have a {listTypes[listType-1]} List!";
@@ -66,16 +70,20 @@ public class GamesListsController : Controller
             }
             // Set the default list name.
             listName = listTypes[listType-1];
-             _personRepository.AddDefaultList(person, listType, listName);
+             _personGameListRepository.AddDefaultList(person, listType, listName);
         }
 
         if (listType == 4)
         {
-            var check = _personRepository.CheckIfUserHasCustomListWithSameName(person, listName);
+            var check = _personGameListRepository.CheckIfUserHasCustomListWithSameName(person, listName);
             if (check)
             {
                 ViewBag.ErrorMessage = $"A list with the name {listName} already exists, try a different one!";
                 return View("Index", userVM);
+            }
+            else
+            {
+                _personGameListRepository.AddCustomList(person, listType, listName);
             }
         }
 

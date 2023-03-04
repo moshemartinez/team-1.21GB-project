@@ -40,6 +40,7 @@ builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseSqlServer(GPconnectionString));
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonGameListRepository, PersonGameListRepository>();
 
 
 var app = builder.Build();
