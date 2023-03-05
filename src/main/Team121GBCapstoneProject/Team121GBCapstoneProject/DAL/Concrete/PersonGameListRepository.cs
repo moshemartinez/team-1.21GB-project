@@ -75,8 +75,6 @@ public class PersonGameListRepository : Repository<PersonGameList>, IPersonGameL
         }
     }
 
-    //public void DeleteACustomList(Person user, string listName)
-    // public void DeleteACustomList(Person user, List<int> idList)
     public void DeleteACustomList(List<PersonGameList> listToDelete)
     {
         foreach (var listItem in listToDelete)
