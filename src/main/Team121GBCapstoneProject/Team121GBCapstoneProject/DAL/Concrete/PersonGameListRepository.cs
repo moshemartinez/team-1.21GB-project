@@ -39,18 +39,27 @@ public class PersonGameListRepository : Repository<PersonGameList>, IPersonGameL
         return check;
     }
 
-    public bool AddDefaultList(Person user, int listType, string listName)
+    public void AddDefaultList(Person user, GamePlayListType listType, ListName listName)
     {
-        PersonGameList newList = new PersonGameList();
-        ListName listNameObj = new ListName();
-        newList.ListKindId = listType;
-        if (listType != 4)
+        PersonGameList newList = new PersonGameList
         {
+            Person = user,
+            PersonId = user.Id,
+            ListKind = listType,
+            ListKindId = listType.Id,
+            ListName = listName,
+            ListNameId = listName.Id
+        };
+        ListName listNameObj = new ListName();
+        AddOrUpdate(newList);
+        // newList.ListKindId = listType;
+        // if (listType != 4)
+        // {
 
-        }
-        listNameObj.NameOfList = listName;
+        // }
+        //listNameObj.NameOfList = listName;
 
-        return false;
+        // return false;
     }
 
     public void AddCustomList(Person user, GamePlayListType listType, ListName listName)

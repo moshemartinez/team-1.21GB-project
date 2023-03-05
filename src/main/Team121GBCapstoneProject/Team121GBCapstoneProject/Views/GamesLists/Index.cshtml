@@ -43,7 +43,7 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                         <div>
                             <label for="listType">List Type</label>
                             <br />
-                            <select id="listType" name="listType">
+                            <select id="listType" name="listTypeId">
                                 <option value="1">Currently Playing</option>
                                 <option value="2">Complete</option>
                                 <option value="3">Want to Play</option>
@@ -52,8 +52,8 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                         </div>
                         <div>
                             <label for="customListName">Custom List name</label>
-                            <br />
-                            <input id="customListName" name="listName" type="text" value="" maxlength="64" required />
+                            <br />@*required*@
+                            <input id="customListName" name="listName" type="text" value="" maxlength="64"  />
                         </div>
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
                         <input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary"

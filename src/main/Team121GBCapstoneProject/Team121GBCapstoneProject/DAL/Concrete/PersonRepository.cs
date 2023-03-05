@@ -27,7 +27,16 @@ public class PersonRepository : Repository<Person>, IPersonRepository
                 {
                     AuthorizationId = authorizationID
                 };
-                AddOrUpdate(GPPerson);
+                GPPerson = AddOrUpdate(GPPerson);
+                // //! create the default lists
+                // PersonGameList currentlyPlaying = new PersonGameList
+                // {
+                //     PersonId = GPPerson.Id,
+                //     ListKind = GamePlayListType
+                //     ListKindId = listType.Id,
+                //     ListName = listName,
+                //     ListNameId = listName.Id
+                // };
                 return true;
             }
             catch (Exception e)
@@ -37,5 +46,5 @@ public class PersonRepository : Repository<Person>, IPersonRepository
             }
         }
     }
-/*   */
+    /*   */
 }
