@@ -50,7 +50,6 @@ public class PersonGameListRepository : Repository<PersonGameList>, IPersonGameL
         }
         listNameObj.NameOfList = listName;
 
-        //user.PersonGameLists.Add
         return false;
     }
 
@@ -80,11 +79,9 @@ public class PersonGameListRepository : Repository<PersonGameList>, IPersonGameL
     // public void DeleteACustomList(Person user, List<int> idList)
     public void DeleteACustomList(List<PersonGameList> listToDelete)
     {
-        // delete list with name and person id
         foreach (var listItem in listToDelete)
         {
             DeleteById(listItem.Id);
         }
-        // throw new NotImplementedException();
     }
 }
