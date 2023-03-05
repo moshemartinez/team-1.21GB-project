@@ -65,7 +65,7 @@ public class IgdbService : IIgdbService
     {
         // TODO: Implement using the query variable
         // This is manual data entry, do it somewhere else in the future
-        string searchBody = "search \"Super Mario Bros\"; fields name, cover.url, url; where parent_game = null;";
+        string searchBody = $"search \"{query}\"; fields name, cover.url, url; where parent_game = null;";
         string searchUri = "https://api.igdb.com/v4/games/";
 
         string response = await GetJsonStringFromEndpoint(_bearerToken, searchUri, _clientId, searchBody);
@@ -73,8 +73,7 @@ public class IgdbService : IIgdbService
         IEnumerable<GameJsonDTO> gamesJsonDTO;
         try
         {
-            //gamesJsonDTO = JsonConvert.DeserializeObject<IEnumerable<GameJsonDTO>>(response);
-            // OR Try:
+
             gamesJsonDTO = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<GameJsonDTO>>(response);
         }
         catch (System.Text.Json.JsonException)
