@@ -2,11 +2,13 @@
 function displayImage(data) {
 	console.log("Successfully made image with dalle: " + data);
 
-	
+	let temp = document.createElement("img");
+	temp.src = `${data.responseText}`;
+	document.getElementById("imageHere").appendChild(temp);
 }
 
 function errorOnAjax(data) {
-	console.log("Error in AJAX call" + data);
+	console.log("Error in AJAX call" + data.url);
 }
 
 $(function () {
@@ -17,14 +19,13 @@ $(function () {
 
 	$("#submitPromptButton").click(function () {
 		const userPrompt = document.getElementById("userPrompt")
-		console.log(values);
+		console.log(userPrompt);
 			$.ajax({
 				method: "GET",
-				url: "/api/Dalle/GetImages?prompt=${userPrompt}",
+				url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
 				dataType: "json",					// data type expected in response
-				contentType: "application/json; charset=UTF-8",	// data type to send
-				success: afterAddPerson,
-				error: errorOnAjax
+				success: displayImage,
+				error: displayImage
 			});
 	});
 });

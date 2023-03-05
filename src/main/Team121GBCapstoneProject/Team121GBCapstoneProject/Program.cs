@@ -44,10 +44,14 @@ builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseSqlServer(GPconnectionString));
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 
+
 builder.Services.AddOpenAIService(settings =>
 {
     settings.ApiKey = DalleSecretKey;
 });
+builder.Services.AddScoped<IOpenAIService, OpenAIService>();
+builder.Services.AddScoped<IDalleService, DalleService>();
+
 //var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
 //openAiService.SetDefaultModelId(Models.Davinci);
 

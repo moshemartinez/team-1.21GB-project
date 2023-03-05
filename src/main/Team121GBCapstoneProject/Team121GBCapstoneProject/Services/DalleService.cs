@@ -2,14 +2,15 @@
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
 using Microsoft.AspNetCore.Identity;
+using OpenAI.GPT3.Interfaces;
 
 namespace Team121GBCapstoneProject.Services;
 
 class DalleService : IDalleService
 {
-    private readonly OpenAIService _openAiService;
+    private readonly IOpenAIService _openAiService;
 
-    public DalleService(OpenAIService openAiService)
+    public DalleService(IOpenAIService openAiService)
     {
         _openAiService = openAiService;
     }
@@ -32,10 +33,10 @@ class DalleService : IDalleService
                 finalImage = image.Url;
             }
 
-            if (imageResult.Error == null)
-            {
-                throw new Exception("Error processing result");
-            }
+            //if (imageResult.Error == null)
+            //{
+            //    throw new Exception("Error processing result");
+            //}
 
             return finalImage;
         }

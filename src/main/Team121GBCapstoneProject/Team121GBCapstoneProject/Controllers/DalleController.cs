@@ -21,20 +21,35 @@ namespace Team121GBCapstoneProject.Controllers
         }
 
         [HttpGet("GetImages")]
-        public ActionResult<DalleVM> GetImages(string prompt)
+        public ActionResult<string> GetImages(string prompt)
         {
-            DalleVM dalleVM = new DalleVM();
-            if (prompt != null)
+            try
             {
-                dalleVM.Prompt = prompt;
-                dalleVM.ImageURL = _dalleService.GetImages(prompt).Result;
-            }
-            else
-            {
+                if (prompt != null)
+                {
+                    return Ok(_dalleService.GetImages(prompt).Result);
+                }
+
                 throw new Exception("Prompt Invalid");
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
-            return Ok(dalleVM);
+            //DalleVM dalleVM = new DalleVM();
+            //if (prompt != null)
+            //{
+            //    dalleVM.Prompt = prompt;
+            //    dalleVM.ImageURL = _dalleService.GetImages(prompt).Result;
+            //}
+            //else
+            //{
+            //    throw new Exception("Prompt Invalid");
+            //}
+
+            //return Ok(dalleVM);
         }
     }
 }
