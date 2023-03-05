@@ -18,7 +18,8 @@ var SendGridKey = builder.Configuration["SendGridKey"];
 // Add services to the container.
 builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey,
                                                                              new HttpClient()
-                                                                             { BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
+                                                                             {
+                                                                                 BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
 var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -38,8 +39,10 @@ var GPconnectionString = builder.Configuration.GetConnectionString("GPConnection
 builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
                             .UseSqlServer(GPconnectionString));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); //Register all generic repositories
 builder.Services.AddScoped<IGameRepository, GameRepository>();
-
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonGameListRepository, PersonGameListRepository>();
 
 
 var app = builder.Build();
