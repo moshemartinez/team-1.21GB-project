@@ -22,6 +22,7 @@ using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Services;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.DAL.Abstract;
+using Team121GBCapstoneProject.Services.Abstract;
 
 namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
 {

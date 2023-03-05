@@ -12,6 +12,6 @@
     public class Cover
     {
         public int id { get; set; }
-        public int url { get; set; }
+        public string url { get; set; }
     }
 }

@@ -26,6 +26,13 @@ builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new
                                                                                  BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
 
+// Add Swagger middleware
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+//
+
+
 builder.Services.AddScoped<IIgdbService, IgdbService>();
 
 var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
@@ -56,6 +63,18 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+
+// Enable middleware to serve generated Swagger as a JSON endpoint.
+app.UseSwagger();
+
+// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+// specifying the Swagger JSON endpoint.
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+});
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -80,6 +99,13 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "game",
+    pattern: "api/Game/{query}",
+    defaults: new { controller = "Game", action = "Index"}
+);
+
 app.MapRazorPages();
 
 app.Run();
