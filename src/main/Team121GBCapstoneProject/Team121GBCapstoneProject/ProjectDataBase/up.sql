@@ -23,12 +23,19 @@ CREATE TABLE [GamePlayListType] (
     [ListKind] NVARCHAR(64)
 );
 
+CREATE TABLE [ListName] (
+    [ID] INT PRIMARY KEY IDENTITY(1,1),
+    [NameOfList] NVARCHAR(64) 
+)
+
 CREATE TABLE [PersonGameList] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [PersonID] INT NOT NULL,
-    [GameID] INT NOT NULL,
+    [PersonID] INT NOT NULL, --Had to make FK nullable
+    [GameID] INT,
     [ListKindID] INT NOT NULL,
+    [ListNameID] INT NOT NULL,
     CONSTRAINT [FK_PersonID] FOREIGN KEY ([PersonId]) REFERENCES [Person]([ID]),
     CONSTRAINT [FK_GameID] FOREIGN KEY ([GameID]) REFERENCES [Game]([ID]),
-    CONSTRAINT [FK_ListKindID] FOREIGN KEY ([ListKindID]) REFERENCES [GamePlayListType]([ID])
+    CONSTRAINT [FK_ListKindID] FOREIGN KEY ([ListKindID]) REFERENCES [GamePlayListType]([ID]),
+    CONSTRAINT [FK_ListNameID] FOREIGN KEY ([ListNameID]) REFERENCES [ListName]([ID])
 );

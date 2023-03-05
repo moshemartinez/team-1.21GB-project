@@ -14,13 +14,16 @@ public partial class PersonGameList
     public int Id { get; set; }
 
     [Column("PersonID")]
-    public int PersonId { get; set; }
+    public int? PersonId { get; set; }
 
     [Column("GameID")]
-    public int GameId { get; set; }
+    public int? GameId { get; set; }
 
     [Column("ListKindID")]
     public int ListKindId { get; set; }
+
+    [Column("ListNameID")]
+    public int ListNameId { get; set; }
 
     [ForeignKey("GameId")]
     [InverseProperty("PersonGameLists")]
@@ -29,6 +32,10 @@ public partial class PersonGameList
     [ForeignKey("ListKindId")]
     [InverseProperty("PersonGameLists")]
     public virtual GamePlayListType ListKind { get; set; }
+
+    [ForeignKey("ListNameId")]
+    [InverseProperty("PersonGameLists")]
+    public virtual ListName ListName { get; set; }
 
     [ForeignKey("PersonId")]
     [InverseProperty("PersonGameLists")]
