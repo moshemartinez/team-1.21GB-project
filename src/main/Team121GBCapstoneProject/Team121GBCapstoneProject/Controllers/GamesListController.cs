@@ -70,7 +70,7 @@ public class GamesListsController : Controller
             return View("Index", userVM);
         }
 
-        //check if the user already has a default list
+        // *check if the user already has a default list
         if (listType != 4)
         {
             bool check = _personGameListRepository.CheckIfUserHasDefaultListAlready(person, listType);
@@ -79,7 +79,7 @@ public class GamesListsController : Controller
                 ViewBag.ErrorMessage = $"You already have a {listTypes[listType - 1]} List!";
                 return View("Index", userVM);
             }
-            // Set the default list name.
+            // * Set the default list name.
             listName = listTypes[listType - 1];
             _personGameListRepository.AddDefaultList(person, listType, listName);
         }
@@ -104,8 +104,6 @@ public class GamesListsController : Controller
                     gameLists = _personGameListRepository.GetAll()
                                                         .Where(l => l.PersonId == userId)
                                                         .ToList();
-                                                        //  && l.Game != null)
-                                                        //.ToList();
                     userVM = new UserListsViewModel(person, gameLists);
                     ViewBag.Message = "Success!";
                     return View("Index", userVM);
@@ -147,15 +145,7 @@ public class GamesListsController : Controller
             ViewBag.ErrorMessage = $"You do not have a list called {listName}";
             return View("Index", userVM);
         }
-        // var list = _listNameRepository.GetAll()
-        //                                 .Where(l => l.NameOfList == listName)
-        //                                 .First();
 
-        // var list = _personGameListRepository.GetAll()
-        //                                     .Where(l => l.ListKindId == 4 &&
-        //                                     l.PersonId == userId &&
-        //                                     l.ListName.NameOfList == listName)
-        //                                     .First();
         // *Prevent deletion of a default list
         try
         {
@@ -179,19 +169,11 @@ public class GamesListsController : Controller
         // * if we gotten to this point, the list can be deleted.
         try
         {   
+            // * create a list of the items inside the list to be deleted.
             List<PersonGameList> listToDelete = _personGameListRepository.GetAll()
                                                         .Where(l => l.PersonId == userId 
                                                         && l.ListName.NameOfList == listName)
                                                         .ToList();
-            
-                
-            foreach(var id in listToDelete)
-            {
-                Debug.WriteLine(id);
-                Debug.WriteLine(id.GetType());
-            }
-            //_personGameListRepository.Delete(listToDelete);
-            // _personGameListRepository.DeleteACustomList(loggedInUser, listName);
             _personGameListRepository.DeleteACustomList(listToDelete);
 
         }
@@ -200,19 +182,7 @@ public class GamesListsController : Controller
             Debug.WriteLine(e);
             ViewBag.ErrorMessage = $"Something went wrong when trying to delete list {listName}. Please try again.";
         }
-        // var list = _personGameListRepository.GetAll()
-        //                                     .Where(l => l.PersonId == userId &&
-        //                                     l.ListName.NameOfList == listName)
-        //                                     .First();
-        // if (list.ListKindId != 4)
-        // {
-        //     ViewBag.ErrorMessage = "You may not delete a default list.";
-        //     return View("Index", userVM);
-        // }
-        // .Select(l => l);
-        //if( defaultListCheck.PersonGameLists.)
-
-
+        //* update the view model.
         loggedInUser = _personRepository.GetAll()
                                         .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
                                         .First();
