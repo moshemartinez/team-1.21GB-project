@@ -29,9 +29,6 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
         </div>
     </div>
 }
-@* @Html.DropDownListFor(m => m.LoggedInUser.PersonGameLists, Model.SelectListItems, "Select a category", new { @class =
-"form-control" }) *@
-
 
 <div class="modal fade" id="AddListForm" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -56,13 +53,11 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                         <div>
                             <label for="customListName">Custom List name</label>
                             <br />
-                            <input id="customListName" name="listName" type="text" value="" maxlength="64" />
+                            <input id="customListName" name="listName" type="text" value="" maxlength="64" required />
                         </div>
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
-
-
                         <input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary"
-                            data-bs-dismiss="modal" value="Add List" />
+                            value="Add List" />
 
                     </form>
                 </div>
@@ -77,25 +72,27 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
 <div id="userLists">
     @if (Model.UsersLists.Count != 0)
     {
-        @* @for (int i = 0; i < @Model.Count; ++i) *@
-        @foreach(var list in @Model.UsersLists)
+        @foreach (var list in @Model.UsersLists)
         {
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
                         <th>
                             @list.First().ListName.NameOfList
-                            @* <h3>@Model.ListNames[i]</h3> *@
                         </th>
+                        @if(list.First().ListKind.Id == 4)
+                        {
                         <th>
-                            <button class="btn btn-danger" id="deleteList@list.ListName.NameOfList" data-bs-toggle="modal"
-                                data-bs-target="#deleteListFormModal">Delete List</button>
+                            <div style="float: right">
+                                <button class="btn btn-danger" id="deleteList@list.ListName.NameOfList" data-bs-toggle="modal"
+                                    data-bs-target="#deleteListFormModal">Delete List</button>
+                            </div>
                         </th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
-                    @* @foreach (var game in @Model.UsersLists[i]) *@
-                    @foreach(var game in list)
+                    @foreach (var game in list)
                     {
                         if (Model.UsersLists.Count != 0 && game.Game != null)
                         {
@@ -129,14 +126,11 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                             <h3 class="text-danger">Are you sure you want to permanently delete this list? </h3>
                             <h5>Please type the name of the list you would like to delete below to Confirm.</h5>
                             <br>
-                            <input id="deleteListName" type="text" name="listName" value="" maxLength="64">
+                            <input id="deleteListName" type="text" name="listName" value="" maxLength="64" required />
                         </div>
-
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
-
-                        @* <input type="hidden" name="listId" value="@Model.UsersLists" /> *@
                         <input id="formSubmit" type="submit" asp-action="DeleteList" class="btn btn-danger"
-                            data-bs-dismiss="modal" value="Delete List" />
+                            value="Delete List" />
                     </form>
                 </div>
             </div>

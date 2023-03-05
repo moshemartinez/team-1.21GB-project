@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using System.Diagnostics;
-using Team121GBCapstoneProject.DAL.Concrete;
+using System.Text.RegularExpressions;
+
 
 namespace Team121GBCapstoneProjects.Controllers;
 
@@ -40,7 +41,7 @@ public class GamesListsController : Controller
     {
         var loggedInUser = _personRepository.GetAll()
                                                .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
-                                               .First();        
+                                               .First();
         var usersLists = _personGameListRepository.GetAll()
                                                  .Where(lists => lists.PersonId == loggedInUser.Id)
                                                  .ToList();
@@ -53,10 +54,24 @@ public class GamesListsController : Controller
     {
         Person person = _personRepository.FindById(userId);
         List<PersonGameList> gameLists = _personGameListRepository.GetAll()
-                                                                    .Where(l => l.PersonId == userId
-                                                                    && l.Game != null)
+                                                                    .Where(l => l.PersonId == userId)
                                                                     .ToList();
         UserListsViewModel userVM = new UserListsViewModel(person, gameLists);
+        //* make sure the input list name is not null
+        if (listName == null)
+        {
+            ViewBag.ErrorMessage = $"A list name cannot be empty!!!";
+            return View("Index", userVM);
+        }
+        //*check that the input is not empty or just white space.
+        string regex = @"^\s*$";
+        bool isMatch = Regex.IsMatch(listName, regex);
+
+        if (isMatch)
+        {
+            ViewBag.ErrorMessage = $"A list name cannot be empty!!!";
+            return View("Index", userVM);
+        }
 
         if (person == null)
         {
@@ -66,6 +81,10 @@ public class GamesListsController : Controller
         //! listType == 4 means the list is a custom list.
         if (listType != 4 && listName != null)
         {
+            gameLists = _personGameListRepository.GetAll()
+                                                .Where(l => l.PersonId == userId)
+                                                .ToList();
+            userVM = new UserListsViewModel(person, gameLists);
             ViewBag.ErrorMessage = $"A non custom list may not have a custom name!";
             return View("Index", userVM);
         }
@@ -75,13 +94,23 @@ public class GamesListsController : Controller
         {
             bool check = _personGameListRepository.CheckIfUserHasDefaultListAlready(person, listType);
             if (!check)
-            {   // * listType- 1 because indexes are base zero
+            {
+                gameLists = _personGameListRepository.GetAll()
+                                                .Where(l => l.PersonId == userId)
+                                                .ToList();
+                userVM = new UserListsViewModel(person, gameLists);
+                // * listType- 1 because indexes are base zero
+
                 ViewBag.ErrorMessage = $"You already have a {listTypes[listType - 1]} List!";
                 return View("Index", userVM);
             }
             // * Set the default list name.
             listName = listTypes[listType - 1];
             _personGameListRepository.AddDefaultList(person, listType, listName);
+            gameLists = _personGameListRepository.GetAll()
+                                                .Where(l => l.PersonId == userId)
+                                                .ToList();
+            userVM = new UserListsViewModel(person, gameLists);
         }
 
         if (listType == 4)
@@ -89,6 +118,10 @@ public class GamesListsController : Controller
             var check = _personGameListRepository.CheckIfUserHasCustomListWithSameName(person, listName);
             if (check)
             {
+                gameLists = _personGameListRepository.GetAll()
+                                                .Where(l => l.PersonId == userId)
+                                                .ToList();
+                userVM = new UserListsViewModel(person, gameLists);
                 ViewBag.ErrorMessage = $"A list with the name {listName} already exists, try a different one!";
                 return View("Index", userVM);
             }
@@ -127,10 +160,15 @@ public class GamesListsController : Controller
                                              .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
                                              .First();
         var usersLists = _personGameListRepository.GetAll()
-                                                 .Where(lists => lists.PersonId == loggedInUser.Id &&
-                                                 lists.GameId != null)
+                                                 .Where(lists => lists.PersonId == loggedInUser.Id)
                                                  .ToList();
         UserListsViewModel userVM = new UserListsViewModel(loggedInUser, usersLists);
+        //* make sure the input list name is not null
+        if (listName == null)
+        {
+            ViewBag.ErrorMessage = $"A list name cannot be empty!!!";
+            return View("Index", userVM);
+        }
         // * check if the list exists
         try
         {
@@ -141,6 +179,13 @@ public class GamesListsController : Controller
         }
         catch (Exception e)
         {
+            loggedInUser = _personRepository.GetAll()
+                                             .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
+                                             .First();
+            usersLists = _personGameListRepository.GetAll()
+                                                    .Where(lists => lists.PersonId == loggedInUser.Id)
+                                                    .ToList();
+            userVM = new UserListsViewModel(loggedInUser, usersLists);
             Debug.WriteLine(e);
             ViewBag.ErrorMessage = $"You do not have a list called {listName}";
             return View("Index", userVM);
@@ -168,10 +213,10 @@ public class GamesListsController : Controller
 
         // * if we gotten to this point, the list can be deleted.
         try
-        {   
+        {
             // * create a list of the items inside the list to be deleted.
             List<PersonGameList> listToDelete = _personGameListRepository.GetAll()
-                                                        .Where(l => l.PersonId == userId 
+                                                        .Where(l => l.PersonId == userId
                                                         && l.ListName.NameOfList == listName)
                                                         .ToList();
             _personGameListRepository.DeleteACustomList(listToDelete);
@@ -192,7 +237,7 @@ public class GamesListsController : Controller
         userVM = new UserListsViewModel(loggedInUser, usersLists);
 
 
-        ViewBag.Message = $"Deletion of {{insert list name}} successful!";
+        ViewBag.Message = $"Deletion of {listName} successful!";
         return View("Index", userVM);
     }
 }
