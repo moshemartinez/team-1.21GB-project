@@ -30,8 +30,8 @@ CREATE TABLE [ListName] (
 
 CREATE TABLE [PersonGameList] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [PersonID] INT NOT NULL,
-    [GameID] INT NOT NULL,
+    [PersonID] INT NOT NULL, --Had to make FK nullable
+    [GameID] INT,
     [ListKindID] INT NOT NULL,
     [ListNameID] INT NOT NULL,
     CONSTRAINT [FK_PersonID] FOREIGN KEY ([PersonId]) REFERENCES [Person]([ID]),
