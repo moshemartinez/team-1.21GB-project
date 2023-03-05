@@ -22,7 +22,8 @@ builder.Services.AddHttpClient();
 // Add services to the container.
 builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey,
                                                                              new HttpClient()
-                                                                             { BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
+                                                                             {
+                                                                                 BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
@@ -46,8 +47,10 @@ var GPconnectionString = builder.Configuration.GetConnectionString("GPConnection
 builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
                             .UseSqlServer(GPconnectionString));
-
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); //Register all generic repositories
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonGameListRepository, PersonGameListRepository>();
 
 builder.Services.AddSwaggerGen();
 
