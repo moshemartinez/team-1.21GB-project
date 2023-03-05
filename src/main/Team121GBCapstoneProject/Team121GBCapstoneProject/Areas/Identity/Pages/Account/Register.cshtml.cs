@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Team121GBCapstoneProject.Areas.Identity.Data;
+using Team121GBCapstoneProject.Services;
+using Team121GBCapstoneProject.Models;
+using Team121GBCapstoneProject.DAL.Abstract;
 
 namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
 {
@@ -30,13 +33,17 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IReCaptchaService _reCaptchaService;
+        private readonly IPersonRepository _personRepository;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IReCaptchaService captchaService,
+            IPersonRepository personRepository)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +51,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _reCaptchaService = captchaService;
+            _personRepository = personRepository;
         }
 
         /// <summary>
@@ -110,8 +119,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-            //var user = CreateUser();
- 
+        //var user = CreateUser();
+
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -125,6 +134,12 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                //
+                //check the recaptcha
+                if (!Request.Form.ContainsKey("g-recaptcha-response")) return Page();
+                var captcha = Request.Form["g-recaptcha-response"].ToString();
+                if (!await _reCaptchaService.IsValid(captcha)) return Page();
+
                 // Added code to add First Name and Last Name
                 var user = CreateUser();
                 user.FirstName = Input.FirstName;
@@ -136,6 +151,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    _personRepository.AddPersonToProjectDb(user.Id);
+                    
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
