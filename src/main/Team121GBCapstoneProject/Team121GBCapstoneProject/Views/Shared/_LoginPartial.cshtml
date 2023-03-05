@@ -8,7 +8,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <form action="/api/game/search" method="get">
+            <form action="/api/game/" method="get">
                 <input type="text" name="query" placeholder="Search...">
                 <button type="submit" class="btn btn-outline-primary">
                     <i class="bi bi-search"></i>

@@ -63,8 +63,6 @@ public class IgdbService : IIgdbService
 
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
-        // TODO: Implement using the query variable
-        // This is manual data entry, do it somewhere else in the future
         string searchBody = $"search \"{query}\"; fields name, cover.url, url; where parent_game = null;";
         string searchUri = "https://api.igdb.com/v4/games/";
 
@@ -73,7 +71,6 @@ public class IgdbService : IIgdbService
         IEnumerable<GameJsonDTO> gamesJsonDTO;
         try
         {
-
             gamesJsonDTO = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<GameJsonDTO>>(response);
         }
         catch (System.Text.Json.JsonException)
@@ -83,7 +80,7 @@ public class IgdbService : IIgdbService
 
         if (gamesJsonDTO != null)
         {
-            return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover.url.ToString(), g.url));
+            return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover?.url?.ToString(), g.url));
         }
 
 

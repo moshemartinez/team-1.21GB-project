@@ -30,8 +30,6 @@ builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//
-
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
 
@@ -71,7 +69,7 @@ app.UseSwagger();
 // specifying the Swagger JSON endpoint.
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "GP API V1");
 });
 
 

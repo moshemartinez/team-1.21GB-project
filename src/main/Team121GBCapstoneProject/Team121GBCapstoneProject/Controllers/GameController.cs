@@ -20,18 +20,17 @@ namespace Team121GBCapstoneProject.Controllers
             _igdbService = igdbService;
         }
 
-        //[HttpGet("api/game/{query}")]
         [HttpGet]
-        public ActionResult<IEnumerable<IgdbGame>> Index(string query)
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query)
         {
-            // TODO: Move these somewhere else
+            // TODO: Move these to UserSecrets before deployment
             _bearerToken = "llrnvo5vfowcyr0ggecl445q5dunyl";
             _clientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
             
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
 
-            var searchResult = _igdbService.SearchGames(query);
+            var searchResult = await _igdbService.SearchGames(query);
 
             if (searchResult is null)
             {
