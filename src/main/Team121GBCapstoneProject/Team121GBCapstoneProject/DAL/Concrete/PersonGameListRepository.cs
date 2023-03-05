@@ -38,8 +38,7 @@ public class PersonGameListRepository : Repository<PersonGameList>, IPersonGameL
         check = true;
         return check;
     }
-
-    public void AddDefaultList(Person user, GamePlayListType listType, ListName listName)
+    public void AddList(Person user, GamePlayListType listType, ListName listName)
     {
         PersonGameList newList = new PersonGameList
         {
@@ -50,40 +49,10 @@ public class PersonGameListRepository : Repository<PersonGameList>, IPersonGameL
             ListName = listName,
             ListNameId = listName.Id
         };
-        ListName listNameObj = new ListName();
         AddOrUpdate(newList);
-        // newList.ListKindId = listType;
-        // if (listType != 4)
-        // {
-
-        // }
-        //listNameObj.NameOfList = listName;
-
-        // return false;
+        
     }
-
-    public void AddCustomList(Person user, GamePlayListType listType, ListName listName)
-    {
-        PersonGameList newList = new PersonGameList
-        {
-            Person = user,
-            PersonId = user.Id,
-            ListKind = listType,
-            ListKindId = listType.Id,
-            ListName = listName,
-            ListNameId = listName.Id
-        };
-        try
-        {
-            AddOrUpdate(newList);
-        }
-        catch (Exception e)
-        {
-            Debug.WriteLine(e);
-            throw e;
-        }
-    }
-
+    
     public void DeleteACustomList(List<PersonGameList> listToDelete)
     {
         foreach (var listItem in listToDelete)
