@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Team121GBCapstoneProject.Services;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Services.Abstract;
@@ -38,7 +39,6 @@ namespace Team121GBCapstoneProject.Controllers
             }
 
             return Ok(searchResult);
-
         }
 
 
