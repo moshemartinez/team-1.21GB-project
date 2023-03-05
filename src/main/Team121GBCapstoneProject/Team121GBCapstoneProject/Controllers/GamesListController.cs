@@ -57,21 +57,6 @@ public class GamesListsController : Controller
                                                                     .Where(l => l.PersonId == userId)
                                                                     .ToList();
         UserListsViewModel userVM = new UserListsViewModel(person, gameLists);
-        // //* make sure the input list name is not null
-        // if (listName == null)
-        // {
-        //     ViewBag.ErrorMessage = $"A list name cannot be empty!!!";
-        //     return View("Index", userVM);
-        // }
-        // //*check that the input is not empty or just white space.
-        // string regex = @"^\s*$";
-        // bool isMatch = Regex.IsMatch(listName, regex);
-
-        // if (isMatch)
-        // {
-        //     ViewBag.ErrorMessage = $"A list name cannot be empty!!!";
-        //     return View("Index", userVM);
-        // }
 
         if (person == null)
         {
@@ -102,18 +87,12 @@ public class GamesListsController : Controller
                                                     .ToList();
                     userVM = new UserListsViewModel(person, gameLists);
                     // * listTypeId- 1 because indexes are base zero
-
                     ViewBag.ErrorMessage = $"You already have a {listTypes[listTypeId - 1]} List!";
                     return View("Index", userVM);
                 }
-                // // * Set the default list name.
-                // listName = listTypes[listTypeId - 1];
-                // // GamePlayListType gamePlayListType = new
                 GamePlayListType gamePlayListType = _gamePlayListType.FindById(listTypeId);
                 ListName defaultListName = _listNameRepository.FindById(listTypeId);
-                // ListName listNameObj = new ListName { NameOfList = listName };
-
-                _personGameListRepository.AddDefaultList(person, gamePlayListType, defaultListName);
+                _personGameListRepository.AddList(person, gamePlayListType, defaultListName);
                 gameLists = _personGameListRepository.GetAll()
                                                     .Where(l => l.PersonId == userId)
                                                     .ToList();
@@ -152,14 +131,12 @@ public class GamesListsController : Controller
                     GamePlayListType gamePlayListType = _gamePlayListType.FindById(listTypeId);
                     ListName listNameObj = new ListName { NameOfList = listName };
                     listNameObj = _listNameRepository.AddOrUpdate(listNameObj);
-                    _personGameListRepository.AddCustomList(person, gamePlayListType, listNameObj);
+                    _personGameListRepository.AddList(person, gamePlayListType, listNameObj);
                     person = _personRepository.FindById(userId);
                     gameLists = _personGameListRepository.GetAll()
                                                         .Where(l => l.PersonId == userId)
                                                         .ToList();
                     userVM = new UserListsViewModel(person, gameLists);
-                    ViewBag.Message = "Success!";
-                    return View("Index", userVM);
                 }
                 catch (Exception e)
                 {
