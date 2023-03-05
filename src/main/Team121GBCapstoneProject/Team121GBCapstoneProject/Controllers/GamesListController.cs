@@ -40,12 +40,7 @@ public class GamesListsController : Controller
     {
         var loggedInUser = _personRepository.GetAll()
                                                .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
-                                               .First();
-        // var usersLists = _personGameListRepository.GetAll()
-        //                                          .Where(lists => lists.PersonId == loggedInUser.Id &&
-        //                                          lists.GameId != null)
-        //                                          .ToList();
-        
+                                               .First();        
         var usersLists = _personGameListRepository.GetAll()
                                                  .Where(lists => lists.PersonId == loggedInUser.Id)
                                                  .ToList();
@@ -180,6 +175,31 @@ public class GamesListsController : Controller
             ViewBag.ErrorMessage = "Something went wrong. Please try again.";
             return View("Index", userVM);
         }
+
+        // * if we gotten to this point, the list can be deleted.
+        try
+        {   
+            List<PersonGameList> listToDelete = _personGameListRepository.GetAll()
+                                                        .Where(l => l.PersonId == userId 
+                                                        && l.ListName.NameOfList == listName)
+                                                        .ToList();
+            
+                
+            foreach(var id in listToDelete)
+            {
+                Debug.WriteLine(id);
+                Debug.WriteLine(id.GetType());
+            }
+            //_personGameListRepository.Delete(listToDelete);
+            // _personGameListRepository.DeleteACustomList(loggedInUser, listName);
+            _personGameListRepository.DeleteACustomList(listToDelete);
+
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+            ViewBag.ErrorMessage = $"Something went wrong when trying to delete list {listName}. Please try again.";
+        }
         // var list = _personGameListRepository.GetAll()
         //                                     .Where(l => l.PersonId == userId &&
         //                                     l.ListName.NameOfList == listName)
@@ -197,8 +217,7 @@ public class GamesListsController : Controller
                                         .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
                                         .First();
         usersLists = _personGameListRepository.GetAll()
-                                                .Where(lists => lists.PersonId == loggedInUser.Id &&
-                                                lists.GameId != null)
+                                                .Where(lists => lists.PersonId == loggedInUser.Id)
                                                 .ToList();
         userVM = new UserListsViewModel(loggedInUser, usersLists);
 

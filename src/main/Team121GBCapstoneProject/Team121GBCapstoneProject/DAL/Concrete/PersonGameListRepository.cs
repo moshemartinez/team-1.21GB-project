@@ -75,4 +75,16 @@ public class PersonGameListRepository : Repository<PersonGameList>, IPersonGameL
             throw e;
         }
     }
+
+    //public void DeleteACustomList(Person user, string listName)
+    // public void DeleteACustomList(Person user, List<int> idList)
+    public void DeleteACustomList(List<PersonGameList> listToDelete)
+    {
+        // delete list with name and person id
+        foreach (var listItem in listToDelete)
+        {
+            DeleteById(listItem.Id);
+        }
+        // throw new NotImplementedException();
+    }
 }
