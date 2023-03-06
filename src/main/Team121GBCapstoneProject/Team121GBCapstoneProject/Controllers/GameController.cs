@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Team121GBCapstoneProject.Services;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Services.Abstract;
+using Team121GBCapstoneProject.DAL.Abstract;
+using System.Diagnostics;
+
 
 namespace Team121GBCapstoneProject.Controllers
 {
@@ -13,12 +16,14 @@ namespace Team121GBCapstoneProject.Controllers
     public class GameController : ControllerBase
     {
         private readonly IIgdbService _igdbService;
+        private IRepository<Game> _gameRepository;
         private string _clientId;
         private string _bearerToken;
 
-        public GameController(IIgdbService igdbService)
+        public GameController(IIgdbService igdbService, IRepository<Game> gameRepository)
         {
             _igdbService = igdbService;
+            _gameRepository = gameRepository;
         }
 
         [HttpGet]
@@ -41,6 +46,25 @@ namespace Team121GBCapstoneProject.Controllers
             return Ok(searchResult);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<IgdbGame>>  AddGame(Game game)
+        //public async Task<ActionResult<IgdbGame>>  AddGame()
+        {
+            game.Title = "Thing";
+            game.Description = "Thing Thing";
+            game.EsrbratingId = 9;
+            game.AverageRating =  9.0;
+            try
+            {
+                _gameRepository.AddOrUpdate(game);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return BadRequest(e);
+            }
+        }
 
     }
 }
