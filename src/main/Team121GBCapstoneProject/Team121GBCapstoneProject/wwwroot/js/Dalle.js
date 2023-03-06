@@ -38,19 +38,33 @@ $(function () {
 		event.preventDefault();
 	})
 
-	document.getElementById("submitPromptButton").setAttribute("aria-disabled", "true");
+//	document.getElementById("submitPromptButton").setAttribute("aria-disabled", "true");
 
-	$("#submitPromptButton").click(function () {
-		const userPrompt = document.getElementById("userPrompt")
-		if (userPrompt.value != "") {
-			console.log(userPrompt);
-			$.ajax({
-				method: "GET",
-				url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
-				dataType: "json",					// data type expected in response
-				success: displayImage,
-				error: displayImage
-			});
-		};
-	});
+//	$("#submitPromptButton").click(function () {
+//		const userPrompt = document.getElementById("userPrompt")
+//		if (userPrompt.value != "") {
+//			console.log(userPrompt);
+//			$.ajax({
+//				method: "GET",
+//				url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
+//				dataType: "json",					// data type expected in response
+//				success: displayImage,
+//				error: displayImage
+//			});
+//		};
+//	});
 });
+
+function dalleClick() {
+	const userPrompt = document.getElementById("userPrompt")
+	if (userPrompt.value != "") {
+		console.log(userPrompt);
+		$.ajax({
+			method: "GET",
+			url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
+			dataType: "json",					// data type expected in response
+			success: displayImage,
+			error: displayImage
+		});
+	};
+};
