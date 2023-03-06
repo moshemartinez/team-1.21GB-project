@@ -12,8 +12,6 @@ public class UserListsViewModel
     I couln't figure out how to do this so I left it for later.
     */
     //public List<SelectListItem> SelectListItems { get; set; } 
-    //! add list of list names
-    public int Count { get; set; }
     public List<string> ListNames { get; set; }
     public List<List<PersonGameList>> UsersLists { get; set; }
     public UserListsViewModel() { }
@@ -27,6 +25,5 @@ public class UserListsViewModel
                               .GroupBy(listNameId => listNameId.ListNameId)
                               .Select(group => group.ToList())
                               .ToList();
-        Count = ListNames.Count();
     }
 }
