@@ -31,3 +31,10 @@ $(document).ready(function () {
         });
     });
 });
+
+function dalleModalOpen() {
+    $('#DalleModal').modal('show');
+}
+function dalleModalClose() {
+    $('#DalleModal').modal('hide');
+}
