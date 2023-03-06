@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.center {
+    margin: auto;
+    padding: 10px;
+}

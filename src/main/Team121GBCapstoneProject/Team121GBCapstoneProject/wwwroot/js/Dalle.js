@@ -1,10 +1,30 @@
 ﻿
+function dalleModalOpen() {
+	$('#DalleModal').modal('show');
+}
+function dalleModalClose() {
+	$('#DalleModal').modal('hide');
+}
+
 function displayImage(data) {
 	console.log("Successfully made image with dalle: " + data);
 
 	let temp = document.createElement("img");
 	temp.src = `${data.responseText}`;
+	temp.style.display = "block";
+	temp.style.marginLeft = "auto";
+	temp.style.marginRight = "auto";
+	document.getElementById("applyProfilePhoto").removeAttribute("hidden");
+	document.getElementById("imageHere").removeAttribute("hidden");
+
+	document.getElementById("imageHere").innerHTML = "";
+	//document.getElementById("imageHere").setAttribute("href", `${data.responseText}`)
+	//document.getElementById("imageHere").setAttribute("download", "DalleGeneratedImage")
 	document.getElementById("imageHere").appendChild(temp);
+	
+
+	//document.getElementById("imageHere").removeAttribute("hidden");
+	//document.getElementById("imageHere").setAttribute("src", `${data.responseText}`)
 }
 
 function errorOnAjax(data) {
