@@ -27,7 +27,7 @@ public class PersonRepository : Repository<Person>, IPersonRepository
                 {
                     AuthorizationId = authorizationID
                 };
-                AddOrUpdate(GPPerson);
+                GPPerson = AddOrUpdate(GPPerson);
                 return true;
             }
             catch (Exception e)
@@ -37,5 +37,4 @@ public class PersonRepository : Repository<Person>, IPersonRepository
             }
         }
     }
-/*   */
 }
