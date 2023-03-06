@@ -21,6 +21,7 @@ function displayImage(data) {
 	//document.getElementById("imageHere").setAttribute("href", `${data.responseText}`)
 	//document.getElementById("imageHere").setAttribute("download", "DalleGeneratedImage")
 	document.getElementById("imageHere").appendChild(temp);
+	document.getElementById("submitPromptButton").setAttribute("aria-disabled", "false");
 	
 
 	//document.getElementById("imageHere").removeAttribute("hidden");
@@ -37,15 +38,33 @@ $(function () {
 		event.preventDefault();
 	})
 
-	$("#submitPromptButton").click(function () {
-		const userPrompt = document.getElementById("userPrompt")
-		console.log(userPrompt);
-			$.ajax({
-				method: "GET",
-				url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
-				dataType: "json",					// data type expected in response
-				success: displayImage,
-				error: displayImage
-			});
-	});
+//	document.getElementById("submitPromptButton").setAttribute("aria-disabled", "true");
+
+//	$("#submitPromptButton").click(function () {
+//		const userPrompt = document.getElementById("userPrompt")
+//		if (userPrompt.value != "") {
+//			console.log(userPrompt);
+//			$.ajax({
+//				method: "GET",
+//				url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
+//				dataType: "json",					// data type expected in response
+//				success: displayImage,
+//				error: displayImage
+//			});
+//		};
+//	});
 });
+
+function dalleClick() {
+	const userPrompt = document.getElementById("userPrompt")
+	if (userPrompt.value != "") {
+		console.log(userPrompt);
+		$.ajax({
+			method: "GET",
+			url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
+			dataType: "json",					// data type expected in response
+			success: displayImage,
+			error: displayImage
+		});
+	};
+};
