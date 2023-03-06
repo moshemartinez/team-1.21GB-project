@@ -19,7 +19,12 @@ $(document).ready(function () {
                     // resize cover image
                     var resizedCoverArt = game.gameCoverArt.replace("thumb", "logo_med");
 
-                    var row = "<tr><td><img src=\"" + resizedCoverArt + "\"></td><td>" + game.gameTitle + "</td><td><a href=\"" + game.gameWebsite +  "\">" + game.gameWebsite + "</a></td><td><button>Add Game</button></td></tr>";
+                    var row = `<tr>
+                                    <td><img src="${resizedCoverArt}"></td>
+                                    <td>${game.gameTitle}</td>
+                                    <td><a href="${game.gameWebsite}">${game.gameWebsite}"</a></td>
+                                    <td><button class="btn btn-primary">Add Game</button></td>
+                               </tr>`;
                     $("#gameTableBody").append(row);
                 });
             }
