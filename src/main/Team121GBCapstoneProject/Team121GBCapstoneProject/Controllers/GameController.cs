@@ -70,9 +70,6 @@ namespace Team121GBCapstoneProject.Controllers
                     check = loggedInUser.PersonGameLists
                                         .Where(g => g.Game != null)
                                         .Any(g => g.Game.Title == game.Title);
-                    //check = loggedInUser.PersonGameLists
-                    //                    .Where(g => g != null)
-                    //                    .Any(g => g.Game.Title == game.Title);
                     //check if user's list already contains this game.
                     if (check)
                     {
