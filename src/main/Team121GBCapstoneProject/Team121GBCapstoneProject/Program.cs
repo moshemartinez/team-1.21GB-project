@@ -3,11 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Data;
-using Team121GBCapstoneProject.Services;
+using Team121GBCapstoneProject.Services.Abstract;
+using Team121GBCapstoneProject.Services.Concrete;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Http;
+using Team121GBCapstoneProject.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,12 +18,21 @@ var builder = WebApplication.CreateBuilder(args);
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
 var SendGridKey = builder.Configuration["SendGridKey"];
 
+builder.Services.AddHttpClient();
 // Add services to the container.
 builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey,
                                                                              new HttpClient()
                                                                              {
                                                                                  BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
+
+// Add Swagger middleware
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddScoped<IIgdbService, IgdbService>();
+
 var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -33,6 +45,7 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var GPconnectionString = builder.Configuration.GetConnectionString("GPConnection");
@@ -44,8 +57,21 @@ builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IPersonGameListRepository, PersonGameListRepository>();
 
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+
+// Enable middleware to serve generated Swagger as a JSON endpoint.
+app.UseSwagger();
+
+// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+// specifying the Swagger JSON endpoint.
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "GP API V1");
+});
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -71,6 +97,13 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "game",
+    pattern: "api/Game/{query}",
+    defaults: new { controller = "Game", action = "Index"}
+);
+
 app.MapRazorPages();
 
 app.Run();

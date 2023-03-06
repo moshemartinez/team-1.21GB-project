@@ -20,3 +20,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+/*Search Bar */
+.navbar-search .input-group {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search .form-control {
+    flex: 1;
+}
+
