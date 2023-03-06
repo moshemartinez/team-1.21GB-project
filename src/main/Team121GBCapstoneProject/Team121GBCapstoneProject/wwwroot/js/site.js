@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 
+// Search feature
 $(document).ready(function () {
     $("#searchButton").click(function (event) {
         event.preventDefault(); // prevent the default form submission behavior
@@ -15,7 +16,10 @@ $(document).ready(function () {
             success: function (data) {
                 $("#gameTableBody").empty(); // clear the table body before populating with new data
                 $.each(data, function (i, game) {
-                    var row = "<tr><td>" + game.gameCoverArt + "</td><td>" + game.gameTitle + "</td><td>" + game.gameWebsite + "</td></tr>";
+                    // resize cover image
+                    var resizedCoverArt = game.gameCoverArt.replace("thumb", "logo_med");
+
+                    var row = "<tr><td><img src=\"" + resizedCoverArt + "\"></td><td>" + game.gameTitle + "</td><td><a href=\"" + game.gameWebsite +  "\">" + game.gameWebsite + "</a></td></tr>";
                     $("#gameTableBody").append(row);
                 });
             }
