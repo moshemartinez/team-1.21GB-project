@@ -52,8 +52,8 @@ else if (!string.IsNullOrEmpty(ViewBag.Message))
                         </div>
                         <div>
                             <label for="customListName">Custom List name</label>
-                            <br />@*required*@
-                            <input id="customListName" name="listName" type="text" value="" maxlength="64"  />
+                            <br />
+                            <input id="customListName" name="listName" type="text" value="" maxlength="64" />
                         </div>
                         @* <input type="hidden" name="userVMP" value="@Model" /> *@
                         <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
