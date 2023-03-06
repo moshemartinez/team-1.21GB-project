@@ -54,14 +54,12 @@ namespace Team121GBCapstoneProject.Controllers
             return Ok(searchResult);
         }
         [HttpPost("addGame")]
-        //public async Task<ActionResult<IgdbGame>> AddGameToList(Game game, string listName)
-        public async Task<ActionResult<IgdbGame>> AddGameToList()
+        public async Task<ActionResult<IgdbGame>> AddGameToList(Game game, string listName)
+        //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)
         {   //need to set it up so we have a user a that is logged in.
             var loggedInUser = _personRepository.GetAll()
                                                .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
                                                .First();
-            var game = new Game();
-            game.Title = "aaaaaaaaa";
             try
             {
                 // * check if this game already exists in the database
@@ -84,12 +82,53 @@ namespace Team121GBCapstoneProject.Controllers
                     //grab game from db and add it your specified list
                     string gameTitle = game.Title;
                     game = _gameRepository.GetAll()
-                                          .Where(g => g.Title == gameTitle);
+                                          .Where(g => g.Title == gameTitle)
+                                          .First();
+                    //string listName = "Currently Playing";
+                    PersonGameList list = loggedInUser.PersonGameLists
+                                                      .Where(l => l.ListName.NameOfList == listName)
+                                                      .First();
+
+                    PersonGameList gameList = new PersonGameList();
+                    gameList.ListName = list.ListName;
+                    gameList.ListNameId = list.ListNameId;
+                    gameList.Game = game;
+                    gameList.GameId = game.Id;
+                    gameList.Person = loggedInUser;
+                    gameList.PersonId = loggedInUser.Id;
+                    gameList.ListKind = list.ListKind;
+                    gameList.ListKindId = list.ListKindId;
+
+                    loggedInUser.PersonGameLists.Add(gameList);
+                    _personRepository.AddOrUpdate(loggedInUser);
+
                 }
                 else // add game to db first.
                 {
                     await AddGameToDb(game);
                     //now add to users list
+                    //grab game from db and add it your specified list
+                    string gameTitle = game.Title;
+                    game = _gameRepository.GetAll()
+                                          .Where(g => g.Title == gameTitle)
+                                          .First();
+                    //string listName = "Currently Playing";
+                    PersonGameList list = loggedInUser.PersonGameLists
+                                                      .Where(l => l.ListName.NameOfList == listName)
+                                                      .First();
+
+                    PersonGameList gameList = new PersonGameList();
+                    gameList.ListName = list.ListName;
+                    gameList.ListNameId = list.ListNameId;
+                    gameList.Game = game;
+                    gameList.GameId = game.Id;
+                    gameList.Person = loggedInUser;
+                    gameList.PersonId = loggedInUser.Id;
+                    gameList.ListKind = list.ListKind;
+                    gameList.ListKindId = list.ListKindId;
+
+                    loggedInUser.PersonGameLists.Add(gameList);
+                    _personRepository.AddOrUpdate(loggedInUser);
                 }
                 return Ok();
             }
