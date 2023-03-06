@@ -8,12 +8,19 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <form action="/api/game/" method="get">
+            <form id="searchForm" action="/Search/Results/">
+                <input type="text" name="query" id="searchInput" placeholder="Search...">
+                <button type="submit" id="searchButton" class="btn btn-outline-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+
+            @*            <form action="/api/Game/" method="get">
                 <input type="text" name="query" placeholder="Search...">
                 <button type="submit" class="btn btn-outline-primary">
                     <i class="bi bi-search"></i>
                 </button>
-            </form>
+            </form>*@
         </li>
 
         <li class="nav-item">
