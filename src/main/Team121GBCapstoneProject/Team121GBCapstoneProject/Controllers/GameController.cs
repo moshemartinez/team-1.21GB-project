@@ -40,9 +40,6 @@ namespace Team121GBCapstoneProject.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query)
         {
-            // TODO: Move these to UserSecrets before deployment
-            //_bearerToken = "llrnvo5vfowcyr0ggecl445q5dunyl";
-            //_clientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
             _clientId = _config["GamingPlatform:igdbClientId"];
             
