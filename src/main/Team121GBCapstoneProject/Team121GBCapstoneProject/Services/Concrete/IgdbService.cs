@@ -34,10 +34,7 @@ public class IgdbService : IIgdbService
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         httpClient.DefaultRequestHeaders.Add("Client-ID",clientId);
 
-        // HttpResponseMessage response = await httpClient.SendAsync(httpRequestMessage);
-        // OR Try:
         HttpResponseMessage response = await httpClient.PostAsync(uri, new StringContent(rawBody));
-
 
         // This is only a minimum version; make sure to cover all your bases here
         if (response.IsSuccessStatusCode)
