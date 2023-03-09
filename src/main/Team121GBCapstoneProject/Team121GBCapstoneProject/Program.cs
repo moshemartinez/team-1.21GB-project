@@ -30,7 +30,7 @@ var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToke
 
 builder.Services.AddHttpClient();
 // Add services to the container.
-builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey,
+builder.Services.AddScoped<IReCaptchaService, ReCaptchaV2Service>(recaptcha => new ReCaptchaV2Service(reCAPTCHASecretKey,
                                                                              new HttpClient()
                                                                              {
                                                                                  BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
