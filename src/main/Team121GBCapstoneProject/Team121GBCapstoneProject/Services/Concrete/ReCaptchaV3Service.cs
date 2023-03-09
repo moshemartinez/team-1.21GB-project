@@ -9,9 +9,10 @@ public class ReCaptchaV3Service : IReCaptchaV3Service
 {
     private readonly string _secretKey;
     private readonly IHttpClientFactory _httpClientFactory;
-    public ReCaptchaV3Service(string secretKey)
+    public ReCaptchaV3Service(string secretKey, IHttpClientFactory httpClientFactory)
     {
         _secretKey = secretKey;
+        _httpClientFactory = httpClientFactory;
     }
 
     //public Task<ReCaptchaResponse> GetVerifyResponseAsync(string reCaptchaResponse)

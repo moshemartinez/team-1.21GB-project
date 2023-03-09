@@ -36,7 +36,9 @@ builder.Services.AddScoped<IReCaptchaService, ReCaptchaV2Service>(recaptcha => n
                                                                              {
                                                                                  BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
-builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha => new ReCaptchaV3Service(reCAPTCHAV3SecretKey));
+builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha => 
+                                                                    new ReCaptchaV3Service(reCAPTCHAV3SecretKey, 
+                                                                    recaptcha.GetRequiredService<IHttpClientFactory>()));
 
 // Add Swagger middleware
 builder.Services.AddEndpointsApiExplorer();
