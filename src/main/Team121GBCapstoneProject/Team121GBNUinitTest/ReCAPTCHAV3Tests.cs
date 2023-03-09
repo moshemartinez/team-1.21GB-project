@@ -29,7 +29,7 @@ public class ReCAPTCHAV3Tests
         var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
         var reCaptchaResponse = "{\"success\": true}";
         // ! Act
-        bool result = reCaptchaV3.VerifyAsync(reCaptchaResponse).Result;
+        bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
 
         // ? Assert
         Assert.That(result, Is.EqualTo(true));
@@ -45,7 +45,7 @@ public class ReCAPTCHAV3Tests
         var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
         var reCaptchaResponse = "{\"success\": false}";
         // ! Act
-        bool result = reCaptchaV3.VerifyAsync(reCaptchaResponse).Result;
+        bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
 
         // ? Assert
         Assert.That(result, Is.EqualTo(false));
@@ -61,7 +61,7 @@ public class ReCAPTCHAV3Tests
         var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
         var reCaptchaResponse = "{}";
         // ! Act
-        bool result = reCaptchaV3.VerifyAsync(reCaptchaResponse).Result;
+        bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
 
         // ? Assert
         Assert.That(result, Is.EqualTo(false));

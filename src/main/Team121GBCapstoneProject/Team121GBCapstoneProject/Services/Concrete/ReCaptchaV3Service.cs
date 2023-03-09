@@ -1,5 +1,5 @@
-﻿using AspNetCore.ReCaptcha;
-
+﻿//using AspNetCore.ReCaptcha;
+using Team121GBCapstoneProject.Services.Abstract;
 namespace Team121GBCapstoneProject.Services.Concrete;
 
 public class ReCaptchaV3Service : IReCaptchaService
@@ -12,12 +12,17 @@ public class ReCaptchaV3Service : IReCaptchaService
         _httpClientFactory = httpClientFactory;
     }
 
-    public Task<ReCaptchaResponse> GetVerifyResponseAsync(string reCaptchaResponse)
-    {
-        throw new NotImplementedException();
-    }
+    //public Task<ReCaptchaResponse> GetVerifyResponseAsync(string reCaptchaResponse)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
-    public Task<bool> VerifyAsync(string reCaptchaResponse, string action = null)
+    //public Task<bool> VerifyAsync(string reCaptchaResponse, string action = null)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    public Task<bool> IsValid(string captcha)
     {
         throw new NotImplementedException();
     }
