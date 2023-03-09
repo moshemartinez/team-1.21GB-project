@@ -58,7 +58,6 @@ $(function () {
 
 function dalleClick() {
 	const userPrompt = document.getElementById("userPrompt")
-	//onClick(e);
 	const recaptcha = $("#dalleRecaptcha").val();
 	if (userPrompt.value != "") {
 		console.log(userPrompt);

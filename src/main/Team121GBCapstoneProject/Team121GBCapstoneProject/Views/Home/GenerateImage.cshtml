@@ -14,11 +14,7 @@
             <label asp-for="@Model.Prompt" class="form-label"></label>
             <span asp-validation-for="@Model.Prompt"  class="text-danger"></span>
         </div>
-        @*<div id="recaptcha"
-             class="g-recaptcha"
-             data-sitekey="6LcR_-YkAAAAAIR4vU4A-D3bq9NjQvyv129J7Azj"
-             data-callback="onSubmit"
-             data-size="invisible"></div>*@
+      
         <input type="hidden" id="dalleRecaptcha"  name="gRecaptchaResponse" />
         <div>
             <button id="submitPromptButton" type="submit" class="w-100 btn btn-lg btn-primary" onclick="dalleClick()">Generate Images</button>
@@ -65,24 +61,6 @@
     {
     <script type="text/javascript" src="~/js/Dalle.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6LcR_-YkAAAAAIR4vU4A-D3bq9NjQvyv129J7Azj"></script>
-    <script>
-        //$(function () {
-        //    grecaptcha.ready(function () {
-        //        grecaptcha.execute('6LcR_-YkAAAAAIR4vU4A-D3bq9NjQvyv129J7Azj', { action: 'submit' }).then(function (token) {
-        //            // Add your logic to submit to your backend server here.
-        //            console.log(token);
-        //        });
-        //    });
-        //});
-    </script>
-
-    @*<script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LcR_-YkAAAAAIR4vU4A-D3bq9NjQvyv129J7Azj', { action: 'getImages' }).then(function (token) {
-                document.getElementById("token").value = token;
-            });
-        });
-    </script>*@
     <script type="text/javascript" src="~/js/reCAPTCHAV3.js"></script>
 
 }
