@@ -1,15 +1,17 @@
-﻿//using AspNetCore.ReCaptcha;
+﻿using System.Diagnostics;
+using Newtonsoft.Json.Linq;
+using static System.Net.WebRequestMethods;
 using Team121GBCapstoneProject.Services.Abstract;
+
 namespace Team121GBCapstoneProject.Services.Concrete;
 
-public class ReCaptchaV3Service : IReCaptchaService
+public class ReCaptchaV3Service : IReCaptchaV3Service
 {
     private readonly string _secretKey;
     private readonly IHttpClientFactory _httpClientFactory;
-    public ReCaptchaV3Service(string secretKey, IHttpClientFactory httpClientFactory)
+    public ReCaptchaV3Service(string secretKey)
     {
         _secretKey = secretKey;
-        _httpClientFactory = httpClientFactory;
     }
 
     //public Task<ReCaptchaResponse> GetVerifyResponseAsync(string reCaptchaResponse)
@@ -24,6 +26,7 @@ public class ReCaptchaV3Service : IReCaptchaService
 
     public Task<bool> IsValid(string captcha)
     {
+
         throw new NotImplementedException();
     }
 }
