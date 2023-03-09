@@ -26,7 +26,7 @@ public class ReCAPTCHAV3Tests
         var handler = new Mock<HttpMessageHandler>();
         handler.SetupAnyRequest()
                .ReturnsResponse(System.Net.HttpStatusCode.OK);
-        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
+        var reCaptchaV3 = new ReCaptchaV3Service(secretKey);
         var reCaptchaResponse = "{\"success\": true}";
         // ! Act
         bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
@@ -42,7 +42,7 @@ public class ReCAPTCHAV3Tests
         var handler = new Mock<HttpMessageHandler>();
         handler.SetupAnyRequest()
                .ReturnsResponse(System.Net.HttpStatusCode.OK);
-        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
+        var reCaptchaV3 = new ReCaptchaV3Service(secretKey);
         var reCaptchaResponse = "{\"success\": false}";
         // ! Act
         bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
@@ -51,14 +51,14 @@ public class ReCAPTCHAV3Tests
         Assert.That(result, Is.EqualTo(false));
     }
     [Test]
-    public void ReCaptchaV3_Invalid_ShouldReturnFalse()
+    public void ReCaptchaV3_Invalid_ShouldReturnFalse() 
     {
         // * Arrange
         var secretKey = "SecretKey";
         var handler = new Mock<HttpMessageHandler>();
         handler.SetupAnyRequest()
                .ReturnsResponse(System.Net.HttpStatusCode.OK);
-        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
+        var reCaptchaV3 = new ReCaptchaV3Service(secretKey);
         var reCaptchaResponse = "{}";
         // ! Act
         bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
