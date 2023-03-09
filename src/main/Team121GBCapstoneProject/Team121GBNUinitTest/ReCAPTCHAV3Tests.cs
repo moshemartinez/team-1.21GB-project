@@ -22,12 +22,12 @@ public class ReCAPTCHAV3Tests
     public void ReCaptchaV3_Success_ShouldReturnTrue()
     {
         // * Arrange
+        var secretKey = "SecretKey";
         var handler = new Mock<HttpMessageHandler>();
         handler.SetupAnyRequest()
                .ReturnsResponse(System.Net.HttpStatusCode.OK);
-        var reCaptchaV3 = new ReCaptchaV3Service(handler.CreateClientFactory());
+        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
         var reCaptchaResponse = "{\"success\": true}";
-        var secretKey = "SecretKey";
         // ! Act
         bool result = reCaptchaV3.VerifyAsync(reCaptchaResponse).Result;
 
@@ -38,12 +38,12 @@ public class ReCAPTCHAV3Tests
     public void ReCaptchaV3_Failure_ShouldReturnFalse()
     {
         // * Arrange
+        var secretKey = "SecretKey";
         var handler = new Mock<HttpMessageHandler>();
         handler.SetupAnyRequest()
                .ReturnsResponse(System.Net.HttpStatusCode.OK);
-        var reCaptchaV3 = new ReCaptchaV3Service(handler.CreateClientFactory());
+        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
         var reCaptchaResponse = "{\"success\": false}";
-        var secretKey = "SecretKey";
         // ! Act
         bool result = reCaptchaV3.VerifyAsync(reCaptchaResponse).Result;
 
@@ -54,12 +54,12 @@ public class ReCAPTCHAV3Tests
     public void ReCaptchaV3_Invalid_ShouldReturnFalse()
     {
         // * Arrange
+        var secretKey = "SecretKey";
         var handler = new Mock<HttpMessageHandler>();
         handler.SetupAnyRequest()
                .ReturnsResponse(System.Net.HttpStatusCode.OK);
-        var reCaptchaV3 = new ReCaptchaV3Service(handler.CreateClientFactory());
+        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
         var reCaptchaResponse = "{}";
-        var secretKey = "SecretKey";
         // ! Act
         bool result = reCaptchaV3.VerifyAsync(reCaptchaResponse).Result;
 
