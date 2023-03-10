@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
@@ -15,9 +16,9 @@ namespace Team121GBCapstoneProject.Controllers
     public class DalleController : Controller
     {
         private readonly IDalleService _dalleService;
-        private readonly IReCaptchaService _reCaptchaService;
-
-        public DalleController(IDalleService dalleService, IReCaptchaService reCaptchaService)
+        private readonly IReCaptchaV3Service _reCaptchaService;
+        private readonly string _url = "https://www.google.com/recaptcha/api/siteverify";
+        public DalleController(IDalleService dalleService, IReCaptchaV3Service reCaptchaService)
         {
             _dalleService = dalleService;
             _reCaptchaService = reCaptchaService;
@@ -28,8 +29,9 @@ namespace Team121GBCapstoneProject.Controllers
         {
             try
             {
+                //Debug.Assert(gRecaptchaResponse != null);
                 if (gRecaptchaResponse == null) return BadRequest();
-                if (!_reCaptchaService.IsValid(gRecaptchaResponse).Result) return BadRequest();
+                if (!_reCaptchaService.IsValid(gRecaptchaResponse, _url).Result) return BadRequest();
 
                 if (prompt != null)
                 {

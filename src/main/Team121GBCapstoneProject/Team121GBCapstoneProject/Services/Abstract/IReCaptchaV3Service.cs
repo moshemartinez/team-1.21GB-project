@@ -2,5 +2,5 @@
 
 public interface IReCaptchaV3Service
 {
-    public Task<bool> IsValid(string captcha);
+    public Task<bool> IsValid(string captcha, string url);
 }

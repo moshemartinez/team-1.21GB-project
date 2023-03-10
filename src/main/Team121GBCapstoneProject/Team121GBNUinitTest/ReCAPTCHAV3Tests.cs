@@ -22,14 +22,23 @@ public class ReCAPTCHAV3Tests
     public void ReCaptchaV3_Success_ShouldReturnTrue()
     {
         // * Arrange
-        var secretKey = "SecretKey";
+        string secretKey = "SecretKey";
+        string captcha = "captcha_response";
+        string responseJson = "{\"success\": true}";
+        string url = "https://fake.com";
+
         var handler = new Mock<HttpMessageHandler>();
-        handler.SetupAnyRequest()
-               .ReturnsResponse(System.Net.HttpStatusCode.OK);
-        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
-        var reCaptchaResponse = "{\"success\": true}";
+        HttpResponseMessage response = new HttpResponseMessage()
+        {
+            Content = new StringContent(responseJson)
+        };
+        handler.SetupAnyRequest().ReturnsAsync(response);
+
+
+        ReCaptchaV3Service reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
+
         // ! Act
-        bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
+        bool result = reCaptchaV3.IsValid(captcha, url).Result;
 
         // ? Assert
         Assert.That(result, Is.EqualTo(true));
@@ -38,14 +47,21 @@ public class ReCAPTCHAV3Tests
     public void ReCaptchaV3_Failure_ShouldReturnFalse()
     {
         // * Arrange
-        var secretKey = "SecretKey";
+        string secretKey = "SecretKey";
+        string captcha = "captcha_response";
+        string responseJson = "{\"success\": false}";
+        string url = "https://fake.com";
+        
         var handler = new Mock<HttpMessageHandler>();
-        handler.SetupAnyRequest()
-               .ReturnsResponse(System.Net.HttpStatusCode.OK);
-        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
-        var reCaptchaResponse = "{\"success\": false}";
+        HttpResponseMessage response = new HttpResponseMessage()
+        {
+            Content = new StringContent(responseJson)
+        };
+        handler.SetupAnyRequest().ReturnsAsync(response);
+
+        ReCaptchaV3Service reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
         // ! Act
-        bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
+        bool result = reCaptchaV3.IsValid(captcha, url).Result;
 
         // ? Assert
         Assert.That(result, Is.EqualTo(false));
@@ -54,14 +70,23 @@ public class ReCAPTCHAV3Tests
     public void ReCaptchaV3_NotFound_ShouldReturnFalse() 
     {
         // * Arrange
-        var secretKey = "SecretKey";
+        string secretKey = "SecretKey";
+        string captcha = "captcha_response";
+        string responseJson = "{}";
+        string url = "https://fake.com";
+
         var handler = new Mock<HttpMessageHandler>();
-        handler.SetupAnyRequest()
-               .ReturnsResponse(System.Net.HttpStatusCode.NotFound);
-        var reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
-        var reCaptchaResponse = "{}";
+        HttpResponseMessage response = new HttpResponseMessage()
+        {
+            Content = new StringContent(responseJson)
+        };
+        handler.SetupAnyRequest().ReturnsAsync(response);
+
+
+        ReCaptchaV3Service reCaptchaV3 = new ReCaptchaV3Service(secretKey, handler.CreateClientFactory());
+        
         // ! Act
-        bool result = reCaptchaV3.IsValid(reCaptchaResponse).Result;
+        bool result = reCaptchaV3.IsValid(captcha, url).Result;
 
         // ? Assert
         Assert.That(result, Is.EqualTo(false));
