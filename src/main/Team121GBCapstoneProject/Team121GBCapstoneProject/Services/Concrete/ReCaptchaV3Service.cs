@@ -16,22 +16,12 @@ public class ReCaptchaV3Service : IReCaptchaV3Service
         _secretKey = secretKey;
         _httpClientFactory = httpClientFactory;
     }
-
-    //public Task<ReCaptchaResponse> GetVerifyResponseAsync(string reCaptchaResponse)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public Task<bool> VerifyAsync(string reCaptchaResponse, string action = null)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
+    
     public async Task<bool> IsValid(string captcha, string url)
     {
         try
         {
-            _url = url + $"/?secret={_secretKey}&response={captcha}";
+            _url = url + $"?secret={_secretKey}&response={captcha}";
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.BaseAddress = new Uri(_url);
             HttpResponseMessage postTask = await httpClient.PostAsync(_url, new StringContent(""));
