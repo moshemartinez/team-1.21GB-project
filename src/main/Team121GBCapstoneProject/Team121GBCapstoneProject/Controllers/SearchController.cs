@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.DAL.Abstract;
@@ -23,7 +24,7 @@ public class SearchController : Controller
 
     //    return View("SearchResults", gameSearchResults);
     //}
-
+    [Authorize]
     public IActionResult Results()
     {
         return View("SearchResults");

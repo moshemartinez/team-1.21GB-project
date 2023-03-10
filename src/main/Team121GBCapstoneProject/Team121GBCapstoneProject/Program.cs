@@ -23,6 +23,7 @@ using Team121GBCapstoneProject.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
+var reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
 var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
 var SendGridKey = builder.Configuration["SendGridKey"];
 var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
@@ -30,11 +31,14 @@ var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToke
 
 builder.Services.AddHttpClient();
 // Add services to the container.
-builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey,
+builder.Services.AddScoped<IReCaptchaService, ReCaptchaV2Service>(recaptcha => new ReCaptchaV2Service(reCAPTCHASecretKey,
                                                                              new HttpClient()
                                                                              {
                                                                                  BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
+builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha => 
+                                                                    new ReCaptchaV3Service(reCAPTCHAV3SecretKey, 
+                                                                    recaptcha.GetRequiredService<IHttpClientFactory>()));
 
 // Add Swagger middleware
 builder.Services.AddEndpointsApiExplorer();

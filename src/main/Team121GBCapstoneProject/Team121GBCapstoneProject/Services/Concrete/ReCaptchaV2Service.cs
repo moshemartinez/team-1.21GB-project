@@ -5,11 +5,11 @@ using Team121GBCapstoneProject.Services.Abstract;
 
 namespace Team121GBCapstoneProject.Services.Concrete;
 
-public class ReCaptchaService : IReCaptchaService
+public class ReCaptchaV2Service : IReCaptchaService
 {
     private readonly HttpClient _captchaClient;
     private string _secretKey;
-    public ReCaptchaService(string secretKey, HttpClient httpClient)
+    public ReCaptchaV2Service(string secretKey, HttpClient httpClient)
     {
         _secretKey = secretKey;
         _captchaClient = httpClient;
