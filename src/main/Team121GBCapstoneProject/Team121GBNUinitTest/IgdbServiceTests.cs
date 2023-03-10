@@ -5,7 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Contrib.HttpClient;  
-using Team121GBCapstoneProject.Services;
+using Team121GBCapstoneProject.Services.Concrete;
 using Team121GBCapstoneProject.Models;
 
 namespace Team121GBNUinitTests;
