@@ -30,5 +30,5 @@ public partial class Game
     public string CoverPicture { get; set; }
 
     [InverseProperty("Game")]
-    public virtual ICollection<PersonGameList> PersonGameLists { get; } = new List<PersonGameList>();
+    public virtual ICollection<PersonGame> PersonGames { get; } = new List<PersonGame>();
 }

@@ -109,15 +109,20 @@ INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[Cover
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture]) VALUES ('Kirby Mass Attack','In this game, poor Kirby was split into 10 weaker copies of himself by the villainous Necrodeus. Using the stylus, players guided these mini Kirbys on an amazing adventure to restore Kirby to his former self.', 2011, 9.1, 'https://upload.wikimedia.org/wikipedia/en/thumb/b/be/Kirby_Mass_Attack_cover.jpg/220px-Kirby_Mass_Attack_cover.jpg');
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture]) VALUES ('Kirby''s Return to Dream Land','When a mysterious traveler crash-landed on Planet Popstar, Kirby and his friends rushed to his aid, and an amazing adventure began!', 2011, 9.2, 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Kirbys_return_to_dreamland_boxart.jpg/220px-Kirbys_return_to_dreamland_boxart.jpg');
 
---seed List Types
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Currently Playing');
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Completed');
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Want to Play');
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Custom');
+--seed ListKind
+INSERT INTO [ListKind] ([Kind]) VALUES ('Currently Playing');
+INSERT INTO [ListKind] ([Kind]) VALUES ('Completed');
+INSERT INTO [ListKind] ([Kind]) VALUES ('Want to Play');
 
---seed default List Names
-INSERT INTO [ListName] ([NameOfList]) VALUES ('Currently Playing');
-INSERT INTO [ListName] ([NameOfList]) VALUES ('Completed');
-INSERT INTO [ListName] ([NameOfList]) VALUES ('Want to Play');
+--seed List Types
+-- INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Currently Playing');
+-- INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Completed');
+-- INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Want to Play');
+-- INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Custom');
+
+-- --seed default List Names
+-- INSERT INTO [ListName] ([NameOfList]) VALUES ('Currently Playing');
+-- INSERT INTO [ListName] ([NameOfList]) VALUES ('Completed');
+-- INSERT INTO [ListName] ([NameOfList]) VALUES ('Want to Play');
 
 
