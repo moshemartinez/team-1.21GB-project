@@ -5,8 +5,9 @@
 }
 
 <div class="row">
-    @* <div  style="float: right;">
-        @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddListForm">AddList</button> 
+    @* <div style="float: right;">
+    @* <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#AddListForm">AddList</button>
     </div> *@
 
     @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
@@ -55,13 +56,30 @@
             <tbody>
                 @* Add the game info *@
                 <tr>
-                   
+
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
 
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("tr").hover(
+                function () {
+                    $(this).css("background-color", "white");
+                    $(this).css("border-radius", "10px");
+                },
+                function () {
+                    $(this).css("background-color", "");
+                    $(this).css("border-radius", "");
+                });
+        });
+
+    </script>
+}
 @* <div class="modal fade" id="AddListForm" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
