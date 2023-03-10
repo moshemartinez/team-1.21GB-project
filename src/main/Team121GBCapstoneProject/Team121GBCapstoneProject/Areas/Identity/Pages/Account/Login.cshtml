@@ -29,6 +29,7 @@
                         @Html.DisplayNameFor(m => m.Input.RememberMe)
                     </label>
                 </div>
+                <input type="hidden" id="recaptcha"  name="gRecaptchaResponse" />
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
@@ -80,4 +81,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcR_-YkAAAAAIR4vU4A-D3bq9NjQvyv129J7Azj"></script>
+    <script type="text/javascript" src="~/js/reCAPTCHAV3.js"></script>
 }
