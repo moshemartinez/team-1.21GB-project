@@ -113,16 +113,3 @@ INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[Cover
 INSERT INTO [ListKind] ([Kind]) VALUES ('Currently Playing');
 INSERT INTO [ListKind] ([Kind]) VALUES ('Completed');
 INSERT INTO [ListKind] ([Kind]) VALUES ('Want to Play');
-
---seed List Types
--- INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Currently Playing');
--- INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Completed');
--- INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Want to Play');
--- INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Custom');
-
--- --seed default List Names
--- INSERT INTO [ListName] ([NameOfList]) VALUES ('Currently Playing');
--- INSERT INTO [ListName] ([NameOfList]) VALUES ('Completed');
--- INSERT INTO [ListName] ([NameOfList]) VALUES ('Want to Play');
-
-
