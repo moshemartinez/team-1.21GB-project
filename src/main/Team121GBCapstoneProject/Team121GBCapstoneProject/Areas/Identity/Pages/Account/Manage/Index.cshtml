@@ -17,20 +17,24 @@
                 <label asp-for="Input.FirstName" class="form-label"></label>
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-floating mb-3">
                 <input asp-for="Input.LastName" class="form-control" placeholder="Please enter your last name" required />
                 <label asp-for="Input.LastName" class="form-label"></label>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
+            <br/>
             <div class="form-floating mb-3">
                 <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-floating mb-3">
                 <input asp-for="Input.ProfileBio" class="form-control" placeholder="@Model.Input.ProfileBio" maxlength="500" />
                 <label asp-for="Input.ProfileBio" class="form-label"></label>
@@ -88,8 +92,8 @@
             </div>
         </div>
     </div>
-    <br/>
-    <button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+     <br/> 
+    <button id="update-profile-bio-button" style="padding: 10px;" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
 </form>
 
 
