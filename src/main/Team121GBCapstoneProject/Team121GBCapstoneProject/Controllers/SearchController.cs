@@ -16,7 +16,6 @@ public class SearchController : Controller
         _logger = logger;
     }
 
-
     [Authorize]
     public IActionResult Results()
     {
