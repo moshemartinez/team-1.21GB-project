@@ -36,10 +36,16 @@ public class GamesListsController : Controller
         List<PersonList> personLists = _personListRepository.GetAll()
                                                             .Where(l => l.Person.AuthorizationId == user.AuthorizationId)
                                                             .ToList();
-
-        PersonListVM personListVM = new PersonListVM(personLists);
+        List<string> listKinds = personLists.Select(l => l.ListKind)
+                                            .ToList();
+        List<PersonGame> personGames = new List<PersonGame>();
         List<PersonListVM> personListVMList = new List<PersonListVM>();
-        return View("Index", personListVM );
+        foreach(string listKind in listKinds)
+        {
+            PersonListVM temp = new PersonListVM(listKind, personGames);
+            personListVMList.Add(temp);
+        }
+        return View("Index", personListVMList );
     }
 
     // [HttpPost]

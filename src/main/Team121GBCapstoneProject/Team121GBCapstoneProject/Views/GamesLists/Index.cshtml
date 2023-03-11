@@ -33,7 +33,6 @@
 </div>
 <br>
 <!--for each lists construct view-->
-@* @foreach (var list in @Model.PersonLists) *@
 @foreach(PersonListVM listVm in @Model)
 {
     <div class="row">
@@ -43,7 +42,6 @@
                     <tr>
                         <td>
                             <h1>@listVm.ListKind</h1>
-                            @* <h1>@list.First().ListKind</h1> *@
                         </td>
                     </tr>
                     <tr>
@@ -59,12 +57,6 @@
                 </thead>
                 <tbody>
                     @* Add the game info *@
-                    @* @foreach (var game in list) *@
-                    {
-                    <tr>
-                        @* //<td>@game.PersonGames</td> *@
-                    </tr>   
-                    }
                 </tbody>
             </table>
         </div>
