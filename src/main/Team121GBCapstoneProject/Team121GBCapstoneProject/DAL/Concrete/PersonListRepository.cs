@@ -8,5 +8,11 @@ public class PersonListRepository : Repository<PersonList>, IPersonListRepositor
     public PersonListRepository(GPDbContext ctx) : base(ctx)
     {
     }
+
+    public bool AddDefaultListsOnAccountCreation(string authorizationId)
+    {
+
+        throw new NotImplementedException();
+    }
 }
 
