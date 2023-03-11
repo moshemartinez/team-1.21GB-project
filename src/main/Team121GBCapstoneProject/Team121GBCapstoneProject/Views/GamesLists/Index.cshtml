@@ -1,4 +1,4 @@
-@model Team121GBCapstoneProject.Models.PersonListVM;
+@* @model Team121GBCapstoneProject.Models.PersonListVM; *@
 
 @{
     ViewData["Title"] = "Games Lists";
@@ -33,7 +33,8 @@
 </div>
 <br>
 <!--for each lists construct view-->
-@foreach (var list in @Model.PersonLists)
+@* @foreach (var list in @Model.PersonLists) *@
+@foreach(PersonListVM listVm in @Model)
 {
     <div class="row">
         <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
@@ -41,7 +42,8 @@
                 <thead>
                     <tr>
                         <td>
-                            <h1>@list.First().ListKind</h1>
+                            <h1>@listVm.ListKind</h1>
+                            @* <h1>@list.First().ListKind</h1> *@
                         </td>
                     </tr>
                     <tr>
@@ -57,7 +59,7 @@
                 </thead>
                 <tbody>
                     @* Add the game info *@
-                    @foreach (var game in list)
+                    @* @foreach (var game in list) *@
                     {
                     <tr>
                         @* //<td>@game.PersonGames</td> *@
