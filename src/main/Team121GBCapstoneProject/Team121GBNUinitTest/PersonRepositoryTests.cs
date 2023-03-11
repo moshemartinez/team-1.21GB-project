@@ -10,7 +10,6 @@ using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
 using Team121GBNUinitTest;
 
-//#nullable disable
 namespace Team121GBNUnitTest;
 
 /**
