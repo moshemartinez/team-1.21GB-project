@@ -31,7 +31,11 @@ public class GamesListsController : Controller
     [HttpGet]
     public IActionResult Index()
     {   
-
+        Person user = _personRepository.GetAll()
+                                       .FirstOrDefault(u => u.AuthorizationId == _userManager.GetUserId(User));
+        List<PersonList> personLists = _personListRepository.GetAll()
+                                                            .Where(l => l.Person.AuthorizationId == user.AuthorizationId)
+                                                            .ToList();
         return View("Index");
     }
 
