@@ -33,36 +33,41 @@
 </div>
 <br>
 <!--for each lists construct view-->
-<div class="row">
-    <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
-        <table>
-            <thead>
-                <tr>
-                    <td>
-                        <h1>LIST NAME</h1>
-                    </td>
-                </tr>
-                <tr>
-                    <h3>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Released</th>
-                        <th>ESRB Rating</th>
-                        <th>Average Rating</th>
-                        <th>Cover Picture</th>
-                    </h3>
-                </tr>
-            </thead>
-            <tbody>
-                @* Add the game info *@
-                <tr>
-
-                </tr>
-            </tbody>
-        </table>
+@foreach (var list in @Model.PersonLists)
+{
+    <div class="row">
+        <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            <h1>@list.First().ListKind</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <h3>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Released</th>
+                            <th>ESRB Rating</th>
+                            <th>Average Rating</th>
+                            <th>Cover Picture</th>
+                        </h3>
+                    </tr>
+                </thead>
+                <tbody>
+                    @* Add the game info *@
+                    @foreach (var game in list)
+                    {
+                    <tr>
+                        @* //<td>@game.PersonGames</td> *@
+                    </tr>   
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-
+}
 @section Scripts
     {
     <script>
