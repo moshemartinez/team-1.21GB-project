@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
 
@@ -20,18 +22,25 @@ public class PersonListRepositoryTests
         // * Arrange 
         using GPDbContext context = _dbHelper.GetContext();
         PersonListRepository personListRepository = new PersonListRepository(context);
-        Person person = new Person
-        {
+        PersonRepository personRepository = new PersonRepository(context);
+        string authorizationId = "some-String";
+        ListKindRepository listKindRepository = new ListKindRepository(context);
+        List<ListKind> listKinds = listKindRepository.GetAll().ToList();
+        //add a valid person to db
+        personRepository.AddPersonToProjectDb(authorizationId);
+        //Get the person that was added to db and pass it to default list method
+        Person person = personRepository.GetAll().FirstOrDefault(p => p.AuthorizationId == authorizationId);
 
-        };
-        PersonList personList = new PersonList
-        {
-
-        };
         // ! Act
-
+        bool result = personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
+        int count = personListRepository.GetAll().Count();
+        List<PersonList> personListsInDb = personListRepository.GetAll().ToList();
         // ? Assert
-
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.EqualTo(true));
+            Assert.That(count, Is.EqualTo(3));
+        });
     }
 
     [Test]
@@ -40,11 +49,18 @@ public class PersonListRepositoryTests
         // * Arrange 
         using GPDbContext context = _dbHelper.GetContext();
         PersonListRepository personListRepository = new PersonListRepository(context);
+        ListKindRepository listKindRepository = new ListKindRepository(context);
+        List<ListKind> listKinds = listKindRepository.GetAll().ToList();
         Person person = null;
-        PersonList personList = new PersonList();
         // ! Act
-
+        bool result = personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
+        int count = personListRepository.GetAll().Count();
         // ? Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.EqualTo(false));
+            Assert.That(count, Is.EqualTo(0));
+        });
 
     }
     [Test]
@@ -53,22 +69,24 @@ public class PersonListRepositoryTests
         // * Arrange 
         using GPDbContext context = _dbHelper.GetContext();
         PersonListRepository personListRepository = new PersonListRepository(context);
+        ListKindRepository listKindRepository = new ListKindRepository(context);
+        List<ListKind> listKinds = null;
+        PersonRepository personRepository = new PersonRepository(context);
+        string authorizationId = "some-String";
+        //add a valid person to db
+        personRepository.AddPersonToProjectDb(authorizationId);
+        //Get the person that was added to db and pass it to default list method
+        Person person = personRepository.GetAll().FirstOrDefault(p => p.AuthorizationId == authorizationId);
 
         // ! Act
-
+        bool result = personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
+        int count = personListRepository.GetAll().Count();
         // ? Assert
-
-    }
-    [Test]
-    public void GPDbContext_CreateDefaultLists_Failure_ListNameIsEmpty_ShouldReturnFalse()
-    {
-        // * Arrange 
-        using GPDbContext context = _dbHelper.GetContext();
-        PersonListRepository personListRepository = new PersonListRepository(context);
-
-        // ! Act
-
-        // ? Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.EqualTo(false));
+            Assert.That(count, Is.EqualTo(0));
+        });
 
     }
 }
