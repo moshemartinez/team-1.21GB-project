@@ -42,11 +42,11 @@ namespace Team121GBCapstoneProject.Controllers
         {
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
             _clientId = _config["GamingPlatform:igdbClientId"];
-            
+
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
 
-            var searchResult = await _igdbService.SearchGames(query);
+            var searchResult = _igdbService.SearchGameWithCachingAsync(query);
 
             if (searchResult is null)
             {
@@ -55,6 +55,25 @@ namespace Team121GBCapstoneProject.Controllers
 
             return Ok(searchResult);
         }
+
+        /*  [HttpGet]
+          public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query)
+          {
+              _bearerToken = _config["GamingPlatform:igdbBearerToken"];
+              _clientId = _config["GamingPlatform:igdbClientId"];
+
+              // Set Credentials
+              _igdbService.SetCredentials(_clientId, _bearerToken);
+
+              var searchResult = await _igdbService.SearchGames(query);
+
+              if (searchResult is null)
+              {
+                  return NotFound();
+              }
+
+              return Ok(searchResult);
+          }*/
 
         [HttpPost("addGame")]
         public async Task<ActionResult<IgdbGame>> AddGameToList(Game game, string listName)

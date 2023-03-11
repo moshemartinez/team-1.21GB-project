@@ -7,5 +7,5 @@ public interface IIgdbService
 {
     void SetCredentials(string clientId, string token);
     Task<IEnumerable<IgdbGame>> SearchGames(string query);
-
+    Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(string query = "");
 }

@@ -48,10 +48,18 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             throw new NotImplementedException();
         }
 
+        public List<Game> GetGamesByTitle(string title)
+        {
+            var gamesToReturn = _game.Where(g => g.Title.Contains(title)).Take(10).ToList();
+            return gamesToReturn;
+        }
+
         public List<Game> GetTrendingGames(int numberOfGames)
         {
             var gamesReturn = _game.OrderByDescending(g => g.AverageRating).Take(numberOfGames).ToList();
             return gamesReturn;
         }
+
+
     }
 }
