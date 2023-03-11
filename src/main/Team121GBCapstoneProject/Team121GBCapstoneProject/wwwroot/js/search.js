@@ -21,7 +21,7 @@ function displaySearchResults(query) {
 
                         var row = `<tr>
                                     <td><img src="${resizedCoverArt}"></td>
-                                    <td>${game.gameTitle}</td>
+                                    <td><b>${game.gameTitle}</b></td>
                                     <td><a href="${game.gameWebsite}">${game.gameWebsite}"</a></td>
                                     <td><button class="btn btn-primary">Add Game</button></td>
                                </tr>`;
