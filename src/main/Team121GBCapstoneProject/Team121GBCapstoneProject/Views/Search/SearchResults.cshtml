@@ -4,15 +4,15 @@
 
 <table class="table" id="gameTable">
     <thead>
-    <tr>
-        <th>Cover</th>
-        <th>Name</th>
-        <th>Website</th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>Cover</th>
+            <th>Name</th>
+            <th>Website</th>
+            <th></th>
+        </tr>
     </thead>
     <tbody id="gameTableBody">
-        
+
     </tbody>
 </table>
 <div class="modal fade" id="AddGame" tabindex="-1" aria-labelledby="gameFormModalLabel" aria-hidden="true">
@@ -33,7 +33,7 @@
                         </div>
                         @*asp-action="AddList"*@
                         <input id="formSubmit" type="submit" data-bs-dismiss="modal" class="btn btn-primary"
-                               value="Add Game" />
+                            value="Add Game" />
                     </form>
                 </div>
             </div>
@@ -43,4 +43,7 @@
         </div>
     </div>
 </div>
-<script src="/js/search.js"></script>
+@section Scripts{
+    <script src="~/js/search.js"></script>
+    <script src="~/js/addGame.js"></script>
+}
