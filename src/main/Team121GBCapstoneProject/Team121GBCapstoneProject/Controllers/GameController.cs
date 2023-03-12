@@ -46,7 +46,7 @@ namespace Team121GBCapstoneProject.Controllers
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
 
-            var searchResult = _igdbService.SearchGameWithCachingAsync(query);
+            var searchResult = await _igdbService.SearchGameWithCachingAsync(query);
 
             if (searchResult is null)
             {

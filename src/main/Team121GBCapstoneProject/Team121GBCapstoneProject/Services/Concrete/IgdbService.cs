@@ -116,7 +116,7 @@ public class IgdbService : IIgdbService
         
         foreach (var game in gamesFromSearch) 
         {
-            if (gamesToReturn.Count() == 10)
+            if (gamesToReturn.Count() >= 10)
             {
                 break;
             }
@@ -125,18 +125,18 @@ public class IgdbService : IIgdbService
             {
                 continue;
             }
-            else
-            {
+           
                 Game gameToAdd = new Game();
-                gameToAdd.Title = game.GameTitle;
+                gameToAdd.Title = game.GameTitle.ToString();
                 gameToAdd.CoverPicture = game.GameCoverArt.ToString();
                 gameToAdd.IGDBUrl = game.GameWebsite.ToString();
+
 
                 _genericGameRepo.AddOrUpdate(gameToAdd);
 
                 gamesToReturn.Add(game);
 
-            }
+            
         }
 
 
