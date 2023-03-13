@@ -21,50 +21,20 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <input type="button" 
-                               value="Log Out" 
-                               style="height:50px; 
-                                      width:200px; 
-                                      background-color: grey; 
-                                      color: white; 
-                                      font-weight: bolder; 
-                                      border-color: black; 
-                                      border-width: 2px; 
-                                      border-radius: 10px;
-                                      font-size: larger;"/>
+                        <input type="button" value="Log Out" class="loggedInOrOut"/>
                     </a>
                 }
                 else
                 {
                     <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
-                        <input type="button" 
-                               value="Log In" 
-                               style="height:50px; 
-                                      width:200px; 
-                                      background-color: grey; 
-                                      color: white; 
-                                      font-weight: bolder; 
-                                      border-color: black; 
-                                      border-width: 2px; 
-                                      border-radius: 10px;
-                                      font-size: larger;"/>
+                        <input type="button" value="Log In" class="loggedInOrOut"/>
                     </a>
                 }
 
             </div>
             <div class="col-sm">
                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">
-                <input type="button"
-                       value="Create Account"
-                       style="height:50px;
-                              width:200px;
-                              background-color: dodgerblue;
-                              color: white;
-                              font-weight: bolder;
-                              border-color: black;
-                              border-width: 2px;
-                              border-radius: 10px;
-                              font-size: larger;" />
+                <input type="button" value="Create Account" class="createUser"/>
                 </a>
             </div>
         </div>
@@ -110,15 +80,16 @@
 
             @foreach (var game in Model.games)
             {
-                
+
                 <div class="carousel-item @(i == 1? "active": "")">
-                    <img src="@game.CoverPicture" style="width: 200px; height: 200px; margin-bottom: 175px; margin-top: 30px;">
+                <span class="hovertext" data-hover="@game.YearPublished">
+                        <img src="@game.CoverPicture" style="width: 200px; height: 200px; margin-bottom: 175px; margin-top: 30px;">
+                    </span>
                     <div class="carousel-caption d-none d-md-block">
                         <h5 style="color: black; font-weight: bold;">@($"#{i++} - {game.Title}")</h5>
                         <p style="color: black; font-weight: bold;">@game.Description</p>
                     </div>
                 </div>
-            
             }
     
         
