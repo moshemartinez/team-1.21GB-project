@@ -40,3 +40,25 @@ function dalleModalOpen() {
 function dalleModalClose() {
     $('#DalleModal').modal('hide');
 }
+
+// Dark Mode
+$(document).ready(function () {
+    // Check if the user has previously set the dark mode preference
+    if (localStorage.getItem('dark-mode-enabled') === 'true') {
+        // Enable dark mode
+        $('body').addClass('dark-mode');
+    }
+});
+
+// When the dark mode toggle button is clicked
+$('#dark-mode-toggle').click(function () {
+    // Toggle the dark mode
+    $('body').toggleClass('dark-mode');
+
+    // Save the user's preference
+    if ($('body').hasClass('dark-mode')) {
+        localStorage.setItem('dark-mode-enabled', 'true');
+    } else {
+        localStorage.setItem('dark-mode-enabled', 'false');
+    }
+});
