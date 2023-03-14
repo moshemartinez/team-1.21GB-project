@@ -51,7 +51,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
 
         public List<Game> GetGamesByTitle(string title)
         {
-            var gamesToReturn = _game.Where(g => g.Title.Contains(title)).Take(10).ToList();
+            var gamesToReturn = _game.Where(g => g.Title.Contains(title)).ToList();
             return gamesToReturn;
         }
 

@@ -86,14 +86,14 @@ public class IgdbService : IIgdbService
         return Enumerable.Empty<IgdbGame>();
     }
 
-    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(string query = "")
+    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "")
     {
         List<IgdbGame> gamesToReturn = new List<IgdbGame>();
         List<Game> GamesFromPersonalDB = _gameRepository.GetGamesByTitle(query);
 
         if (GamesFromPersonalDB.Count() > 0)
         {
-            if (GamesFromPersonalDB.Count() == 10)
+            if (GamesFromPersonalDB.Count() == numberOfGames)
             {
                 foreach (var game in GamesFromPersonalDB)
                 {
@@ -116,7 +116,7 @@ public class IgdbService : IIgdbService
         
         foreach (var game in gamesFromSearch) 
         {
-            if (gamesToReturn.Count() >= 10)
+            if (gamesToReturn.Count() >= numberOfGames)
             {
                 break;
             }
@@ -128,7 +128,16 @@ public class IgdbService : IIgdbService
            
                 Game gameToAdd = new Game();
                 gameToAdd.Title = game.GameTitle.ToString();
-                gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+
+                if (game.GameCoverArt == null)
+                {
+                    gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
+                }
+                else
+                {
+                    gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+                }
+                
                 gameToAdd.IGDBUrl = game.GameWebsite.ToString();
 
 
