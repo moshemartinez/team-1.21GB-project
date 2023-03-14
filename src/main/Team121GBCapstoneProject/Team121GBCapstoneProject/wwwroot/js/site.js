@@ -4,7 +4,7 @@
 // Write your JavaScript code.
 
 
-// Search feature
+// Search Feature
 $(document).ready(function () {
     $("#searchButton").click(function (event) {
 
@@ -41,24 +41,45 @@ function dalleModalClose() {
     $('#DalleModal').modal('hide');
 }
 
+
 // Dark Mode
 $(document).ready(function () {
-    // Check if the user has previously set the dark mode preference
+    // check if the user has previously set the dark mode preference
     if (localStorage.getItem('dark-mode-enabled') === 'true') {
-        // Enable dark mode
+        // enable dark mode
         $('body').addClass('dark-mode');
     }
 });
 
-// When the dark mode toggle button is clicked
+// when the dark mode toggle button is clicked
 $('#dark-mode-toggle').click(function () {
-    // Toggle the dark mode
+    // toggle the dark mode
     $('body').toggleClass('dark-mode');
 
-    // Save the user's preference
+    // save the user's preference
     if ($('body').hasClass('dark-mode')) {
         localStorage.setItem('dark-mode-enabled', 'true');
     } else {
         localStorage.setItem('dark-mode-enabled', 'false');
     }
 });
+
+// Darkmode.js
+// See https://darkmodejs.learn.uno/
+var options = {
+    bottom: '64px', // default: '32px'
+    right: 'unset', // default: '32px'
+    left: '32px', // default: 'unset'
+    time: '0.3s', // default: '0.3s'
+    mixColor: '#fff', // default: '#fff'
+    backgroundColor: '#fff',  // default: '#fff'
+    buttonColorDark: '#100f2c',  // default: '#100f2c'
+    buttonColorLight: '#fff', // default: '#fff'
+    saveInCookies: true, // default: true,
+    label: '🌓', // default: ''
+    autoMatchOsTheme: true // default: true
+}
+
+var darkmode = new Darkmode(options);
+darkmode.showWidget();
+
