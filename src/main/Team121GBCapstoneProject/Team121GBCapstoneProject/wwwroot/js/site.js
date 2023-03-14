@@ -42,26 +42,21 @@ function dalleModalClose() {
 }
 
 
-// Dark Mode
-$(document).ready(function () {
-    // check if the user has previously set the dark mode preference
-    if (localStorage.getItem('dark-mode-enabled') === 'true') {
-        // enable dark mode
-        $('body').addClass('dark-mode');
-    }
-});
 
 // when the dark mode toggle button is clicked
 $('#dark-mode-toggle').click(function () {
-    // toggle the dark mode
-    $('body').toggleClass('dark-mode');
+    //// toggle the dark mode
+    //$('body').toggleClass('dark-mode');
 
-    // save the user's preference
-    if ($('body').hasClass('dark-mode')) {
-        localStorage.setItem('dark-mode-enabled', 'true');
-    } else {
-        localStorage.setItem('dark-mode-enabled', 'false');
-    }
+    //// save the user's preference
+    //if ($('body').hasClass('dark-mode')) {
+    //    localStorage.setItem('dark-mode-enabled', 'true');
+    //} else {
+    //    localStorage.setItem('dark-mode-enabled', 'false');
+    //}
+
+    darkmode.toggle();
+    console.log("dark mode activated: ", darkmode.isActivated()); // should return true
 });
 
 // Darkmode.js
@@ -81,5 +76,4 @@ var options = {
 }
 
 var darkmode = new Darkmode(options);
-darkmode.showWidget();
 
