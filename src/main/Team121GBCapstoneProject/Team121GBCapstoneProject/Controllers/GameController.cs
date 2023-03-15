@@ -70,47 +70,25 @@ namespace Team121GBCapstoneProject.Controllers
                                                                 .ToList();
             List<PersonListDTO> personListDTOs = new List<PersonListDTO>();
             personLists.ForEach(list => personListDTOs.Add(new PersonListDTO(list.ListKind)));
-            // foreach(PersonList list in personLists)
-            // {
-            //     personListDTOs.Add(new PersonListDTO(list.ListKind));
-            // }
             return Ok(personListDTOs);
 
-            // List<PersonGameList> userLists = _personRepository.GetAll()
-            //                                              .Where(user => user.AuthorizationId == currentUser.Id)
-            //                                              .First()
-            //                                              .PersonGameLists
-            //                                              .ToList();
-            // List<PersonGameListDTO> userListDTO = new List<PersonGameListDTO>();
-            // foreach (var list in userLists)
-            // {
-            //     PersonGameListDTO listDTO = new PersonGameListDTO(list.ListName.NameOfList);
-            //     userListDTO.Add(listDTO);  
-            // }
-            // if(userLists.Count == 0)
-            // {
-            //     return BadRequest("You don't have any lists!");
-            // }
-            // return Ok(userListDTO);
         }
-        
+
         [HttpPost("addGame")]
-        public async Task<ActionResult<IgdbGame>> addGameToList(Game game, string listKind)
+        public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("GameTitle,ImageSrc,ListKind")] GameDto gameDto)
         {
             try
             {
-                // * check if game exists in db.
+                // check if the game exists in db
                 return Ok();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                return BadRequest();
+                return BadRequest("Debugger didn't hit break point");
             }
         }
-        // [HttpPost("addGame")]
-        // public async Task<ActionResult<IgdbGame>> AddGameToList(Game game, string listName)
-        // //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)
+        //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)
         // {   //need to set it up so we have a user a that is logged in.
         //     var loggedInUser = _personRepository.GetAll()
         //                                        .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
