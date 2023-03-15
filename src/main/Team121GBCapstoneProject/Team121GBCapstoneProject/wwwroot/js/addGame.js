@@ -1,11 +1,11 @@
 console.log("Hello from addGame.js");
 
-$(document).ready( function () {
+$(document).ready(function () {
     $("table").on("click", "button", function () {
         const $row = $(this).closest("tr");
         // * retrieve info from from tag
         const $name = $row.find("b");
-        
+
         console.log(`$row:${$row}`);
         console.log(`$name:${$name.text()}`);
 
@@ -16,42 +16,53 @@ $(document).ready( function () {
             success: getUserListsSuccess,
             error: getUserListsFailure
         });
-    
+
+    });
+
+    $("#formSubmit").on("click", function () {
+        const $listName = $("#listName option:selected").text();
+        const $tds = $("tr").find("td");
+        const $imageSrc = $($tds[0]).find("img").attr("src");
+        const $gameTitle = $($tds[1]).text();
+
+        let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
+        const poo = JSON.stringify(gameDto);
+        console.log(poo);
+        const origin = $(location).attr("origin");
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: `${origin}/api/Game/addGame`,
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(gameDto),
+            success: afterAddGame,
+            error: errorAddingGameToList
+        });
     });
 });
 
-// function (data) {
-//     console.log("Getting user lists succeeded");
-//     let listNameFormId = $("#listName").attr("id");
-//     $("#listName").empty();
-//     for (let i = 0; i < data.length; ++i) {
-//         console.log(data[i]);
-//         let selectOption = `<option value="${data[i].listName}">${data[i].listName}</option>`;
-//         $("#listName").append(selectOption);
-//     }
-
-//     $("#formSubmit").on("click", function () {
-//         const list = $("#listName").text();
-//         console.log("listName = " + list);
-//         let origin = $(location).attr("origin");
-//         console.log(title);
-//         const dataToSend = { listName: list, gameTitle: title };
-//         console.log(dataToSend);
-//         $.ajax({
-//             type: "POST",
-//             dataType: "json",
-//             url: `${origin}/api/Game/addGame`,
-//             contentType: "application/json; charset=UTF-8",
-//             data: JSON.stringify(dataToSend),
-//             success: afterAddGame,
-//             error: errorAlert
-//         });
-//     });
-// }
-function addGame() {
-
+class GameDto {
+    constructor(listKind, gameTitle, imageSrc) {
+        this.listKind = listKind;
+        this.gameTitle = gameTitle;
+        this.imageSrc = imageSrc;
+    }
 }
 
+function afterAddGame(data) {
+    const notification = $(`<div>
+                            <h1>Success!</h1>
+                          </div>`);
+    $("#topOfPageHeader").after(notification);
+}
+
+function errorAddingGameToList(data) {
+    const notification = $(`<div>
+                            <h1>Something went wrong. Please try again.</h1>
+                          </div>`);
+    $("#topOfPageHeader").after(notification);
+}
+// ! Modifying the DOM
 function getUserListsSuccess(data) {
 
     console.log("Getting user lists succeeded");
@@ -62,28 +73,6 @@ function getUserListsSuccess(data) {
         let selectOption = `<option value="${data[i].listKind}">${data[i].listKind}</option>`;
         $("#listName").append(selectOption);
     }
-
-    $("#formSubmit").on("click", function () {
-        const list = $("#listName").text();
-        console.log("listName = " + list);
-        //let id = $(this).attr("id");
-        //let tableDataId = $(`#td${id}`).attr("id");
-        //const title = $(`#${tableDataId}`).text();
-        ////const title = $("#").text();
-
-        console.log(this.title);
-        const dataToSend = { listName: list, gameTitle: this.title };
-        console.log(dataToSend);
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: `api/Game/addGame`,
-            contentType: "application/json; charset=UTF-8",
-            data: JSON.stringify(dataToSend),
-            success: afterAddGame,
-            error: errorAlert
-        });
-    });
 }
 
 function getUserListsFailure(data) {
