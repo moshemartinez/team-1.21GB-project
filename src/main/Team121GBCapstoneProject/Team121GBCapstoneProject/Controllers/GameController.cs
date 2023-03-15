@@ -21,6 +21,7 @@ namespace Team121GBCapstoneProject.Controllers
         private readonly IIgdbService _igdbService;
         private readonly IRepository<Person> _personRepository;
         private readonly IRepository<Game> _gameRepository;
+        private readonly IRepository<PersonGame> _personGameRepository;
         private readonly IPersonListRepository _personListRepository;
 
         private string _clientId;
@@ -31,6 +32,7 @@ namespace Team121GBCapstoneProject.Controllers
                                 IIgdbService igdbService, 
                                 IRepository<Person> personRepository,                                 
                                 IRepository<Game> gameRepository, 
+                                IRepository<PersonGame> personGameRepository,
                                 IPersonListRepository personListRepository,
                                 IConfiguration configuration)
         {
@@ -38,6 +40,7 @@ namespace Team121GBCapstoneProject.Controllers
             _igdbService = igdbService;
             _personRepository = personRepository;
             _gameRepository = gameRepository;
+            _personGameRepository = personGameRepository;
             _personListRepository = personListRepository;
             _config = configuration;
         }
@@ -79,7 +82,48 @@ namespace Team121GBCapstoneProject.Controllers
         {
             try
             {
+                ApplicationUser currentUser = await _userManager.GetUserAsync(User);
                 // check if the game exists in db
+                bool check = _gameRepository.GetAll().Any(g => g.Title == gameDto.GameTitle);
+                if (check)
+                {
+                    // check if the already have the game in their list
+                    check = _personGameRepository.GetAll().Any(pg => pg.PersonList.Person.AuthorizationId == currentUser.Id);
+                    if(check)
+                    {
+                        return BadRequest($"You alreay have that game stored in{gameDto.ListKind}");
+                    }
+                    // if we have gotten to this point, we can now add the game
+                    PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
+                    Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle);
+                    //PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.Id == personListId);
+                    PersonGame newPersonGame = new PersonGame
+                    {
+                        PersonList = personList,
+                        PersonListId = personList.Id,
+                        Game = game,
+                        GameId = game.Id
+                    };
+
+                    _personGameRepository.AddOrUpdate(newPersonGame);
+                }
+                else // game does not exist
+                {
+                    Game newGame = new Game
+                    {
+                        Title = gameDto.GameTitle,
+                        CoverPicture = gameDto.ImageSrc
+                    };
+                    _gameRepository.AddOrUpdate(newGame);
+
+                    PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
+                    //Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle);
+                    PersonGame newPersonGame = new PersonGame
+                    {
+                        PersonListId = personList.Id,
+                                                
+                    };
+                }
                 return Ok();
             }
             catch (Exception e)
