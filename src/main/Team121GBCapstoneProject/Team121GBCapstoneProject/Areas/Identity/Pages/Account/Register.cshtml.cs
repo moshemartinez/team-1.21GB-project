@@ -164,7 +164,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
                     Person person = _personRepository.GetAll()
                                                      .FirstOrDefault(person => person.AuthorizationId == user.Id);
                     List<ListKind> listKinds = _listKindRepository.GetAll()
-                                                                  .ToList();
+                                                                  .Where(l => l.Kind != null)
+                                                                  .ToList();// check that this is only the default lists, not custom
                     _personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
                     
                     _logger.LogInformation("User created a new account with password.");
