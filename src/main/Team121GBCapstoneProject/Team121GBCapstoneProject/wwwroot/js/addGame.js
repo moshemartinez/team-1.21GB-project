@@ -27,6 +27,7 @@ function afterAddGame(data) {
                             <h1>${data}</h1>
                           </div>`;
     $("#statusMessage").append(notification);
+    
 }
 
 function errorAddingGameToList(data) {
@@ -34,7 +35,7 @@ function errorAddingGameToList(data) {
     console.log(data.responseText);
     console.log(data.value);
     console.log(data);
-    
+
     console.log("errorAddingGameToList hit");
     const notification = `<div class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -74,25 +75,50 @@ $(document).ready(function () {
             success: getUserListsSuccess,
             error: getUserListsFailure
         });
+
+        $("#formSubmit").on("click", async function (event) {
+            event.preventDefault(); // prevent the default form submission behavior
+            console.log("#formSubmit Clicked");
+            const $listName = $("#listName option:selected").text();
+            // const $tr = $(event.target).closest("tr");
+            const $tds = $row.find("td");
+            console.log($tds);
+            console.log($($tds[0]).find("img").attr("src"));
+            console.log( $($tds[1]).text());
+            const $imageSrc = $($tds[0]).find("img").attr("src");
+            const $gameTitle = $($tds[1]).text();
+            let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
+            const origin = $(location).attr("origin");
+            const url = `${origin}/api/Game/addGame`;
+            try {
+                let response = await addGame(gameDto, url);
+                let data = response;
+                console.log(data);
+                console.log("We made it");
+            } catch (error) {
+                console.log(error);
+            }
+        });
     });
 
-    $("#formSubmit").on("click", async function (event) {
-        event.preventDefault(); // prevent the default form submission behavior
-        console.log("#formSubmit Clicked");
-        const $listName = $("#listName option:selected").text();
-        const $tds = $("tr").find("td");
-        const $imageSrc = $($tds[0]).find("img").attr("src");
-        const $gameTitle = $($tds[1]).text();
-        let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
-        const origin = $(location).attr("origin");
-        const url = `${origin}/api/Game/addGame`;
-        try {
-            let response = await addGame(gameDto, url);
-            let data = response;
-            console.log(data);
-            console.log("We made it");
-        } catch (error) {
-            console.log(error);
-        }
-    });
+    // $("#formSubmit").on("click", async function (event) {
+    //     event.preventDefault(); // prevent the default form submission behavior
+    //     console.log("#formSubmit Clicked");
+    //     const $listName = $("#listName option:selected").text();
+    //     const $tr = $(event.target).closest("tr");
+    //     const $tds = $tr.find("td");
+    //     const $imageSrc = $($tds[0]).find("img").attr("src");
+    //     const $gameTitle = $($tds[1]).text();
+    //     let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
+    //     const origin = $(location).attr("origin");
+    //     const url = `${origin}/api/Game/addGame`;
+    //     try {
+    //         let response = await addGame(gameDto, url);
+    //         let data = response;
+    //         console.log(data);
+    //         console.log("We made it");
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // });
 });
