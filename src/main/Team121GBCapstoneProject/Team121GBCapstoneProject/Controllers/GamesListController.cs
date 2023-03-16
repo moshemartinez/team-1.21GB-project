@@ -63,39 +63,7 @@ public class GamesListsController : Controller
         return View("Index", personListVMList);
     }
 
-    //! This one works but is really ugly
-    // [HttpGet]
-    // public IActionResult Index()
-    // {   
-    //     Person user = _personRepository.GetAll()
-    //                                    .FirstOrDefault(u => u.AuthorizationId == _userManager.GetUserId(User));
-    //     List<PersonList> personLists = _personListRepository.GetAll()
-    //                                                         .Where(l => l.Person.AuthorizationId == user.AuthorizationId)
-    //                                                         .ToList();
-    //     List<string> listKinds = personLists.Select(l => l.ListKind)
-    //                                         .ToList();
-    //     List<PersonListVM> personListVMList = new List<PersonListVM>();
-
-    //     List<PersonGame> personGames = _personGameRepository.GetAll()
-    //                                                         .Where(pg => pg.PersonList.Person.AuthorizationId == user.AuthorizationId)
-    //                                                         .ToList();
-    //     List<List<PersonGame>> personGames2DList = new List<List<PersonGame>>();
-
-    //     foreach(var listKind in listKinds)
-    //     {
-    //         List<PersonGame> temp = personGames.Where(pg => pg.PersonList.ListKind == listKind)
-    //                                            .ToList();
-    //         personGames2DList.Add(temp);
-    //     }
-
-    //     foreach(string listKind in listKinds)
-    //     {
-    //         PersonListVM temp = new PersonListVM(listKind, personGames);
-    //         personListVMList.Add(temp);
-    //     }
-    //     return View("Index", personListVMList );
-    // }
-
+   
     // [HttpPost]
     // public IActionResult AddList(int userId, int listTypeId, string listName)
     // {
