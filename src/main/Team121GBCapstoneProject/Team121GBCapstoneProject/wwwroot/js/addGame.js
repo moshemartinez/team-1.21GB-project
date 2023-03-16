@@ -8,6 +8,7 @@ class GameDto {
 }
 
 function afterAddGame(data) {
+    console.log(data);
     console.log('afterAddGame hit');
     const notification = $(`<div>
                             <h1>Success!</h1>
@@ -63,6 +64,7 @@ $(document).ready(function () {
     });
 
     $("#formSubmit").on("click", function () {
+        console.log("#formSubmitClicked");
         const $listName = $("#listName option:selected").text();
         const $tds = $("tr").find("td");
         const $imageSrc = $($tds[0]).find("img").attr("src");
@@ -71,14 +73,16 @@ $(document).ready(function () {
         let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
         const origin = $(location).attr("origin");
         $.ajax({
-            type: "POST",
-            dataType: "json",
+            method: "POST",
             url: `${origin}/api/Game/addGame`,
             contentType: "application/json; charset=UTF-8",
             data: JSON.stringify(gameDto),
             success: afterAddGame,
-            error: errorAddingGameToList
+            fail: errorAddingGameToList
         });
         console.log("We made it");
     });
 });
+
+// success: afterAddGame,
+//error: errorAddingGameToList
