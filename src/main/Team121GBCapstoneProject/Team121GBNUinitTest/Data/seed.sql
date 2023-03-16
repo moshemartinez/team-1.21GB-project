@@ -113,3 +113,6 @@ INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[Cover
 INSERT INTO [ListKind] ([Kind]) VALUES ('Currently Playing');
 INSERT INTO [ListKind] ([Kind]) VALUES ('Completed');
 INSERT INTO [ListKind] ([Kind]) VALUES ('Want to Play');
+
+--seed user for tests
+-- //INSERT INTO [Person] ([AuthorizationId]) VALUES ('1010101-wowowow');
