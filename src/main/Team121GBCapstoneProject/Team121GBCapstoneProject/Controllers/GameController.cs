@@ -93,7 +93,7 @@ namespace Team121GBCapstoneProject.Controllers
                                               .PersonGames.Any(pg => pg.Game.Title == gameDto.GameTitle);
                 if (check)
                 {
-                    return BadRequest($"You alreay have that game stored in {gameDto.ListKind}");
+                    return BadRequest($"You alreay have {gameDto.GameTitle} stored in {gameDto.ListKind}.");
                 }
                 // if we have gotten to this point, we can now add the game
                 PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
@@ -108,12 +108,12 @@ namespace Team121GBCapstoneProject.Controllers
 
                 _personGameRepository.AddOrUpdate(newPersonGame);
                 var response = new { message = "Success!"};
-                return Ok($"Success adding a game to {gameDto.ListKind}");
+                return Ok($"Succeeded in adding {gameDto.GameTitle} to {gameDto.ListKind}.");
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                return BadRequest("Debugger didn't hit break point");
+                return BadRequest("Somethine went wrong. Please try again.");
             }
         }
     }

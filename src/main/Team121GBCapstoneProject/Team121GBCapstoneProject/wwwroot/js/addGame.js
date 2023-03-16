@@ -27,7 +27,7 @@ function afterAddGame(data) {
                             <h1>${data}</h1>
                           </div>`;
     $("#statusMessage").append(notification);
-    
+    $("#statusMessage").show();
 }
 
 function errorAddingGameToList(data) {
@@ -76,11 +76,10 @@ $(document).ready(function () {
             error: getUserListsFailure
         });
 
-        $("#formSubmit").on("click", async function (event) {
+        $("#formSubmit").on("click", function (event) {
             event.preventDefault(); // prevent the default form submission behavior
             console.log("#formSubmit Clicked");
             const $listName = $("#listName option:selected").text();
-            // const $tr = $(event.target).closest("tr");
             const $tds = $row.find("td");
             console.log($tds);
             console.log($($tds[0]).find("img").attr("src"));
@@ -91,11 +90,11 @@ $(document).ready(function () {
             const origin = $(location).attr("origin");
             const url = `${origin}/api/Game/addGame`;
             try {
-                let response = await addGame(gameDto, url);
+                let response = addGame(gameDto, url);
                 let data = response;
                 console.log(data);
-                console.log("We made it");
-            } catch (error) {
+            } 
+            catch (error) {
                 console.log(error);
             }
         });
