@@ -29,6 +29,8 @@ public partial class Game
     [StringLength(526)]
     public string CoverPicture { get; set; }
 
+    public string IGDBUrl { get; set; }
+
     [InverseProperty("Game")]
     public virtual ICollection<PersonGameList> PersonGameLists { get; } = new List<PersonGameList>();
 }

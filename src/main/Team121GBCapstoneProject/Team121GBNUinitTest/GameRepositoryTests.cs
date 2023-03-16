@@ -78,5 +78,35 @@ namespace Team121GBNUinitTest
             Assert.That(actual, Is.EqualTo(expected));
         }
 
+        [Test]
+        public void GetGamesByTitleWithGameInDBShouldReturn3()
+        {
+            IGameRepository gameRepository = new GameRepository(_mockContext.Object);
+            int expected = 3;
+            int actual = 0;
+
+            string title = "Dark";
+
+            var listGames = gameRepository.GetGamesByTitle(title);
+            actual = listGames.Count();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetGamesByTitleWithOutGameInDBShouldReturn0()
+        {
+            IGameRepository gameRepository = new GameRepository(_mockContext.Object);
+            int expected = 0;
+            int actual = 0;
+
+            string title = "Mario";
+
+            var listGames = gameRepository.GetGamesByTitle(title);
+            actual = listGames.Count();
+
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }
