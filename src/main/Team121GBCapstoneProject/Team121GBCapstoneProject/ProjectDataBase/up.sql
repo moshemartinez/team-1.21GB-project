@@ -16,7 +16,8 @@ CREATE TABLE [Game] (
     [YearPublished]   INT,
     [ESRBRatingID]    INT,
     [AverageRating]   FLOAT,
-    [CoverPicture]    NVARCHAR(526)  
+    [CoverPicture]    NVARCHAR(MAX),
+    [IGDBUrl]         NVARCHAR(MAX)
 );
 
 CREATE TABLE [ListKind] (

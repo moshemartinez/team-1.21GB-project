@@ -54,10 +54,11 @@ namespace Team121GBCapstoneProject.Controllers
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
             _clientId = _config["GamingPlatform:igdbClientId"];
 
+
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
 
-            var searchResult = await _igdbService.SearchGames(query);
+            var searchResult = await _igdbService.SearchGameWithCachingAsync(10, query);
 
             if (searchResult is null)
             {
