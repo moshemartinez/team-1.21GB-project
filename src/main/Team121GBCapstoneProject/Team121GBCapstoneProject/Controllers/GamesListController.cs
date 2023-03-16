@@ -16,37 +16,85 @@ public class GamesListsController : Controller
     private readonly ILogger<GamesListsController> _logger;
     private IPersonRepository _personRepository;
     private IPersonListRepository _personListRepository;
+    IRepository<PersonGame> _personGameRepository;
     public GamesListsController(UserManager<ApplicationUser> userManager,
                                  ILogger<GamesListsController> logger,
                                  IPersonRepository personRepository,
-                                 IPersonListRepository personListRepository)
+                                 IPersonListRepository personListRepository,
+                                 IRepository<PersonGame> personGameRepository)
     {
         _userManager = userManager;
         _logger = logger;
         _personRepository = personRepository;
         _personListRepository = personListRepository;
+        _personGameRepository = personGameRepository;
     }
 
     [Authorize]
     [HttpGet]
     public IActionResult Index()
-    {   
-        Person user = _personRepository.GetAll()
-                                       .FirstOrDefault(u => u.AuthorizationId == _userManager.GetUserId(User));
-        List<PersonList> personLists = _personListRepository.GetAll()
-                                                            .Where(l => l.Person.AuthorizationId == user.AuthorizationId)
-                                                            .ToList();
-        List<string> listKinds = personLists.Select(l => l.ListKind)
-                                            .ToList();
-        List<PersonGame> personGames = new List<PersonGame>();
-        List<PersonListVM> personListVMList = new List<PersonListVM>();
-        foreach(string listKind in listKinds)
+    {
+        string authorizationId = _userManager.GetUserId(User);
+        var userLists = _personListRepository.GetAll()
+                                            .Join(_personRepository.GetAll(), pl => pl.PersonId, p => p.Id, (pl, p) => new { pl, p })
+                                            .Where(x => x.p.AuthorizationId == authorizationId)
+                                            .Select(x => x.pl);
+        var personGames = _personGameRepository.GetAll()
+                                                .Where(pg => pg.PersonList.Person.AuthorizationId == authorizationId)
+                                                .ToList();
+
+        var personGamesByListKind = personGames.GroupBy(pg => pg.PersonList.ListKind)
+                                                .ToDictionary(g => g.Key, g => g.ToList());
+
+        var personListVMList = new List<PersonListVM>();
+
+        foreach (var kvp in personGamesByListKind)
         {
-            PersonListVM temp = new PersonListVM(listKind, personGames);
+            PersonListVM temp = new PersonListVM(kvp.Key, kvp.Value);
             personListVMList.Add(temp);
         }
-        return View("Index", personListVMList );
+        List<PersonList> emptyListCheck = userLists.Where(l => l.PersonGames.Count == 0)
+                                                    .ToList();
+        foreach (var emptyList in emptyListCheck)
+        {
+            PersonListVM temp = new PersonListVM(emptyList.ListKind, emptyList.PersonGames.ToList()); // ! converted PersonGames to a list because that is what the constructor expects.   
+            personListVMList.Add(temp);
+        }
+        return View("Index", personListVMList);
     }
+
+    //! This one works but is really ugly
+    // [HttpGet]
+    // public IActionResult Index()
+    // {   
+    //     Person user = _personRepository.GetAll()
+    //                                    .FirstOrDefault(u => u.AuthorizationId == _userManager.GetUserId(User));
+    //     List<PersonList> personLists = _personListRepository.GetAll()
+    //                                                         .Where(l => l.Person.AuthorizationId == user.AuthorizationId)
+    //                                                         .ToList();
+    //     List<string> listKinds = personLists.Select(l => l.ListKind)
+    //                                         .ToList();
+    //     List<PersonListVM> personListVMList = new List<PersonListVM>();
+
+    //     List<PersonGame> personGames = _personGameRepository.GetAll()
+    //                                                         .Where(pg => pg.PersonList.Person.AuthorizationId == user.AuthorizationId)
+    //                                                         .ToList();
+    //     List<List<PersonGame>> personGames2DList = new List<List<PersonGame>>();
+
+    //     foreach(var listKind in listKinds)
+    //     {
+    //         List<PersonGame> temp = personGames.Where(pg => pg.PersonList.ListKind == listKind)
+    //                                            .ToList();
+    //         personGames2DList.Add(temp);
+    //     }
+
+    //     foreach(string listKind in listKinds)
+    //     {
+    //         PersonListVM temp = new PersonListVM(listKind, personGames);
+    //         personListVMList.Add(temp);
+    //     }
+    //     return View("Index", personListVMList );
+    // }
 
     // [HttpPost]
     // public IActionResult AddList(int userId, int listTypeId, string listName)

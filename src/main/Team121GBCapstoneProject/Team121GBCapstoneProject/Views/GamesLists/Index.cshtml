@@ -33,7 +33,7 @@
 </div>
 <br>
 <!--for each lists construct view-->
-@foreach(PersonListVM listVm in @Model)
+@foreach (PersonListVM listVm in @Model)
 {
     <div class="row">
         <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
@@ -45,18 +45,22 @@
                         </td>
                     </tr>
                     <tr>
-                        <h3>
+                        <h2>
                             <th>Title</th>
-                            <th>Description</th>
-                            <th>Released</th>
-                            <th>ESRB Rating</th>
-                            <th>Average Rating</th>
                             <th>Cover Picture</th>
-                        </h3>
+                        </h2>
                     </tr>
                 </thead>
                 <tbody>
-                    @* Add the game info *@
+                    @foreach (PersonGame personGame in listVm.PersonGames)
+                    {
+                        <tr>
+                            <td><h2>@personGame.Game.Title</h2></td>
+                            <td><img src="@personGame.Game.CoverPicture" alt="@personGame.Game.Title Cover Image"></td>
+                            <td><a class="btn btn-dark" href="@personGame.Game.Igdburl" role="button">Igdb Page</a></td>
+                        </tr>
+                        <br/>
+                    }
                 </tbody>
             </table>
         </div>
@@ -68,7 +72,7 @@
         $(document).ready(function () {
             $("tr").hover(
                 function () {
-                    $(this).css("background-color", "white");
+                    $(this).css("background-color", "#FF3555");
                     $(this).css("border-radius", "10px");
                 },
                 function () {
