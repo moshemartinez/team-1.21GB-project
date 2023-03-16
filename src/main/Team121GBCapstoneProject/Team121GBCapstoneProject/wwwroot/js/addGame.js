@@ -64,7 +64,7 @@ $(document).ready(function () {
     });
 
     $("#formSubmit").on("click", function () {
-        console.log("#formSubmitClicked");
+        console.log("#formSubmit Clicked");
         const $listName = $("#listName option:selected").text();
         const $tds = $("tr").find("td");
         const $imageSrc = $($tds[0]).find("img").attr("src");
@@ -72,14 +72,35 @@ $(document).ready(function () {
 
         let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
         const origin = $(location).attr("origin");
-        $.ajax({
+        // const check = $.ajax({
+        //     method: "POST",
+        //     url: `${origin}/api/Game/addGame`,
+        //     contentType: "application/json; charset=UTF-8",
+        //     data: JSON.stringify(gameDto),
+        //     success: afterAddGame,
+        //     error: errorAddingGameToList
+        // });
+        const check = $.ajax({
             method: "POST",
             url: `${origin}/api/Game/addGame`,
             contentType: "application/json; charset=UTF-8",
             data: JSON.stringify(gameDto),
-            success: afterAddGame,
-            fail: errorAddingGameToList
+            success: function(data) {
+                console.log("Success callback called");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Error callback called");
+            }
         });
+        //console.log(check.status);
+        check.done(function(data) {
+            console.log("Request completed successfully");
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log("Request failed: " + textStatus);
+        }).always(function() {
+            console.log("Request completed");
+        });
+        
         console.log("We made it");
     });
 });
