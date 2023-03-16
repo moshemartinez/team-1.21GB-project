@@ -87,21 +87,17 @@ namespace Team121GBCapstoneProject.Controllers
             try
             {
                 ApplicationUser currentUser = await _userManager.GetUserAsync(User);
-                // check if the already have the game in their list
-                // bool check = _personGameRepository.GetAll()
-                //                                   .Where(pg => pg.PersonList.).Any(pg => pg.PersonList.Person.AuthorizationId == currentUser.Id);
-                                                  
-                var b = _personListRepository.GetAll()
-                                              .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
-                                              //.Any(pg => )
-                // if (check)
-                // {
-                //     return BadRequest($"You alreay have that game stored in {gameDto.ListKind}");
-                // }
-                // // if we have gotten to this point, we can now add the game
+                // check if the already have the game in their list                            
+                bool check = _personListRepository.GetAll()
+                                              .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind)
+                                              .PersonGames.Any(pg => pg.Game.Title == gameDto.GameTitle);
+                if (check)
+                {
+                    return BadRequest($"You alreay have that game stored in {gameDto.ListKind}");
+                }
+                // if we have gotten to this point, we can now add the game
                 PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
                 Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle);
-                //PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.Id == personListId);
                 PersonGame newPersonGame = new PersonGame
                 {
                     PersonList = personList,
@@ -112,7 +108,7 @@ namespace Team121GBCapstoneProject.Controllers
 
                 _personGameRepository.AddOrUpdate(newPersonGame);
                 var response = new { message = "Success!"};
-                return Ok();
+                return Ok($"Success adding a game to {gameDto.ListKind}");
             }
             catch (Exception e)
             {

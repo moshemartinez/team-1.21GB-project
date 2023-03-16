@@ -6,45 +6,42 @@ class GameDto {
         this.imageSrc = imageSrc;
     }
 }
-// function afterAddGame() {
-//     $.ajax({
-//         method: "GET",
-//         url: "/api/Game/getUserLists",
-//         dataType: "json",
-//         success: getUserListsSuccess,
-//         error: getUserListsFailure
-//     });
-// }
+
 function addGame(gameDto, url) {
     return $.ajax({
         method: "POST",
         url: url,
         contentType: "application/json; charset=UTF-8",
         data: JSON.stringify(gameDto),
-        success: afterAddGame1,
+        success: afterAddGame,
         error: errorAddingGameToList
     });
 }
 
-function afterAddGame1(data) {
+function afterAddGame(data) {
+    $("#statusMessage").empty();
     console.log(data);
     console.log('afterAddGame hit');
-    const notification = $(`<div>
-                            <h1>Success!</h1>
-                          </div>`);
-    $("#statusMessage").append($(notification));
-    //$("#topOfPageHeader").after(notification);
+    const notification = `<div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <h1>${data}</h1>
+                          </div>`;
+    $("#statusMessage").append(notification);
 }
 
 function errorAddingGameToList(data) {
+    $("#statusMessage").empty();
+    console.log(data.responseText);
+    console.log(data.value);
+    console.log(data);
+    
     console.log("errorAddingGameToList hit");
-    const notification = $(`<div>
-                            <h1>Something went wrong. Please try again.</h1>
-                          </div>`);
-    $("#statusMessage").append($(notification));
+    const notification = `<div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <h1>${data.responseText}</h1>
+                          </div>`;
+    $("#statusMessage").append(notification);
     $("#statusMessage").show();
-
-    /*  $("#topOfPageHeader").after(notification);*/
 }
 // ! Modifying the DOM
 function getUserListsSuccess(data) {
@@ -68,10 +65,8 @@ $(document).ready(function () {
         const $row = $(this).closest("tr");
         // * retrieve info from from tag
         const $name = $row.find("b");
-
         console.log(`$row:${$row}`);
         console.log(`$name:${$name.text()}`);
-
         $.ajax({
             type: "GET",
             url: "/api/Game/getUserLists",
@@ -79,22 +74,18 @@ $(document).ready(function () {
             success: getUserListsSuccess,
             error: getUserListsFailure
         });
-
     });
 
     $("#formSubmit").on("click", async function (event) {
         event.preventDefault(); // prevent the default form submission behavior
-        
         console.log("#formSubmit Clicked");
         const $listName = $("#listName option:selected").text();
         const $tds = $("tr").find("td");
         const $imageSrc = $($tds[0]).find("img").attr("src");
         const $gameTitle = $($tds[1]).text();
-
         let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
         const origin = $(location).attr("origin");
         const url = `${origin}/api/Game/addGame`;
-        
         try {
             let response = await addGame(gameDto, url);
             let data = response;
