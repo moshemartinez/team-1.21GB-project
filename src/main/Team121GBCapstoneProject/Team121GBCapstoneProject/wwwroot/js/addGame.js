@@ -6,8 +6,27 @@ class GameDto {
         this.imageSrc = imageSrc;
     }
 }
+// function afterAddGame() {
+//     $.ajax({
+//         method: "GET",
+//         url: "/api/Game/getUserLists",
+//         dataType: "json",
+//         success: getUserListsSuccess,
+//         error: getUserListsFailure
+//     });
+// }
+function addGame(gameDto, url) {
+    return $.ajax({
+        method: "POST",
+        url: url,
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(gameDto),
+        success: afterAddGame1,
+        error: errorAddingGameToList
+    });
+}
 
-function afterAddGame(data) {
+function afterAddGame1(data) {
     console.log(data);
     console.log('afterAddGame hit');
     const notification = $(`<div>
@@ -25,7 +44,7 @@ function errorAddingGameToList(data) {
     $("#statusMessage").append($(notification));
     $("#statusMessage").show();
 
-  /*  $("#topOfPageHeader").after(notification);*/
+    /*  $("#topOfPageHeader").after(notification);*/
 }
 // ! Modifying the DOM
 function getUserListsSuccess(data) {
@@ -63,7 +82,9 @@ $(document).ready(function () {
 
     });
 
-    $("#formSubmit").on("click", function () {
+    $("#formSubmit").on("click", async function (event) {
+        event.preventDefault(); // prevent the default form submission behavior
+        
         console.log("#formSubmit Clicked");
         const $listName = $("#listName option:selected").text();
         const $tds = $("tr").find("td");
@@ -72,38 +93,15 @@ $(document).ready(function () {
 
         let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
         const origin = $(location).attr("origin");
-        // const check = $.ajax({
-        //     method: "POST",
-        //     url: `${origin}/api/Game/addGame`,
-        //     contentType: "application/json; charset=UTF-8",
-        //     data: JSON.stringify(gameDto),
-        //     success: afterAddGame,
-        //     error: errorAddingGameToList
-        // });
-        const check = $.ajax({
-            method: "POST",
-            url: `${origin}/api/Game/addGame`,
-            contentType: "application/json; charset=UTF-8",
-            data: JSON.stringify(gameDto),
-            success: function(data) {
-                console.log("Success callback called");
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("Error callback called");
-            }
-        });
-        //console.log(check.status);
-        check.done(function(data) {
-            console.log("Request completed successfully");
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            console.log("Request failed: " + textStatus);
-        }).always(function() {
-            console.log("Request completed");
-        });
+        const url = `${origin}/api/Game/addGame`;
         
-        console.log("We made it");
+        try {
+            let response = await addGame(gameDto, url);
+            let data = response;
+            console.log(data);
+            console.log("We made it");
+        } catch (error) {
+            console.log(error);
+        }
     });
 });
-
-// success: afterAddGame,
-//error: errorAddingGameToList

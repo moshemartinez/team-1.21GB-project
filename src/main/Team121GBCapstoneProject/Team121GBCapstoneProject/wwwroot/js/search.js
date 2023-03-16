@@ -31,32 +31,3 @@ function displaySearchResults(query) {
         }
     });
 }
-
-// $("#formSubmit").on("click", function () {
-//     const $listName = $("#listName option:selected").text();
-//     const $tds = $("tr").find("td");
-//     const $imageSrc = $($tds[0]).find("img").attr("src");
-//     const $gameTitle = $($tds[1]).text();
-
-//     let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
-//     const origin = $(location).attr("origin");
-//     $.ajax({
-//         type: "POST",
-//         dataType: "json",
-//         url: `${origin}/api/Game/addGame`,
-//         contentType: "application/json; charset=UTF-8",
-//         data: JSON.stringify(gameDto),
-//         success: function (data) {
-//             console.log(data);
-//             console.log('success hit');
-//             const notification = $(`<div>
-//                                         <h1>Success!</h1>
-//                                     </div>`);
-//             $("#statusMessage").append($(notification));
-//         },
-//         fail: function (data) {
-//             console.log(data);
-//         }
-//     });
-//     console.log("We made it");
-// });
