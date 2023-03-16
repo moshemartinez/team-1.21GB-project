@@ -26,10 +26,10 @@ public partial class Game
 
     public double? AverageRating { get; set; }
 
-    [StringLength(526)]
     public string CoverPicture { get; set; }
 
-    public string IGDBUrl { get; set; }
+    [Column("IGDBUrl")]
+    public string Igdburl { get; set; }
 
     [InverseProperty("Game")]
     public virtual ICollection<PersonGame> PersonGames { get; } = new List<PersonGame>();

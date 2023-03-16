@@ -26,34 +26,28 @@ public partial class GPDbContext : DbContext
     public virtual DbSet<PersonList> PersonLists { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer("Name=GPConnection");
-        }
-    }
-        //=> optionsBuilder.UseSqlServer("Name=GPConnection");
+        => optionsBuilder.UseSqlServer("Name=GPConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Game>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Game__3214EC278CA05823");
+            entity.HasKey(e => e.Id).HasName("PK__Game__3214EC27391BD51C");
         });
 
         modelBuilder.Entity<ListKind>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ListKind__3214EC2798A1E72A");
+            entity.HasKey(e => e.Id).HasName("PK__ListKind__3214EC27D65DB83E");
         });
 
         modelBuilder.Entity<Person>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Person__3214EC27EF5C9B0B");
+            entity.HasKey(e => e.Id).HasName("PK__Person__3214EC27F541FC34");
         });
 
         modelBuilder.Entity<PersonGame>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PersonGa__3214EC270EE45173");
+            entity.HasKey(e => e.Id).HasName("PK__PersonGa__3214EC27F422BCFF");
 
             entity.HasOne(d => d.Game).WithMany(p => p.PersonGames)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -66,7 +60,7 @@ public partial class GPDbContext : DbContext
 
         modelBuilder.Entity<PersonList>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PersonLi__3214EC27B31E5FB7");
+            entity.HasKey(e => e.Id).HasName("PK__PersonLi__3214EC270538D71F");
 
             entity.HasOne(d => d.ListKindNavigation).WithMany(p => p.PersonLists).HasConstraintName("FK_ListKindID");
 
