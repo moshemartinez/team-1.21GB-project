@@ -22,6 +22,7 @@ namespace Team121GBCapstoneProject.Controllers
         private readonly IRepository<Person> _personRepository;
         private readonly IRepository<Game> _gameRepository;
         private readonly IRepository<PersonGame> _personGameRepository;
+        private readonly IRepository<ListKind> _listKindRepository;
         private readonly IPersonListRepository _personListRepository;
 
         private string _clientId;
@@ -29,10 +30,11 @@ namespace Team121GBCapstoneProject.Controllers
         private readonly IConfiguration _config;
 
         public GameController(UserManager<ApplicationUser> userManager,
-                                IIgdbService igdbService, 
-                                IRepository<Person> personRepository,                                 
-                                IRepository<Game> gameRepository, 
+                                IIgdbService igdbService,
+                                IRepository<Person> personRepository,
+                                IRepository<Game> gameRepository,
                                 IRepository<PersonGame> personGameRepository,
+                                IRepository<ListKind> listKindRepository,
                                 IPersonListRepository personListRepository,
                                 IConfiguration configuration)
         {
@@ -41,6 +43,7 @@ namespace Team121GBCapstoneProject.Controllers
             _personRepository = personRepository;
             _gameRepository = gameRepository;
             _personGameRepository = personGameRepository;
+            _listKindRepository = listKindRepository;
             _personListRepository = personListRepository;
             _config = configuration;
         }
@@ -50,7 +53,7 @@ namespace Team121GBCapstoneProject.Controllers
         {
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
             _clientId = _config["GamingPlatform:igdbClientId"];
-            
+
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
 
@@ -83,47 +86,31 @@ namespace Team121GBCapstoneProject.Controllers
             try
             {
                 ApplicationUser currentUser = await _userManager.GetUserAsync(User);
-                // check if the game exists in db
-                bool check = _gameRepository.GetAll().Any(g => g.Title == gameDto.GameTitle);
-                if (check)
+                // check if the already have the game in their list
+                // bool check = _personGameRepository.GetAll()
+                //                                   .Where(pg => pg.PersonList.).Any(pg => pg.PersonList.Person.AuthorizationId == currentUser.Id);
+                                                  
+                var b = _personListRepository.GetAll()
+                                              .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
+                                              //.Any(pg => )
+                // if (check)
+                // {
+                //     return BadRequest($"You alreay have that game stored in {gameDto.ListKind}");
+                // }
+                // // if we have gotten to this point, we can now add the game
+                PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
+                Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle);
+                //PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.Id == personListId);
+                PersonGame newPersonGame = new PersonGame
                 {
-                    // check if the already have the game in their list
-                    check = _personGameRepository.GetAll().Any(pg => pg.PersonList.Person.AuthorizationId == currentUser.Id);
-                    if(check)
-                    {
-                        return BadRequest($"You alreay have that game stored in{gameDto.ListKind}");
-                    }
-                    // if we have gotten to this point, we can now add the game
-                    PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
-                    Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle);
-                    //PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.Id == personListId);
-                    PersonGame newPersonGame = new PersonGame
-                    {
-                        PersonList = personList,
-                        PersonListId = personList.Id,
-                        Game = game,
-                        GameId = game.Id
-                    };
+                    PersonList = personList,
+                    PersonListId = personList.Id,
+                    Game = game,
+                    GameId = game.Id
+                };
 
-                    _personGameRepository.AddOrUpdate(newPersonGame);
-                }
-                else // game does not exist
-                {
-                    Game newGame = new Game
-                    {
-                        Title = gameDto.GameTitle,
-                        CoverPicture = gameDto.ImageSrc
-                    };
-                    _gameRepository.AddOrUpdate(newGame);
-
-                    PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
-                    //Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle);
-                    PersonGame newPersonGame = new PersonGame
-                    {
-                        PersonListId = personList.Id,
-                                                
-                    };
-                }
+                _personGameRepository.AddOrUpdate(newPersonGame);
+                var response = new { message = "Success!"};
                 return Ok();
             }
             catch (Exception e)
@@ -132,100 +119,5 @@ namespace Team121GBCapstoneProject.Controllers
                 return BadRequest("Debugger didn't hit break point");
             }
         }
-        //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)
-        // {   //need to set it up so we have a user a that is logged in.
-        //     var loggedInUser = _personRepository.GetAll()
-        //                                        .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
-        //                                        .First();
-        //     try
-        //     {
-        //         // * check if this game already exists in the database
-        //         bool check = _gameRepository.GetAll()
-        //                                     .Any(g => g.Title == game.Title);
-        //         if(check) //add game to a users list 
-        //         {
-        //             check = loggedInUser.PersonGameLists
-        //                                 .Where(g => g.Game != null)
-        //                                 .Any(g => g.Game.Title == game.Title);
-        //             //check if user's list already contains this game.
-        //             if (check)
-        //             {
-        //                 //return what?
-        //                 return Content("This game is already in your list.");
-        //             }
-        //             //grab game from db and add it your specified list
-        //             string gameTitle = game.Title;
-        //             game = _gameRepository.GetAll()
-        //                                   .Where(g => g.Title == gameTitle)
-        //                                   .First();
-        //             //string listName = "Currently Playing";
-        //             PersonGameList list = loggedInUser.PersonGameLists
-        //                                               .Where(l => l.ListName.NameOfList == listName)
-        //                                               .First();
-
-        //             PersonGameList gameList = new PersonGameList();
-        //             gameList.ListName = list.ListName;
-        //             gameList.ListNameId = list.ListNameId;
-        //             gameList.Game = game;
-        //             gameList.GameId = game.Id;
-        //             gameList.Person = loggedInUser;
-        //             gameList.PersonId = loggedInUser.Id;
-        //             gameList.ListKind = list.ListKind;
-        //             gameList.ListKindId = list.ListKindId;
-
-        //             loggedInUser.PersonGameLists.Add(gameList);
-        //             _personRepository.AddOrUpdate(loggedInUser);
-
-        //         }
-        //         else // add game to db first.
-        //         {
-        //             await AddGameToDb(game);
-        //             //now add to users list
-        //             //grab game from db and add it your specified list
-        //             string gameTitle = game.Title;
-        //             game = _gameRepository.GetAll()
-        //                                   .Where(g => g.Title == gameTitle)
-        //                                   .First();
-        //             //string listName = "Currently Playing";
-        //             PersonGameList list = loggedInUser.PersonGameLists
-        //                                               .Where(l => l.ListName.NameOfList == listName)
-        //                                               .First();
-
-        //             PersonGameList gameList = new PersonGameList();
-        //             gameList.ListName = list.ListName;
-        //             gameList.ListNameId = list.ListNameId;
-        //             gameList.Game = game;
-        //             gameList.GameId = game.Id;
-        //             gameList.Person = loggedInUser;
-        //             gameList.PersonId = loggedInUser.Id;
-        //             gameList.ListKind = list.ListKind;
-        //             gameList.ListKindId = list.ListKindId;
-
-        //             loggedInUser.PersonGameLists.Add(gameList);
-        //             _personRepository.AddOrUpdate(loggedInUser);
-        //         }
-        //         return Ok();
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         Debug.WriteLine(e);
-        //         return BadRequest(e.Message);
-        //     }
-        // }
-
-        // [HttpPost]
-        // public async Task<ActionResult<IgdbGame>>  AddGameToDb(Game game)
-        // {
-        //     try
-        //     {
-        //         _gameRepository.AddOrUpdate(game);
-        //         return Ok();
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         Debug.WriteLine(e);
-        //         return BadRequest(e);
-        //     }
-        // }
     }
 }
