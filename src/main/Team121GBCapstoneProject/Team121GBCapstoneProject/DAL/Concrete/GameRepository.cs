@@ -61,6 +61,5 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             return gamesReturn;
         }
 
-
     }
 }

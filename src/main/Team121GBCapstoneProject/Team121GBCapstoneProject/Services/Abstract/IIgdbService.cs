@@ -8,4 +8,7 @@ public interface IIgdbService
     void SetCredentials(string clientId, string token);
     Task<IEnumerable<IgdbGame>> SearchGames(string query);
     Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "");
+    public bool checkGamesFromDatabase(List<Game> gamesToCheck, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck);
+    public bool CheckForGame(List<Game> gamesToCheck, string title);
+
 }
