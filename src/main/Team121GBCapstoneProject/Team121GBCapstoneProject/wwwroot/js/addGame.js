@@ -1,4 +1,4 @@
-import { GameDto } from "./GameDtoClass";
+import { GameDto } from "./GameDtoClass.js";
 
 console.log("Hello from addGame.js");
 
