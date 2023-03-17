@@ -1,8 +1,9 @@
-﻿using Team121GBCapstoneProject.Services.Concrete;
+﻿using System.Net;
 using Moq;
 using Moq.Protected;
-using System.Net;
-namespace Team121GBNUinitTests;
+using Team121GBCapstoneProject.Services.Concrete;
+
+namespace Team121GBNUnitTest;
 
 
 public class AccountRegistrationCAPTCHATests
@@ -13,7 +14,7 @@ public class AccountRegistrationCAPTCHATests
     }
 
     [Test]
-    public void ReCaptchaService_IsValid_ValidInput_ShouldReturnTrue()
+    public void ReCaptchaV2Service__IsValid_ValidInput_ShouldReturnTrue()
     {
         // Arrange
         var secretKey = "secret_key";
@@ -31,17 +32,17 @@ public class AccountRegistrationCAPTCHATests
         {
             BaseAddress = new Uri("http://test.com")
         };
-        var reCaptchaService = new ReCaptchaService(secretKey, httpClient);
+        var reCaptchaV2Service = new ReCaptchaV2Service(secretKey, httpClient);
 
         // Act
-        var result = reCaptchaService.IsValid(captcha).Result;
+        var result = reCaptchaV2Service.IsValid(captcha).Result;
 
         // Assert
         Assert.AreEqual(true, result);
     }
 
     [Test]
-    public void ReCaptchaService_IsValid_InvalidInput_ShouldReturnFalse()
+    public void ReCaptchaV2Service__IsValid_InvalidInput_ShouldReturnFalse()
     {
         // Arrange
         var secretKey = "secret_key";
@@ -59,17 +60,17 @@ public class AccountRegistrationCAPTCHATests
         {
             BaseAddress = new Uri("http://test.com")
         };
-        var reCaptchaService = new ReCaptchaService(secretKey, httpClient);
+        var reCaptchaV2Service = new ReCaptchaV2Service(secretKey, httpClient);
 
         // Act
-        var result = reCaptchaService.IsValid(captcha).Result;
+        var result = reCaptchaV2Service.IsValid(captcha).Result;
 
         // Assert
         Assert.AreEqual(false, result);
     }
     // !Write one more unit test to check what happens when given a bad input
     [Test]
-    public void ReCaptchaService_IsValid_CaptchaSetToNULL_ShouldReturnFalse()
+    public void ReCaptchaV2Service__IsValid_CaptchaSetToNULL_ShouldReturnFalse()
     {
         // Arrange
         string secretKey = "secret_key";;
@@ -87,10 +88,10 @@ public class AccountRegistrationCAPTCHATests
         {
             BaseAddress = new Uri("http://test.com")
         };
-        var reCaptchaService = new ReCaptchaService(secretKey, httpClient);
+        var reCaptchaV2Service = new ReCaptchaV2Service(secretKey, httpClient);
 
         // Act
-        var result = reCaptchaService.IsValid(captcha).Result;
+        var result = reCaptchaV2Service.IsValid(captcha).Result;
 
         // Assert
         Assert.AreEqual(false, result);
