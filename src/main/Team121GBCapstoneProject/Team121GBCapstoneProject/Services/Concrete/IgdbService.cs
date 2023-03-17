@@ -97,7 +97,7 @@ public class IgdbService : IIgdbService
             {
                 foreach (var game in GamesFromPersonalDB)
                 {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
                     gamesToReturn.Add(gameToAdd);
                 }
                 return gamesToReturn;
@@ -106,7 +106,7 @@ public class IgdbService : IIgdbService
             {
                 foreach (var game in GamesFromPersonalDB)
                 {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
                     gamesToReturn.Add(gameToAdd);
                 }
             }
@@ -138,7 +138,7 @@ public class IgdbService : IIgdbService
                     gameToAdd.CoverPicture = game.GameCoverArt.ToString();
                 }
                 
-                gameToAdd.IGDBUrl = game.GameWebsite.ToString();
+                gameToAdd.Igdburl = game.GameWebsite.ToString();
 
 
                 _genericGameRepo.AddOrUpdate(gameToAdd);
