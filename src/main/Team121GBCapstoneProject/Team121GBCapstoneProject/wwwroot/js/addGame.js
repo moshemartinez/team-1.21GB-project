@@ -1,11 +1,7 @@
+import { GameDto } from "./GameDtoClass";
+
 console.log("Hello from addGame.js");
-class GameDto {
-    constructor(listKind, gameTitle, imageSrc) {
-        this.listKind = listKind;
-        this.gameTitle = gameTitle;
-        this.imageSrc = imageSrc;
-    }
-}
+
 
 function addGame(gameDto, url) {
     return $.ajax({
@@ -77,47 +73,26 @@ $(document).ready(function () {
         });
 
         $("#formSubmit").on("click", function (event) {
-            event.preventDefault(); // prevent the default form submission behavior
-            console.log("#formSubmit Clicked");
-            const $listName = $("#listName option:selected").text();
-            const $tds = $row.find("td");
-            console.log($tds);
-            console.log($($tds[0]).find("img").attr("src"));
-            console.log( $($tds[1]).text());
-            const $imageSrc = $($tds[0]).find("img").attr("src");
-            const $gameTitle = $($tds[1]).text();
-            let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
-            const origin = $(location).attr("origin");
-            const url = `${origin}/api/Game/addGame`;
             try {
+                event.preventDefault(); // prevent the default form submission behavior
+                console.log("#formSubmit Clicked");
+                const $listName = $("#listName option:selected").text();
+                const $tds = $row.find("td");
+                console.log($tds);
+                console.log($($tds[0]).find("img").attr("src"));
+                console.log($($tds[1]).text());
+                const $imageSrc = $($tds[0]).find("img").attr("src");
+                const $gameTitle = $($tds[1]).text();
+                let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
+                const origin = $(location).attr("origin");
+                const url = `${origin}/api/Game/addGame`;
                 let response = addGame(gameDto, url);
                 let data = response;
                 console.log(data);
-            } 
+            }
             catch (error) {
                 console.log(error);
             }
         });
     });
-
-    // $("#formSubmit").on("click", async function (event) {
-    //     event.preventDefault(); // prevent the default form submission behavior
-    //     console.log("#formSubmit Clicked");
-    //     const $listName = $("#listName option:selected").text();
-    //     const $tr = $(event.target).closest("tr");
-    //     const $tds = $tr.find("td");
-    //     const $imageSrc = $($tds[0]).find("img").attr("src");
-    //     const $gameTitle = $($tds[1]).text();
-    //     let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
-    //     const origin = $(location).attr("origin");
-    //     const url = `${origin}/api/Game/addGame`;
-    //     try {
-    //         let response = await addGame(gameDto, url);
-    //         let data = response;
-    //         console.log(data);
-    //         console.log("We made it");
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // });
 });
