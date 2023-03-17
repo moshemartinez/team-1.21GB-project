@@ -8,7 +8,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -22,19 +26,22 @@ body {
 }
 
 .center {
-    margin: auto;
-    padding: 10px;
-}
+  margin: auto;
+  padding: 10px;
 }
 
 
 /*Search Bar */
 .navbar-search .input-group {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .navbar-search .form-control {
-    flex: 1;
+  flex: 1;
 }
 
+/* * div spacing */
+div {
+  padding: 10px;
+}

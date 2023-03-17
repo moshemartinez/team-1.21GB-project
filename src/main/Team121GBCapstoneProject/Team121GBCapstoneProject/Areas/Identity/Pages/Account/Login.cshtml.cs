@@ -120,8 +120,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
                 //var captcha = Request.Form["g-recaptcha-response"].ToString();
                 //if (!await _reCaptchaV3Service.IsValid(captcha, "https://www.google.com/recaptcha/api/siteverify")) return Page();
 
-                if (gRecaptchaResponse == null) return Page();
-                if (!_reCaptchaV3Service.IsValid(gRecaptchaResponse, "https://www.google.com/recaptcha/api/siteverify").Result) return Page();
+                // if (gRecaptchaResponse == null) return Page();
+                // if (!_reCaptchaV3Service.IsValid(gRecaptchaResponse, "https://www.google.com/recaptcha/api/siteverify").Result) return Page();
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);

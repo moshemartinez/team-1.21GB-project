@@ -23,7 +23,7 @@ function displaySearchResults(query) {
                                     <td><img src="${resizedCoverArt}"></td>
                                     <td><b>${game.gameTitle}</b></td>
                                     <td><a href="${game.gameWebsite}">${game.gameWebsite}"</a></td>
-                                    <td><button class="btn btn-primary">Add Game</button></td>
+                                    <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
                                </tr>`;
                         $("#gameTableBody").append(row);
                     });
