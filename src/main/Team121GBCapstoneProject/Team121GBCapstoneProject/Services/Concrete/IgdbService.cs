@@ -94,7 +94,7 @@ public class IgdbService : IIgdbService
             {
                 foreach (var game in gamesToCheck)
                 {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
                     gamesToReturn.Add(gameToAdd);
                 }
                 return true;
@@ -103,7 +103,7 @@ public class IgdbService : IIgdbService
             {
                 foreach (var game in gamesToCheck)
                 {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
                     gamesToReturn.Add(gameToAdd);
                 }
             }
