@@ -22,7 +22,7 @@ CREATE TABLE [Game] (
 
 CREATE TABLE [ListKind] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [Kind] NVARCHAR(50);
+    [Kind] NVARCHAR(50)
 );
 
 CREATE TABLE [PersonList] (
