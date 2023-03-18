@@ -8,7 +8,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -22,8 +26,8 @@ body {
 }
 
 .center {
-    margin: auto;
-    padding: 10px;
+  margin: auto;
+  padding: 10px;
 }
 
 .loggedInOrOut {
@@ -50,29 +54,57 @@ body {
     font-size: larger;
 }
 
+/*Hover*/
 .hovertext {
     position: relative;
     border-bottom: 1px dotted black;
 }
 
-.hovertext:before {
+    .hovertext:before {
         content: attr(data-hover);
         visibility: hidden;
         opacity: 0;
-        width: max-content;
+        width: 140px;
         background-color: black;
         color: #fff;
-        text-align: center;
+        text-align: left;
         border-radius: 5px;
-        padding: 5px 5px;
+        padding: 5px 0;
         transition: opacity 1s ease-in-out;
         position: absolute;
-        z-index: 1;
-        left: 0;
-        top: 110%;
-}
+        z-index: 10;
+        left: 100%;
+        top: -750%;
+    }
 
 .hovertext:hover:before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hovertext2 {
+    position: relative;
+    border-bottom: 1px dotted black;
+}
+
+    .hovertext2:before {
+        content: attr(data-hover);
+        visibility: hidden;
+        opacity: 0;
+        width: 140px;
+        background-color: #353340;
+        color: #fff;
+        text-align: left;
+        border-radius: 5px;
+        padding: 5px 0;
+        transition: opacity 1s ease-in-out;
+        position: absolute;
+        z-index: 10;
+        left: 100%;
+        top: auto;
+    }
+
+.hovertext2:hover:before {
     opacity: 1;
     visibility: visible;
 }
@@ -80,11 +112,15 @@ body {
 
 /*Search Bar */
 .navbar-search .input-group {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .navbar-search .form-control {
-    flex: 1;
+  flex: 1;
 }
 
+/* * div spacing */
+div {
+  padding: 10px;
+}

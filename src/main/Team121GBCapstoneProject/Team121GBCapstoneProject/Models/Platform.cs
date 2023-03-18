@@ -6,17 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Team121GBCapstoneProject.Models;
 
-[Table("Person")]
-public partial class Person
+[Table("Platform")]
+public partial class Platform
 {
     [Key]
     [Column("ID")]
     public int Id { get; set; }
 
-    [Column("AuthorizationID")]
-    [StringLength(450)]
-    public string AuthorizationId { get; set; }
+    [Required]
+    [StringLength(64)]
+    public string Name { get; set; }
 
-    [InverseProperty("Person")]
-    public virtual ICollection<PersonList> PersonLists { get; } = new List<PersonList>();
+    [InverseProperty("Platform")]
+    public virtual ICollection<GamePlatform> GamePlatforms { get; } = new List<GamePlatform>();
 }
