@@ -1,8 +1,4 @@
-//import { GameDto } from "../../Team121GBCapstoneProject/wwwroot/js/GameDtoClass";
-//import { GameDto } from "../../Team121GBCapstoneProject/wwwroot/js/GameDtoClass";
-//import { getGameInfoFromPage } from "../../Team121GBCapstoneProject/wwwroot/js/addGame";
 import { getUserListsSuccess, setUpURL } from "../../Team121GBCapstoneProject/wwwroot/js/addGameHelperFunctions"
-import { validateUserLists } from "../../Team121GBCapstoneProject/wwwroot/js/validation.js"
 const $ = require('jquery');
 describe("Test Methods for adding game helper functions", () => {
     test("setUpUrl Success", () => {
