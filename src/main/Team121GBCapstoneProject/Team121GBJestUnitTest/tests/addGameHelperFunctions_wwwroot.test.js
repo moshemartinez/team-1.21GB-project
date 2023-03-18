@@ -1,9 +1,9 @@
 //import { GameDto } from "../../Team121GBCapstoneProject/wwwroot/js/GameDtoClass";
 //import { GameDto } from "../../Team121GBCapstoneProject/wwwroot/js/GameDtoClass";
 //import { getGameInfoFromPage } from "../../Team121GBCapstoneProject/wwwroot/js/addGame";
-import { setUpURL } from "../../Team121GBCapstoneProject/wwwroot/js/addGameHelperFunctions"
+import { getUserListsSuccess, setUpURL } from "../../Team121GBCapstoneProject/wwwroot/js/addGameHelperFunctions"
 import { validateUserLists } from "../../Team121GBCapstoneProject/wwwroot/js/validation.js"
-
+const $ = require('jquery');
 describe("Test Methods for adding game helper functions", () => {
     test("setUpUrl Success", () => {
         console.log("setUpUrl success");
@@ -30,5 +30,33 @@ describe("Test Methods for adding game helper functions", () => {
         const urlFrom_setUpURL = setUpURL(origin);
         expect(urlFrom_setUpURL).toBe(false);
     });
-    
+    //!---------------------------------------------------
+    test("getUserListSuccess success", () => {
+        console.log("getUserListSuccess success");
+        const data = [{
+            "listKind": "Currently Playing"
+        },
+        {
+            "listKind": "Completed"
+        },
+        {
+            "listKind": "Want To Play"
+        }];
+        expect(getUserListsSuccess(data)).toEqual(data);
+    });
+    test("getUserListSuccess failure null data", () => {
+        console.log("getUserListSuccess failure null data");
+        const data = null;
+        expect(getUserListsSuccess(data)).toBe(false);
+    });
+    test("getUserListSuccess failure undefined data", () => {
+        console.log("getUserListSuccess failure undefined data");
+        const data = undefined;
+        expect(getUserListsSuccess(data)).toBe(false);
+    });
+    test("getUserListSuccess failure empty data", () => {
+        console.log("getUserListSuccess failure empty data");
+        const data = [];
+        expect(getUserListsSuccess(data)).toBe(false);
+    });
 });
