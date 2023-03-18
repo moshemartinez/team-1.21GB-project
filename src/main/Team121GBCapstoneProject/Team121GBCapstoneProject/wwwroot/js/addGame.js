@@ -1,12 +1,14 @@
-import { setUpURL, getGameInfoFromPage, addGame, afterAddGame, errorAddingGameToList, getUserLists, getUserListsSuccess, getUserListsFailure } from "./addGameHelperFunctions.js";
+import { setUpURL, getGameInfoFromPage, addGame, afterAddGame, errorAddingGameToList, getUserLists, getUserListsSuccess, getUserListSuccessDOM, getUserListsFailure } from "./addGameHelperFunctions.js";
 
 console.log("Hello from addGame.js");
 
 $(document).ready(function () {
-    $("table").on("click", "button", function () {
+    $("table").on("click", "button", async function () {
         const $row = $(this).closest("tr");
         // * retrieve info from from tag
-        getUserLists();
+        const data = await getUserLists();
+        console.log(data[0].listKind);
+        getUserListSuccessDOM(data);
         $("#formSubmit").on("click", function (event) {
             try {
                 event.preventDefault(); // prevent the default form submission behavior

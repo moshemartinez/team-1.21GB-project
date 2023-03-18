@@ -1,5 +1,5 @@
 import { GameDto } from "./GameDtoClass.js";
-
+// const $ = require("jquery");
 
 function setUpURL(origin) {
     if(origin === null || origin === undefined || Object.keys(origin).length === 0) return false;
@@ -54,18 +54,28 @@ function errorAddingGameToList(data) {
     $("#statusMessage").show();
 }
 // ! Modifying the DOM
-function getUserLists() {
-    return $.ajax({
-        type: "GET",
-        url: "/api/Game/getUserLists",
-        dataType: "json",
-        success: getUserListsSuccess,
-        error: getUserListsFailure
-    });
+async function getUserLists() {
+    try {
+        const data = await $.ajax({
+            type: "GET",
+            url: "/api/Game/getUserLists",
+            dataType: "json",
+            success: getUserListsSuccess,
+            error: getUserListsFailure
+        });
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
 }
 function getUserListsSuccess(data) {
-
+    if(data === null || data === undefined || data.length === 0) return false;
     console.log("Getting user lists succeeded");
+    return data;
+}
+
+function getUserListSuccessDOM(data) {
     let listNameFormId = $("#listName").attr("id");
     $("#listName").empty();
     for (let i = 0; i < data.length; ++i) {
@@ -79,4 +89,4 @@ function getUserListsFailure(data) {
     console.log("You don't have any lists to add a game to!");
 }
 
-export { setUpURL, getGameInfoFromPage, addGame, afterAddGame, errorAddingGameToList, getUserLists, getUserListsSuccess, getUserListsFailure }
+export { setUpURL, getGameInfoFromPage, addGame, afterAddGame, errorAddingGameToList, getUserLists, getUserListsSuccess, getUserListSuccessDOM, getUserListsFailure }
