@@ -1,7 +1,7 @@
 --Note: Only Run The create database once and then comment it again. 
 --Uncomment, highight create database, then comment over and run query
 
--- CREATE DATABASE [GamingPlatform]
+--CREATE DATABASE [GamingPlatform]
 
 --Creating Person Table
 CREATE TABLE [Person] (
@@ -22,7 +22,7 @@ CREATE TABLE [Game] (
 
 CREATE TABLE [ListKind] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [Kind] NVARCHAR(50);
+    [Kind] NVARCHAR(50)
 );
 
 CREATE TABLE [PersonList] (
