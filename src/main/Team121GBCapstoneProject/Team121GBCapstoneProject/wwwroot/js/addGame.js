@@ -1,93 +1,98 @@
-import { GameDto } from "./GameDtoClass.js";
+import { setUpURL, getGameInfoFromPage, addGame, afterAddGame, errorAddingGameToList, getUserLists, getUserListsSuccess, getUserListsFailure } from "./addGameHelperFunctions.js";
+//import { GameDto } from "./GameDtoClass.js";
 
 console.log("Hello from addGame.js");
 
+// function setUpURL() {
+//     const origin = $(location).attr("origin");
+//     const url = `${origin}/api/Game/addGame`;
+//     return url;
+// }
 
-function addGame(gameDto, url) {
-    return $.ajax({
-        method: "POST",
-        url: url,
-        contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(gameDto),
-        success: afterAddGame,
-        error: errorAddingGameToList
-    });
-}
+// function getGameInfoFromPage($row) {
+//     const $listName = $("#listName option:selected").text();
+//     const $tds = $row.find("td");
+//     const $imageSrc = $($tds[0]).find("img").attr("src");
+//     const $gameTitle = $($tds[1]).text();
+//     let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
+//     return gameDto;
+// }
 
-function afterAddGame(data) {
-    $("#statusMessage").empty();
-    console.log(data);
-    console.log('afterAddGame hit');
-    const notification = `<div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <h1>${data}</h1>
-                          </div>`;
-    $("#statusMessage").append(notification);
-    $("#statusMessage").show();
-}
+// function addGame(gameDto, url) {
+//     return $.ajax({
+//         method: "POST",
+//         url: url,
+//         contentType: "application/json; charset=UTF-8",
+//         data: JSON.stringify(gameDto),
+//         success: afterAddGame,
+//         error: errorAddingGameToList
+//     });
+// }
 
-function errorAddingGameToList(data) {
-    $("#statusMessage").empty();
-    console.log(data.responseText);
-    console.log(data.value);
-    console.log(data);
+// function afterAddGame(data) {
+//     $("#statusMessage").empty();
+//     console.log(data);
+//     console.log('afterAddGame hit');
+//     const notification = `<div class="alert alert-success alert-dismissible" role="alert">
+//                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+//                             <h1>${data}</h1>
+//                           </div>`;
+//     $("#statusMessage").append(notification);
+//     $("#statusMessage").show();
+// }
 
-    console.log("errorAddingGameToList hit");
-    const notification = `<div class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <h1>${data.responseText}</h1>
-                          </div>`;
-    $("#statusMessage").append(notification);
-    $("#statusMessage").show();
-}
-// ! Modifying the DOM
-function getUserListsSuccess(data) {
+// function errorAddingGameToList(data) {
+//     $("#statusMessage").empty();
+//     console.log(data.responseText);
+//     console.log(data.value);
+//     console.log(data);
 
-    console.log("Getting user lists succeeded");
-    let listNameFormId = $("#listName").attr("id");
-    $("#listName").empty();
-    for (let i = 0; i < data.length; ++i) {
-        console.log(data[i]);
-        let selectOption = `<option value="${data[i].listKind}">${data[i].listKind}</option>`;
-        $("#listName").append(selectOption);
-    }
-}
+//     console.log("errorAddingGameToList hit");
+//     const notification = `<div class="alert alert-danger alert-dismissible" role="alert">
+//                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+//                             <h1>${data.responseText}</h1>
+//                           </div>`;
+//     $("#statusMessage").append(notification);
+//     $("#statusMessage").show();
+// }
+// // ! Modifying the DOM
+// function getUserLists() {
+//     return $.ajax({
+//         type: "GET",
+//         url: "/api/Game/getUserLists",
+//         dataType: "json",
+//         success: getUserListsSuccess,
+//         error: getUserListsFailure
+//     });
+// }
+// function getUserListsSuccess(data) {
 
-function getUserListsFailure(data) {
-    console.log("You don't have any lists to add a game to!");
-}
+//     console.log("Getting user lists succeeded");
+//     let listNameFormId = $("#listName").attr("id");
+//     $("#listName").empty();
+//     for (let i = 0; i < data.length; ++i) {
+//         console.log(data[i]);
+//         let selectOption = `<option value="${data[i].listKind}">${data[i].listKind}</option>`;
+//         $("#listName").append(selectOption);
+//     }
+// }
+
+// function getUserListsFailure(data) {
+//     console.log("You don't have any lists to add a game to!");
+// }
 
 $(document).ready(function () {
     $("table").on("click", "button", function () {
         const $row = $(this).closest("tr");
         // * retrieve info from from tag
-        const $name = $row.find("b");
-        console.log(`$row:${$row}`);
-        console.log(`$name:${$name.text()}`);
-        $.ajax({
-            type: "GET",
-            url: "/api/Game/getUserLists",
-            dataType: "json",
-            success: getUserListsSuccess,
-            error: getUserListsFailure
-        });
-
+        getUserLists();
         $("#formSubmit").on("click", function (event) {
             try {
                 event.preventDefault(); // prevent the default form submission behavior
-                console.log("#formSubmit Clicked");
-                const $listName = $("#listName option:selected").text();
-                const $tds = $row.find("td");
-                console.log($tds);
-                console.log($($tds[0]).find("img").attr("src"));
-                console.log($($tds[1]).text());
-                const $imageSrc = $($tds[0]).find("img").attr("src");
-                const $gameTitle = $($tds[1]).text();
-                let gameDto = new GameDto($listName, $gameTitle, $imageSrc);
-                const origin = $(location).attr("origin");
-                const url = `${origin}/api/Game/addGame`;
-                let response = addGame(gameDto, url);
-                let data = response;
+                const gameDto = getGameInfoFromPage($row);
+                const url = setUpURL();
+                const response = addGame(gameDto, url);
+                const data = response;
                 console.log(data);
             }
             catch (error) {
@@ -96,3 +101,5 @@ $(document).ready(function () {
         });
     });
 });
+
+//export { getGameInfoFromPage, setUpURL }
