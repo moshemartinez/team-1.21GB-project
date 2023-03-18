@@ -11,7 +11,7 @@
     <Controller_SelectedScaffolderCategoryPath>root/Common/MVC/Controller</Controller_SelectedScaffolderCategoryPath>
     <WebStackScaffolding_DbContextDialogWidth>650</WebStackScaffolding_DbContextDialogWidth>
     <WebStackScaffolding_ControllerDialogWidth>650.285714285714</WebStackScaffolding_ControllerDialogWidth>
-    <NameOfLastUsedPublishProfile>C:\Users\natel\Documents\SeniorProject\team-1.21GB-project\src\main\Team121GBCapstoneProject\Team121GBCapstoneProject\Properties\PublishProfiles\gaming-platform - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\Cyber\source\repos\Team-1.21GB-Project\src\main\Team121GBCapstoneProject\Team121GBCapstoneProject\Properties\PublishProfiles\GamingPlatform - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

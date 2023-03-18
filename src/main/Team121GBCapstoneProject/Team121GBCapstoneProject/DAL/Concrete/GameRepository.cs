@@ -51,6 +51,11 @@ namespace Team121GBCapstoneProject.DAL.Concrete
 
         public List<Game> GetGamesByTitle(string title)
         {
+            if (title == "")
+            {
+                List<Game> result = new List<Game>();
+                return result;
+            }
             var gamesToReturn = _game.Where(g => g.Title.Contains(title)).ToList();
             return gamesToReturn;
         }
@@ -60,7 +65,6 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             var gamesReturn = _game.OrderByDescending(g => g.AverageRating).Take(numberOfGames).ToList();
             return gamesReturn;
         }
-
 
     }
 }
