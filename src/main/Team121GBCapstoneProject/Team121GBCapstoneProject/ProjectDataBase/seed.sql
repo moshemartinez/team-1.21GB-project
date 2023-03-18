@@ -109,15 +109,22 @@ INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[Cover
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('Kirby Mass Attack','In this game, poor Kirby was split into 10 weaker copies of himself by the villainous Necrodeus. Using the stylus, players guided these mini Kirbys on an amazing adventure to restore Kirby to his former self.', 2011, 8.5, 'https://images.igdb.com/igdb/image/upload/t_thumb/co1wbw.png', 'https://www.igdb.com/games/kirby-mass-attack');
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('Kirby''s Return to Dream Land','When a mysterious traveler crash-landed on Planet Popstar, Kirby and his friends rushed to his aid, and an amazing adventure began!', 2011, 7, 'https://images.igdb.com/igdb/image/upload/t_thumb/co1w9v.png', 'https://www.igdb.com/games/kirbys-return-to-dream-land');
  
+
+ --remove this 
+INSERT INTO [ListKind] ([Kind]) VALUES ('Currently Playing');
+INSERT INTO [ListKind] ([Kind]) VALUES ('Completed');
+INSERT INTO [ListKind] ([Kind]) VALUES ('Want to Play');
+
+
 --seed List Types
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Currently Playing');
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Completed');
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Want to Play');
-INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Custom');
+--INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Currently Playing');
+--INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Completed');
+--INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Want to Play');
+--INSERT INTO [GamePlayListType] ([ListKind]) VALUES ('Custom');
 
 --seed default List Names
-INSERT INTO [ListName] ([NameOfList]) VALUES ('Currently Playing');
-INSERT INTO [ListName] ([NameOfList]) VALUES ('Completed');
-INSERT INTO [ListName] ([NameOfList]) VALUES ('Want to Play');
+--INSERT INTO [ListName] ([NameOfList]) VALUES ('Currently Playing');
+--INSERT INTO [ListName] ([NameOfList]) VALUES ('Completed');
+--INSERT INTO [ListName] ([NameOfList]) VALUES ('Want to Play');
 
 

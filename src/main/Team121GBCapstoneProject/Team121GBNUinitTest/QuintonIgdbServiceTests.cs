@@ -156,7 +156,7 @@ namespace Team121GBNUnitTest
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("");
-            int numberOfGames = 10;
+            int numberOfGames = 0;
             bool expected = false;
             bool result;
 
