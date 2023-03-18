@@ -1,8 +1,8 @@
 import { GameDto } from "./GameDtoClass.js";
 
 
-function setUpURL() {
-    const origin = $(location).attr("origin");
+function setUpURL(origin) {
+    if(origin === null || origin === undefined || Object.keys(origin).length === 0) return false;
     const url = `${origin}/api/Game/addGame`;
     return url;
 }

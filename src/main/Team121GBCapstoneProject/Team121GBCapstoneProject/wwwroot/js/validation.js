@@ -39,6 +39,13 @@ function validateGameDtoData(data) {
     return errors.length === 0; // return true if there are no errors
 }
 
+function validateUserLists(data) {
+    if (data === undefined) return false;
+    const schema = {
+        listKind: x => typeof x === 'string' && x !== ""
+    }
+    const errors = validateObject(data, schema);
+    return errors.length === 0; // return true if there are no errors
+}
 
-
-export { validateObject, validateArrayOfObjects, validateGameDtoData }
+export { validateObject, validateArrayOfObjects, validateGameDtoData, validateUserLists }
