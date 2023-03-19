@@ -41,8 +41,8 @@ builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha =>
                                                                     recaptcha.GetRequiredService<IHttpClientFactory>()));
 
 // Add Swagger middleware
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
