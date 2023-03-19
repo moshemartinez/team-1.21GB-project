@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Team121GBCapstoneProject": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:55942;http://localhost:55943"
+    }
+  }
+}
