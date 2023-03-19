@@ -6,6 +6,8 @@
 @model Team121GBCapstoneProject.Models.GameInfo;
 @{
     ViewData["Title"] = "Home Page";
+
+    string gameInfo = null;
 }
 
 <div class="text-center">
@@ -22,16 +24,16 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout"
-                    asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <input type="button" 
-                               value="Log Out"
-                               style="height:50px; 
-                                      width:200px; 
-                                      background-color: grey; 
-                                      color: white; 
-                                      font-weight: bolder; 
-                                      border-color: black; 
-                                      border-width: 2px; 
+                   asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <input type="button"
+                           value="Log Out"
+                           style="height:50px;
+                                      width:200px;
+                                      background-color: grey;
+                                      color: white;
+                                      font-weight: bolder;
+                                      border-color: black;
+                                      border-width: 2px;
                                       border-radius: 10px;
                                       font-size: larger;" />
                     </a>
@@ -40,14 +42,14 @@
                 {
                     <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
                         <input type="button"
-                               value="Log In"
-                               style="height:50px; 
-                                      width:200px; 
-                                      background-color: grey; 
-                                      color: white; 
-                                      font-weight: bolder; 
-                                      border-color: black; 
-                                      border-width: 2px; 
+                           value="Log In"
+                           style="height:50px;
+                                      width:200px;
+                                      background-color: grey;
+                                      color: white;
+                                      font-weight: bolder;
+                                      border-color: black;
+                                      border-width: 2px;
                                       border-radius: 10px;
                                       font-size: larger;" />
                     </a>
@@ -56,9 +58,9 @@
             </div>
             <div class="col-sm">
                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">
-                    <input type="button" 
-                           value="Create Account" 
-                           style="height:50px; 
+                    <input type="button"
+                           value="Create Account"
+                           style="height:50px;
                                   width:200px;
                                   background-color: dodgerblue;
                                   color: white;
@@ -106,7 +108,7 @@
 </div>
 
 <div id="carouselExampleControls" class="carousel slide text-center" style="background-color: #961717"
-    data-bs-ride="carousel">
+     data-bs-ride="carousel">
     <div class="carousel-inner">
 
         @{
@@ -115,15 +117,27 @@
 
         @foreach (var game in Model.games)
         {
-
+            gameInfo = null;
+            gameInfo += $"Release Year: {game.YearPublished}";
+            gameInfo += "\nGenres: ";
+            foreach (var genre in game.GameGenres)
+            {
+                gameInfo += $"{genre.Genre.Name} ";
+            }
+            gameInfo += "\n| Platforms: ";
+            foreach (var platform in game.GamePlatforms)
+            {
+                gameInfo += $"{platform.Platform.Name} ";
+            }
             <div class="carousel-item @(i == 1? "active": "")">
-                <img src="@game.CoverPicture" style="width: 200px; height: 200px; margin-bottom: 175px; margin-top: 30px;">
+                <span class="hovertext" data-hover="@gameInfo">
+                    <img src="@game.CoverPicture" style="width: 200px; height: 200px; margin-bottom: 175px; margin-top: 30px;">
+                </span>
                 <div class="carousel-caption d-none d-md-block">
                     <h5 style="color: black; font-weight: bold;">@($"#{i++} - {game.Title}")</h5>
                     <p style="color: black; font-weight: bold;">@game.Description</p>
                 </div>
             </div>
-
         }
 
 
