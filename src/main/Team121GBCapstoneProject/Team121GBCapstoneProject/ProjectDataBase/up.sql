@@ -1,7 +1,7 @@
 --Note: Only Run The create database once and then comment it again. 
 --Uncomment, highight create database, then comment over and run query
 
--- CREATE DATABASE [GamingPlatform]
+--CREATE DATABASE [GamingPlatform]
 
 --Creating Person Table
 CREATE TABLE [Person] (
@@ -22,7 +22,7 @@ CREATE TABLE [Game] (
 
 CREATE TABLE [ListKind] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [Kind] NVARCHAR(50);
+    [Kind] NVARCHAR(50)
 );
 
 CREATE TABLE [PersonList] (
@@ -32,6 +32,32 @@ CREATE TABLE [PersonList] (
     [ListKind] NVARCHAR(50),
     CONSTRAINT [FK_PersonID] FOREIGN KEY ([PersonID]) REFERENCES [Person]([ID]),
     CONSTRAINT [FK_ListKindID] FOREIGN KEY ([ListKindID]) REFERENCES [ListKind]([ID])
+);
+
+CREATE TABLE [Genre] (
+    [ID] INT PRIMARY KEY IDENTITY(1,1),
+    [Name] NVARCHAR(64) NOT NULL
+);
+
+CREATE TABLE [GameGenre] (
+    [ID] INT PRIMARY KEY IDENTITY (1,1),
+    [GameID] INT,
+    [GenreID] INT,
+    CONSTRAINT [FK_GameGenreID] FOREIGN KEY ([GameID]) REFERENCES [Game]([ID]),
+    CONSTRAINT [FK_GenreID] FOREIGN KEY ([GenreID]) REFERENCES [Genre]([ID])
+);
+
+CREATE TABLE [Platform] (
+    [ID] INT PRIMARY KEY IDENTITY(1,1),
+    [Name] NVARCHAR(64) NOT NULL
+);
+
+CREATE TABLE [GamePlatform] (
+    [ID] INT PRIMARY KEY IDENTITY (1,1),
+    [GameID] INT,
+    [PlatformID] INT,
+    CONSTRAINT [FK_GamePlatformID] FOREIGN KEY ([GameID]) REFERENCES [Game]([ID]),
+    CONSTRAINT [FK_PlatformID] FOREIGN KEY ([PlatformID]) REFERENCES [Platform]([ID])
 );
 
 CREATE TABLE [PersonGame] (
