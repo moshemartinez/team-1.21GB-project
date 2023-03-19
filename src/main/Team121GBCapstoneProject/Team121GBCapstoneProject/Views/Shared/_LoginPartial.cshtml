@@ -17,7 +17,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
         </li>
 
         <li class="nav-item dropdown">
@@ -25,14 +25,14 @@
                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
             {
-                <img src="https://img.icons8.com/ios-glyphs/256/user.png" width="30" height="30" class="rounded-circle">
+                <img src="https://img.icons8.com/ios-glyphs/256/user.png" width="25" height="25" class="rounded-circle">
             }
             else
             {
-                <img src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" width="30" height="30" class="rounded-circle">
+                <img src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" width="25" height="25" class="rounded-circle">
             }
             </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink" id="mainDropdown">
                 <li>
                     <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account Preferences</a>
                 </li>
@@ -48,11 +48,8 @@
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                    <label class="switch" for="dark-mode-toggle">
-                        <input type="checkbox" id="dark-mode-toggle">
-                        <span class="slider"></span>
-                    </label>
-                    <span class="slider-text">Dark Mode</span>
+                    @*<button type="button" class="btn btn-light" id="darkModeButton"><span class="bi bi-moon-stars-fill"></span> Dark Mode</button>*@
+                    <button class="darkmode-toggler" aria-label="Activate dark mode" aria-checked="false" role="checkbox"><span class="bi bi-moon-stars-fill"></span> Dark Mode</button>
                 </li>
             </ul>
         </li>
@@ -68,10 +65,10 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink2">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Sign Up</a>
+                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Sign Up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Log In</a>
+                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Log In</a>
                 </li>
 
             </ul>

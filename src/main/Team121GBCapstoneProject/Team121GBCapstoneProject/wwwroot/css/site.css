@@ -25,6 +25,23 @@ body {
   margin-bottom: 60px;
 }
 
+.navbar {
+    background-color: #3f3e56 !important; /* set background color  */
+    padding: 10px; /* add some padding to the navbar */
+}
+
+.navbar a {
+    color: white;
+}
+
+.nav-item.dropdown {
+    color: black !important;
+}
+
+#mainDropdown {
+    color: black !important;
+}
+
 .center {
   margin: auto;
   padding: 10px;
@@ -120,17 +137,8 @@ body {
   flex: 1;
 }
 
-/*:root{
-    --primary-color: #edf2fc;
-    --secondary-color: #212121;
-}*/
 
 
-/*Dark Mode*/
-.dark-mode {
-/*    background-color: #1d1d1d;
-    color: #f0f0f0;*/
-}
 
 /* The switch - the box around the slider */
 .switch {

@@ -132,7 +132,10 @@ function dalleModalClose() {
 //    });
 //});
 
-
+$('#darkModeButton').click(function () {
+    darkmode.toggle();
+    console.log("dark mode activated: ", darkmode.isActivated());
+});
 
 
 // Darkmode.js
