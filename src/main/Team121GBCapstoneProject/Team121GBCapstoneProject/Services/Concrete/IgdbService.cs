@@ -86,73 +86,163 @@ public class IgdbService : IIgdbService
         return Enumerable.Empty<IgdbGame>();
     }
 
+    public bool checkGamesFromDatabase(List<Game> gamesToCheck, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck)
+    {
+        
+        if (gamesToCheck.Count() > 0)
+        {
+            if (gamesToCheck.Count() >= numberOfGamesToCheck)
+            {
+                int i = 0;
+                foreach (var game in gamesToCheck)
+                {
+                    if (i == numberOfGamesToCheck)
+                    {
+                        break;
+                    }
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                    gamesToReturn.Add(gameToAdd);
+                    i++;
+                }
+                return true;
+            }
+            else
+            {
+                foreach (var game in gamesToCheck)
+                {
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                    gamesToReturn.Add(gameToAdd);
+                }
+            }
+        }
+        return false;
+    }
+
+    public void FinishGamesListForView(List<Game> GamesFromOurDB, List<IgdbGame> gameFromAPI, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck)
+    {
+        foreach (var game in gameFromAPI)
+        {
+            if (gamesToReturn.Count() >= numberOfGamesToCheck)
+            {
+                break;
+            }
+
+            if (CheckForGame(GamesFromOurDB, game.GameTitle) == true)
+            {
+                continue;
+            }
+
+            Game gameToAdd = new Game();
+            gameToAdd.Title = game.GameTitle.ToString();
+
+            if (game.GameCoverArt == null)
+            {
+                gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
+            }
+            else
+            {
+                gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+            }
+
+            gameToAdd.Igdburl = game.GameWebsite.ToString();
+
+
+            _genericGameRepo.AddOrUpdate(gameToAdd);
+
+            gamesToReturn.Add(game);
+
+
+        }
+    }
+
     public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "")
     {
         List<IgdbGame> gamesToReturn = new List<IgdbGame>();
         List<Game> GamesFromPersonalDB = _gameRepository.GetGamesByTitle(query);
 
-        if (GamesFromPersonalDB.Count() > 0)
+        bool result = checkGamesFromDatabase(GamesFromPersonalDB, gamesToReturn, numberOfGames);
+
+        if (result == true)
         {
-            if (GamesFromPersonalDB.Count() == numberOfGames)
-            {
-                foreach (var game in GamesFromPersonalDB)
-                {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
-                    gamesToReturn.Add(gameToAdd);
-                }
-                return gamesToReturn;
-            }
-            else
-            {
-                foreach (var game in GamesFromPersonalDB)
-                {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
-                    gamesToReturn.Add(gameToAdd);
-                }
-            }
+            return gamesToReturn;
         }
 
         var gamesFromSearch = await SearchGames(query);
-        
-        foreach (var game in gamesFromSearch) 
-        {
-            if (gamesToReturn.Count() >= numberOfGames)
-            {
-                break;
-            }
 
-            if (CheckForGame(GamesFromPersonalDB, game.GameTitle) == true)
-            {
-                continue;
-            }
-           
-                Game gameToAdd = new Game();
-                gameToAdd.Title = game.GameTitle.ToString();
-
-                if (game.GameCoverArt == null)
-                {
-                    gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
-                }
-                else
-                {
-                    gameToAdd.CoverPicture = game.GameCoverArt.ToString();
-                }
-                
-                gameToAdd.Igdburl = game.GameWebsite.ToString();
-
-
-                _genericGameRepo.AddOrUpdate(gameToAdd);
-
-                gamesToReturn.Add(game);
-
-            
-        }
+        FinishGamesListForView(GamesFromPersonalDB, gamesFromSearch.ToList<IgdbGame>(), gamesToReturn, numberOfGames);
 
 
         return gamesToReturn;
     }
 
-    private bool CheckForGame(List<Game> gamesToCheck, string title)
+    /*
+        public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "")
+        {
+            List<IgdbGame> gamesToReturn = new List<IgdbGame>();
+            List<Game> GamesFromPersonalDB = _gameRepository.GetGamesByTitle(query);
+
+            if (GamesFromPersonalDB.Count() > 0)
+            {
+                if (GamesFromPersonalDB.Count() == numberOfGames)
+                {
+                    foreach (var game in GamesFromPersonalDB)
+                    {
+                        IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
+                        gamesToReturn.Add(gameToAdd);
+                    }
+                    return gamesToReturn;
+                }
+                else
+                {
+                    foreach (var game in GamesFromPersonalDB)
+                    {
+                        IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
+                        gamesToReturn.Add(gameToAdd);
+                    }
+                }
+            }
+
+            var gamesFromSearch = await SearchGames(query);
+
+            foreach (var game in gamesFromSearch) 
+            {
+                if (gamesToReturn.Count() >= numberOfGames)
+                {
+                    break;
+                }
+
+                if (CheckForGame(GamesFromPersonalDB, game.GameTitle) == true)
+                {
+                    continue;
+                }
+
+                    Game gameToAdd = new Game();
+                    gameToAdd.Title = game.GameTitle.ToString();
+
+                    if (game.GameCoverArt == null)
+                    {
+                        gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
+                    }
+                    else
+                    {
+                        gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+                    }
+
+                    gameToAdd.IGDBUrl = game.GameWebsite.ToString();
+
+
+                    _genericGameRepo.AddOrUpdate(gameToAdd);
+
+                    gamesToReturn.Add(game);
+
+
+            }
+
+
+            return gamesToReturn;
+        }*/
+
+    public bool CheckForGame(List<Game> gamesToCheck, string title)
     {
         foreach (var game in gamesToCheck)
         {

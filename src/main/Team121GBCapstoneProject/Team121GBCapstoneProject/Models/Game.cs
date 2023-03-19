@@ -32,5 +32,11 @@ public partial class Game
     public string Igdburl { get; set; }
 
     [InverseProperty("Game")]
+    public virtual ICollection<GameGenre> GameGenres { get; } = new List<GameGenre>();
+
+    [InverseProperty("Game")]
+    public virtual ICollection<GamePlatform> GamePlatforms { get; } = new List<GamePlatform>();
+
+    [InverseProperty("Game")]
     public virtual ICollection<PersonGame> PersonGames { get; } = new List<PersonGame>();
 }

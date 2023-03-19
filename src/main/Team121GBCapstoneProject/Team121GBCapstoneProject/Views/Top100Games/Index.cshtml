@@ -1,6 +1,7 @@
 ﻿@model Team121GBCapstoneProject.Models.GameInfo;
 @{
     ViewData["Title"] = "Top 100 Games Page";
+    string gameInfo = null;
 }
 
 <div class="text-center">
@@ -26,7 +27,25 @@
                 {
                     <tr>
                         <th scope="row">@j</th>
-                        <td><img src=@($"{Model.games[i].CoverPicture}") width="200px" height="200px" /></td>
+                        <td>
+                            @{
+                                gameInfo = null;
+                                gameInfo += $"Release Year: {Model.games[i].YearPublished}";
+                                gameInfo += "\nGenres: ";
+                                foreach (var genre in Model.games[i].GameGenres)
+                                {
+                                    gameInfo += $"{genre.Genre.Name} ";
+                                }
+                                gameInfo += "\n| Platforms: ";
+                                foreach (var platform in Model.games[i].GamePlatforms)
+                                {
+                                    gameInfo += $"{platform.Platform.Name} ";
+                                }
+                            }
+                                <span class="hovertext2" data-hover="@gameInfo">
+                                    <img src=@($"{Model.games[i].CoverPicture}") width="200px" height="200px"/>
+                                </span>
+                                </td>
                         <td style="font-weight: bold;">@Model.games[i].Title</td>
                         <td>@Model.games[i].Description</td>
                         <td style="background-color: @Model.backgroundColor[i]; color: white; font-weight: bolder; text-align: center; font-size: larger">@Model.games[i].AverageRating</td>
