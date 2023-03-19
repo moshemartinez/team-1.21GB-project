@@ -43,21 +43,97 @@ function dalleModalClose() {
 
 
 
-// when the dark mode toggle button is clicked
-$('#dark-mode-toggle').click(function () {
-    //// toggle the dark mode
-    //$('body').toggleClass('dark-mode');
+//$('#dark-mode-toggle').click(function () {
+//    // toggle the dark mode
+//    $('body').toggleClass('dark-mode');
 
-    //// save the user's preference
-    //if ($('body').hasClass('dark-mode')) {
-    //    localStorage.setItem('dark-mode-enabled', 'true');
-    //} else {
-    //    localStorage.setItem('dark-mode-enabled', 'false');
-    //}
+//    // save the user's preference
+//    if ($('body').hasClass('dark-mode')) {
+//        localStorage.setItem('dark-mode-enabled', 'true');
+//    } else {
+//        localStorage.setItem('dark-mode-enabled', 'false');
+//    }
 
-    darkmode.toggle();
-    console.log("dark mode activated: ", darkmode.isActivated()); // should return true
-});
+//    darkmode.toggle();
+//    console.log("dark mode activated: ", darkmode.isActivated()); // should return true
+//});
+
+// ATTEMPT 2
+
+//// check the user's preference on page load
+//$(document).ready(function () {
+//    var darkModeEnabled = localStorage.getItem('dark-mode-enabled');
+//    if (darkModeEnabled === 'true') {
+//        var sliderBefore = $('.slider:before');
+//        sliderBefore.css('left', '34px');
+
+//        if (!darkmode.isActivated) {
+//            darkmode.toggle();
+//        }
+//    } else {
+//        if (darkmode.isActivated) {
+//            darkmode.toggle();
+//        }
+//    }
+
+//    // localStorage.setItem('dark-mode-enabled', 'true');
+
+//    // update the state of the toggle button
+//    //var toggleSwitch = $('#dark-mode-toggle input[type="checkbox"]');
+//    //if (darkmode.isActivated()) {
+//    //    toggleSwitch.prop('checked', true);
+//    //} else {
+//    //    toggleSwitch.prop('checked', false);
+//    //}
+//});
+
+//$('#dark-mode-toggle').click(function () {
+
+//    darkmode.toggle();
+//    console.log("dark mode activated: ", darkmode.isActivated()); // should return the mode
+
+//    // update the state of the toggle button
+//    //var toggleSwitch = $('#dark-mode-toggle input[type="checkbox"]');
+
+//    if (darkmode.isActivated()) {
+//        localStorage.setItem('dark-mode-enabled', 'true');
+//    } else {
+//        localStorage.setItem('dark-mode-enabled', 'false');
+//    }
+//});
+
+
+// *** ATTEMPT 3 ***
+
+//$(document).ready(function () {
+//    var darkModeEnabled = localStorage.getItem('dark-mode-enabled');
+//    if (darkModeEnabled === 'true') {
+//        var sliderBefore = $('.slider:before');
+//        sliderBefore.css('left', '26px');
+
+//        if (!darkmode.isActivated()) {
+//            darkmode.toggle();
+//        }
+//    } else {
+//        if (darkmode.isActivated()) {
+//            darkmode.toggle();
+//        }
+//    }
+
+//    $('#dark-mode-toggle').click(function () {
+//        darkmode.toggle();
+//        console.log("dark mode activated: ", darkmode.isActivated()); // should return the mode
+
+//        if (darkmode.isActivated()) {
+//            localStorage.setItem('dark-mode-enabled', 'true');
+//        } else {
+//            localStorage.setItem('dark-mode-enabled', 'false');
+//        }
+//    });
+//});
+
+
+
 
 // Darkmode.js
 // See https://darkmodejs.learn.uno/
@@ -76,4 +152,4 @@ var options = {
 }
 
 var darkmode = new Darkmode(options);
-
+darkmode.showWidget();
