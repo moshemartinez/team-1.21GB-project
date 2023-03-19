@@ -25,11 +25,11 @@
                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
             {
-                <img src="https://img.icons8.com/ios-glyphs/256/user.png" width="20" height="20" class="rounded-circle">
+                <img src="https://img.icons8.com/ios-glyphs/256/user.png" width="30" height="30" class="rounded-circle">
             }
             else
             {
-                <img src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" width="20" height="20" class="rounded-circle">
+                <img src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" width="30" height="30" class="rounded-circle">
             }
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
