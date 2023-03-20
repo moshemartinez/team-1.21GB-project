@@ -35,18 +35,19 @@ public class GamesListsController : Controller
     public IActionResult Index()
     {
         string authorizationId = _userManager.GetUserId(User);
-        var userLists = _personListRepository.GetAll()
-                                            .Join(_personRepository.GetAll(), pl => pl.PersonId, p => p.Id, (pl, p) => new { pl, p })
-                                            .Where(x => x.p.AuthorizationId == authorizationId)
-                                            .Select(x => x.pl);
-        var personGames = _personGameRepository.GetAll()
-                                                .Where(pg => pg.PersonList.Person.AuthorizationId == authorizationId)
-                                                .ToList();
+        
+        IQueryable<PersonList> userLists = _personListRepository.GetAll()
+                                                                .Join(_personRepository.GetAll(), pl => pl.PersonId, p => p.Id, (pl, p) => new { pl, p })
+                                                                .Where(x => x.p.AuthorizationId == authorizationId)
+                                                                .Select(x => x.pl);
+        List<PersonGame> personGames = _personGameRepository.GetAll()
+                                                            .Where(pg => pg.PersonList.Person.AuthorizationId == authorizationId)
+                                                            .ToList();
 
-        var personGamesByListKind = personGames.GroupBy(pg => pg.PersonList.ListKind)
-                                                .ToDictionary(g => g.Key, g => g.ToList());
+        Dictionary<string, List<PersonGame>> personGamesByListKind = personGames.GroupBy(pg => pg.PersonList.ListKind)
+                                                                                .ToDictionary(g => g.Key, g => g.ToList());
 
-        var personListVMList = new List<PersonListVM>();
+        List<PersonListVM> personListVMList = new List<PersonListVM>();
 
         foreach (var kvp in personGamesByListKind)
         {
