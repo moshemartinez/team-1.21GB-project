@@ -89,14 +89,16 @@ namespace Team121GBCapstoneProject.Controllers
                 ApplicationUser currentUser = await _userManager.GetUserAsync(User);
                 // check if the already have the game in their list                            
                 bool check = _personListRepository.GetAll()
-                                              .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind)
+                                              .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind && pl.Person.AuthorizationId == currentUser.Id)
                                               .PersonGames.Any(pg => pg.Game.Title == gameDto.GameTitle);
                 if (check)
                 {
                     return BadRequest($"You already have {gameDto.GameTitle} stored in {gameDto.ListKind}.");
                 }
                 // if we have gotten to this point, we can now add the game
-                PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl => pl.ListKind == gameDto.ListKind);
+                PersonList personList = _personListRepository.GetAll()
+                                                              .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind && pl.Person.AuthorizationId == currentUser.Id);
+                                                              
                 Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle);
                 PersonGame newPersonGame = new PersonGame
                 {
