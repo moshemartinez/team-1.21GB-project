@@ -49,7 +49,6 @@ public class IgdbService : IIgdbService
         }
         else
         {
-            // TODO: Throw specific exceptions that explain what happened
             throw new HttpRequestException();
         }
     }

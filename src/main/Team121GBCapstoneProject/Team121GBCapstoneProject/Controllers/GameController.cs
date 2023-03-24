@@ -93,7 +93,7 @@ namespace Team121GBCapstoneProject.Controllers
                                               .PersonGames.Any(pg => pg.Game.Title == gameDto.GameTitle);
                 if (check)
                 {
-                    return BadRequest($"You alreay have {gameDto.GameTitle} stored in {gameDto.ListKind}.");
+                    return BadRequest($"You already have {gameDto.GameTitle} stored in {gameDto.ListKind}.");
                 }
                 // if we have gotten to this point, we can now add the game
                 PersonList personList = _personListRepository.GetAll()
