@@ -17,29 +17,41 @@ namespace Team121GBNUinitTests;
 
 public class IgdbAPIServiceTests
 {
-    private readonly string _igdbClientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
-    private readonly string _igdbBearerToken = "llrnvo5vfowcyr0ggecl445q5dunyl";
+    private string _igdbClientId;
+    private string _igdbBearerToken;
+
     private IGameRepository _gameRepository;
     private IRepository<Game> _genericGameRepo;
     private InMemoryDbHelper<GPDbContext> _dbHelper;
 
+    private string _search1;
+    private string _search2;
+    private string _search3;
+
     [SetUp]
     public void SetUp()
     {
+        _igdbClientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
+        _igdbBearerToken = "llrnvo5vfowcyr0ggecl445q5dunyl";
+
         _dbHelper = new InMemoryDbHelper<GPDbContext>(null, DbPersistence.OneDbPerTest);
         _gameRepository = new GameRepository(_dbHelper.GetContext());
         _genericGameRepo = new Repository<Game>(_dbHelper.GetContext());
 
+        _search1 = "Mario";
+        _search2 = "Zelda";
+        _search3 = "Sonic";
+
     }
 
-    // Tests from Moshe (Sprint 2)
+    // Tests from Moshe (Sprint 2 & 3)
 
     [Test]
     public async Task IgdbService_GetJsonStringFromEndpoint_RequestAccepted()
     {
         // --> Arrange
         // Define the search query and the endpoint URL
-        string searchBody = $"search \"Mario\"; fields name, cover.url, url; where parent_game = null;";
+        string searchBody = $"search \"{_search1}\"; fields name, cover.url, url; where parent_game = null;";
         string searchUri = "https://api.igdb.com/v4/games/";
 
         // Create a mock HttpMessageHandler to handle the request
@@ -75,7 +87,7 @@ public class IgdbAPIServiceTests
     {
         // --> Arrange
         // Define the search request body and URI
-        string searchBody = $"search \"Mario\"; fields name, cover.url, url; where parent_game = null;";
+        string searchBody = $"search \"{_search1}\"; fields name, cover.url, url; where parent_game = null;";
         string searchUri = "https://api.igdb.com/v4/games/";
 
         // Set up a mock HttpMessageHandler with a strict mock behavior
@@ -105,6 +117,46 @@ public class IgdbAPIServiceTests
             await igdbService.GetJsonStringFromEndpoint(_igdbBearerToken, searchUri, _igdbClientId, searchBody)
         );
     }
+
+    [Test]
+    public async Task IgdbService_SearchGames_ReturnsListOf10Games()
+    {
+        // Arrange
+        // Set up a mock HttpClientFactory that returns a HttpClient with a custom validation callback for the SSL certificate
+        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(() =>
+        {
+            var handler = new HttpClientHandler()
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+            };
+            return new HttpClient(handler)
+            {
+                BaseAddress = new Uri("https://api.igdb.com/v4/")
+            };
+        });
+
+        // Instantiate a new instance of the IgdbService class and pass in the mocked HttpClientFactory
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+
+        // Set the credentials needed to access the IGDB API
+        igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
+
+        // Act
+        // Call the SearchGames method with three different search queries and capture the results in variables
+        var search1Games = await igdbService.SearchGames(_search1);
+        var search2Games = await igdbService.SearchGames(_search2);
+        var search3Games = await igdbService.SearchGames(_search3);
+
+        // Assert
+        // Check that each of the three search results contains exactly 10 games
+        Assert.That(search1Games.Count(), Is.EqualTo(10));
+        Assert.That(search2Games.Count(), Is.EqualTo(10));
+        Assert.That(search3Games.Count(), Is.EqualTo(10));
+    }
+
+
+
 
 
     //[Test]
