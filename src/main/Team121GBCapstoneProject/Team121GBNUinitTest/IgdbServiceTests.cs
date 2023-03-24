@@ -121,7 +121,7 @@ public class IgdbAPIServiceTests
     [Test]
     public async Task IgdbService_SearchGames_ReturnsListOf10Games()
     {
-        // Arrange
+        // --> Arrange
         // Set up a mock HttpClientFactory that returns a HttpClient with a custom validation callback for the SSL certificate
         var mockHttpClientFactory = new Mock<IHttpClientFactory>();
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(() =>
@@ -142,20 +142,37 @@ public class IgdbAPIServiceTests
         // Set the credentials needed to access the IGDB API
         igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
 
-        // Act
+        // --> Act
         // Call the SearchGames method with three different search queries and capture the results in variables
         var search1Games = await igdbService.SearchGames(_search1);
         var search2Games = await igdbService.SearchGames(_search2);
         var search3Games = await igdbService.SearchGames(_search3);
 
-        // Assert
+        // --> Assert
         // Check that each of the three search results contains exactly 10 games
         Assert.That(search1Games.Count(), Is.EqualTo(10));
         Assert.That(search2Games.Count(), Is.EqualTo(10));
         Assert.That(search3Games.Count(), Is.EqualTo(10));
     }
 
+    [Test]
+    public async Task IgdbService_SearchGames_EmptySearchReturnsEmpty()
+    {
+        // --> Arrange
+        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        var httpClient = new HttpClient();
+        mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
 
+
+        igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
+
+        // --> Act
+        var result = await igdbService.SearchGames("");
+
+        // --> Assert
+        Assert.IsEmpty(result);
+    }
 
 
 
