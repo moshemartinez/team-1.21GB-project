@@ -35,7 +35,7 @@ public class IgdbAPIServiceTests
     // Tests from Moshe (Sprint 2)
 
     [Test]
-    public async Task IgdbService_Request_Success()
+    public async Task IgdbService_GetJsonStringFromEndpoint_RequestAccepted()
     {
         // --> Arrange
         // Define the search query and the endpoint URL
@@ -68,26 +68,62 @@ public class IgdbAPIServiceTests
         // --> Assert
         // Verify that the result matches the expected value
         Assert.That(result, Is.EqualTo("{\"key\":\"value\"}"));
-
     }
 
     [Test]
-    public async Task IgdbService_Request_Denied()
+    public async Task IgdbService_GetJsonStringFromEndpoint_RequestDenied_ThrowsException()
     {
-        //Arrange
-        var handler = new Mock<HttpMessageHandler>();
+        // --> Arrange
+        // Define the search request body and URI
         string searchBody = $"search \"Mario\"; fields name, cover.url, url; where parent_game = null;";
         string searchUri = "https://api.igdb.com/v4/games/";
 
-        handler.SetupAnyRequest()
-            .ReturnsResponse(HttpStatusCode.NotFound);
-        //New up the service class
-        IgdbService igdbService = new IgdbService(handler.CreateClientFactory(), _gameRepository, _genericGameRepo);
-        
-        //Act
-        Task<string> Act() => igdbService.GetJsonStringFromEndpoint("incorrectToken", searchUri, _igdbClientId, searchBody);
+        // Set up a mock HttpMessageHandler with a strict mock behavior
+        var handler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
 
-        //Assert
-        Assert.That(Act, Throws.TypeOf<HttpRequestException>());
+        // Set up the mock handler to return a Forbidden response for any request message
+        handler.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.Forbidden));
+
+        // Create a new HttpClient using the mock handler, and set the BaseAddress
+        var httpClient = new HttpClient(handler.Object)
+        {
+            BaseAddress = new Uri("https://api.igdb.com/v4/")
+        };
+
+        // Set up a mock IHttpClientFactory that returns the mock HttpClient
+        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+
+        // Create a new instance of the IgdbService using the mock HttpClientFactory
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+
+        // --> Act & Assert
+        // Assert that calling the method with the mock HttpClient will throw an HttpRequestException
+        Assert.ThrowsAsync<System.Net.Http.HttpRequestException>(async () =>
+            await igdbService.GetJsonStringFromEndpoint(_igdbBearerToken, searchUri, _igdbClientId, searchBody)
+        );
     }
+
+
+    //[Test]
+    //public async Task IgdbService_Request_Denied()
+    //{
+    //    //Arrange
+    //    var handler = new Mock<HttpMessageHandler>();
+    //    string searchBody = $"search \"Mario\"; fields name, cover.url, url; where parent_game = null;";
+    //    string searchUri = "https://api.igdb.com/v4/games/";
+
+    //    handler.SetupAnyRequest()
+    //        .ReturnsResponse(HttpStatusCode.NotFound);
+    //    //New up the service class
+    //    IgdbService igdbService = new IgdbService(handler.CreateClientFactory(), _gameRepository, _genericGameRepo);
+
+    //    //Act
+    //    Task<string> Act() => igdbService.GetJsonStringFromEndpoint("incorrectToken", searchUri, _igdbClientId, searchBody);
+
+    //    //Assert
+    //    Assert.That(Act, Throws.TypeOf<HttpRequestException>());
+    //}
 }
