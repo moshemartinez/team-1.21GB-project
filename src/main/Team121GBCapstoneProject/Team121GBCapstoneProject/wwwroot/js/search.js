@@ -22,7 +22,8 @@ function displaySearchResults(query) {
                         var row = `<tr>
                                     <td><img src="${resizedCoverArt}"></td>
                                     <td><b>${game.gameTitle}</b></td>
-                                    <td><a href="${game.gameWebsite}">${game.gameWebsite}"</a></td>
+                                    <td><a class="btn btn-primary" href="${game.gameWebsite}">IGDB Page</a></td>
+                                    <td><p>${game.gameDescription}</p></td>
                                     <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
                                </tr>`;
                         $("#gameTableBody").append(row);
