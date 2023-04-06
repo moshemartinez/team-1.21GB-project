@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using Team121GBCapstoneProject.Models.DTO;
 using Microsoft.DotNet.MSIdentity.Shared;
 using Team121GBCapstoneProject.DAL.Abstract;
+using System.Diagnostics;
 
 namespace Team121GBCapstoneProject.Services.Concrete;
 
@@ -61,7 +62,7 @@ public class IgdbService : IIgdbService
 
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
-        string searchBody = $"search \"{query}\"; fields name, cover.url, url; where parent_game = null;";
+        string searchBody = $"search \"{query}\"; fields name, cover.url, url, summary; where parent_game = null;";
         string searchUri = "https://api.igdb.com/v4/games/";
 
         string response = await GetJsonStringFromEndpoint(_bearerToken, searchUri, _clientId, searchBody);
@@ -78,7 +79,7 @@ public class IgdbService : IIgdbService
 
         if (gamesJsonDTO != null)
         {
-            return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover?.url?.ToString(), g.url));
+            return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover?.url?.ToString(), g.url, g.summary));
         }
 
 
@@ -99,7 +100,7 @@ public class IgdbService : IIgdbService
                     {
                         break;
                     }
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description);
                     gamesToReturn.Add(gameToAdd);
                     i++;
                 }
@@ -109,7 +110,7 @@ public class IgdbService : IIgdbService
             {
                 foreach (var game in gamesToCheck)
                 {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description);
                     gamesToReturn.Add(gameToAdd);
                 }
             }
@@ -119,6 +120,7 @@ public class IgdbService : IIgdbService
 
     public void FinishGamesListForView(List<Game> GamesFromOurDB, List<IgdbGame> gameFromAPI, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck)
     {
+
         foreach (var game in gameFromAPI)
         {
             if (gamesToReturn.Count() >= numberOfGamesToCheck)
@@ -145,8 +147,16 @@ public class IgdbService : IIgdbService
 
             gameToAdd.Igdburl = game.GameWebsite.ToString();
 
+            gameToAdd.Description = game.GameDescription.ToString();
 
-            _genericGameRepo.AddOrUpdate(gameToAdd);
+            try
+            {
+                _genericGameRepo.AddOrUpdate(gameToAdd);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
 
             gamesToReturn.Add(game);
 
