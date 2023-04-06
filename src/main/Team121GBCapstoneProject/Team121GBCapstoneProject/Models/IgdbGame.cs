@@ -9,6 +9,15 @@ namespace Team121GBCapstoneProject.Models
         public string GameCoverArt { get; set; } 
         public string GameWebsite { get; set; }
         public string GameDescription { get; set; }
+        //old constructor
+        public IgdbGame(int id, string gameTitle, string gameCoverArt, string gameWebsite)
+        {
+            Id = id;
+            GameTitle = gameTitle;
+            GameCoverArt = gameCoverArt;
+            GameWebsite = gameWebsite;
+        }
+        // * new updated constructor for improved caching.
         public IgdbGame(int id, string gameTitle, string gameCoverArt, string gameWebsite, string gameDescription)
         {
             Id = id;
