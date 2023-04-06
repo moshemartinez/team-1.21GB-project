@@ -12,7 +12,7 @@ CREATE TABLE [Person] (
 CREATE TABLE [Game] (
     [ID]              INT           PRIMARY KEY IDENTITY(1, 1),
     [Title]           NVARCHAR(64),
-    [Description]     NVARCHAR(526),
+    [Description]     NVARCHAR(MAX),
     [YearPublished]   INT,
     [ESRBRatingID]    INT,
     [AverageRating]   FLOAT,
