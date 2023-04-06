@@ -16,7 +16,6 @@ public partial class Game
     [StringLength(64)]
     public string Title { get; set; }
 
-    [StringLength(526)]
     public string Description { get; set; }
 
     public int? YearPublished { get; set; }
