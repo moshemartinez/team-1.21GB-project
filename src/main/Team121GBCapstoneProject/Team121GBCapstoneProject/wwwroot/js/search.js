@@ -32,3 +32,43 @@ function displaySearchResults(query) {
         }
     });
 }
+$(document).on('mouseenter', 'tbody tr', function() {
+    $(this).animate({
+      height: '+=50px'
+    }, 'fast');
+  });
+  
+  $(document).on('mouseleave', 'tbody tr', function() {
+    $(this).animate({
+      height: '-=50px'
+    }, 'fast');
+  });
+
+// $(document).on('mouseenter', 'tr', function() {
+//     $(this).find('td').animate({
+//       height: '+=50px',
+//       width: '+=50px'
+//     }, 'slow');
+//   });
+  
+//   $(document).on('mouseleave', 'tr', function() {
+//     $(this).find('td').animate({
+//       height: '-=50px',
+//       width: '-=50px'
+//     }, 'slow');
+//   });
+
+
+// $(() => {
+//     $('tr').on('mouseenter', (event) => {
+//         $(event.currentTarget).animate({
+//           width: '800px',
+//           height: '800px'
+//         }, 'fast');
+//       }).on('mouseleave', (event) => {
+//         $(event.currentTarget).animate({
+//             width: '',
+//             height: ''
+//           }, 'fast');
+//       });
+// });

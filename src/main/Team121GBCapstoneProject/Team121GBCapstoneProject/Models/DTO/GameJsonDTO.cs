@@ -9,6 +9,20 @@
         public string summary { get; set; }
         public int? first_release_date { get; set; }
 
+        public static int? ConvertFirstReleaseDateFromUnixTimestampToYear(int? firstReleaseDate)
+        {
+            if (firstReleaseDate == null) return null;
+            DateTime dateTime = new DateTime(1970, 
+                                            1,
+                                            1,
+                                            0,
+                                            0,
+                                            0,
+                                            DateTimeKind.Utc)
+                                            .AddSeconds((double)firstReleaseDate);
+            return dateTime.Year;
+        }
+
     }
 
     public class Cover
