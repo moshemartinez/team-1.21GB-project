@@ -23,13 +23,12 @@ public class GameJsonDTOTests
     [TestCase(10223123, 1970)]// 10223123 == 1970
     [TestCase(1000000000, 2001)]// 10223123 == 2001
     [TestCase(1649266800, 2022)]// 1649266800 == 2022
-    public void GameJsonDTO_ConvertFirstReleaseDate_FromUnixTimeStampToInteger(int unixTimeStamp, int expectedValue)
+    [TestCase(null, null)]// should be null if the unixTimeStamp is null
+    public void GameJsonDTO_ConvertFirstReleaseDate_FromUnixTimeStampToInteger(int? unixTimeStamp, int? expectedValue)
     {
         // Arrange  and Act
         int? yearPublished = GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(unixTimeStamp);
         //Assert
         Assert.That(yearPublished, Is.EqualTo(expectedValue));
-        
-
     }
 }
