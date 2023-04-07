@@ -62,7 +62,7 @@ public class IgdbService : IIgdbService
 
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
-        string searchBody = $"search \"{query}\"; fields name, cover.url, url, summary, first_release_date; where parent_game = null;";
+        string searchBody = $"search \"{query}\"; fields name, cover.url, url, summary, first_release_date, rating; where parent_game = null;";
         string searchUri = "https://api.igdb.com/v4/games/";
 
         string response = await GetJsonStringFromEndpoint(_bearerToken, searchUri, _clientId, searchBody);
@@ -79,7 +79,13 @@ public class IgdbService : IIgdbService
 
         if (gamesJsonDTO != null)
         {
-            return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover?.url?.ToString(), g.url, g.summary, 1));
+            return gamesJsonDTO.Select(g => new IgdbGame(g.id,
+                                                          g.name,
+                                                          g.cover?.url?.ToString(),
+                                                          g.url,
+                                                          g.summary,
+                                                          GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(g.first_release_date),
+                                                          g.rating));
         }
 
 
@@ -88,32 +94,60 @@ public class IgdbService : IIgdbService
 
     public bool checkGamesFromDatabase(List<Game> gamesToCheck, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck)
     {
-        
-        if (gamesToCheck.Count() > 0)
+        try
         {
-            if (gamesToCheck.Count() >= numberOfGamesToCheck)
+
+            if (gamesToCheck.Count() > 0)
             {
-                int i = 0;
-                foreach (var game in gamesToCheck)
+                if (gamesToCheck.Count() >= numberOfGamesToCheck)
                 {
-                    if (i == numberOfGamesToCheck)
+                    int i = 0;
+                    foreach (var game in gamesToCheck)
                     {
-                        break;
+                        if (i == numberOfGamesToCheck)
+                        {
+                            break;
+                        }
+
+                        int? yearPublished =
+                            GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
+
+                        IgdbGame gameToAdd = new IgdbGame(1,
+                                                          game.Title,
+                                                          game.CoverPicture.ToString(),
+                                                          game.Igdburl,
+                                                          game.Description, 
+                                                          game.YearPublished, 
+                                                          (double) game.AverageRating);
+                        gamesToReturn.Add(gameToAdd);
+                        i++;
                     }
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished);
-                    gamesToReturn.Add(gameToAdd);
-                    i++;
+
+                    return true;
                 }
-                return true;
-            }
-            else
-            {
-                foreach (var game in gamesToCheck)
+                else
                 {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished);
-                    gamesToReturn.Add(gameToAdd);
+                    foreach (var game in gamesToCheck)
+                    {
+
+                        int? yearPublished =
+                            GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
+
+                        IgdbGame gameToAdd = new IgdbGame(1,
+                                                          game.Title,
+                                                          game.CoverPicture.ToString(),
+                                                          game.Igdburl,
+                                                          game.Description, 
+                                                          yearPublished, 
+                                                          (double)game.AverageRating);
+                        gamesToReturn.Add(gameToAdd);
+                    }
                 }
             }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
         }
         return false;
     }
@@ -146,8 +180,9 @@ public class IgdbService : IIgdbService
             }
 
             gameToAdd.Igdburl = game.GameWebsite.ToString();
-
             gameToAdd.Description = game.GameDescription.ToString();
+            gameToAdd.YearPublished = game.FirstReleaseDate;
+            gameToAdd.AverageRating = game.AverageRating;
 
             try
             {
