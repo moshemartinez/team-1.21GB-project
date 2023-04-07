@@ -8,6 +8,7 @@
         public string url { get; set; }
         public string summary { get; set; }
         public int? first_release_date { get; set; }
+        public double rating { get; set; }
 
         public static int? ConvertFirstReleaseDateFromUnixTimestampToYear(int? firstReleaseDate)
         {
