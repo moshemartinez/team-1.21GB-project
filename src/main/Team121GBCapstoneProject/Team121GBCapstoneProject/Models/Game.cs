@@ -30,6 +30,10 @@ public partial class Game
     [Column("IGDBUrl")]
     public string Igdburl { get; set; }
 
+    [ForeignKey("EsrbratingId")]
+    [InverseProperty("Games")]
+    public virtual Esrbrating Esrbrating { get; set; }
+
     [InverseProperty("Game")]
     public virtual ICollection<GameGenre> GameGenres { get; } = new List<GameGenre>();
 
