@@ -9,6 +9,7 @@ namespace Team121GBCapstoneProject.Models
         public string GameCoverArt { get; set; } 
         public string GameWebsite { get; set; }
         public string GameDescription { get; set; }
+        public int? FirstReleaseDate { get; set; }
         //old constructor
         public IgdbGame(int id, string gameTitle, string gameCoverArt, string gameWebsite)
         {
@@ -18,13 +19,19 @@ namespace Team121GBCapstoneProject.Models
             GameWebsite = gameWebsite;
         }
         // * new updated constructor for improved caching.
-        public IgdbGame(int id, string gameTitle, string gameCoverArt, string gameWebsite, string gameDescription)
+        public IgdbGame(int id,
+                        string gameTitle,
+                        string gameCoverArt,
+                        string gameWebsite,
+                        string gameDescription,
+                        int? firstReleaseDate)
         {
             Id = id;
             GameTitle = gameTitle;
             GameCoverArt = gameCoverArt;
             GameWebsite = gameWebsite;
             GameDescription = gameDescription;
+            FirstReleaseDate = firstReleaseDate;
         }
     }
 }

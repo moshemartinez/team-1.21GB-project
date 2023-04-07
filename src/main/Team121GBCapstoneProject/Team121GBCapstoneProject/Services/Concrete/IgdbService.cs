@@ -62,7 +62,7 @@ public class IgdbService : IIgdbService
 
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
-        string searchBody = $"search \"{query}\"; fields name, cover.url, url, summary; where parent_game = null;";
+        string searchBody = $"search \"{query}\"; fields name, cover.url, url, summary, first_release_date; where parent_game = null;";
         string searchUri = "https://api.igdb.com/v4/games/";
 
         string response = await GetJsonStringFromEndpoint(_bearerToken, searchUri, _clientId, searchBody);
@@ -79,7 +79,7 @@ public class IgdbService : IIgdbService
 
         if (gamesJsonDTO != null)
         {
-            return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover?.url?.ToString(), g.url, g.summary));
+            return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover?.url?.ToString(), g.url, g.summary, 1));
         }
 
 
@@ -100,7 +100,7 @@ public class IgdbService : IIgdbService
                     {
                         break;
                     }
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description);
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished);
                     gamesToReturn.Add(gameToAdd);
                     i++;
                 }
@@ -110,7 +110,7 @@ public class IgdbService : IIgdbService
             {
                 foreach (var game in gamesToCheck)
                 {
-                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description);
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished);
                     gamesToReturn.Add(gameToAdd);
                 }
             }

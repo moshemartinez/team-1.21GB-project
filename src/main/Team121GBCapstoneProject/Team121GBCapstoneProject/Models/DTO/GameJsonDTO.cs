@@ -7,6 +7,8 @@
         public string name { get; set; }
         public string url { get; set; }
         public string summary { get; set; }
+        public int? first_release_date { get; set; }
+
     }
 
     public class Cover
