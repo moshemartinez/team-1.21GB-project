@@ -85,7 +85,8 @@ public class IgdbService : IIgdbService
                                                           g.url,
                                                           g.summary,
                                                           GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(g.first_release_date),
-                                                          g.rating));
+                                                          g.rating,
+                                                          g.age_ratings));
         }
 
 
@@ -118,7 +119,8 @@ public class IgdbService : IIgdbService
                                                           game.Igdburl,
                                                           game.Description, 
                                                           game.YearPublished, 
-                                                          (double) game.AverageRating);
+                                                          (double) game.AverageRating,
+                                                          game.EsrbratingId);
                         gamesToReturn.Add(gameToAdd);
                         i++;
                     }
@@ -139,7 +141,8 @@ public class IgdbService : IIgdbService
                                                           game.Igdburl,
                                                           game.Description, 
                                                           yearPublished, 
-                                                          (double)game.AverageRating);
+                                                          (double)game.AverageRating,
+                                                          game.EsrbratingId);
                         gamesToReturn.Add(gameToAdd);
                     }
                 }

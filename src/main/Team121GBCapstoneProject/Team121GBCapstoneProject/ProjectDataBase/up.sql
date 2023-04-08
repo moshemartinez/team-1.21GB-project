@@ -11,7 +11,8 @@ CREATE TABLE [Person] (
 
 CREATE TABLE [ESRBRating] (
     [ID] INT PRIMARY KEY IDENTITY (1,1),
-    [ESRBRatingName] NVARCHAR(4)
+    [ESRBRatingName] NVARCHAR(4),
+    [IGDBRatingValue] INT
 );
 
 CREATE TABLE [Game] (

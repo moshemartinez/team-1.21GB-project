@@ -11,6 +11,7 @@ namespace Team121GBCapstoneProject.Models
         public string GameDescription { get; set; }
         public int? FirstReleaseDate { get; set; }
         public double AverageRating { get; set; }
+        public int? ESRBRatingValue { get; set; }
         //old constructor
         public IgdbGame(int id, string gameTitle, string gameCoverArt, string gameWebsite)
         {
@@ -26,7 +27,8 @@ namespace Team121GBCapstoneProject.Models
                         string gameWebsite,
                         string gameDescription,
                         int? firstReleaseDate,
-                        double averageRating)
+                        double averageRating,
+                        int? eSRBRatingValue)
         {
             Id = id;
             GameTitle = gameTitle;
@@ -35,6 +37,7 @@ namespace Team121GBCapstoneProject.Models
             GameDescription = gameDescription;
             FirstReleaseDate = firstReleaseDate;
             AverageRating = averageRating;
+            ESRBRatingValue = eSRBRatingValue;
         }
     }
 }

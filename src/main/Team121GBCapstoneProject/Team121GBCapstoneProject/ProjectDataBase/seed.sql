@@ -545,11 +545,13 @@ INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (101, 5);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 18);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 5);
 
---seed ESRBRatings
-INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('EC');
-INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('E');
-INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('E10');
-INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('T');
-INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('M');
-INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('AO');
-INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('RP');
+--seed ESRBRatings 
+--according to the devs on the IGDB discord server, you have to map
+--the value returned by the API to a name which is what the IGDBRatingValue column does
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('RP', 6);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('EC', 7);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('E', 8);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('E10', 9);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('T', 10);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('M', 11);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('AO', 12);

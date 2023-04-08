@@ -17,6 +17,9 @@ public partial class Esrbrating
     [StringLength(4)]
     public string EsrbratingName { get; set; }
 
+    [Column("IGDBRatingValue")]
+    public int? IgdbratingValue { get; set; }
+
     [InverseProperty("Esrbrating")]
     public virtual ICollection<Game> Games { get; } = new List<Game>();
 }
