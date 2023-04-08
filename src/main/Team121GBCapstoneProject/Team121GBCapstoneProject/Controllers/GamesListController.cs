@@ -47,7 +47,7 @@ public class GamesListsController : Controller
                                                             .Where(pg => pg.PersonList.Person.AuthorizationId == authorizationId)
                                                             .ToList();
 
-        List<Game> curratedList = _gameRecommender.recommendGames(personGames,10,23);
+        List<Game> curratedList = _gameRecommender.recommendGames(personGames,10);
 
         Dictionary<string, List<PersonGame>> personGamesByListKind = personGames.GroupBy(pg => pg.PersonList.ListKind)
                                                                                 .ToDictionary(g => g.Key, g => g.ToList());

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.Models;
@@ -50,29 +52,43 @@ namespace Team121GBCapstoneProject.DAL.Concrete
         }
 
         //counting genres
-        private void genreCounter(Game gameToCheckGenres)
+        public void genreCounter(Game gameToCheckGenres, int[] genreArrForCounting) //Tested
         {
-            foreach (var genre in gameToCheckGenres.GameGenres) 
+            /*       List<GameGenre> GenreForCheck = gameToCheckGenres.GameGenres.;
+                   GameGenre genre = GenreForCheck[0];
+                   int Id = (int)genre.GenreId;
+                   genreCount[Id - 1]++;*/
+            int GenreID = (int)gameToCheckGenres.GameGenres.First().GenreId;
+            genreArrForCounting[GenreID - 1]++;
+            int i = 0;
+
+      /*      foreach (var genre in gameToCheckGenres.GameGenres) 
             {
                 int genreID = (int)genre.GenreId;
                 genreCount[genreID - 1]++;
-            }
+            }*/
         }
 
-        private int[] findTopGenres()
+        public int[] findTopGenres(int[] genreArr) //Tested
         {
             int[] topGenresToReturn = new int[3];
 
+            /*       int[] orderList = genreArr.OrderByDescending(i => i).ToArray();
+                   topGenresToReturn[0] = orderList[0];
+                   topGenresToReturn[1] = orderList[1];
+                   topGenresToReturn[2] = orderList[2];*/
+
             for (int i = 0; i < 3; i++)
             {
-                int largest = genreCount.Max();
-                for (int j = 0; j < genreCount.Length; j++)
+                int largest = genreArr.Max();
+                for (int j = 0; j < genreArr.Length; j++)
                 {
-                    if (genreCount[j] == largest)
+                    if (genreArr[j] == largest)
                     {
                         int test = j;
-                        topGenresToReturn[i] = test + 1;
-                        genreCount[j] = -1;
+                        topGenresToReturn[i] = (test + 1);
+                        genreArr[j] = -1;
+                        break;
                     }
                 }
             }
@@ -80,24 +96,40 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             return topGenresToReturn;
         }
 
+        public int calculateNumberOfGames(int numberOfGames, int divisor) //Tested
+        {
+            return numberOfGames / divisor;
+        }
+
+        public List<Game> getCurratedSection(int position, int gameTakeCount)
+        {
+            List<Game> listToReturn = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == position)).Take(gameTakeCount).ToList();
+            return listToReturn;
+        }
+
         //function to currate list of games
-        private List<Game> currateGames(int numberOfGames)
+        public List<Game> currateGames(int numberOfGames, List<PersonGame> ownedGames)
         {
             List<Game> curratedGames = new List<Game>();
-            int topGenreGameCount = numberOfGames / 2;
-            int SecondGenreGameCount = numberOfGames / 3;
+            
+            int topGenreGameCount = calculateNumberOfGames(numberOfGames, 2);
+            int SecondGenreGameCount = calculateNumberOfGames(numberOfGames, 3);
             int thirdGenreGameCount = numberOfGames - (topGenreGameCount + SecondGenreGameCount);
 
             //find top x games
-            int[] TopGenres = findTopGenres();
+            int[] TopGenres = findTopGenres(genreCount);
             int first = TopGenres[0];
             int second = TopGenres[1];
             int third = TopGenres[2];
 
+            curratedGames = getCurratedSection(first, topGenreGameCount);
+            List<Game> secondPlaceGames = getCurratedSection(second, SecondGenreGameCount);
+            List<Game> thirdPlaceGames = getCurratedSection(third, thirdGenreGameCount);
+
             //Top 3 Lists
-            curratedGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == first)).Take(topGenreGameCount).ToList();
-            List<Game> secondPlaceGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == second)).Take(SecondGenreGameCount).ToList();
-            List<Game> thirdPlaceGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == third)).Take(thirdGenreGameCount).ToList();
+            //curratedGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == first)).Take(topGenreGameCount).ToList(); //Make sure to seperate and test.
+            //List<Game> secondPlaceGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == second)).Take(SecondGenreGameCount).ToList();
+            //List<Game> thirdPlaceGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == third)).Take(thirdGenreGameCount).ToList();
 
             curratedGames.AddRange(secondPlaceGames);
             curratedGames.AddRange(thirdPlaceGames);
@@ -106,7 +138,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
         }
 
         //Setting up Array
-        private void SetUpGenreCountArray(int numberOfGenres)
+        public void SetUpGenreCountArray(int numberOfGenres)
         {
             genreCount = new int[numberOfGenres];
 
@@ -116,7 +148,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             }
         }
 
-        public List<Game> recommendGames(List<PersonGame> games, int numberOfRecommendations, int genreCount)
+        public List<Game> recommendGames(List<PersonGame> games, int numberOfRecommendations)
         {
             List<Game> gamesToReturn= new List<Game>();
             //SetUpGenreCountArray(genreCount);
@@ -130,11 +162,11 @@ namespace Team121GBCapstoneProject.DAL.Concrete
                     Game gameToCheck = game.Game;
 
                     //iterate through games genres and count them up
-                    genreCounter(gameToCheck);
+                    genreCounter(gameToCheck, genreCount);
                 }
 
                 //generate currated list
-                gamesToReturn = currateGames(numberOfRecommendations);
+                gamesToReturn = currateGames(numberOfRecommendations, games);
             }
 
 
@@ -142,5 +174,3 @@ namespace Team121GBCapstoneProject.DAL.Concrete
         }
     }
 }
-
-//Note: When you see this tomarrow, you will need to make it display on the page as well as adding it to the vm
