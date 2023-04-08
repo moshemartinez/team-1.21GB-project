@@ -17,15 +17,17 @@ public class IgdbService : IIgdbService
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IGameRepository _gameRepository;
     private readonly IRepository<Game> _genericGameRepo;
+    private readonly IRepository<Esrbrating> _esrbRatingRepository;
 
     private string _bearerToken;
     private string _clientId;
 
-    public IgdbService(IHttpClientFactory httpClientFactory, IGameRepository gameRepository, IRepository<Game> genericGameRepo)
+    public IgdbService(IHttpClientFactory httpClientFactory, IGameRepository gameRepository, IRepository<Game> genericGameRepo, IRepository<Esrbrating> esrbRatingRepository)
     {
         _httpClientFactory = httpClientFactory;
         _gameRepository = gameRepository;
         _genericGameRepo = genericGameRepo;
+        _esrbRatingRepository = esrbRatingRepository;
     }
 
     public async Task<string> GetJsonStringFromEndpoint(string token, string uri, string clientId, string rawBody)
@@ -37,7 +39,7 @@ public class IgdbService : IIgdbService
         httpClient.BaseAddress = new Uri(uri);
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        httpClient.DefaultRequestHeaders.Add("Client-ID",clientId);
+        httpClient.DefaultRequestHeaders.Add("Client-ID", clientId);
 
         HttpResponseMessage response = await httpClient.PostAsync(uri, new StringContent(rawBody));
 
@@ -63,7 +65,9 @@ public class IgdbService : IIgdbService
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
         // * game Endpoint Search
-        string gameSearchBody = $"search \"{query}\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating; where parent_game = null;";
+        string gameSearchBody = $"search \"{query}\"; " +
+                                "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category;" +
+                                "where parent_game = null;";
         string gameSearchUri = "https://api.igdb.com/v4/games/";
         string gameResponse = await GetJsonStringFromEndpoint(_bearerToken, gameSearchUri, _clientId, gameSearchBody);
         IEnumerable<GameJsonDTO> gamesJsonDTO;
@@ -77,8 +81,8 @@ public class IgdbService : IIgdbService
             gamesJsonDTO = null;
         }
 
-        if (gamesJsonDTO != null)
-        {
+        if (gamesJsonDTO != null && gamesJsonDTO.Any())
+        { // some times search returns duplicates of the same from the API 
             return gamesJsonDTO.Select(g => new IgdbGame(g.id,
                                                           g.name,
                                                           g.cover?.url?.ToString(),
@@ -86,7 +90,7 @@ public class IgdbService : IIgdbService
                                                           g.summary,
                                                           GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(g.first_release_date),
                                                           g.rating,
-                                                          g.age_ratings));
+                                                          GameJsonDTO.ExtractEsrbRatingFromAgeRatingsArray(g.age_ratings)));
         }
 
 
@@ -117,9 +121,9 @@ public class IgdbService : IIgdbService
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
                                                           game.Igdburl,
-                                                          game.Description, 
-                                                          game.YearPublished, 
-                                                          (double) game.AverageRating,
+                                                          game.Description,
+                                                          game.YearPublished,
+                                                          (double)game.AverageRating,
                                                           game.EsrbratingId);
                         gamesToReturn.Add(gameToAdd);
                         i++;
@@ -139,8 +143,8 @@ public class IgdbService : IIgdbService
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
                                                           game.Igdburl,
-                                                          game.Description, 
-                                                          yearPublished, 
+                                                          game.Description,
+                                                          yearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId);
                         gamesToReturn.Add(gameToAdd);
@@ -157,48 +161,59 @@ public class IgdbService : IIgdbService
 
     public void FinishGamesListForView(List<Game> GamesFromOurDB, List<IgdbGame> gameFromAPI, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck)
     {
-
         foreach (var game in gameFromAPI)
         {
-            if (gamesToReturn.Count() >= numberOfGamesToCheck)
-            {
-                break;
-            }
-
-            if (CheckForGame(GamesFromOurDB, game.GameTitle) == true)
-            {
-                continue;
-            }
-
-            Game gameToAdd = new Game();
-            gameToAdd.Title = game.GameTitle.ToString();
-
-            if (game.GameCoverArt == null)
-            {
-                gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
-            }
-            else
-            {
-                gameToAdd.CoverPicture = game.GameCoverArt.ToString();
-            }
-
-            gameToAdd.Igdburl = game.GameWebsite.ToString();
-            gameToAdd.Description = game.GameDescription.ToString();
-            gameToAdd.YearPublished = game.FirstReleaseDate;
-            gameToAdd.AverageRating = game.AverageRating;
-
             try
             {
-                _genericGameRepo.AddOrUpdate(gameToAdd);
+
+                if (gamesToReturn.Count() >= numberOfGamesToCheck)
+                {
+                    break;
+                }
+
+                if (CheckForGame(GamesFromOurDB, game.GameTitle) == true)
+                {
+                    continue;
+                }
+                //if(game.ESRBRatingValue != 1) continue;
+
+                Game gameToAdd = new Game();
+                gameToAdd.Title = game.GameTitle.ToString();
+
+                if (game.GameCoverArt == null)
+                {
+                    gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
+                }
+                else
+                {
+                    gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+                }
+
+                gameToAdd.Igdburl = game.GameWebsite.ToString();
+                gameToAdd.Description = game.GameDescription.ToString();
+                gameToAdd.YearPublished = game.FirstReleaseDate;
+                gameToAdd.AverageRating = game.AverageRating;
+                int esrbRatingId = _esrbRatingRepository.GetAll()
+                                                        .FirstOrDefault(esrbRating => esrbRating.IgdbratingValue == game.ESRBRatingValue)!
+                                                        .Id;
+                gameToAdd.EsrbratingId = game.ESRBRatingValue;
+
+
+                try
+                {
+                    _genericGameRepo.AddOrUpdate(gameToAdd);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
+
+                gamesToReturn.Add(game);
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
-
-            gamesToReturn.Add(game);
-
-
         }
     }
 

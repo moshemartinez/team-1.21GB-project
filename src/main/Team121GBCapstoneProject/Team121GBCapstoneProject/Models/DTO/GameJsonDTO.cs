@@ -10,7 +10,7 @@
         public int? first_release_date { get; set; }
 
         public double rating { get; set; }
-        public int age_ratings { get; set; }
+        public List<AgeRating> age_ratings { get; set; }
 
         public static int? ConvertFirstReleaseDateFromUnixTimestampToYear(int? firstReleaseDate)
         {
@@ -25,11 +25,24 @@
                 .AddSeconds((double) firstReleaseDate);
             return dateTime.Year;
         }
+
+        public static int? ExtractEsrbRatingFromAgeRatingsArray(List<AgeRating> ageRatings)
+        {
+            int? rating = null;
+            if (ageRatings != null) rating = ageRatings.FirstOrDefault(ageRating => ageRating.category == 1)?.rating;
+            return rating;
+        }
     }
 
     public class Cover
     {
         public int id { get; set; }
         public string url { get; set; }
+    }
+
+    public class AgeRating
+    {
+        public int? rating { get; set; }
+        public int? category { get; set; }
     }
 }
