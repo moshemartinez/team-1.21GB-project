@@ -3,18 +3,8 @@
  * If you change or add tests, please note where you make changes
  * Or note which tests you wrote.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Team121GBCapstoneProject.DAL.Abstract;
-using Team121GBCapstoneProject.DAL.Concrete;
-using Team121GBCapstoneProject.Models;
+
 using Team121GBCapstoneProject.Models.DTO;
-using Team121GBCapstoneProject.Services.Abstract;
-using Team121GBCapstoneProject.Services.Concrete;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Team121GBNUnitTest;
 

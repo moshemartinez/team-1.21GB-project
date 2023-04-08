@@ -546,8 +546,10 @@ INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 18);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 5);
 
 --seed ESRBRatings
+INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('EC');
 INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('E');
 INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('E10');
 INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('T');
 INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('M');
 INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('AO');
+INSERT INTO [ESRBRating] ([ESRBRatingName]) VALUES ('RP');

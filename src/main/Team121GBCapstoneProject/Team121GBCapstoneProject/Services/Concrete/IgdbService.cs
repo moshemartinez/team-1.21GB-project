@@ -62,15 +62,15 @@ public class IgdbService : IIgdbService
 
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
-        string searchBody = $"search \"{query}\"; fields name, cover.url, url, summary, first_release_date, rating; where parent_game = null;";
-        string searchUri = "https://api.igdb.com/v4/games/";
-
-        string response = await GetJsonStringFromEndpoint(_bearerToken, searchUri, _clientId, searchBody);
-
+        // * game Endpoint Search
+        string gameSearchBody = $"search \"{query}\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating; where parent_game = null;";
+        string gameSearchUri = "https://api.igdb.com/v4/games/";
+        string gameResponse = await GetJsonStringFromEndpoint(_bearerToken, gameSearchUri, _clientId, gameSearchBody);
         IEnumerable<GameJsonDTO> gamesJsonDTO;
+
         try
         {
-            gamesJsonDTO = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<GameJsonDTO>>(response);
+            gamesJsonDTO = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<GameJsonDTO>>(gameResponse);
         }
         catch (System.Text.Json.JsonException)
         {
