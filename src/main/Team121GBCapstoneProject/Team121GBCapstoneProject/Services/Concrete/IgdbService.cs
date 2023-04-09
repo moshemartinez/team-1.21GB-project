@@ -193,10 +193,16 @@ public class IgdbService : IIgdbService
                 gameToAdd.Description = game.GameDescription.ToString();
                 gameToAdd.YearPublished = game.FirstReleaseDate;
                 gameToAdd.AverageRating = game.AverageRating;
-                int esrbRatingId = _esrbRatingRepository.GetAll()
+                
+                int? esrbRatingId = null;
+                if (game.ESRBRatingValue  != null)
+                {
+                    esrbRatingId = _esrbRatingRepository.GetAll()
                                                         .FirstOrDefault(esrbRating => esrbRating.IgdbratingValue == game.ESRBRatingValue)!
                                                         .Id;
-                gameToAdd.EsrbratingId = game.ESRBRatingValue;
+
+                }
+                gameToAdd.EsrbratingId = esrbRatingId;
 
 
                 try
@@ -220,9 +226,9 @@ public class IgdbService : IIgdbService
     public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "")
     {
         List<IgdbGame> gamesToReturn = new List<IgdbGame>();
-        List<Game> GamesFromPersonalDB = _gameRepository.GetGamesByTitle(query);
+        List<Game> gamesFromPersonalDb = _gameRepository.GetGamesByTitle(query);
 
-        bool result = checkGamesFromDatabase(GamesFromPersonalDB, gamesToReturn, numberOfGames);
+        bool result = checkGamesFromDatabase(gamesFromPersonalDb, gamesToReturn, numberOfGames);
 
         if (result == true)
         {
@@ -231,7 +237,7 @@ public class IgdbService : IIgdbService
 
         var gamesFromSearch = await SearchGames(query);
 
-        FinishGamesListForView(GamesFromPersonalDB, gamesFromSearch.ToList<IgdbGame>(), gamesToReturn, numberOfGames);
+        FinishGamesListForView(gamesFromPersonalDb, gamesFromSearch.ToList<IgdbGame>(), gamesToReturn, numberOfGames);
 
 
         return gamesToReturn;
