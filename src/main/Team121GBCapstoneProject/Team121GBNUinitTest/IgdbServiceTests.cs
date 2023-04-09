@@ -22,6 +22,7 @@ public class IgdbAPIServiceTests
 
     private IGameRepository _gameRepository;
     private IRepository<Game> _genericGameRepo;
+    private IRepository<Esrbrating> _esrbratingRepo;
     private InMemoryDbHelper<GPDbContext> _dbHelper;
 
     private string _search1;
@@ -36,6 +37,7 @@ public class IgdbAPIServiceTests
 
         _dbHelper = new InMemoryDbHelper<GPDbContext>(null, DbPersistence.OneDbPerTest);
         _gameRepository = new GameRepository(_dbHelper.GetContext());
+        _esrbratingRepo = new Repository<Esrbrating>(_dbHelper.GetContext());
         _genericGameRepo = new Repository<Game>(_dbHelper.GetContext());
 
         _search1 = "Mario";
@@ -71,7 +73,7 @@ public class IgdbAPIServiceTests
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         // Create an instance of the IgdbService, passing in the mock HttpClientFactory and any other dependencies
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+        var igdbService =new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
 
         // --> Act
         // Call the method under test and capture the result
@@ -109,7 +111,7 @@ public class IgdbAPIServiceTests
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         // Create a new instance of the IgdbService using the mock HttpClientFactory
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+        var igdbService =new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
 
         // --> Act & Assert
         // Assert that calling the method with the mock HttpClient will throw an HttpRequestException
@@ -137,7 +139,7 @@ public class IgdbAPIServiceTests
         });
 
         // Instantiate a new instance of the IgdbService class and pass in the mocked HttpClientFactory
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+        var igdbService =new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
 
         // Set the credentials needed to access the IGDB API
         igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
@@ -162,7 +164,7 @@ public class IgdbAPIServiceTests
         var mockHttpClientFactory = new Mock<IHttpClientFactory>();
         var httpClient = new HttpClient();
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+        var igdbService =new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
 
 
         igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);

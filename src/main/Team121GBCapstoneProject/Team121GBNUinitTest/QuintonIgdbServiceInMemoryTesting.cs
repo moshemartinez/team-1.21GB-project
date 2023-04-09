@@ -20,6 +20,7 @@ namespace Team121GBNUnitTest
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IGameRepository _gameRepository;
         private readonly IRepository<Game> _genericGameRepo;
+        private readonly IRepository<Esrbrating> _esrbratingRepo;
 
         [Test]
         public void GPDBContextFinishGamesaListForViewSuccessShouldReturnTenGames()
@@ -30,7 +31,7 @@ namespace Team121GBNUnitTest
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
@@ -70,7 +71,7 @@ namespace Team121GBNUnitTest
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Yoshi's");
-            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo);
+            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, _esrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
@@ -110,7 +111,7 @@ namespace Team121GBNUnitTest
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
@@ -161,7 +162,7 @@ namespace Team121GBNUnitTest
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Yoshi's");
-            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
@@ -212,7 +213,7 @@ namespace Team121GBNUnitTest
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
@@ -271,7 +272,7 @@ namespace Team121GBNUnitTest
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
@@ -305,7 +306,7 @@ namespace Team121GBNUnitTest
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Super Man");
-            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
