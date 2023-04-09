@@ -16,10 +16,11 @@ function displaySearchResults(query) {
                 $("#gameTableBody").empty(); // clear the table body before populating with new data
                 $.each(data,
                     function (i, game) {
-                        // resize cover image
-                        var resizedCoverArt = game.gameCoverArt.replace("thumb", "logo_med");
+                        try {
+                            // resize cover image
+                            var resizedCoverArt = game.gameCoverArt.replace("thumb", "logo_med");
 
-                        var row = `<tr>
+                            var row = `<tr>
                                     <td><img src="${resizedCoverArt}"></td>
                                     <td><b>${game.gameTitle}</b></td>
                                     <td><a class="btn btn-primary" href="${game.gameWebsite}">IGDB Page</a></td>
@@ -27,7 +28,22 @@ function displaySearchResults(query) {
                                     <td><p>${game.firstReleaseDate}</p></td>
                                     <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
                                </tr>`;
-                        $("#gameTableBody").append(row);
+                            $("#gameTableBody").append(row);
+                        }
+                        catch {
+                            // resize cover image
+                            let noCover = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
+                            var resizedCoverArt = noCover.replace("thumb", "logo_med");
+                            var row = `<tr>
+                                    <td><img src="${resizedCoverArt}"></td>
+                                    <td><b>${game.gameTitle}</b></td>
+                                    <td><a class="btn btn-primary" href="${game.gameWebsite}">IGDB Page</a></td>
+                                    <td><p>${game.gameDescription}</p></td>
+                                    <td><p>${game.firstReleaseDate}</p></td>
+                                    <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
+                               </tr>`;
+                            $("#gameTableBody").append(row);
+                        }
                     });
             }
         }
