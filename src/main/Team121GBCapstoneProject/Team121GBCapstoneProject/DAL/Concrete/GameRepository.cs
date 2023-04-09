@@ -3,6 +3,8 @@ using SendGrid.Helpers.Mail;
 using System.Linq.Expressions;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.Models;
+using FuzzySharp;
+using NuGet.DependencyResolver;
 
 namespace Team121GBCapstoneProject.DAL.Concrete
 {
@@ -57,8 +59,20 @@ namespace Team121GBCapstoneProject.DAL.Concrete
                 return result;
             }
             var gamesToReturn = _game.Where(g => g.Title.Contains(title)).ToList();
+            // Check Fuzzy equality of strings
+            if (gamesToReturn.Count == 0)
+            {
+                List<Game> allGames = _game.ToList();
+                gamesToReturn = allGames.Where(game =>
+                {
+                    int score = Fuzz.Ratio(game.Title, title);
+                    return score > 70;
+                }).ToList();
+
+            }
             return gamesToReturn;
         }
+
 
         public List<Game> GetTrendingGames(int numberOfGames)
         {

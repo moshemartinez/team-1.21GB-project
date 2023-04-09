@@ -108,5 +108,19 @@ namespace Team121GBNUinitTest
             Assert.AreEqual(expected, actual);
         }
 
+        // Tests written by Nathaniel
+        [TestCase("Getting Over it", 1)]
+        [TestCase("GEtting 0ver IT", 1)]
+        [TestCase("dark souls", 3)]
+        [TestCase("mario", 0)]
+        public void GetGamesByTitleFuzzyEquality(string title, int expected)
+        {
+            //Arrange and Act
+            IGameRepository gameRepository = new GameRepository(_mockContext.Object);
+            List<Game> games = gameRepository.GetGamesByTitle(title);
+            //Assert
+            Assert.That(games.Count, Is.EqualTo(expected));
+        }
+        // end of tests written by Nathaniel
     }
 }
