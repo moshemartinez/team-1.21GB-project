@@ -12,7 +12,8 @@ function getGameInfoFromPage($row) {
     const $tds = $row.find("td");
     const $imageSrc = $($tds[0]).find("img").attr("src");
     const $gameTitle = $($tds[1]).text();
-    const $gameIgdbId = $($tds[6]).text();
+    const $gameIgdbId = Number($($tds[6]).text());
+    console.log(typeof($gameIgdbId));
     let gameDto = new GameDto($listName, $gameTitle, $imageSrc, $gameIgdbId);
     return gameDto;
 }

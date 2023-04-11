@@ -27,9 +27,14 @@ describe("GameDto data validation tests", () => {
         const gameDto = new GameDto("list", "title", "");
         expect(validateGameDtoData(gameDto)).toBe(false);
     });
+    test("string igdbId GameDto fails validation", () => {
+        console.log("string igdbId GameDto fails validation");
+        const gameDto = new GameDto("list", "title", "source", "1232");
+        expect(validateGameDtoData(gameDto)).toBe(false);
+    });
     test("constructed GameDto passes validation", () => {
         console.log("constructed GameDto passes validation");
-        const gameDto = new GameDto("list", "title", "source");
+        const gameDto = new GameDto("list", "title", "source", 1232);
         expect(validateGameDtoData(gameDto)).toBe(true);
     });
 });

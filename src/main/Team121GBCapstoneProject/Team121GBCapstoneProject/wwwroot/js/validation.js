@@ -33,7 +33,8 @@ function validateGameDtoData(data) {
     const schema = {
         listKind: x => typeof x === 'string' && x !== "",
         gameTitle: x => typeof x === 'string' && x !== "",
-        imageSrc: x => typeof x === 'string' && x !== ""
+        imageSrc: x => typeof x === 'string' && x !== "",
+        igdbID: x => typeof x === 'number'
     };
     const errors = validateObject(data, schema);
     return errors.length === 0; // return true if there are no errors
