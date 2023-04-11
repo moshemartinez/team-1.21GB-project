@@ -30,6 +30,9 @@ public partial class Game
     [Column("IGDBUrl")]
     public string Igdburl { get; set; }
 
+    [Column("IGDBGameID")]
+    public int? IgdbgameId { get; set; }
+
     [ForeignKey("EsrbratingId")]
     [InverseProperty("Games")]
     public virtual Esrbrating Esrbrating { get; set; }
