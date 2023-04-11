@@ -58,10 +58,11 @@ namespace Team121GBCapstoneProject.DAL.Concrete
                    GameGenre genre = GenreForCheck[0];
                    int Id = (int)genre.GenreId;
                    genreCount[Id - 1]++;*/
-            int GenreID = (int)gameToCheckGenres.GameGenres.First().GenreId;
-            genreArrForCounting[GenreID - 1]++;
-            int i = 0;
-
+            if (gameToCheckGenres.GameGenres.Count != 0)
+            {
+                int GenreID = (int)gameToCheckGenres.GameGenres.First().GenreId;
+                genreArrForCounting[GenreID - 1]++;
+            }
       /*      foreach (var genre in gameToCheckGenres.GameGenres) 
             {
                 int genreID = (int)genre.GenreId;
