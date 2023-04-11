@@ -83,6 +83,17 @@ builder.Services.AddScoped<IDalleService, DalleService>();
 
 //var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
 //openAiService.SetDefaultModelId(Models.Davinci);
+builder.Services.AddAuthentication()
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Identity/Account/Login";
+        options.LogoutPath = "/Identity/Account/Logout";
+    })
+    .AddSteam(options =>
+    {
+        options.CorrelationCookie.SameSite = SameSiteMode.None;
+        options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+    });
 
 
 var app = builder.Build();
@@ -116,6 +127,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // If program says "Index Not Found" run: dotnet watch run (only on VS 2022)
