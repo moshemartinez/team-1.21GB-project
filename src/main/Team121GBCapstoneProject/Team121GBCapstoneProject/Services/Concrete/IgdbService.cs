@@ -136,15 +136,15 @@ public class IgdbService : IIgdbService
                     foreach (var game in gamesToCheck)
                     {
 
-                        int? yearPublished =
-                            GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
+                        // int? yearPublished =
+                        //     GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
 
-                        IgdbGame gameToAdd = new IgdbGame(1,
+                        IgdbGame gameToAdd = new IgdbGame(game.IgdbgameId,
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
                                                           game.Igdburl,
                                                           game.Description,
-                                                          yearPublished,
+                                                          game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId);
                         gamesToReturn.Add(gameToAdd);
@@ -170,13 +170,11 @@ public class IgdbService : IIgdbService
                 {
                     break;
                 }
-
                 if (CheckForGame(GamesFromOurDB, game.GameTitle) == true)
                 {
+                   // gamesToReturn.Add(game);
                     continue;
                 }
-                //if(game.ESRBRatingValue != 1) continue;
-
                 Game gameToAdd = new Game();
                 gameToAdd.Title = game.GameTitle.ToString();
 
@@ -193,9 +191,10 @@ public class IgdbService : IIgdbService
                 gameToAdd.Description = game.GameDescription.ToString();
                 gameToAdd.YearPublished = game.FirstReleaseDate;
                 gameToAdd.AverageRating = game.AverageRating;
-                
+                gameToAdd.IgdbgameId = game.Id;
+
                 int? esrbRatingId = null;
-                if (game.ESRBRatingValue  != null)
+                if (game.ESRBRatingValue != null)
                 {
                     esrbRatingId = _esrbRatingRepository.GetAll()
                                                         .FirstOrDefault(esrbRating => esrbRating.IgdbratingValue == game.ESRBRatingValue)!

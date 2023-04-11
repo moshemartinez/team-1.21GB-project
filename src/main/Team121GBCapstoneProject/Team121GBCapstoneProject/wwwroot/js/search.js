@@ -27,6 +27,7 @@ function displaySearchResults(query) {
                                     <td><p>${game.gameDescription}</p></td>
                                     <td><p>${game.firstReleaseDate}</p></td>
                                     <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
+                                    <td style="display:none;">${game.id}</td>
                                </tr>`;
                             $("#gameTableBody").append(row);
                         }
@@ -41,6 +42,7 @@ function displaySearchResults(query) {
                                     <td><p>${game.gameDescription}</p></td>
                                     <td><p>${game.firstReleaseDate}</p></td>
                                     <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
+                                    <td style="display:none;">${game.id}</td>
                                </tr>`;
                             $("#gameTableBody").append(row);
                         }
@@ -49,17 +51,17 @@ function displaySearchResults(query) {
         }
     });
 }
-$(document).on('mouseenter', 'tbody tr', function() {
-    $(this).animate({
-      height: '+=50px'
-    }, 'fast');
-  });
+//$(document).on('mouseenter', 'tbody tr', function() {
+//    $(this).animate({
+//      height: '+=50px'
+//    }, 'fast');
+//  });
   
-  $(document).on('mouseleave', 'tbody tr', function() {
-    $(this).animate({
-      height: '-=50px'
-    }, 'fast');
-  });
+//  $(document).on('mouseleave', 'tbody tr', function() {
+//    $(this).animate({
+//      height: '-=50px'
+//    }, 'fast');
+//  });
 
 // $(document).on('mouseenter', 'tr', function() {
 //     $(this).find('td').animate({
