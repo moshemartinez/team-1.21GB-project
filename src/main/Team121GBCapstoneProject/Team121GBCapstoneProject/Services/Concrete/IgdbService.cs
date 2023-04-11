@@ -82,7 +82,7 @@ public class IgdbService : IIgdbService
         }
 
         if (gamesJsonDTO != null && gamesJsonDTO.Any())
-        { // some times search returns duplicates of the same from the API 
+        {  
             return gamesJsonDTO.Select(g => new IgdbGame(g.id,
                                                           g.name,
                                                           g.cover?.url?.ToString(),
@@ -101,7 +101,6 @@ public class IgdbService : IIgdbService
     {
         try
         {
-
             if (gamesToCheck.Count() > 0)
             {
                 if (gamesToCheck.Count() >= numberOfGamesToCheck)
@@ -135,18 +134,14 @@ public class IgdbService : IIgdbService
                 {
                     foreach (var game in gamesToCheck)
                     {
-
-                        // int? yearPublished =
-                        //     GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
-
                         IgdbGame gameToAdd = new IgdbGame(game.IgdbgameId,
-                                                          game.Title,
-                                                          game.CoverPicture.ToString(),
-                                                          game.Igdburl,
-                                                          game.Description,
-                                                          game.YearPublished,
-                                                          (double)game.AverageRating,
-                                                          game.EsrbratingId);
+                                      game.Title,
+                                      game.CoverPicture.ToString(),
+                                      game.Igdburl,
+                                      game.Description,
+                                      game.YearPublished,
+                                      (double)game.AverageRating,
+                                      game.EsrbratingId);
                         gamesToReturn.Add(gameToAdd);
                     }
                 }
@@ -172,7 +167,6 @@ public class IgdbService : IIgdbService
                 }
                 if (CheckForGame(GamesFromOurDB, game.GameTitle) == true)
                 {
-                   // gamesToReturn.Add(game);
                     continue;
                 }
                 Game gameToAdd = new Game();

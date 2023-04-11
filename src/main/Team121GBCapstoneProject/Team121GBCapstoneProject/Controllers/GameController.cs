@@ -81,8 +81,8 @@ namespace Team121GBCapstoneProject.Controllers
 
         }
 
-        [HttpPost("addGame")]
-        public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("GameTitle,ImageSrc,ListKind")] GameDto gameDto)
+    [HttpPost("addGame")]
+        public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("GameTitle,ImageSrc,ListKind,IgdbID")] GameDto gameDto)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace Team121GBCapstoneProject.Controllers
                 // check if the already have the game in their list                            
                 bool check = _personListRepository.GetAll()
                                               .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind && pl.Person.AuthorizationId == currentUser.Id)
-                                              .PersonGames.Any(pg => pg.Game.Title == gameDto.GameTitle);
+                                              .PersonGames.Any(pg => pg.Game.Title == gameDto.GameTitle && pg.Game.IgdbgameId == gameDto.IgdbID);
                 if (check)
                 {
                     return BadRequest($"You already have {gameDto.GameTitle} stored in {gameDto.ListKind}.");
@@ -99,7 +99,7 @@ namespace Team121GBCapstoneProject.Controllers
                 PersonList personList = _personListRepository.GetAll()
                                                               .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind && pl.Person.AuthorizationId == currentUser.Id);
                                                               
-                Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle);
+                Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle && g.IgdbgameId == gameDto.IgdbID);
                 PersonGame newPersonGame = new PersonGame
                 {
                     PersonList = personList,
