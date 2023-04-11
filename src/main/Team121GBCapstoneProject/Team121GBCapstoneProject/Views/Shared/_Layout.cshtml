@@ -186,7 +186,9 @@
 
 <!-- Template Main JS File -->
     <script src="~/lib/assets/js/main.js"></script>
-
+    
+    <!-- Will run into error if this is not used -->  
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 

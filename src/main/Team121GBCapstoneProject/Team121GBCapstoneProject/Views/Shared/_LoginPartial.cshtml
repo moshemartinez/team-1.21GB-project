@@ -3,8 +3,71 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-    
-<a href="#about" class="get-started-btn scrollto">Get Started</a>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <form id="searchForm" action="/Search/Results/">
+            <input type="text" name="query" id="searchInput" placeholder="Search...">
+            <button type="submit" id="searchButton" class="btn btn-outline-primary">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
+            {
+                <img src="https://img.icons8.com/ios-glyphs/256/user.png" width="25" height="25" class="rounded-circle">
+            }
+            else
+            {
+                <img src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" width="25" height="25" class="rounded-circle">
+            }
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+            <li>
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" style="color: black">Account Preferences</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+                <a class="dropdown-item" asp-controller="GamesLists" asp-action="Index" style="color: black">Game Lists</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+                <form accesskeyclass="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="dropdown-item">Log Out</button>
+                </form>
+            </li>
+        </ul>
+    </li>
+
+
+}
+else
+{
+    <a class="get-started-btn scrollto" asp-area="Identity" asp-page="/Account/Login">Get Started</a>
+}
+
+
+@*Scripts not being used for some reason*@
+@*@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+}*@
+
+
+
+
+
+@*OLD*@
+
 
 @*<ul class="navbar-nav .d-flex .flex-row">
     @if (SignInManager.IsSignedIn(User))
@@ -82,8 +145,3 @@
     <button class="darkmode-toggler" aria-label="Activate dark mode" aria-checked="false" role="checkbox"><span class="bi bi-moon-stars-fill"></span> Dark Mode</button>
 </li>*@
 
-
-@section Scripts
-{
-    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-}
