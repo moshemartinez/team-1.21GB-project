@@ -1,4 +1,4 @@
-﻿/*using Standups_BDD_Tests.Drivers;
+﻿using Standups_BDD_Tests.Drivers;
 using Standups_BDD_Tests.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -20,4 +20,4 @@ namespace Standups_BDD_Tests.Hooks
         }
 
     }
-}*/
+}
