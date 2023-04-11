@@ -6,6 +6,7 @@ using Team121GBCapstoneProject.Services.Abstract;
 using System.Net.Http.Headers;
 using Team121GBCapstoneProject.Models.DTO;
 using Microsoft.DotNet.MSIdentity.Shared;
+using Team121GBCapstoneProject.DAL.Abstract;
 
 namespace Team121GBCapstoneProject.Services.Concrete;
 
@@ -13,14 +14,17 @@ public class IgdbService : IIgdbService
 {
     // * Inject the IHttpClientFactory through constructor injection
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IGameRepository _gameRepository;
+    private readonly IRepository<Game> _genericGameRepo;
 
     private string _bearerToken;
     private string _clientId;
 
-    public IgdbService(IHttpClientFactory httpClientFactory)
+    public IgdbService(IHttpClientFactory httpClientFactory, IGameRepository gameRepository, IRepository<Game> genericGameRepo)
     {
         _httpClientFactory = httpClientFactory;
-
+        _gameRepository = gameRepository;
+        _genericGameRepo = genericGameRepo;
     }
 
     public async Task<string> GetJsonStringFromEndpoint(string token, string uri, string clientId, string rawBody)
@@ -45,7 +49,6 @@ public class IgdbService : IIgdbService
         }
         else
         {
-            // TODO: Throw specific exceptions that explain what happened
             throw new HttpRequestException();
         }
     }
@@ -55,8 +58,6 @@ public class IgdbService : IIgdbService
         _clientId = clientId;
         _bearerToken = token;
     }
-
-
 
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
@@ -83,4 +84,198 @@ public class IgdbService : IIgdbService
 
         return Enumerable.Empty<IgdbGame>();
     }
+
+    public bool checkGamesFromDatabase(List<Game> gamesToCheck, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck)
+    {
+        
+        if (gamesToCheck.Count() > 0)
+        {
+            if (gamesToCheck.Count() >= numberOfGamesToCheck)
+            {
+                int i = 0;
+                foreach (var game in gamesToCheck)
+                {
+                    if (i == numberOfGamesToCheck)
+                    {
+                        break;
+                    }
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                    gamesToReturn.Add(gameToAdd);
+                    i++;
+                }
+                return true;
+            }
+            else
+            {
+                foreach (var game in gamesToCheck)
+                {
+                    IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                    gamesToReturn.Add(gameToAdd);
+                }
+            }
+        }
+        return false;
+    }
+
+    public void FinishGamesListForView(List<Game> GamesFromOurDB, List<IgdbGame> gameFromAPI, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck)
+    {
+        foreach (var game in gameFromAPI)
+        {
+            if (gamesToReturn.Count() >= numberOfGamesToCheck)
+            {
+                break;
+            }
+
+            if (CheckForGame(GamesFromOurDB, game.GameTitle) == true)
+            {
+                continue;
+            }
+
+            Game gameToAdd = new Game();
+            gameToAdd.Title = game.GameTitle.ToString();
+
+            if (game.GameCoverArt == null)
+            {
+                gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
+            }
+            else
+            {
+                gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+            }
+
+            gameToAdd.Igdburl = game.GameWebsite.ToString();
+
+
+            _genericGameRepo.AddOrUpdate(gameToAdd);
+
+            gamesToReturn.Add(game);
+
+
+        }
+    }
+
+    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "")
+    {
+        List<IgdbGame> gamesToReturn = new List<IgdbGame>();
+        List<Game> GamesFromPersonalDB = _gameRepository.GetGamesByTitle(query);
+
+        bool result = checkGamesFromDatabase(GamesFromPersonalDB, gamesToReturn, numberOfGames);
+
+        if (result == true)
+        {
+            return gamesToReturn;
+        }
+
+        var gamesFromSearch = await SearchGames(query);
+
+        FinishGamesListForView(GamesFromPersonalDB, gamesFromSearch.ToList<IgdbGame>(), gamesToReturn, numberOfGames);
+
+
+        return gamesToReturn;
+    }
+
+    /*
+        public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "")
+        {
+            List<IgdbGame> gamesToReturn = new List<IgdbGame>();
+            List<Game> GamesFromPersonalDB = _gameRepository.GetGamesByTitle(query);
+
+            if (GamesFromPersonalDB.Count() > 0)
+            {
+                if (GamesFromPersonalDB.Count() == numberOfGames)
+                {
+                    foreach (var game in GamesFromPersonalDB)
+                    {
+                        IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
+                        gamesToReturn.Add(gameToAdd);
+                    }
+                    return gamesToReturn;
+                }
+                else
+                {
+                    foreach (var game in GamesFromPersonalDB)
+                    {
+                        IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
+                        gamesToReturn.Add(gameToAdd);
+                    }
+                }
+            }
+
+            var gamesFromSearch = await SearchGames(query);
+
+            foreach (var game in gamesFromSearch) 
+            {
+                if (gamesToReturn.Count() >= numberOfGames)
+                {
+                    break;
+                }
+
+                if (CheckForGame(GamesFromPersonalDB, game.GameTitle) == true)
+                {
+                    continue;
+                }
+
+                    Game gameToAdd = new Game();
+                    gameToAdd.Title = game.GameTitle.ToString();
+
+                    if (game.GameCoverArt == null)
+                    {
+                        gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
+                    }
+                    else
+                    {
+                        gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+                    }
+
+                    gameToAdd.IGDBUrl = game.GameWebsite.ToString();
+
+
+                    _genericGameRepo.AddOrUpdate(gameToAdd);
+
+                    gamesToReturn.Add(game);
+
+
+            }
+
+
+            return gamesToReturn;
+        }*/
+
+    public bool CheckForGame(List<Game> gamesToCheck, string title)
+    {
+        foreach (var game in gamesToCheck)
+        {
+            if (game.Title == title)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /* public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
+     {
+         string searchBody = $"search \"{query}\"; fields name, cover.url, url; where parent_game = null;";
+         string searchUri = "https://api.igdb.com/v4/games/";
+
+         string response = await GetJsonStringFromEndpoint(_bearerToken, searchUri, _clientId, searchBody);
+
+         IEnumerable<GameJsonDTO> gamesJsonDTO;
+         try
+         {
+             gamesJsonDTO = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<GameJsonDTO>>(response);
+         }
+         catch (System.Text.Json.JsonException)
+         {
+             gamesJsonDTO = null;
+         }
+
+         if (gamesJsonDTO != null)
+         {
+             return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover?.url?.ToString(), g.url));
+         }
+
+
+         return Enumerable.Empty<IgdbGame>();
+     }*/
 }

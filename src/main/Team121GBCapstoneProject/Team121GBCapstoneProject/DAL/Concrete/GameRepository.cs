@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
 using System.Linq.Expressions;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.Models;
@@ -48,10 +49,22 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             throw new NotImplementedException();
         }
 
+        public List<Game> GetGamesByTitle(string title)
+        {
+            if (title == "")
+            {
+                List<Game> result = new List<Game>();
+                return result;
+            }
+            var gamesToReturn = _game.Where(g => g.Title.Contains(title)).ToList();
+            return gamesToReturn;
+        }
+
         public List<Game> GetTrendingGames(int numberOfGames)
         {
             var gamesReturn = _game.OrderByDescending(g => g.AverageRating).Take(numberOfGames).ToList();
             return gamesReturn;
         }
+
     }
 }
