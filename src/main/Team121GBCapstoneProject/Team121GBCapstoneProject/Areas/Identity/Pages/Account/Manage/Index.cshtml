@@ -46,6 +46,11 @@
                     <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
                 </div>
             </div>
+            
+            <div>
+                <img id="steamButton" style="width:150px;height:50px; object-fit:cover" src="images/steam_button_icon_151838.png"/>
+            </div>
+
             <button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
             @*<div class="form-floating mb-3">*@
             @*                <input asp-for="Input.ProfileUsername" class="form-control" placeholder="@Model.Input.ProfileUsername" />
@@ -109,4 +114,5 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script type="text/javascript" src="~/js/site.js"></script>
+    <script type="text/javascript" src="~/js/Steam.js"></script>
 }
