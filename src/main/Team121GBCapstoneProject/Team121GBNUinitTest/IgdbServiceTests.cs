@@ -13,7 +13,7 @@ using Team121GBNUnitTest;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Moq.Protected;
 
-namespace Team121GBNUinitTests;
+namespace Team121GBNUnitTests;
 
 public class IgdbAPIServiceTests
 {
@@ -28,7 +28,15 @@ public class IgdbAPIServiceTests
     private string _search1;
     private string _search2;
     private string _search3;
-
+    private string _platform1;
+    private string _platform2;
+    private string _platform3;
+    private string _genre1;
+    private string _genre2;
+    private string _genre3;
+    private int _esrbRatingId1;
+    private int _esrbRatingId2;
+    private int _esrbRatingId3;
     [SetUp]
     public void SetUp()
     {
@@ -43,7 +51,6 @@ public class IgdbAPIServiceTests
         _search1 = "Mario";
         _search2 = "Zelda";
         _search3 = "Sonic";
-
     }
 
     // Tests from Moshe (Sprint 2 & 3)
@@ -146,9 +153,9 @@ public class IgdbAPIServiceTests
 
         // --> Act
         // Call the SearchGames method with three different search queries and capture the results in variables
-        var search1Games = await igdbService.SearchGames(_search1);
-        var search2Games = await igdbService.SearchGames(_search2);
-        var search3Games = await igdbService.SearchGames(_search3);
+        var search1Games = await igdbService.SearchGames("", "", 0, _search1);
+        var search2Games = await igdbService.SearchGames("", "", 0, _search2);
+        var search3Games = await igdbService.SearchGames("", "", 0, _search3);
 
         // --> Assert
         // Check that each of the three search results contains exactly 10 games
@@ -170,12 +177,11 @@ public class IgdbAPIServiceTests
         igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
 
         // --> Act
-        var result = await igdbService.SearchGames("");
+        var result = await igdbService.SearchGames(_platform1, _search1, _esrbRatingId1, "");
 
         // --> Assert
         Assert.IsEmpty(result);
     }
-
 
 
     //[Test]
@@ -197,4 +203,32 @@ public class IgdbAPIServiceTests
     //    //Assert
     //    Assert.That(Act, Throws.TypeOf<HttpRequestException>());
     //}
+
+    // * Tests written by Nathaniel Kuga beginning
+    [TestCase("", "", 0, "", "")]
+    [TestCase("Xbox One", "Adventure", 11, "Elden Ring", "search \"Elden Ring\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\";")]
+    [TestCase("Playstation 2", "Shooter", 10, "Call of Duty 3", "search \"Call of Duty 3\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 10 & age_ratings.category = 1 & genres.name = \"Shooter\";")]
+    [TestCase("Playstation 4", "Adventure", 11, "God of War", "search \"God of War\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\";")]
+    public async Task IgdbService_ConstructSearchBody(string platform,
+                                                      string genre, 
+                                                      int esrbRatingId,
+                                                      string query,
+                                                      string expected)
+    {
+        // * Arrange
+        Mock<IHttpClientFactory> mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        HttpClient httpClient = new HttpClient();
+        mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        IgdbService igdbService = new IgdbService (mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
+
+        // ! Act
+        string searchBody = await igdbService.ConstructSearchBody(platform,
+                                                                  genre,
+                                                                  esrbRatingId,
+                                                                  query);
+        // ? Assert
+        Assert.That(searchBody, Is.EqualTo(expected));
+
+    }
+    // * Tests written by Nathaniel Kuga ending
 }
