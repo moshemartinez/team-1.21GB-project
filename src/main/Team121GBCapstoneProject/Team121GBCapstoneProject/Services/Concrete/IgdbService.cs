@@ -55,13 +55,11 @@ public class IgdbService : IIgdbService
             throw new HttpRequestException();
         }
     }
-
     public void SetCredentials(string clientId, string token)
     {
         _clientId = clientId;
         _bearerToken = token;
     }
-
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
         // * game Endpoint Search
@@ -71,7 +69,6 @@ public class IgdbService : IIgdbService
         string gameSearchUri = "https://api.igdb.com/v4/games/";
         string gameResponse = await GetJsonStringFromEndpoint(_bearerToken, gameSearchUri, _clientId, gameSearchBody);
         IEnumerable<GameJsonDTO> gamesJsonDTO;
-
         try
         {
             gamesJsonDTO = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<GameJsonDTO>>(gameResponse);
@@ -80,7 +77,6 @@ public class IgdbService : IIgdbService
         {
             gamesJsonDTO = null;
         }
-
         if (gamesJsonDTO != null && gamesJsonDTO.Any())
         {  
             return gamesJsonDTO.Select(g => new IgdbGame(g.id,
@@ -92,8 +88,6 @@ public class IgdbService : IIgdbService
                                                           g.rating,
                                                           GameJsonDTO.ExtractEsrbRatingFromAgeRatingsArray(g.age_ratings)));
         }
-
-
         return Enumerable.Empty<IgdbGame>();
     }
 
@@ -115,7 +109,7 @@ public class IgdbService : IIgdbService
 
                         int? yearPublished =
                             GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
-
+// Look into sending null or 0 instead of 1
                         IgdbGame gameToAdd = new IgdbGame(1,
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
@@ -127,7 +121,6 @@ public class IgdbService : IIgdbService
                         gamesToReturn.Add(gameToAdd);
                         i++;
                     }
-
                     return true;
                 }
                 else
@@ -160,7 +153,6 @@ public class IgdbService : IIgdbService
         {
             try
             {
-
                 if (gamesToReturn.Count() >= numberOfGamesToCheck)
                 {
                     break;
@@ -187,16 +179,16 @@ public class IgdbService : IIgdbService
                 gameToAdd.AverageRating = game.AverageRating;
                 gameToAdd.IgdbgameId = game.Id;
 
+                // * This is here to make sure that esrbrating will always be null or an int.
+                // * sometimes game from Igdb do not have an esrbrating so this handles that case
                 int? esrbRatingId = null;
                 if (game.ESRBRatingValue != null)
                 {
                     esrbRatingId = _esrbRatingRepository.GetAll()
                                                         .FirstOrDefault(esrbRating => esrbRating.IgdbratingValue == game.ESRBRatingValue)!
                                                         .Id;
-
                 }
                 gameToAdd.EsrbratingId = esrbRatingId;
-
 
                 try
                 {
@@ -206,7 +198,6 @@ public class IgdbService : IIgdbService
                 {
                     Debug.WriteLine(e);
                 }
-
                 gamesToReturn.Add(game);
             }
             catch (Exception e)
@@ -215,8 +206,7 @@ public class IgdbService : IIgdbService
             }
         }
     }
-
-    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "")
+    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string platform, string query = "")
     {
         List<IgdbGame> gamesToReturn = new List<IgdbGame>();
         List<Game> gamesFromPersonalDb = _gameRepository.GetGamesByTitle(query);
@@ -235,74 +225,6 @@ public class IgdbService : IIgdbService
 
         return gamesToReturn;
     }
-
-    /*
-        public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string query = "")
-        {
-            List<IgdbGame> gamesToReturn = new List<IgdbGame>();
-            List<Game> GamesFromPersonalDB = _gameRepository.GetGamesByTitle(query);
-
-            if (GamesFromPersonalDB.Count() > 0)
-            {
-                if (GamesFromPersonalDB.Count() == numberOfGames)
-                {
-                    foreach (var game in GamesFromPersonalDB)
-                    {
-                        IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
-                        gamesToReturn.Add(gameToAdd);
-                    }
-                    return gamesToReturn;
-                }
-                else
-                {
-                    foreach (var game in GamesFromPersonalDB)
-                    {
-                        IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.IGDBUrl);
-                        gamesToReturn.Add(gameToAdd);
-                    }
-                }
-            }
-
-            var gamesFromSearch = await SearchGames(query);
-
-            foreach (var game in gamesFromSearch) 
-            {
-                if (gamesToReturn.Count() >= numberOfGames)
-                {
-                    break;
-                }
-
-                if (CheckForGame(GamesFromPersonalDB, game.GameTitle) == true)
-                {
-                    continue;
-                }
-
-                    Game gameToAdd = new Game();
-                    gameToAdd.Title = game.GameTitle.ToString();
-
-                    if (game.GameCoverArt == null)
-                    {
-                        gameToAdd.CoverPicture = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
-                    }
-                    else
-                    {
-                        gameToAdd.CoverPicture = game.GameCoverArt.ToString();
-                    }
-
-                    gameToAdd.IGDBUrl = game.GameWebsite.ToString();
-
-
-                    _genericGameRepo.AddOrUpdate(gameToAdd);
-
-                    gamesToReturn.Add(game);
-
-
-            }
-
-
-            return gamesToReturn;
-        }*/
-
     public bool CheckForGame(List<Game> gamesToCheck, string title)
     {
         foreach (var game in gamesToCheck)
@@ -314,30 +236,4 @@ public class IgdbService : IIgdbService
         }
         return false;
     }
-
-    /* public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
-     {
-         string searchBody = $"search \"{query}\"; fields name, cover.url, url; where parent_game = null;";
-         string searchUri = "https://api.igdb.com/v4/games/";
-
-         string response = await GetJsonStringFromEndpoint(_bearerToken, searchUri, _clientId, searchBody);
-
-         IEnumerable<GameJsonDTO> gamesJsonDTO;
-         try
-         {
-             gamesJsonDTO = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<GameJsonDTO>>(response);
-         }
-         catch (System.Text.Json.JsonException)
-         {
-             gamesJsonDTO = null;
-         }
-
-         if (gamesJsonDTO != null)
-         {
-             return gamesJsonDTO.Select(g => new IgdbGame(g.id, g.name, g.cover?.url?.ToString(), g.url));
-         }
-
-
-         return Enumerable.Empty<IgdbGame>();
-     }*/
 }

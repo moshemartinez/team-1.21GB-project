@@ -49,7 +49,7 @@ namespace Team121GBCapstoneProject.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query)
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query, string platform = "")
         {
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
             _clientId = _config["GamingPlatform:igdbClientId"];
