@@ -60,12 +60,46 @@ public class IgdbService : IIgdbService
         _clientId = clientId;
         _bearerToken = token;
     }
-    public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
+    public async Task<string> ConstructSearchBody(string platform, 
+                                                  string genre,
+                                                  int esrbRatingId,
+                                                  string query)
+    {   
+        if (String.IsNullOrEmpty(query)) return "";
+        
+        string search = $"search \"{query}\"; ";
+        string fields = "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category";
+        string filtering = " where parent_game = null ";
+        
+        // * Add parameters from search bar to the strings respectively.
+        if (!String.IsNullOrEmpty(platform)) fields += ", platforms";
+        if (!String.IsNullOrEmpty(genre)) fields += ", genres";
+        if (esrbRatingId > 0) filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1 & genres.name = \"{genre}\""; 
+        
+        // * Finish up string formatting.
+        fields += ';';
+        filtering += ';';
+
+        // * construct the search body with all of the pieces.
+        string body = search + fields + filtering;
+        
+        return body;
+    }
+    public async Task<IEnumerable<IgdbGame>> SearchGames(string platform,
+                                                         string genre,
+                                                         int esrbRating,
+                                                         string query = "")
     {
         // * game Endpoint Search
-        string gameSearchBody = $"search \"{query}\"; " +
+        /* string gameSearchBody = $"search \"{query}\"; " +
                                 "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category;" +
                                 "where parent_game = null;";
+                                */
+        string gameSearchBody = await ConstructSearchBody(platform,
+                                                          genre,
+                                                          esrbRating,
+                                                          query);
+        if (String.IsNullOrEmpty(gameSearchBody)) return Enumerable.Empty<IgdbGame>(); //! If the query was empty don't hit the API cause there is no point in send an empty query.
         string gameSearchUri = "https://api.igdb.com/v4/games/";
         string gameResponse = await GetJsonStringFromEndpoint(_bearerToken, gameSearchUri, _clientId, gameSearchBody);
         IEnumerable<GameJsonDTO> gamesJsonDTO;
@@ -206,7 +240,12 @@ public class IgdbService : IIgdbService
             }
         }
     }
-    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string platform, string query = "")
+
+    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, 
+                                                                        string platform = "",
+                                                                        string genre = "",
+                                                                        int esrbRating = 0,
+                                                                        string query = "")
     {
         List<IgdbGame> gamesToReturn = new List<IgdbGame>();
         List<Game> gamesFromPersonalDb = _gameRepository.GetGamesByTitle(query);
@@ -218,7 +257,10 @@ public class IgdbService : IIgdbService
             return gamesToReturn;
         }
 
-        var gamesFromSearch = await SearchGames(query);
+        var gamesFromSearch = await SearchGames(platform,
+                                                genre,
+                                                esrbRating,
+                                                query);
 
         FinishGamesListForView(gamesFromPersonalDb, gamesFromSearch.ToList<IgdbGame>(), gamesToReturn, numberOfGames);
 

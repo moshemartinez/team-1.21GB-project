@@ -49,7 +49,10 @@ namespace Team121GBCapstoneProject.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query, string platform = "")
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query, 
+                                                                     string platform = "",
+                                                                     string genre = "", 
+                                                                     int esrbRating = 0)
         {
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
             _clientId = _config["GamingPlatform:igdbClientId"];
@@ -58,7 +61,11 @@ namespace Team121GBCapstoneProject.Controllers
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
 
-            var searchResult = await _igdbService.SearchGameWithCachingAsync(10, query);
+            var searchResult = await _igdbService.SearchGameWithCachingAsync(10,
+                                                                             platform,
+                                                                             genre,
+                                                                             esrbRating,
+                                                                             query);
 
             if (searchResult is null)
             {
