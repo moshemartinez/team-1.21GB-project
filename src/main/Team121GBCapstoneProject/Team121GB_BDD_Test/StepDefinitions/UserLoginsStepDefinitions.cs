@@ -91,7 +91,7 @@ namespace Standups_BDD_Tests.StepDefinitions
         {
             // This is after a redirection to the homepage so we need to use that page
             TestUser u = (TestUser)_scenarioContext["CurrentUser"];
-            _homePage.NavbarWelcomeText().Should().ContainEquivalentOf(u.Email, AtLeast.Once());
+            _homePage.NavbarWelcomeText().Should().ContainEquivalentOf(u.FirstName, AtLeast.Once());
         }
 
         [Then(@"I can see a login error message")]

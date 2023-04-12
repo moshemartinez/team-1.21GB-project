@@ -1,6 +1,6 @@
 ﻿@Quinton
 Feature: User Logins
-**As a registered user I would like to be able to login so I may be able to have a customized experience.**
+**As a user, I want to be able to create an authorized account so that I can use more features of the site**
 
 This feature ensures that users who have previously registered can successfully login and see a personalized message
 that confirms they are recognized by the application and logged in.  It also *defines* a set of seeded users for 
