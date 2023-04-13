@@ -206,9 +206,9 @@ public class IgdbAPIServiceTests
 
     // * Tests written by Nathaniel Kuga beginning
     [TestCase("", "", 0, "", "")]
-    [TestCase("Xbox One", "Adventure", 11, "Elden Ring", "search \"Elden Ring\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\";")]
-    [TestCase("Playstation 2", "Shooter", 10, "Call of Duty 3", "search \"Call of Duty 3\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 10 & age_ratings.category = 1 & genres.name = \"Shooter\";")]
-    [TestCase("Playstation 4", "Adventure", 11, "God of War", "search \"God of War\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\";")]
+    [TestCase("Xbox One", "Adventure", 11, "Elden Ring", "search \"Elden Ring\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\" & platforms.name = \"Xbox One\";")]
+    [TestCase("Playstation 2", "Shooter", 10, "Call of Duty 3", "search \"Call of Duty 3\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 10 & age_ratings.category = 1 & genres.name = \"Shooter\" & platforms.name = \"Playstation 2\";")]
+    [TestCase("Playstation 4", "Adventure", 11, "God of War", "search \"God of War\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\" & platforms.name = \"Playstation 4\";")]
     public async Task IgdbService_ConstructSearchBody(string platform,
                                                       string genre, 
                                                       int esrbRatingId,

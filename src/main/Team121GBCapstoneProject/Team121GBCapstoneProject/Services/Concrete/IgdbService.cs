@@ -74,7 +74,7 @@ public class IgdbService : IIgdbService
         // * Add parameters from search bar to the strings respectively.
         if (!String.IsNullOrEmpty(platform)) fields += ", platforms";
         if (!String.IsNullOrEmpty(genre)) fields += ", genres";
-        if (esrbRatingId > 0) filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1 & genres.name = \"{genre}\""; 
+        if (esrbRatingId > 0) filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1 & genres.name = \"{genre}\" & platforms.name = \"{platform}\""; 
         
         // * Finish up string formatting.
         fields += ';';
