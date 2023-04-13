@@ -221,9 +221,10 @@ namespace Team121GBNUnitTest
             //Arrange
             using GPDbContext context = _dbHelper.GetContext();
             IGameRecommender _gameRecommender = new GameRecommender(context);
+            List<Game> emptyList = new List<Game>();
 
             //Act
-            List<Game> games = _gameRecommender.getCurratedSection(5,5);
+            List<Game> games = _gameRecommender.getCurratedSection(5,5, emptyList);
 
             //Assert
             Assert.AreEqual(games.Count, 5);
@@ -235,9 +236,10 @@ namespace Team121GBNUnitTest
             //Arrange
             using GPDbContext context = _dbHelper.GetContext();
             IGameRecommender _gameRecommender = new GameRecommender(context);
+            List<Game> emptyList = new List<Game>();
 
             //Act
-            List<Game> games = _gameRecommender.getCurratedSection(5, 3);
+            List<Game> games = _gameRecommender.getCurratedSection(5, 3, emptyList);
 
             //Assert
             Assert.AreEqual(games.Count, 3);
@@ -249,9 +251,10 @@ namespace Team121GBNUnitTest
             //Arrange
             using GPDbContext context = _dbHelper.GetContext();
             IGameRecommender _gameRecommender = new GameRecommender(context);
+            List<Game> emptyList = new List<Game>();
 
             //Act
-            List<Game> games = _gameRecommender.getCurratedSection(1, 5);
+            List<Game> games = _gameRecommender.getCurratedSection(1, 5, emptyList);
 
             //Assert
             Assert.AreEqual(games.Count, 0);

@@ -54,30 +54,18 @@ namespace Team121GBCapstoneProject.DAL.Concrete
         //counting genres
         public void genreCounter(Game gameToCheckGenres, int[] genreArrForCounting) //Tested
         {
-            /*       List<GameGenre> GenreForCheck = gameToCheckGenres.GameGenres.;
-                   GameGenre genre = GenreForCheck[0];
-                   int Id = (int)genre.GenreId;
-                   genreCount[Id - 1]++;*/
+
             if (gameToCheckGenres.GameGenres.Count != 0)
             {
                 int GenreID = (int)gameToCheckGenres.GameGenres.First().GenreId;
                 genreArrForCounting[GenreID - 1]++;
             }
-      /*      foreach (var genre in gameToCheckGenres.GameGenres) 
-            {
-                int genreID = (int)genre.GenreId;
-                genreCount[genreID - 1]++;
-            }*/
+
         }
 
         public int[] findTopGenres(int[] genreArr) //Tested
         {
             int[] topGenresToReturn = new int[3];
-
-            /*       int[] orderList = genreArr.OrderByDescending(i => i).ToArray();
-                   topGenresToReturn[0] = orderList[0];
-                   topGenresToReturn[1] = orderList[1];
-                   topGenresToReturn[2] = orderList[2];*/
 
             for (int i = 0; i < 3; i++)
             {
@@ -102,16 +90,45 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             return numberOfGames / divisor;
         }
 
-        public List<Game> getCurratedSection(int position, int gameTakeCount)
+        public List<Game> getCurratedSection(int position, int gameTakeCount, List<Game> prevousList)
         {
-            List<Game> listToReturn = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == position)).Take(gameTakeCount).ToList();
-            return listToReturn;
+            List<Game> listToShuffle = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == position)).ToList();
+            
+            List<Game> listToReturn = new List<Game>();
+
+            //fix duplication bug
+            if (listToShuffle.Count > 0)
+            {
+                var random = new Random();
+                for (int i = 0; i < gameTakeCount; i++)
+                {
+                    
+                    int randomGameIndex = random.Next(0, listToShuffle.Count());
+                    Game gameForCheck = listToShuffle.ElementAt(randomGameIndex);
+
+                    if (listToReturn.Contains(gameForCheck) && prevousList.Contains(gameForCheck))
+                    {
+                        i--;
+                        continue;
+                    }
+                    else { 
+                        listToReturn.Add(listToShuffle.ElementAt(randomGameIndex));
+                    }
+                }
+            }
+            return listToReturn.Distinct().ToList();
+
+
+            //shuffle list
+            /* List<Game> listToReturn = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == position)).Take(gameTakeCount).ToList();
+             return listToReturn;*/
         }
 
         //function to currate list of games
         public List<Game> currateGames(int numberOfGames, List<PersonGame> ownedGames)
         {
             List<Game> curratedGames = new List<Game>();
+            List<Game> listForChecking = new List<Game>();
             
             int topGenreGameCount = calculateNumberOfGames(numberOfGames, 2);
             int SecondGenreGameCount = calculateNumberOfGames(numberOfGames, 3);
@@ -123,19 +140,17 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             int second = TopGenres[1];
             int third = TopGenres[2];
 
-            curratedGames = getCurratedSection(first, topGenreGameCount);
-            List<Game> secondPlaceGames = getCurratedSection(second, SecondGenreGameCount);
-            List<Game> thirdPlaceGames = getCurratedSection(third, thirdGenreGameCount);
+            curratedGames = getCurratedSection(first, topGenreGameCount, listForChecking);
+            listForChecking = curratedGames;
+            List<Game> secondPlaceGames = getCurratedSection(second, SecondGenreGameCount, listForChecking);
+            listForChecking.AddRange(secondPlaceGames);
+            List<Game> thirdPlaceGames = getCurratedSection(third, thirdGenreGameCount, listForChecking);
 
-            //Top 3 Lists
-            //curratedGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == first)).Take(topGenreGameCount).ToList(); //Make sure to seperate and test.
-            //List<Game> secondPlaceGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == second)).Take(SecondGenreGameCount).ToList();
-            //List<Game> thirdPlaceGames = _game.Where(g => g.GameGenres.Any(genre => genre.GenreId == third)).Take(thirdGenreGameCount).ToList();
 
             curratedGames.AddRange(secondPlaceGames);
             curratedGames.AddRange(thirdPlaceGames);
 
-            return curratedGames;
+            return curratedGames.Distinct().ToList();
         }
 
         //Setting up Array
@@ -171,7 +186,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             }
 
 
-            return gamesToReturn;
+            return gamesToReturn.Take(numberOfRecommendations).ToList();
         }
     }
 }
