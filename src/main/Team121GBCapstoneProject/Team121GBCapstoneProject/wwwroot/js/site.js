@@ -11,10 +11,10 @@ $(document).ready(function () {
         event.preventDefault(); // prevent the default form submission behavior
         var query = $("#searchInput").val(); // get the value from the search input field
         let $platform = $("#platformSelectList").val(); // * get the platform value
-        
+        let $genre = $("#genreSelectList").val();
 
         // navigate to query url
-        var location = "/Search/Results/?query=" + encodeURIComponent(query) + "&platform=" + encodeURIComponent($platform);
+        var location = "/Search/Results/?query=" + encodeURIComponent(query) + "&platform=" + encodeURIComponent($platform) + "&genre=" + encodeURIComponent($genre);
         window.location.href = location;
     });
 });
@@ -25,11 +25,12 @@ $(document).ready(function () {
         var urlParams = new URLSearchParams(window.location.search);
         var query = urlParams.get('query');
         let platform = urlParams.get('platform');
+        let genre = urlParams.get('genre');
 
-        console.log("Search: ", query, "Platform: ", platform);
+        console.log("Search: ", query, "Platform: ", platform, "Genre:", genre);
 
         if (query != null) {
-            displaySearchResults(query, platform);
+            displaySearchResults(query, platform, genre);
         } else {
             console.log("No search query provided");
         }

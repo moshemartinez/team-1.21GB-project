@@ -1,13 +1,14 @@
 ﻿
 // Use this function for updating the SearchResults page using Ajax
 
-function displaySearchResults(query, platform) {
+function displaySearchResults(query, platform, genre) {
 
     $.ajax({
         type: "GET",
         url: "/api/Game",
         data: { query: query,
-                platform: platform }, // pass the search query as a parameter to the API Controller
+                platform: platform ,
+                genre: genre}, // pass the search query as a parameter to the API Controller
         dataType: "json",
         success: function (data) {
             if (data.length === 0) {
