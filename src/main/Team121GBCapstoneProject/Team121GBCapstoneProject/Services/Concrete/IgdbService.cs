@@ -91,10 +91,6 @@ public class IgdbService : IIgdbService
                                                          string query = "")
     {
         // * game Endpoint Search
-        /* string gameSearchBody = $"search \"{query}\"; " +
-                                "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category;" +
-                                "where parent_game = null;";
-                                */
         string gameSearchBody = await ConstructSearchBody(platform,
                                                           genre,
                                                           esrbRating,
@@ -218,9 +214,16 @@ public class IgdbService : IIgdbService
                 int? esrbRatingId = null;
                 if (game.ESRBRatingValue != null)
                 {
-                    esrbRatingId = _esrbRatingRepository.GetAll()
-                                                        .FirstOrDefault(esrbRating => esrbRating.IgdbratingValue == game.ESRBRatingValue)!
-                                                        .Id;
+                    try
+                    {
+                        esrbRatingId = _esrbRatingRepository.GetAll()
+                                                            .FirstOrDefault(esrbRating => esrbRating.IgdbratingValue == game.ESRBRatingValue)!
+                                                            .Id;
+                    }
+                    catch (NullReferenceException e)
+                    {
+                        Debug.WriteLine(e);
+                    }
                 }
                 gameToAdd.EsrbratingId = esrbRatingId;
 
@@ -228,7 +231,7 @@ public class IgdbService : IIgdbService
                 {
                     _genericGameRepo.AddOrUpdate(gameToAdd);
                 }
-                catch (Exception e)
+                catch (NullReferenceException e)
                 {
                     Debug.WriteLine(e);
                 }
