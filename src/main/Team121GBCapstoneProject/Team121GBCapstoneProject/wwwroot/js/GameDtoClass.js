@@ -3,7 +3,7 @@ class GameDto {
         this.listKind = listKind;
         this.gameTitle = gameTitle;
         this.imageSrc = imageSrc;
-        this.igdbID = igdbID;
+        this.igdbID = igdbID; // === undefined ? -1: igdbID; //ternary operater in js
     }
 }
 console.log("Calling Constructor for GameDto inside GameDtoClass");
