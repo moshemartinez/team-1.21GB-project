@@ -29,27 +29,28 @@ namespace Team121GBNUnitTest
             using GPDbContext context = _dbHelper.GetContext();
             GameRepository gameRepository = new GameRepository(context);
             Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
-                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
-                gamesToReturn.Add(gameToAdd);   
+                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
+                gamesToReturn.Add(gameToAdd);
             }
 
             List<IgdbGame> gamesFromAPIMocked = new List<IgdbGame>
             {
-                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png"),
-                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(5, "Gears Of War Judgment", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png"),
-                new IgdbGame(6, "Gears Of War ", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(7, "Gears Of War 6", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(8, "Gears Of War 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(9, "Gears Of War 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(10, "Gears Of War 9", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
+                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", 2008, 84, 11),
+                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png", "Description", 2011, 82, 11),
+                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", 2016, 77, 11),
+                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, 0, null),
+                new IgdbGame(5, "Gears Of War Judgment", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png", "Description", 2013, 70, 11),
+                new IgdbGame(6, "Gears Of War ", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(7, "Gears Of War 6", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(8, "Gears Of War 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(9, "Gears Of War 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(10, "Gears Of War 9", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
             };
 
             int numberOfGames = 10;
@@ -69,27 +70,28 @@ namespace Team121GBNUnitTest
             using GPDbContext context = _dbHelper.GetContext();
             GameRepository gameRepository = new GameRepository(context);
             Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Yoshi's");
-            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, _esrbratingRepo);
+            IgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
-                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
                 gamesToReturn.Add(gameToAdd);
             }
 
             List<IgdbGame> gamesFromAPIMocked = new List<IgdbGame>
             {
-                new IgdbGame(1, "Yoshi's Topsy Turvey", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(2, "Yoshi's Story", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png"),
-                new IgdbGame(3, "Yoshi's Game", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(4, "Yoshi's Story 2", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(5, "Yoshi's Story 3", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png"),
-                new IgdbGame(6, "Yoshi's Story 4", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(7, "Yoshi's Story 5", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(8, "Yoshi's Story 6", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(9, "Yoshi's Story 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(10, "Yoshi's Story 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
+                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", 2008, 84, 11),
+                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png", "Description", 2011, 82, 11),
+                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", 2016, 77, 11),
+                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, 0, null),
+                new IgdbGame(5, "Gears Of War Judgment", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png", "Description", 2013, 70, 11),
+                new IgdbGame(6, "Gears Of War ", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(7, "Gears Of War 6", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(8, "Gears Of War 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(9, "Gears Of War 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(10, "Gears Of War 9", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
             };
 
             int numberOfGames = 10;
@@ -108,28 +110,29 @@ namespace Team121GBNUnitTest
             //Arrange
             using GPDbContext context = _dbHelper.GetContext();
             GameRepository gameRepository = new GameRepository(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
-                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
                 gamesToReturn.Add(gameToAdd);
             }
 
             List<IgdbGame> gamesFromAPIMocked = new List<IgdbGame>
             {
-                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png"),
-                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(5, "Gears Of War Judgment", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png"),
-                new IgdbGame(6, "Gears Of War ", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(7, "Gears Of War 6", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(8, "Gears Of War 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(9, "Gears Of War 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(10, "Gears Of War 9", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
+                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", 2008, 84, 11),
+                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png", "Description", 2011, 82, 11),
+                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", 2016, 77, 11),
+                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, 0, null),
+                new IgdbGame(5, "Gears Of War Judgment", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png", "Description", 2013, 70, 11),
+                new IgdbGame(6, "Gears Of War ", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(7, "Gears Of War 6", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(8, "Gears Of War 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(9, "Gears Of War 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(10, "Gears Of War 9", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
             };
 
             int numberOfGames = 10;
@@ -160,27 +163,28 @@ namespace Team121GBNUnitTest
             using GPDbContext context = _dbHelper.GetContext();
             GameRepository gameRepository = new GameRepository(context);
             Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Yoshi's");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
-                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
                 gamesToReturn.Add(gameToAdd);
             }
 
             List<IgdbGame> gamesFromAPIMocked = new List<IgdbGame>
             {
-                new IgdbGame(1, "Yoshi's Topsy Turvey", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(2, "Yoshi's Story", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png"),
-                new IgdbGame(3, "Yoshi's Game", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(4, "Yoshi's Story 2", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(5, "Yoshi's Story 3", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png"),
-                new IgdbGame(6, "Yoshi's Story 4", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(7, "Yoshi's Story 5", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(8, "Yoshi's Story 6", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(9, "Yoshi's Story 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(10, "Yoshi's Story 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
+                new IgdbGame(1, "Yoshi's Topsy Turvey", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, null, null),
+                new IgdbGame(2, "Yoshi's Story", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png", "Description", null, null, null),
+                new IgdbGame(3, "Yoshi's Game", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, null, null),
+                new IgdbGame(4, "Yoshi's Story 2", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, null, null),
+                new IgdbGame(5, "Yoshi's Story 3", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png", "Description", null, null, null),
+                new IgdbGame(6, "Yoshi's Story 4", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, null, null),
+                new IgdbGame(7, "Yoshi's Story 5", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, null, null),
+                new IgdbGame(8, "Yoshi's Story 6", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, null, null),
+                new IgdbGame(9, "Yoshi's Story 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, null, null),
+                new IgdbGame(10, "Yoshi's Story 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, null, null),
             };
 
             int numberOfGames = 10;
@@ -211,28 +215,28 @@ namespace Team121GBNUnitTest
             using GPDbContext context = _dbHelper.GetContext();
             GameRepository gameRepository = new GameRepository(context);
             Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
-                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
                 gamesToReturn.Add(gameToAdd);
             }
 
             List<IgdbGame> gamesFromAPIMocked = new List<IgdbGame>
             {
-                new IgdbGame(1, "Gears Of War", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png"),
-                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(5, "Gears Of War Judgment", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png"),
-                new IgdbGame(6, "Gears Of War ", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(7, "Gears Of War 6", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(8, "Gears Of War 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(9, "Gears Of War 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(10, "Gears Of War 9", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
+                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", 2008, 84, 11),
+                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png", "Description", 2011, 82, 11),
+                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", 2016, 77, 11),
+                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, 0, null),
+                new IgdbGame(5, "Gears Of War Judgment", "https://www.igdb.com/games/gears-of-war-judgment", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y2a.png", "Description", 2013, 70, 11),
+                new IgdbGame(6, "Gears Of War ", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(7, "Gears Of War 6", "https://www.igdb.com/games/gears-of-war-6", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(8, "Gears Of War 7", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(9, "Gears Of War 8", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(10, "Gears Of War 9", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
             };
 
             int numberOfGames = 10;
@@ -270,21 +274,23 @@ namespace Team121GBNUnitTest
             using GPDbContext context = _dbHelper.GetContext();
             GameRepository gameRepository = new GameRepository(context);
             Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
-                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
                 gamesToReturn.Add(gameToAdd);
             }
 
             List<IgdbGame> gamesFromAPIMocked = new List<IgdbGame>
             {
-                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png"),
-                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
+                new IgdbGame(1, "Gears Of War 2", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", 2008, 84, 11),
+                new IgdbGame(2, "Gears Of War 3", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png", "Description", 2011, 82, 11),
+                new IgdbGame(3, "Gears Of War 4", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", 2016, 77, 11),
+                new IgdbGame(4, "Gears Of War 5", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, 0, null),
+
             };
 
             int numberOfGames = 5;
@@ -304,21 +310,22 @@ namespace Team121GBNUnitTest
             using GPDbContext context = _dbHelper.GetContext();
             GameRepository gameRepository = new GameRepository(context);
             Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Super Man");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo);
             foreach (var game in GamesFromPersonalDB)
             {
-                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl);
+                IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
                 gamesToReturn.Add(gameToAdd);
             }
 
             List<IgdbGame> gamesFromAPIMocked = new List<IgdbGame>
             {
-                new IgdbGame(1, "Super Man", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png"),
-                new IgdbGame(2, "Super Man 2", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png"),
-                new IgdbGame(3, "Super Man 3", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
-                new IgdbGame(4, "Super Man 4", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png"),
+                new IgdbGame(1, "Super Man", "https://www.igdb.com/games/gears-of-war-2", "https://images.igdb.com/igdb/image/upload/t_thumb/co28gg.png", "Description", null, 0, null),
+                new IgdbGame(2, "Super Man 2", "https://www.igdb.com/games/gears-of-war-3", "https://images.igdb.com/igdb/image/upload/t_thumb/co2a21.png", "Description", null, 0, null),
+                new IgdbGame(3, "Super Man 3", "https://www.igdb.com/games/gears-of-war-4", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, 0, null),
+                new IgdbGame(4, "Super Man 4", "https://www.igdb.com/games/gears-of-war-5", "https://images.igdb.com/igdb/image/upload/t_thumb/co2y29.png", "Description", null, 0, null),
             };
 
             int numberOfGames = 4;
@@ -329,6 +336,5 @@ namespace Team121GBNUnitTest
             //Assert
             Assert.AreEqual(numberOfGames, gamesToReturn.Count());
         }
-
     }
 }
