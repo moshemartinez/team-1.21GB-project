@@ -70,7 +70,6 @@ namespace Standups_BDD_Tests.StepDefinitions
         {
             // Go to the login page
             _loginPage.GoTo();
-            Thread.Sleep(3000);
             // Now (attempt to) log them in.  Assumes previous steps defined the user
             TestUser u = (TestUser)_scenarioContext["CurrentUser"];
             _loginPage.EnterEmail(u.Email);

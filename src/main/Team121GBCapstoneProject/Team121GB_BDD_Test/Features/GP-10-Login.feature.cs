@@ -30,14 +30,14 @@ namespace Team121GB_BDD_Test.Features
         private string[] _featureTags = new string[] {
                 "Quinton"};
         
-#line 1 "Login.feature"
+#line 1 "GP-10-Login.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "User Logins", @"**As a registered user I would like to be able to login so I may be able to have a customized experience.**
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "User Logins", @"**As a user, I want to be able to create an authorized account so that I can use more features of the site**
 
 This feature ensures that users who have previously registered can successfully login and see a personalized message
 that confirms they are recognized by the application and logged in.  It also *defines* a set of seeded users for 
@@ -98,27 +98,21 @@ To generate living documentation, create a Documentation folder and then run one
                         "Password"});
             table1.AddRow(new string[] {
                         "TaliaK",
-                        "xxwsyygnurpmliaypy@bbitj.com",
+                        "BDDTesting1@gmail.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
             table1.AddRow(new string[] {
                         "ZaydenC",
-                        "xjnewrtlxjtefsjxos@tpwlb.com",
+                        "BDDTesting2@gmail.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
             table1.AddRow(new string[] {
                         "DavilaH",
-                        "nvgfzacknsolgwhaqa@bbitq.com",
+                        "team121gigabytes@gmail.com",
                         "Hareem",
                         "Davila",
-                        "Password1!"});
-            table1.AddRow(new string[] {
-                        "KrzysztofP",
-                        "hmzsefexqchqznjrbn@bbitj.com",
-                        "Krzysztof",
-                        "Ponce",
                         "Password1!"});
 #line 16
  testRunner.Given("the following users exist", ((string)(null)), table1, "Given ");
@@ -141,7 +135,7 @@ To generate living documentation, create a Documentation folder and then run one
                         "Joanna",
                         "Valdez",
                         "d9u(*dsF4"});
-#line 22
+#line 21
  testRunner.And("the following users do not exist", ((string)(null)), table2, "And ");
 #line hidden
         }
@@ -152,7 +146,6 @@ To generate living documentation, create a Documentation folder and then run one
         [NUnit.Framework.TestCaseAttribute("Talia", "Home", null)]
         [NUnit.Framework.TestCaseAttribute("Zayden", "Home", null)]
         [NUnit.Framework.TestCaseAttribute("Hareem", "Home", null)]
-        [NUnit.Framework.TestCaseAttribute("Krzysztof", "Home", null)]
         public virtual void ExistingUserCanLogin(string firstName, string page, string[] exampleTags)
         {
             string[] @__tags = new string[] {
@@ -166,7 +159,7 @@ To generate living documentation, create a Documentation folder and then run one
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Existing user can login", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 28
+#line 27
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -189,16 +182,16 @@ this.ScenarioInitialize(scenarioInfo);
 #line 15
 this.FeatureBackground();
 #line hidden
-#line 29
+#line 28
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 30
+#line 29
  testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 31
+#line 30
  testRunner.Then(string.Format("I am redirected to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 32
+#line 31
    testRunner.And("I can see a personalized message in the navbar that includes my email", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
@@ -215,7 +208,7 @@ this.FeatureBackground();
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Non-user cannot login", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 40
+#line 38
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -238,13 +231,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 15
 this.FeatureBackground();
 #line hidden
-#line 41
+#line 39
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 42
+#line 40
  testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 43
+#line 41
  testRunner.Then("I can see a login error message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -260,7 +253,7 @@ this.FeatureBackground();
                     "support"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("We can save cookies", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 51
+#line 49
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -283,13 +276,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 15
 this.FeatureBackground();
 #line hidden
-#line 52
+#line 50
  testRunner.Given("I am a user with first name \'Talia\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 53
+#line 51
  testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 54
+#line 52
  testRunner.Then("I can save cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -305,7 +298,7 @@ this.FeatureBackground();
                     "support"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("We can log in with only a cookie", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 57
+#line 55
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -328,19 +321,19 @@ this.ScenarioInitialize(scenarioInfo);
 #line 15
 this.FeatureBackground();
 #line hidden
-#line 58
+#line 56
  testRunner.Given("I am a user with first name \'Talia\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 58
+  testRunner.And("I am on the \"Home\" page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 59
+ testRunner.When("I load previously saved cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 60
   testRunner.And("I am on the \"Home\" page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 61
- testRunner.When("I load previously saved cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 62
-  testRunner.And("I am on the \"Home\" page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 63
  testRunner.Then("I can see a personalized message in the navbar that includes my email", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

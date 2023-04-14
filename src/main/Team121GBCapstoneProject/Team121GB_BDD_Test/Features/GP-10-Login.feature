@@ -14,11 +14,10 @@ To generate living documentation, create a Documentation folder and then run one
 
 Background:
 	Given the following users exist
-	  | UserName   | Email                            | FirstName | LastName | Password   |
-	  | TaliaK     | xxwsyygnurpmliaypy@bbitj.com     | Talia     | Knott    | Password1! |
-	  | ZaydenC    | xjnewrtlxjtefsjxos@tpwlb.com     | Zayden    | Clark    | Password1! |
-	  | DavilaH    | nvgfzacknsolgwhaqa@bbitq.com     | Hareem    | Davila   | Password1! |
-	  | KrzysztofP | hmzsefexqchqznjrbn@bbitj.com     | Krzysztof | Ponce    | Password1! |
+	  | UserName   | Email                          | FirstName | LastName | Password   |
+	  | TaliaK     | BDDTesting1@gmail.com          | Talia     | Knott    | Password1! |
+	  | ZaydenC    | BDDTesting2@gmail.com          | Zayden    | Clark    | Password1! |
+	  | DavilaH    | team121gigabytes@gmail.com     | Hareem    | Davila   | Password1! |
 	And the following users do not exist
 	  | UserName | Email               | FirstName | LastName | Password  |
 	  | AndreC   | colea@example.com   | Andre     | Cole     | 0a9dfi3.a |
@@ -35,7 +34,6 @@ Scenario Outline: Existing user can login
 	| Talia     | Home |
 	| Zayden    | Home |
 	| Hareem    | Home |
-	| Krzysztof | Home |
 
 Scenario Outline: Non-user cannot login
 	Given I am a user with first name '<FirstName>'

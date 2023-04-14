@@ -20,9 +20,10 @@ namespace Team121GB_BDD_Test.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Home \"HomePage User Story title\"")]
+    [NUnit.Framework.DescriptionAttribute("As a visitor, I want to be able to run a basic web application on localhost so th" +
+        "at I know that the website exists")]
     [NUnit.Framework.CategoryAttribute("Quinton")]
-    public partial class HomeHomePageUserStoryTitleFeature
+    public partial class AsAVisitorIWantToBeAbleToRunABasicWebApplicationOnLocalhostSoThatIKnowThatTheWebsiteExistsFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
@@ -30,14 +31,17 @@ namespace Team121GB_BDD_Test.Features
         private string[] _featureTags = new string[] {
                 "Quinton"};
         
-#line 1 "Home.feature"
+#line 1 "GP-8-Home.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Home \"HomePage User Story title\"", "A short summary of the feature", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "As a visitor, I want to be able to run a basic web application on localhost so th" +
+                    "at I know that the website exists", "This feature is used to create a simple web application that can be ran even if i" +
+                    "t is small. In the section there \r\nwill be a small home page that simply display" +
+                    "s the title of the page and a small decription.", ProgrammingLanguage.CSharp, new string[] {
                         "Quinton"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -83,7 +87,7 @@ namespace Team121GB_BDD_Test.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Home page title contains Home Page", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 6
+#line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -103,13 +107,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 7
+#line 8
  testRunner.Given("I am a visitor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 8
+#line 9
  testRunner.When("I am on the \"Home\" page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 9
+#line 10
  testRunner.Then("The page title contains \"Home Page\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
