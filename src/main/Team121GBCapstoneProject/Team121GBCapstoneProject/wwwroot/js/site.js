@@ -12,9 +12,9 @@ $(document).ready(function () {
         var query = $("#searchInput").val(); // get the value from the search input field
         let $platform = $("#platformSelectList").val(); // * get the platform value
         let $genre = $("#genreSelectList").val();
-
+        let $esrbRatingId = $("#esrbRatingSelectList").val();
         // navigate to query url
-        var location = "/Search/Results/?query=" + encodeURIComponent(query) + "&platform=" + encodeURIComponent($platform) + "&genre=" + encodeURIComponent($genre);
+        var location = "/Search/Results/?query=" + encodeURIComponent(query) + "&platform=" + encodeURIComponent($platform) + "&genre=" + encodeURIComponent($genre) + "&esrbRating=" + encodeURIComponent($esrbRatingId);
         window.location.href = location;
     });
 });
@@ -26,11 +26,12 @@ $(document).ready(function () {
         var query = urlParams.get('query');
         let platform = urlParams.get('platform');
         let genre = urlParams.get('genre');
+        let esrbRating = urlParams.get('esrbRating');
 
-        console.log("Search: ", query, "Platform: ", platform, "Genre:", genre);
+        console.log("Search: ", query, "Platform: ", platform, "Genre: ", genre, "EsrbRating: ", esrbRating);
 
         if (query != null) {
-            displaySearchResults(query, platform, genre);
+            displaySearchResults(query, platform, genre, esrbRating);
         } else {
             console.log("No search query provided");
         }
