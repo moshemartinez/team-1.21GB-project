@@ -10,9 +10,9 @@ $(document).ready(function () {
 
         event.preventDefault(); // prevent the default form submission behavior
         var query = $("#searchInput").val(); // get the value from the search input field
-        let $platform = $("#platformSelectList").val(); // * get the platform value
-        let $genre = $("#genreSelectList").val();
-        let $esrbRatingId = $("#esrbRatingSelectList").val();
+        let $platform = $("#platformSelectList").val() ?? ""; // * get the platform value
+        let $genre = $("#genreSelectList").val() ?? "";
+        let $esrbRatingId = $("#esrbRatingSelectList").val() ?? 0;
         // navigate to query url
         var location = "/Search/Results/?query=" + encodeURIComponent(query) + "&platform=" + encodeURIComponent($platform) + "&genre=" + encodeURIComponent($genre) + "&esrbRating=" + encodeURIComponent($esrbRatingId);
         window.location.href = location;

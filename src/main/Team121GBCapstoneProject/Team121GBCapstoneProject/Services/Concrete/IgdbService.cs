@@ -182,12 +182,12 @@ public class IgdbService : IIgdbService
     }
 
     public void AddGamesToDb(List<Game> GamesFromOurDB,
-                                       List<IgdbGame> gameFromAPI,
-                                       List<IgdbGame> gamesToReturn,
-                                       int numberOfGamesToCheck,
-                                       string platform,
-                                       string genre,
-                                       int esrbRating)
+                             List<IgdbGame> gameFromAPI,
+                             List<IgdbGame> gamesToReturn,
+                             int numberOfGamesToCheck,
+                             string platform,
+                             string genre,
+                             int esrbRating)
     {
         foreach (var game in gameFromAPI)
         {
@@ -254,8 +254,10 @@ public class IgdbService : IIgdbService
             }
         }
         // ! add filtering logic here I think
-        //AddGameGenreForNewGames(gamesToReturn,
-        //                        );
+        // gamesToReturn = ApplyFiltersForNewGames(gamesToReturn, 
+        //                                         platform, 
+        //                                         genre, 
+        //                                         esrbRating);
     }
 
     public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames,
@@ -271,6 +273,10 @@ public class IgdbService : IIgdbService
 
         if (result == true)
         {
+            gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
+                                                platform,
+                                                genre, 
+                                                esrbRating);
             return gamesToReturn;
         }
 
@@ -282,6 +288,10 @@ public class IgdbService : IIgdbService
                                platform,
                                genre,
                                esrbRating);
+        gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
+                                                platform,
+                                                genre, 
+                                                esrbRating); 
         return gamesToReturn;
     }
     public bool CheckForGame(List<Game> gamesToCheck, string title)
@@ -320,19 +330,20 @@ public class IgdbService : IIgdbService
                                         string genre,
                                         int esrbRating)
     {
-        //No filters from client just return
+        // * No filters from client just return
         if (string.IsNullOrEmpty(platform) && string.IsNullOrEmpty(genre) && esrbRating == 0) return games;
-        //Otherwise apply filters
-        List<IgdbGame> filteredGames = new List<IgdbGame>();
+        // * Otherwise apply filters
         /*
          * Checks in filters are null or empty
          * Then checks if genres or platforms are null, and if not checks to see if they contain provided filters.
          * Then checks if esrbRating is 0 otherwise grab the games that have the rating requested.
          */
-        return games.Where(g =>
-                        (string.IsNullOrEmpty(genre) || (g.Genres?.Any(x => x == genre) ?? false)) &&
-                        (string.IsNullOrEmpty(platform) || (g.Platforms?.Any(x => x == platform) ?? false)) &&
-                        (esrbRating == 0 || g.ESRBRatingValue == esrbRating))
-                    .ToList();
+        List<IgdbGame> filteredGames = games.Where(g =>
+                                                (string.IsNullOrEmpty(genre) || (g.Genres?.Any(x => x == genre) ?? false)) &&
+                                                (string.IsNullOrEmpty(platform) || (g.Platforms?.Any(x => x == platform) ?? false)) &&
+                                                (esrbRating == 0 || g.ESRBRatingValue == esrbRating))
+                                            .OrderByDescending(x => x.FirstReleaseDate)    
+                                            .ToList();
+        return filteredGames;
     }
 }
