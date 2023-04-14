@@ -25,7 +25,8 @@ public class IgdbAPIServiceTests
     private IRepository<Game> _genericGameRepo;
     private IRepository<Esrbrating> _esrbratingRepo;
     private InMemoryDbHelper<GPDbContext> _dbHelper;
-
+    private readonly IRepository<GameGenre> _gameGenreRepository;
+    private readonly IRepository<Genre> _genreRepository;   
     private string _search1;
     private string _search2;
     private string _search3;
@@ -81,8 +82,7 @@ public class IgdbAPIServiceTests
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         // Create an instance of the IgdbService, passing in the mock HttpClientFactory and any other dependencies
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
-
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository);
         // --> Act
         // Call the method under test and capture the result
         var result = await igdbService.GetJsonStringFromEndpoint(_igdbBearerToken, searchUri, _igdbClientId, searchBody);
@@ -119,7 +119,7 @@ public class IgdbAPIServiceTests
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         // Create a new instance of the IgdbService using the mock HttpClientFactory
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository);
 
         // --> Act & Assert
         // Assert that calling the method with the mock HttpClient will throw an HttpRequestException
@@ -147,16 +147,16 @@ public class IgdbAPIServiceTests
         });
 
         // Instantiate a new instance of the IgdbService class and pass in the mocked HttpClientFactory
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository);
 
         // Set the credentials needed to access the IGDB API
-        igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
+        ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SetCredentials(_igdbClientId, _igdbBearerToken);
 
         // --> Act
         // Call the SearchGames method with three different search queries and capture the results in variables
-        var search1Games = await igdbService.SearchGames("", "", 0, _search1);
-        var search2Games = await igdbService.SearchGames("", "", 0, _search2);
-        var search3Games = await igdbService.SearchGames("", "", 0, _search3);
+        var search1Games = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames("", "", 0, _search1);
+        var search2Games = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames("", "", 0, _search2);
+        var search3Games = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames("", "", 0, _search3);
 
         // --> Assert
         // Check that each of the three search results contains exactly 10 games
@@ -172,13 +172,13 @@ public class IgdbAPIServiceTests
         var mockHttpClientFactory = new Mock<IHttpClientFactory>();
         var httpClient = new HttpClient();
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository);
 
 
-        igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
+        ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SetCredentials(_igdbClientId, _igdbBearerToken);
 
         // --> Act
-        var result = await igdbService.SearchGames(_platform1, _search1, _esrbRatingId1, "");
+        var result = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames(_platform1, _search1, _esrbRatingId1, "");
 
         // --> Assert
         Assert.IsEmpty(result);
@@ -207,9 +207,9 @@ public class IgdbAPIServiceTests
 
     // * Tests written by Nathaniel Kuga beginning
     [TestCase("", "", 0, "", "")]
-    [TestCase("Xbox One", "Adventure", 11, "Elden Ring", "search \"Elden Ring\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\" & platforms.name = \"Xbox One\";")]
-    [TestCase("Playstation 2", "Shooter", 10, "Call of Duty 3", "search \"Call of Duty 3\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 10 & age_ratings.category = 1 & genres.name = \"Shooter\" & platforms.name = \"Playstation 2\";")]
-    [TestCase("Playstation 4", "Adventure", 11, "God of War", "search \"God of War\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\" & platforms.name = \"Playstation 4\";")]
+    [TestCase("Xbox One", "Adventure", 11, "Elden Ring", "search \"Elden Ring\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres.name; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\" & platforms.name = \"Xbox One\";")]
+    [TestCase("Playstation 2", "Shooter", 10, "Call of Duty 3", "search \"Call of Duty 3\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres.name; where parent_game = null & age_ratings.rating = 10 & age_ratings.category = 1 & genres.name = \"Shooter\" & platforms.name = \"Playstation 2\";")]
+    [TestCase("Playstation 4", "Adventure", 11, "God of War", "search \"God of War\"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres.name; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = \"Adventure\" & platforms.name = \"Playstation 4\";")]
     public async Task IgdbService_ConstructSearchBody(string platform,
                                                       string genre,
                                                       int esrbRatingId,
@@ -220,10 +220,9 @@ public class IgdbAPIServiceTests
         Mock<IHttpClientFactory> mockHttpClientFactory = new Mock<IHttpClientFactory>();
         HttpClient httpClient = new HttpClient();
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
-        IgdbService igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
-
+        IgdbService igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository);
         // ! Act
-        string searchBody = await igdbService.ConstructSearchBody(platform,
+        string searchBody = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).ConstructSearchBody(platform,
                                                                   genre,
                                                                   esrbRatingId,
                                                                   query);
@@ -233,8 +232,8 @@ public class IgdbAPIServiceTests
     }
 
     [TestCase("", "", 0, "", 0, 0, false)]
-    // [TestCase("PC (Microsoft Windows)", "Role-playing (RPG)", 11, "Diablo", 1996, 10, true)]
-    // [TestCase("Playstation 3", "Adventure", 11, "God of War", 2009, 10, true)]
+    //[TestCase("PC (Microsoft Windows)", "Role-playing (RPG)", 11, "Diablo", 1996, 10, true)]
+    //[TestCase("Playstation 3", "Adventure", 11, "God of War", 2009, 10, true)]
     public void IgdbService_SearchGames(string platform,
                                         string genre,
                                         int esrbRatingId,
@@ -245,12 +244,11 @@ public class IgdbAPIServiceTests
     {
         // * Arrange
         Mock<IHttpClientFactory> mockHttpClientFactory = new Mock<IHttpClientFactory>();
-        HttpClient httpClient = new HttpClient();
-        mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
-        IgdbService igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
-
+        Mock<HttpClient> httpClient = new Mock<HttpClient>(); // set up a mock httpclient and send that to the mocked httpClientFactory
+        //mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        IgdbService igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository);
         // ! Act
-        List<IgdbGame> gamesReturned = igdbService.SearchGames(platform,
+        List<IgdbGame> gamesReturned = ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames(platform,
                                                                genre,
                                                                esrbRatingId,
                                                                query)
@@ -263,5 +261,36 @@ public class IgdbAPIServiceTests
             Assert.That(gamesReturned.Any(g => g.GameTitle == query), Is.EqualTo(containsAGameWithTitleMatchingQuery));
         });
     }
+
+    // [TestCase("PC (Microsoft Windows)", "Role-playing (RPG)", 11, "Diablo", 1996, 10, true)]
+    // public void IgdbService_SearchGamesfake(string platform,
+    //                                     string genre,
+    //                                     int esrbRatingId,
+    //                                     string query,
+    //                                     int yearPublished,
+    //                                     int expectedCountOfGamesReturned,
+    //                                     bool containsAGameWithTitleMatchingQuery)
+    // {
+    //     // * Arrange
+    //     Mock<IHttpClientFactory> mockHttpClientFactory = new Mock<IHttpClientFactory>();
+    //     HttpClient httpClient = new HttpClient();
+    //     mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+    //     IgdbService igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo);
+
+    //     // ! Act
+    //     List<IgdbGame> gamesReturned = igdbService.SearchGames(platform,
+    //                                                            genre,
+    //                                                            esrbRatingId,
+    //                                                            query)
+    //                                                            .Result
+    //                                                            .ToList();
+    //     // ? Assert
+    //     Assert.Multiple(() =>
+    //     {
+    //         Assert.That(gamesReturned.Count, Is.EqualTo(expectedCountOfGamesReturned));
+    //         Assert.That(gamesReturned.Any(g => g.GameTitle == query), Is.EqualTo(containsAGameWithTitleMatchingQuery));
+    //     });
+    // }
+
     // * Tests written by Nathaniel Kuga ending
 }

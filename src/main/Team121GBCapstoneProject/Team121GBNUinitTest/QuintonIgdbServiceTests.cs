@@ -26,6 +26,8 @@ namespace Team121GBNUnitTest
         private readonly IGameRepository _gameRepository;
         private readonly IRepository<Game> _genericGameRepo;
         private readonly IRepository<Esrbrating> _esrbRatingRepository;
+        private readonly IRepository<GameGenre> _gameGenreRepository;
+        private readonly IRepository<Genre> _genreRepository;   
 
 
         [SetUp]
@@ -57,7 +59,7 @@ namespace Team121GBNUnitTest
         public void checkGamesFromDatabaseWithGamesWithOutTenGamesInDataBaseShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Dark");
@@ -77,7 +79,7 @@ namespace Team121GBNUnitTest
         public void checkGamesFromDatabaseWithNoGamesThatMatchInDatabaseShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Donkey Kong");
@@ -115,7 +117,7 @@ namespace Team121GBNUnitTest
             _mockContext.Setup(ctx => ctx.Games).Returns(_mockGameDbSet.Object);
             _mockContext.Setup(ctx => ctx.Set<Game>()).Returns(_mockGameDbSet.Object);
             
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Dark");
@@ -135,7 +137,7 @@ namespace Team121GBNUnitTest
         public void checkGamesFromDatabaseWithNonSenseQueryShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("dkvjnskdvcnbseiukjrnvksnfd");
@@ -154,7 +156,7 @@ namespace Team121GBNUnitTest
         public void checkGamesFromDatabaseWithEmptyQueryShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("");
@@ -173,7 +175,7 @@ namespace Team121GBNUnitTest
         public void checkGamesFromDatabaseWithWhiteSpaceQueryShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle(" ");
@@ -192,7 +194,7 @@ namespace Team121GBNUnitTest
         public void CheckForGameWithMatchInTheDatabaseShouldReturnTrue()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Dark Souls");
@@ -209,7 +211,7 @@ namespace Team121GBNUnitTest
         public void CheckForGameWithOutMatchInTheDatabaseShouldReturnTrue()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Dark Souls");
@@ -226,7 +228,7 @@ namespace Team121GBNUnitTest
         public void CheckForGameWithEmptySearchInTheDatabaseShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("");
@@ -243,7 +245,7 @@ namespace Team121GBNUnitTest
         public void CheckForGameWithWhiteSpaceSearchInTheDatabaseShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository);
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle(" ");
