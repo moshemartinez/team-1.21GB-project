@@ -8,10 +8,9 @@
         public string url { get; set; }
         public string summary { get; set; }
         public int? first_release_date { get; set; }
-
         public double rating { get; set; }
         public List<AgeRating> age_ratings { get; set; }
-
+        public List<IgdbGenre> genres { get; set;}
         public static int? ConvertFirstReleaseDateFromUnixTimestampToYear(int? firstReleaseDate)
         {
             if (firstReleaseDate == null) return null;
@@ -44,5 +43,10 @@
     {
         public int? rating { get; set; }
         public int? category { get; set; }
+    }
+
+    public class IgdbGenre 
+    {
+        public string name { get; set; }
     }
 }

@@ -18,16 +18,25 @@ public class IgdbService : IIgdbService
     private readonly IGameRepository _gameRepository;
     private readonly IRepository<Game> _genericGameRepo;
     private readonly IRepository<Esrbrating> _esrbRatingRepository;
+    private readonly IRepository<GameGenre> _gameGenreRepository;
+    private readonly IRepository<Genre> _genreRepository;
 
     private string _bearerToken;
     private string _clientId;
 
-    public IgdbService(IHttpClientFactory httpClientFactory, IGameRepository gameRepository, IRepository<Game> genericGameRepo, IRepository<Esrbrating> esrbRatingRepository)
+    public IgdbService(IHttpClientFactory httpClientFactory,
+                       IGameRepository gameRepository,
+                       IRepository<Game> genericGameRepo,
+                       IRepository<Esrbrating> esrbRatingRepository,
+                       IRepository<GameGenre> gameGenreRepository,
+                       IRepository<Genre> genreRepository)
     {
         _httpClientFactory = httpClientFactory;
         _gameRepository = gameRepository;
         _genericGameRepo = genericGameRepo;
         _esrbRatingRepository = esrbRatingRepository;
+        _gameGenreRepository = gameGenreRepository;
+        _genreRepository = genreRepository;
     }
 
     public async Task<string> GetJsonStringFromEndpoint(string token, string uri, string clientId, string rawBody)
@@ -60,29 +69,29 @@ public class IgdbService : IIgdbService
         _clientId = clientId;
         _bearerToken = token;
     }
-    public async Task<string> ConstructSearchBody(string platform, 
+    public async Task<string> ConstructSearchBody(string platform,
                                                   string genre,
                                                   int esrbRatingId,
                                                   string query)
-    {   
+    {
         if (String.IsNullOrEmpty(query)) return "";
-        
+        //search "Diablo"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = "Role-playing (RPG)" & platforms.name = "PC (Microsoft Windows)";
         string search = $"search \"{query}\"; ";
         string fields = "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category";
         string filtering = " where parent_game = null ";
-        
+
         // * Add parameters from search bar to the strings respectively.
         if (!String.IsNullOrEmpty(platform)) fields += ", platforms";
-        if (!String.IsNullOrEmpty(genre)) fields += ", genres";
-        if (esrbRatingId > 0) filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1 & genres.name = \"{genre}\" & platforms.name = \"{platform}\""; 
-        
+        if (!String.IsNullOrEmpty(genre)) fields += ", genres.name";
+        if (esrbRatingId > 0) filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1 & genres.name = \"{genre}\" & platforms.name = \"{platform}\"";
+
         // * Finish up string formatting.
         fields += ';';
         filtering += ';';
 
         // * construct the search body with all of the pieces.
         string body = search + fields + filtering;
-        
+
         return body;
     }
     public async Task<IEnumerable<IgdbGame>> SearchGames(string platform,
@@ -108,7 +117,7 @@ public class IgdbService : IIgdbService
             gamesJsonDTO = null;
         }
         if (gamesJsonDTO != null && gamesJsonDTO.Any())
-        {  
+        {
             return gamesJsonDTO.Select(g => new IgdbGame(g.id,
                                                           g.name,
                                                           g.cover?.url?.ToString(),
@@ -116,7 +125,8 @@ public class IgdbService : IIgdbService
                                                           g.summary,
                                                           GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(g.first_release_date),
                                                           g.rating,
-                                                          GameJsonDTO.ExtractEsrbRatingFromAgeRatingsArray(g.age_ratings)));
+                                                          GameJsonDTO.ExtractEsrbRatingFromAgeRatingsArray(g.age_ratings),
+                                                          g.genres.Select(genre => genre.name).ToList()));
         }
         return Enumerable.Empty<IgdbGame>();
     }
@@ -127,7 +137,7 @@ public class IgdbService : IIgdbService
         {
             if (gamesToCheck.Count() > 0)
             {
-                if (gamesToCheck.Count() >= numberOfGamesToCheck)
+                if (gamesToCheck.Count() >= numberOfGamesToCheck) // ! 
                 {
                     int i = 0;
                     foreach (var game in gamesToCheck)
@@ -137,9 +147,10 @@ public class IgdbService : IIgdbService
                             break;
                         }
 
-                        int? yearPublished =
-                            GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
-// Look into sending null or 0 instead of 1
+                        int? yearPublished = GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
+                        // Look into sending null or 0 instead of 1
+
+
                         IgdbGame gameToAdd = new IgdbGame(1,
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
@@ -147,24 +158,31 @@ public class IgdbService : IIgdbService
                                                           game.Description,
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
-                                                          game.EsrbratingId);
+                                                          game.EsrbratingId,
+                                                          game.GameGenres
+                                                              .Select(g => g.Genre.Name)
+                                                              .ToList());
                         gamesToReturn.Add(gameToAdd);
                         i++;
                     }
                     return true;
                 }
-                else
+                else // ! 
                 {
                     foreach (var game in gamesToCheck)
                     {
+                        List<string> genres = game.GameGenres
+                                                  .Select(g => g.Genre.Name)
+                                                  .ToList();
                         IgdbGame gameToAdd = new IgdbGame(game.IgdbgameId,
-                                      game.Title,
-                                      game.CoverPicture.ToString(),
-                                      game.Igdburl,
-                                      game.Description,
-                                      game.YearPublished,
-                                      (double)game.AverageRating,
-                                      game.EsrbratingId);
+                                                          game.Title,
+                                                          game.CoverPicture.ToString(),
+                                                          game.Igdburl,
+                                                          game.Description,
+                                                          game.YearPublished,
+                                                          (double)game.AverageRating,
+                                                          game.EsrbratingId,
+                                                          genres);
                         gamesToReturn.Add(gameToAdd);
                     }
                 }
@@ -191,6 +209,7 @@ public class IgdbService : IIgdbService
                 {
                     continue;
                 }
+
                 Game gameToAdd = new Game();
                 gameToAdd.Title = game.GameTitle.ToString();
 
@@ -226,12 +245,12 @@ public class IgdbService : IIgdbService
                     }
                 }
                 gameToAdd.EsrbratingId = esrbRatingId;
-
                 try
                 {
-                    _genericGameRepo.AddOrUpdate(gameToAdd);
+                    Game addedGame = _genericGameRepo.AddOrUpdate(gameToAdd);
+                    AddGameGenreForNewGames(game, addedGame);
                 }
-                catch (NullReferenceException e)
+                catch (Exception e)
                 {
                     Debug.WriteLine(e);
                 }
@@ -244,7 +263,7 @@ public class IgdbService : IIgdbService
         }
     }
 
-    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, 
+    public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames,
                                                                         string platform = "",
                                                                         string genre = "",
                                                                         int esrbRating = 0,
@@ -280,5 +299,23 @@ public class IgdbService : IIgdbService
             }
         }
         return false;
+    }
+    public void AddGameGenreForNewGames(IgdbGame gameFromApi, Game addedGame)
+    {
+        List<Genre> allGenres = _genreRepository.GetAll().ToList();
+        List<GameGenre> gameGenresToAddForNewGames = gameFromApi.Genres
+                                                                .Select(genre => allGenres.FirstOrDefault(g => g.Name == genre))// ! Returns a list of genres and matches their name and sets all others to null
+                                                                .Where(genre => genre != null)
+                                                                .Select(genre => new GameGenre
+                                                                {
+                                                                    GameId = addedGame.Id,
+                                                                    Game = addedGame,
+                                                                    GenreId = genre.Id,
+                                                                    Genre = genre
+                                                                })
+                                                                .ToList();
+        gameGenresToAddForNewGames.ForEach(gg => {
+            _gameGenreRepository.AddOrUpdate(gg);
+        });
     }
 }

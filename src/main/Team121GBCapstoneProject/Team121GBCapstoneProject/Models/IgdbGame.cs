@@ -12,7 +12,9 @@ namespace Team121GBCapstoneProject.Models
         public int? FirstReleaseDate { get; set; }
         public double? AverageRating { get; set; }
         public int? ESRBRatingValue { get; set; }
-        // * new updated constructor for improved caching.
+        public List<string> Genres { get; set;}
+
+        
         public IgdbGame(int? id,
                         string gameTitle,
                         string gameCoverArt,
@@ -30,6 +32,28 @@ namespace Team121GBCapstoneProject.Models
             FirstReleaseDate = firstReleaseDate;
             AverageRating = averageRating;
             ESRBRatingValue = eSRBRatingValue;
+        }
+
+        // * new updated constructor for improved caching.
+        public IgdbGame(int? id,
+                        string gameTitle,
+                        string gameCoverArt,
+                        string gameWebsite,
+                        string gameDescription,
+                        int? firstReleaseDate,
+                        double? averageRating,
+                        int? eSRBRatingValue,
+                        List<string> genres)
+        {
+            Id = id;
+            GameTitle = gameTitle;
+            GameCoverArt = gameCoverArt;
+            GameWebsite = gameWebsite;
+            GameDescription = gameDescription;
+            FirstReleaseDate = firstReleaseDate;
+            AverageRating = averageRating;
+            ESRBRatingValue = eSRBRatingValue;
+            Genres = genres;
         }
     }
 }

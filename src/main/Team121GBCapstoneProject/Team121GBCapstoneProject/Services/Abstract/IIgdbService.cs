@@ -12,4 +12,10 @@ public interface IIgdbService
     public bool checkGamesFromDatabase(List<Game> gamesToCheck, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck);
     public bool CheckForGame(List<Game> gamesToCheck, string title);
     public void FinishGamesListForView(List<Game> GamesFromOurDB, List<IgdbGame> gameFromAPI, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck);
+    /// <summary>
+    /// Adds new GameGenres to db after having added a new game to db
+    /// </summary>
+    /// <param name="gameFromApi">IGDB Game object used to add new Game to db</param>
+    /// <param name="addedGame">Game object that was just added to the db</param>
+    public void AddGameGenreForNewGames(IgdbGame gamesFromApi, Game addedGame);
 }
