@@ -81,9 +81,20 @@ public class IgdbService : IIgdbService
         string filtering = " where parent_game = null ";
 
         // * Add parameters from search bar to the strings respectively.
-        if (!String.IsNullOrEmpty(platform)) fields += ", platforms";
-        if (!String.IsNullOrEmpty(genre)) fields += ", genres.name";
-        if (esrbRatingId > 0) filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1 & genres.name = \"{genre}\" & platforms.name = \"{platform}\"";
+        if (!String.IsNullOrEmpty(platform)) 
+        {
+            fields += ", platforms";
+            filtering += $"& platforms.name = \"{platform}\"";
+        }
+        if (!String.IsNullOrEmpty(genre)) 
+        {
+            fields += ", genres.name";
+            filtering += $"& genres.name = \"{genre}\"";
+        }
+        if (esrbRatingId > 0) 
+        {
+            filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1";
+        }
 
         // * Finish up string formatting.
         fields += ';';
@@ -118,7 +129,9 @@ public class IgdbService : IIgdbService
         }
         if (gamesJsonDTO != null && gamesJsonDTO.Any())
         {
-            return gamesJsonDTO.Select(g => new IgdbGame(g.id,
+            try
+            {
+                return gamesJsonDTO.Select(g => new IgdbGame(g.id,
                                                           g.name,
                                                           g.cover?.url?.ToString(),
                                                           g.url,
@@ -126,7 +139,12 @@ public class IgdbService : IIgdbService
                                                           GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(g.first_release_date),
                                                           g.rating,
                                                           GameJsonDTO.ExtractEsrbRatingFromAgeRatingsArray(g.age_ratings),
-                                                          g.genres.Select(genre => genre.name).ToList()));
+                                                          g.genres?.Select(genre => genre.name)?.ToList()));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
         return Enumerable.Empty<IgdbGame>();
     }

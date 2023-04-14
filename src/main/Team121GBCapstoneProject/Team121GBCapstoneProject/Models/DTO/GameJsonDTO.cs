@@ -10,7 +10,7 @@
         public int? first_release_date { get; set; }
         public double rating { get; set; }
         public List<AgeRating> age_ratings { get; set; }
-        public List<IgdbGenre> genres { get; set;}
+        public List<IgdbGenre>? genres { get; set;}
         public static int? ConvertFirstReleaseDateFromUnixTimestampToYear(int? firstReleaseDate)
         {
             if (firstReleaseDate == null) return null;

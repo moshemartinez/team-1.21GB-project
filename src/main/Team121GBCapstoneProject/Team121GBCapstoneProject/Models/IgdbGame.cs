@@ -12,7 +12,7 @@ namespace Team121GBCapstoneProject.Models
         public int? FirstReleaseDate { get; set; }
         public double? AverageRating { get; set; }
         public int? ESRBRatingValue { get; set; }
-        public List<string> Genres { get; set;}
+        public List<string>? Genres { get; set;}
 
         
         public IgdbGame(int? id,
@@ -43,7 +43,7 @@ namespace Team121GBCapstoneProject.Models
                         int? firstReleaseDate,
                         double? averageRating,
                         int? eSRBRatingValue,
-                        List<string> genres)
+                        List<string>? genres)
         {
             Id = id;
             GameTitle = gameTitle;
