@@ -1,5 +1,4 @@
-﻿
---Seed Script
+﻿--Seed Script
 
 --Inserting Sample Data for Game
 
@@ -141,22 +140,22 @@ INSERT INTO [Genre] ([Name]) VALUES ('Indie');
 INSERT INTO [Genre] ([Name]) VALUES ('Card & Board Game');
 INSERT INTO [Genre] ([Name]) VALUES ('MOBA');
 
-INSERT INTO [Platform] ([Name]) VALUES ('Mac'); --1
-INSERT INTO [Platform] ([Name]) VALUES ('PC'); --2
-INSERT INTO [Platform] ([Name]) VALUES ('Linux'); --3
-INSERT INTO [Platform] ([Name]) VALUES ('Xbox Series X|S'); --4
-INSERT INTO [Platform] ([Name]) VALUES ('PlayStation 5'); --5
-INSERT INTO [Platform] ([Name]) VALUES ('Xbox One'); --6
-INSERT INTO [Platform] ([Name]) VALUES ('Playstation 4'); --7
-INSERT INTO [Platform] ([Name]) VALUES ('Nintendo Switch'); --8
-INSERT INTO [Platform] ([Name]) VALUES ('Playstation 3'); --9
-INSERT INTO [Platform] ([Name]) VALUES ('Xbox 360'); --10
-INSERT INTO [Platform] ([Name]) VALUES ('SNES'); --11
-INSERT INTO [Platform] ([Name]) VALUES ('Nintendo 3DS'); --12
-INSERT INTO [Platform] ([Name]) VALUES ('Game boy'); --13
-INSERT INTO [Platform] ([Name]) VALUES ('Nintendo 64'); --14
-INSERT INTO [Platform] ([Name]) VALUES ('Nintendo GameCube'); --15
-INSERT INTO [Platform] ([Name]) VALUES ('Nintendo Wii'); --16
+INSERT INTO [Platform] ([Name]) VALUES ('Mac');
+INSERT INTO [Platform] ([Name]) VALUES ('PC');
+INSERT INTO [Platform] ([Name]) VALUES ('Linux');
+INSERT INTO [Platform] ([Name]) VALUES ('Xbox Series X|S');
+INSERT INTO [Platform] ([Name]) VALUES ('PlayStation 5');
+INSERT INTO [Platform] ([Name]) VALUES ('Xbox One');
+INSERT INTO [Platform] ([Name]) VALUES ('Playstation 4');
+INSERT INTO [Platform] ([Name]) VALUES ('Nintendo Switch');
+INSERT INTO [Platform] ([Name]) VALUES ('Playstation 3');
+INSERT INTO [Platform] ([Name]) VALUES ('Xbox 360');
+INSERT INTO [Platform] ([Name]) VALUES ('SNES');
+INSERT INTO [Platform] ([Name]) VALUES ('Nintendo 3DS');
+INSERT INTO [Platform] ([Name]) VALUES ('Game boy');
+INSERT INTO [Platform] ([Name]) VALUES ('Nintendo 64');
+INSERT INTO [Platform] ([Name]) VALUES ('Nintendo GameCube');
+INSERT INTO [Platform] ([Name]) VALUES ('Nintendo Wii');
 
 INSERT INTO [GamePlatform] ([GameID], [PlatformID]) VALUES (1, 10);
 INSERT INTO [GamePlatform] ([GameID], [PlatformID]) VALUES (1, 2);
@@ -545,14 +544,3 @@ INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (101, 18);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (101, 5);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 18);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 5);
-
---seed ESRBRatings 
---according to the devs on the IGDB discord server, you have to map
---the value returned by the API to a name which is what the IGDBRatingValue column does
-INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('RP', 6);
-INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('EC', 7);
-INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('E', 8);
-INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('E10', 9);
-INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('T', 10);
-INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('M', 11);
-INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('AO', 12);
