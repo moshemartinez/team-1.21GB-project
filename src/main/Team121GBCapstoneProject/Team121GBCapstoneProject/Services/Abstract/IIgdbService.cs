@@ -6,8 +6,9 @@ namespace Team121GBCapstoneProject.Services.Abstract;
 public interface IIgdbService
 {
     void SetCredentials(string clientId, string token);
-    Task<string> ConstructSearchBody(string platform, string genre, int esrbRatingId, string query);
-    Task<IEnumerable<IgdbGame>> SearchGames(string platform, string genre, int esrbRatingId, string query);
+    // ! This method might not be needed
+    // ! Task<string> ConstructSearchBody(string platform, string genre, int esrbRatingId, string query);
+    Task<IEnumerable<IgdbGame>> SearchGames(string query);
     Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string platform, string genre, int esrbRating,    string query = "");
     public bool checkGamesFromDatabase(List<Game> gamesToCheck, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck);
     public bool CheckForGame(List<Game> gamesToCheck, string title);

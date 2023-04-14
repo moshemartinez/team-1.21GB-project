@@ -69,55 +69,55 @@ public class IgdbService : IIgdbService
         _clientId = clientId;
         _bearerToken = token;
     }
-    public async Task<string> ConstructSearchBody(string platform,
-                                                  string genre,
-                                                  int esrbRatingId,
-                                                  string query)
-    {
-        if (String.IsNullOrEmpty(query)) return "";
-        //search "Diablo"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = "Role-playing (RPG)" & platforms.name = "PC (Microsoft Windows)";
-        string search = $"search \"{query}\"; ";
-        string fields = "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category";
-        string filtering = " where parent_game = null ";
+    // public async Task<string> ConstructSearchBody(string platform,
+    //                                               string genre,
+    //                                               int esrbRatingId,
+    //                                               string query)
+    // {
+    //     if (String.IsNullOrEmpty(query)) return "";
+    //     //search "Diablo"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = "Role-playing (RPG)" & platforms.name = "PC (Microsoft Windows)";
+    //     string search = $"search \"{query}\"; ";
+    //     string fields = "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category";
+    //     string filtering = " where parent_game = null ";
 
-        // * Add parameters from search bar to the strings respectively.
-        if (!String.IsNullOrEmpty(platform)) 
-        {
-            fields += ", platforms";
-            filtering += $"& platforms.name = \"{platform}\"";
-        }
-        if (!String.IsNullOrEmpty(genre)) 
-        {
-            fields += ", genres.name";
-            filtering += $"& genres.name = \"{genre}\"";
-        }
-        if (esrbRatingId > 0) 
-        {
-            filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1";
-        }
+    //     // * Add parameters from search bar to the strings respectively.
+    //     if (!String.IsNullOrEmpty(platform)) 
+    //     {
+    //         fields += ", platforms";
+    //         filtering += $"& platforms.name = \"{platform}\"";
+    //     }
+    //     if (!String.IsNullOrEmpty(genre)) 
+    //     {
+    //         fields += ", genres.name";
+    //         filtering += $"& genres.name = \"{genre}\"";
+    //     }
+    //     if (esrbRatingId > 0) 
+    //     {
+    //         filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1";
+    //     }
 
-        // * Finish up string formatting.
-        fields += ';';
-        filtering += ';';
+    //     // * Finish up string formatting.
+    //     fields += ';';
+    //     filtering += ';';
 
-        // * construct the search body with all of the pieces.
-        string body = search + fields + filtering;
+    //     // * construct the search body with all of the pieces.
+    //     string body = search + fields + filtering;
 
-        return body;
-    }
-    public async Task<IEnumerable<IgdbGame>> SearchGames(string platform,
-                                                         string genre,
-                                                         int esrbRating,
-                                                         string query = "")
+    //     return body;
+    // }
+    public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
         // * game Endpoint Search
-        string gameSearchBody = await ConstructSearchBody(platform,
-                                                          genre,
-                                                          esrbRating,
-                                                          query);
-        if (String.IsNullOrEmpty(gameSearchBody)) return Enumerable.Empty<IgdbGame>(); //! If the query was empty don't hit the API cause there is no point in send an empty query.
+        // string gameSearchBody = await ConstructSearchBody(platform,
+        //                                                   genre,
+        //                                                   esrbRating,
+        //                                                   query);
+        string searchBody = $"search \"{query}\";" + 
+                            "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms.name, genres.name;" + 
+                            " where parent_game = null & age_ratings.category = 1;";
+        if (String.IsNullOrEmpty(searchBody)) return Enumerable.Empty<IgdbGame>(); //! If the query was empty don't hit the API cause there is no point in send an empty query.
         string gameSearchUri = "https://api.igdb.com/v4/games/";
-        string gameResponse = await GetJsonStringFromEndpoint(_bearerToken, gameSearchUri, _clientId, gameSearchBody);
+        string gameResponse = await GetJsonStringFromEndpoint(_bearerToken, gameSearchUri, _clientId, searchBody);
         IEnumerable<GameJsonDTO> gamesJsonDTO;
         try
         {
@@ -139,7 +139,7 @@ public class IgdbService : IIgdbService
                                                           GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(g.first_release_date),
                                                           g.rating,
                                                           GameJsonDTO.ExtractEsrbRatingFromAgeRatingsArray(g.age_ratings),
-                                                          g.genres?.Select(genre => genre.name)?.ToList()));
+                                                          g.genres.Select(genre => genre.name).ToList()));
             }
             catch (Exception e)
             {
@@ -167,8 +167,6 @@ public class IgdbService : IIgdbService
 
                         int? yearPublished = GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
                         // Look into sending null or 0 instead of 1
-
-
                         IgdbGame gameToAdd = new IgdbGame(1,
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
@@ -272,6 +270,8 @@ public class IgdbService : IIgdbService
                 {
                     Debug.WriteLine(e);
                 }
+                // ! add filtering logic here I think
+
                 gamesToReturn.Add(game);
             }
             catch (Exception e)
@@ -297,10 +297,7 @@ public class IgdbService : IIgdbService
             return gamesToReturn;
         }
 
-        var gamesFromSearch = await SearchGames(platform,
-                                                genre,
-                                                esrbRating,
-                                                query);
+        var gamesFromSearch = await SearchGames(query);
 
         FinishGamesListForView(gamesFromPersonalDb, gamesFromSearch.ToList<IgdbGame>(), gamesToReturn, numberOfGames);
 
