@@ -26,5 +26,6 @@ public interface IIgdbService
     /// <param name="platform">Filter provided by client</param>
     /// <param name="genre">Filter provided by client</param>
     /// <param name="esrbRating">Filter provided by client</param>
-    public void ApplyFiltersForNewGames(List<IgdbGame> games, string platform, string genre, int esrbRating);
+    /// <returns>Filtered list of igdbgames</returns>
+    public List<IgdbGame> ApplyFiltersForNewGames(List<IgdbGame> games, string platform, string genre, int esrbRating);
 }

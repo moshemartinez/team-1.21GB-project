@@ -11,6 +11,7 @@
         public double rating { get; set; }
         public List<AgeRating> age_ratings { get; set; }
         public List<IgdbGenre>? genres { get; set;}
+        public List<IgdbPlatform>? platforms { get; set; }
         public static int? ConvertFirstReleaseDateFromUnixTimestampToYear(int? firstReleaseDate)
         {
             if (firstReleaseDate == null) return null;
@@ -46,6 +47,11 @@
     }
 
     public class IgdbGenre 
+    {
+        public string name { get; set; }
+    }
+
+    public class IgdbPlatform
     {
         public string name { get; set; }
     }

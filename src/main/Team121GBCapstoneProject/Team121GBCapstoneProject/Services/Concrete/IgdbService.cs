@@ -100,7 +100,8 @@ public class IgdbService : IIgdbService
                                                           GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(g.first_release_date),
                                                           g.rating,
                                                           GameJsonDTO.ExtractEsrbRatingFromAgeRatingsArray(g.age_ratings),
-                                                          g.genres.Select(genre => genre.name).ToList()));
+                                                          g.genres.Select(genre => genre.name).ToList(),
+                                                          g.platforms.Select(genre => genre.name).ToList()));
             }
             catch (Exception e)
             {
@@ -138,6 +139,9 @@ public class IgdbService : IIgdbService
                                                           game.EsrbratingId,
                                                           game.GameGenres
                                                               .Select(g => g.Genre.Name)
+                                                              .ToList(),
+                                                          game.GamePlatforms
+                                                              .Select(p => p.Platform.Name)
                                                               .ToList());
                         gamesToReturn.Add(gameToAdd);
                         i++;
@@ -151,6 +155,10 @@ public class IgdbService : IIgdbService
                         List<string> genres = game.GameGenres
                                                   .Select(g => g.Genre.Name)
                                                   .ToList();
+
+                        List<string> platforms = game.GamePlatforms
+                                                     .Select(g => g.Platform.Name)
+                                                     .ToList();
                         IgdbGame gameToAdd = new IgdbGame(game.IgdbgameId,
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
@@ -159,7 +167,8 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
-                                                          genres);
+                                                          genres,
+                                                          platforms);
                         gamesToReturn.Add(gameToAdd);
                     }
                 }
@@ -306,29 +315,24 @@ public class IgdbService : IIgdbService
         });
     }
 
-    public void ApplyFiltersForNewGames(List<IgdbGame> games, 
-                                        string platform, 
-                                        string genre, 
+    public List<IgdbGame> ApplyFiltersForNewGames(List<IgdbGame> games,
+                                        string platform,
+                                        string genre,
                                         int esrbRating)
     {
         //No filters from client just return
-        if (string.IsNullOrEmpty(platform) && string.IsNullOrEmpty(genre) && esrbRating == 0) return;
+        if (string.IsNullOrEmpty(platform) && string.IsNullOrEmpty(genre) && esrbRating == 0) return games;
         //Otherwise apply filters
         List<IgdbGame> filteredGames = new List<IgdbGame>();
-        filteredGames = games.Where(g => 
-                                    g.Genres != null && 
-                                    g.Genres.Contains(genre) && 
-                                    g.ESRBRatingValue == esrbRating
-                                    )
-                             .ToList();
-        //foreach (var game in games)
-        //{
-        //    if (game.ESRBRatingValue == esrbRating)
-        //    {
-        //        filteredGames.Add(game);
-        //    }
-        //}
-
-        throw new NotImplementedException();
+        /*
+         * Checks in filters are null or empty
+         * Then checks if genres or platforms are null, and if not checks to see if they contain provided filters.
+         * Then checks if esrbRating is 0 otherwise grab the games that have the rating requested.
+         */
+        return games.Where(g =>
+                        (string.IsNullOrEmpty(genre) || (g.Genres?.Any(x => x == genre) ?? false)) &&
+                        (string.IsNullOrEmpty(platform) || (g.Platforms?.Any(x => x == platform) ?? false)) &&
+                        (esrbRating == 0 || g.ESRBRatingValue == esrbRating))
+                    .ToList();
     }
 }
