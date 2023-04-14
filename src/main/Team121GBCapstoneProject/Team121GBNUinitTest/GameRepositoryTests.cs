@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
 
-namespace Team121GBNUinitTest
+namespace Team121GBNUnitTest
 {
     public class GameRepositoryTests
     {

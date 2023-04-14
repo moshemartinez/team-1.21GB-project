@@ -10,7 +10,6 @@ using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Services.Abstract;
 using Team121GBCapstoneProject.Services.Concrete;
-using Team121GBNUinitTest;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Team121GBNUnitTest

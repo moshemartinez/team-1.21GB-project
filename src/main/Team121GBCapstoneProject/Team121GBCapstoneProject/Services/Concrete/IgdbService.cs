@@ -69,51 +69,12 @@ public class IgdbService : IIgdbService
         _clientId = clientId;
         _bearerToken = token;
     }
-    // public async Task<string> ConstructSearchBody(string platform,
-    //                                               string genre,
-    //                                               int esrbRatingId,
-    //                                               string query)
-    // {
-    //     if (String.IsNullOrEmpty(query)) return "";
-    //     //search "Diablo"; fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms, genres; where parent_game = null & age_ratings.rating = 11 & age_ratings.category = 1 & genres.name = "Role-playing (RPG)" & platforms.name = "PC (Microsoft Windows)";
-    //     string search = $"search \"{query}\"; ";
-    //     string fields = "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category";
-    //     string filtering = " where parent_game = null ";
 
-    //     // * Add parameters from search bar to the strings respectively.
-    //     if (!String.IsNullOrEmpty(platform)) 
-    //     {
-    //         fields += ", platforms";
-    //         filtering += $"& platforms.name = \"{platform}\"";
-    //     }
-    //     if (!String.IsNullOrEmpty(genre)) 
-    //     {
-    //         fields += ", genres.name";
-    //         filtering += $"& genres.name = \"{genre}\"";
-    //     }
-    //     if (esrbRatingId > 0) 
-    //     {
-    //         filtering += $"& age_ratings.rating = {esrbRatingId} & age_ratings.category = 1";
-    //     }
-
-    //     // * Finish up string formatting.
-    //     fields += ';';
-    //     filtering += ';';
-
-    //     // * construct the search body with all of the pieces.
-    //     string body = search + fields + filtering;
-
-    //     return body;
-    // }
     public async Task<IEnumerable<IgdbGame>> SearchGames(string query = "")
     {
         // * game Endpoint Search
-        // string gameSearchBody = await ConstructSearchBody(platform,
-        //                                                   genre,
-        //                                                   esrbRating,
-        //                                                   query);
-        string searchBody = $"search \"{query}\";" + 
-                            "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms.name, genres.name;" + 
+        string searchBody = $"search \"{query}\";" +
+                            "fields name, cover.url, url, summary, first_release_date, rating, age_ratings.rating, age_ratings.category, platforms.name, genres.name;" +
                             " where parent_game = null & age_ratings.category = 1;";
         if (String.IsNullOrEmpty(searchBody)) return Enumerable.Empty<IgdbGame>(); //! If the query was empty don't hit the API cause there is no point in send an empty query.
         string gameSearchUri = "https://api.igdb.com/v4/games/";
@@ -211,7 +172,13 @@ public class IgdbService : IIgdbService
         return false;
     }
 
-    public void FinishGamesListForView(List<Game> GamesFromOurDB, List<IgdbGame> gameFromAPI, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck)
+    public void AddGamesToDb(List<Game> GamesFromOurDB,
+                                       List<IgdbGame> gameFromAPI,
+                                       List<IgdbGame> gamesToReturn,
+                                       int numberOfGamesToCheck,
+                                       string platform,
+                                       string genre,
+                                       int esrbRating)
     {
         foreach (var game in gameFromAPI)
         {
@@ -270,8 +237,6 @@ public class IgdbService : IIgdbService
                 {
                     Debug.WriteLine(e);
                 }
-                // ! add filtering logic here I think
-
                 gamesToReturn.Add(game);
             }
             catch (Exception e)
@@ -279,6 +244,9 @@ public class IgdbService : IIgdbService
                 Debug.WriteLine(e);
             }
         }
+        // ! add filtering logic here I think
+        //AddGameGenreForNewGames(gamesToReturn,
+        //                        );
     }
 
     public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames,
@@ -298,10 +266,13 @@ public class IgdbService : IIgdbService
         }
 
         var gamesFromSearch = await SearchGames(query);
-
-        FinishGamesListForView(gamesFromPersonalDb, gamesFromSearch.ToList<IgdbGame>(), gamesToReturn, numberOfGames);
-
-
+        AddGamesToDb(gamesFromPersonalDb,
+                     gamesFromSearch.ToList<IgdbGame>(),
+                               gamesToReturn,
+                               numberOfGames,
+                               platform,
+                               genre,
+                               esrbRating);
         return gamesToReturn;
     }
     public bool CheckForGame(List<Game> gamesToCheck, string title)
@@ -329,8 +300,35 @@ public class IgdbService : IIgdbService
                                                                     Genre = genre
                                                                 })
                                                                 .ToList();
-        gameGenresToAddForNewGames.ForEach(gg => {
+        gameGenresToAddForNewGames.ForEach(gg =>
+        {
             _gameGenreRepository.AddOrUpdate(gg);
         });
+    }
+
+    public void ApplyFiltersForNewGames(List<IgdbGame> games, 
+                                        string platform, 
+                                        string genre, 
+                                        int esrbRating)
+    {
+        //No filters from client just return
+        if (string.IsNullOrEmpty(platform) && string.IsNullOrEmpty(genre) && esrbRating == 0) return;
+        //Otherwise apply filters
+        List<IgdbGame> filteredGames = new List<IgdbGame>();
+        filteredGames = games.Where(g => 
+                                    g.Genres != null && 
+                                    g.Genres.Contains(genre) && 
+                                    g.ESRBRatingValue == esrbRating
+                                    )
+                             .ToList();
+        //foreach (var game in games)
+        //{
+        //    if (game.ESRBRatingValue == esrbRating)
+        //    {
+        //        filteredGames.Add(game);
+        //    }
+        //}
+
+        throw new NotImplementedException();
     }
 }

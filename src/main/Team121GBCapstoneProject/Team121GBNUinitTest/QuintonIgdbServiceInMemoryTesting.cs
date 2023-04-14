@@ -60,7 +60,7 @@ namespace Team121GBNUnitTest
             int numberOfGames = 10;
 
             //Act
-            igdbService.FinishGamesListForView(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
+            igdbService.AddGamesToDb(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
 
 
             //Assert
@@ -103,7 +103,7 @@ namespace Team121GBNUnitTest
             int numberOfGames = 10;
 
             //Act
-            ((IIgdbService)igdbService).FinishGamesListForView(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
+            ((IIgdbService)igdbService).AddGamesToDb(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
 
 
             //Assert
@@ -147,7 +147,7 @@ namespace Team121GBNUnitTest
             bool expected = true;
 
             //Act
-            igdbService.FinishGamesListForView(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
+            igdbService.AddGamesToDb(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
 
 
             //Assert
@@ -201,7 +201,7 @@ namespace Team121GBNUnitTest
             bool expected = true;
 
             //Act
-            igdbService.FinishGamesListForView(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
+            igdbService.AddGamesToDb(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
 
 
             //Assert
@@ -256,7 +256,7 @@ namespace Team121GBNUnitTest
             int result = 0;
 
             //Act
-            igdbService.FinishGamesListForView(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
+            igdbService.AddGamesToDb(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
 
 
             //Assert
@@ -310,7 +310,7 @@ namespace Team121GBNUnitTest
             int numberOfGames = 5;
 
             //Act
-            igdbService.FinishGamesListForView(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
+            igdbService.AddGamesToDb(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
 
 
             //Assert
@@ -347,7 +347,7 @@ namespace Team121GBNUnitTest
             int numberOfGames = 4;
 
             //Act
-            igdbService.FinishGamesListForView(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
+            igdbService.AddGamesToDb(GamesFromPersonalDB, gamesFromAPIMocked, gamesToReturn, numberOfGames);
 
             //Assert
             Assert.AreEqual(numberOfGames, gamesToReturn.Count());

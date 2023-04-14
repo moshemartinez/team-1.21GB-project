@@ -8,12 +8,14 @@ using Team121GBCapstoneProject.Models.DTO;
 using Team121GBCapstoneProject.Services.Abstract;
 using Team121GBCapstoneProject.DAL.Abstract;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.DAL.Concrete;
 
 namespace Team121GBCapstoneProject.Controllers
 {
     [Route("api/[controller]")]
+    [ExcludeFromCodeCoverage]
     [ApiController]
     public class GameController : ControllerBase
     {
