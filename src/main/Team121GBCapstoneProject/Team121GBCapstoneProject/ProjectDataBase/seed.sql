@@ -131,7 +131,7 @@ INSERT INTO [Genre] ([Name]) VALUES ('Strategy');
 INSERT INTO [Genre] ([Name]) VALUES ('Turn-Based Strategy');
 INSERT INTO [Genre] ([Name]) VALUES ('Tactical');
 INSERT INTO [Genre] ([Name]) VALUES ('Quiz/Trivia');
-INSERT INTO [Genre] ([Name]) VALUES ('Hack and Slash/Beat em up');
+INSERT INTO [Genre] ([Name]) VALUES ('Hack and slash/Beat ''em up');
 INSERT INTO [Genre] ([Name]) VALUES ('Pinball');
 INSERT INTO [Genre] ([Name]) VALUES ('Adventure');
 INSERT INTO [Genre] ([Name]) VALUES ('Arcade');
