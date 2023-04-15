@@ -141,7 +141,7 @@ INSERT INTO [Genre] ([Name]) VALUES ('Card & Board Game');
 INSERT INTO [Genre] ([Name]) VALUES ('MOBA');
 
 INSERT INTO [Platform] ([Name]) VALUES ('Mac'); --1
-INSERT INTO [Platform] ([Name]) VALUES ('PC'); --2
+INSERT INTO [Platform] ([Name]) VALUES ('PC (Microsoft Windows)'); --2
 INSERT INTO [Platform] ([Name]) VALUES ('Linux'); --3
 INSERT INTO [Platform] ([Name]) VALUES ('Xbox Series X|S'); --4
 INSERT INTO [Platform] ([Name]) VALUES ('PlayStation 5'); --5

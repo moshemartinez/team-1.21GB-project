@@ -248,6 +248,7 @@ public class IgdbService : IIgdbService
                 {
                     Game addedGame = _genericGameRepo.AddOrUpdate(gameToAdd);
                     AddGameGenreForNewGames(game, addedGame);
+                    AddGamePlatformForNewGames(game, addedGame);
                 }
                 catch (Exception e)
                 {
@@ -285,11 +286,11 @@ public class IgdbService : IIgdbService
         var gamesFromSearch = await SearchGames(query);
         AddGamesToDb(gamesFromPersonalDb,
                      gamesFromSearch.ToList<IgdbGame>(),
-                               gamesToReturn,
-                               numberOfGames,
-                               platform,
-                               genre,
-                               esrbRating);
+                     gamesToReturn,
+                     numberOfGames,
+                     platform,
+                     genre,
+                     esrbRating);
         gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
                                                 platform,
                                                 genre, 
@@ -372,9 +373,26 @@ public class IgdbService : IIgdbService
         List<IgdbGame> filteredGames = games.Where(g =>
                                                 (string.IsNullOrEmpty(genre) || (g.Genres?.Any(x => x == genre) ?? false)) &&
                                                 (string.IsNullOrEmpty(platform) || (g.Platforms?.Any(x => x == platform) ?? false)) &&
-                                                (esrbRating == 0 || g.ESRBRatingValue == esrbRating))
+                                                (esrbRating == 0 || _esrbRatingRepository.FindById((int)g.ESRBRatingValue).IgdbratingValue == esrbRating))
                                             .OrderByDescending(x => x.FirstReleaseDate)    
                                             .ToList();
+
+
+        // var ratings = _esrbRatingRepository.GetAll().Where(r => r.IgdbratingValue == esrbRating).First().IgdbratingValue;
+        // foreach (var game in filteredGames)
+        // {
+        //     foreach (var rating in b)
+        //     {
+        //         if (rating.IgdbratingValue == esrbRating)
+        //         {
+        //         }
+        //     }
+        // }
+
+        //  = games.Where(g => g.ESRBRatingValue == _esrbRatingRepository.GetAll().First(g => g.Id == esrbRating).Id).ToList();
+//        .FirstOrDefault(esrbRating => esrbRating.IgdbratingValue == game.ESRBRatingValue)!
+        //var t = _esrbRatingRepository.GetAll().Where(x => x.IgdbratingValue == esrbRating).ToList();
         return filteredGames;
     }
 }
+//Role-Playing (RPG) Role-Playing (RPG)
