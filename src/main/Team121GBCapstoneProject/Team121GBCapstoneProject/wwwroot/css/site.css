@@ -211,6 +211,6 @@ div {
   padding: 10px;
 }
 
-.card.redtoblue-gradient {
-    background-image: linear-gradient(red, blue);
+.card.redtoorange-gradient {
+    background-image: linear-gradient(red, orange);
 }

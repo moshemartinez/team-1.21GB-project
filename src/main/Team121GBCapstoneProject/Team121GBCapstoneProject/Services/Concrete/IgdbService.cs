@@ -136,7 +136,7 @@ public class IgdbService : IIgdbService
 
                         int? yearPublished = GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
                         // Look into sending null or 0 instead of 1
-                        IgdbGame gameToAdd = new IgdbGame(1,
+                        IgdbGame gameToAdd = new IgdbGame(game.IgdbgameId,
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
                                                           game.Igdburl,
@@ -144,6 +144,7 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
+                                                        //   game.IgdbgameId,
                                                           game.GameGenres
                                                               .Select(g => g.Genre.Name)
                                                               .ToList(),
@@ -174,6 +175,7 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
+                                                        //   game.IgdbgameId,
                                                           genres,
                                                           platforms);
                         gamesToReturn.Add(gameToAdd);
@@ -225,7 +227,7 @@ public class IgdbService : IIgdbService
                 gameToAdd.Description = game.GameDescription.ToString();
                 gameToAdd.YearPublished = game.FirstReleaseDate;
                 gameToAdd.AverageRating = game.AverageRating;
-                gameToAdd.IgdbgameId = game.Id;
+                gameToAdd.IgdbgameId = (int)game.Id;
 
                 // * This is here to make sure that esrbrating will always be null or an int.
                 // * sometimes game from Igdb do not have an esrbrating so this handles that case

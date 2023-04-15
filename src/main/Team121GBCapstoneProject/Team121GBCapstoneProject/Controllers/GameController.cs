@@ -51,9 +51,9 @@ namespace Team121GBCapstoneProject.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query, 
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query,
                                                                      string platform = "",
-                                                                     string genre = "", 
+                                                                     string genre = "",
                                                                      int esrbRating = 0)
         {
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
@@ -90,13 +90,13 @@ namespace Team121GBCapstoneProject.Controllers
 
         }
 
-    [HttpPost("addGame")]
+        [HttpPost("addGame")]
         public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("GameTitle,ImageSrc,ListKind,IgdbID")] GameDto gameDto)
         {
             try
             {
                 ApplicationUser currentUser = await _userManager.GetUserAsync(User);
-                // check if the already have the game in their list                            
+                // *check if the already have the game in their list                            
                 bool check = _personListRepository.GetAll()
                                               .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind && pl.Person.AuthorizationId == currentUser.Id)
                                               .PersonGames.Any(pg => pg.Game.Title == gameDto.GameTitle && pg.Game.IgdbgameId == gameDto.IgdbID);
@@ -104,10 +104,10 @@ namespace Team121GBCapstoneProject.Controllers
                 {
                     return BadRequest($"You already have {gameDto.GameTitle} stored in {gameDto.ListKind}.");
                 }
-                // if we have gotten to this point, we can now add the game
+                // * if we have gotten to this point, we can now add the game
                 PersonList personList = _personListRepository.GetAll()
                                                               .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind && pl.Person.AuthorizationId == currentUser.Id);
-                                                              
+
                 Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle && g.IgdbgameId == gameDto.IgdbID);
                 PersonGame newPersonGame = new PersonGame
                 {
@@ -118,7 +118,7 @@ namespace Team121GBCapstoneProject.Controllers
                 };
 
                 _personGameRepository.AddOrUpdate(newPersonGame);
-                var response = new { message = "Success!"};
+                var response = new { message = "Success!" };
                 return Ok($"Succeeded in adding {gameDto.GameTitle} to {gameDto.ListKind}.");
             }
             catch (Exception e)

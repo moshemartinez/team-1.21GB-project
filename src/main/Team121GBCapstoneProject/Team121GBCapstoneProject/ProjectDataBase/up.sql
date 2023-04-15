@@ -24,7 +24,7 @@ CREATE TABLE [Game] (
     [AverageRating]   FLOAT,
     [CoverPicture]    NVARCHAR(MAX),
     [IGDBUrl]         NVARCHAR(MAX),
-    [IGDBGameID]      INT
+    [IGDBGameID]      INT,
     CONSTRAINT [FK_ESRBRatingID] FOREIGN KEY ([ESRBRatingID]) REFERENCES [ESRBRating]([ID]),
 );
 

@@ -12,6 +12,7 @@ namespace Team121GBCapstoneProject.Models
         public int? FirstReleaseDate { get; set; }
         public double? AverageRating { get; set; }
         public int? ESRBRatingValue { get; set; }
+        // public int IgdbId { get; set; }
         public List<string>? Genres { get; set;}
         public List<string>? Platforms { get; set; }
 
@@ -43,6 +44,7 @@ namespace Team121GBCapstoneProject.Models
                         int? firstReleaseDate,
                         double? averageRating,
                         int? eSRBRatingValue,
+                        // int igdbId,
                         List<string>? genres,
                         List<string>? platforms)
         {
@@ -54,6 +56,7 @@ namespace Team121GBCapstoneProject.Models
             FirstReleaseDate = firstReleaseDate;
             AverageRating = averageRating;
             ESRBRatingValue = eSRBRatingValue;
+            // IgdbId = igdbId;
             Genres = genres;
             Platforms = platforms;
         }
