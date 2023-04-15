@@ -30,10 +30,12 @@ const validateArrayOfObjects = (arr, schema) => arr
 function validateGameDtoData(data) {
     if (data === undefined) return false;
     if (Object.keys(data).length === 0) return false;
+    console.log("igdbID passed into validator ", data.igdbID);
     const schema = {
         listKind: x => typeof x === 'string' && x !== "",
         gameTitle: x => typeof x === 'string' && x !== "",
-        imageSrc: x => typeof x === 'string' && x !== ""
+        imageSrc: x => typeof x === 'string' && x !== "",
+        igdbID: x => typeof x === 'number'  && x > 0 // ? This should be false and yet returns true, or is being skipped
     };
     const errors = validateObject(data, schema);
     return errors.length === 0; // return true if there are no errors

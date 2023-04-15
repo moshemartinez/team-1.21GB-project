@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Contrib.HttpClient;
+using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Services.Concrete;
@@ -13,7 +14,7 @@ using Team121GBNUnitTest;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Moq.Protected;
 
-namespace Team121GBNUinitTests;
+namespace Team121GBNUnitTest;
 
 public class IgdbAPIServiceTests
 {
@@ -22,12 +23,24 @@ public class IgdbAPIServiceTests
 
     private IGameRepository _gameRepository;
     private IRepository<Game> _genericGameRepo;
+    private IRepository<Esrbrating> _esrbratingRepo;
     private InMemoryDbHelper<GPDbContext> _dbHelper;
-
+    private IRepository<GameGenre> _gameGenreRepository;
+    private IRepository<Genre> _genreRepository;
+    private IRepository<Platform> _platformRepository;
+    private IRepository<GamePlatform> _gamePlatformRepository;
     private string _search1;
     private string _search2;
     private string _search3;
-
+    private string _platform1;
+    private string _platform2;
+    private string _platform3;
+    private string _genre1;
+    private string _genre2;
+    private string _genre3;
+    private int _esrbRatingId1;
+    private int _esrbRatingId2;
+    private int _esrbRatingId3;
     [SetUp]
     public void SetUp()
     {
@@ -36,12 +49,16 @@ public class IgdbAPIServiceTests
 
         _dbHelper = new InMemoryDbHelper<GPDbContext>(null, DbPersistence.OneDbPerTest);
         _gameRepository = new GameRepository(_dbHelper.GetContext());
+        _esrbratingRepo = new Repository<Esrbrating>(_dbHelper.GetContext());
         _genericGameRepo = new Repository<Game>(_dbHelper.GetContext());
+        _gameGenreRepository = new Repository<GameGenre>(_dbHelper.GetContext());
+        _genreRepository = new Repository<Genre>(_dbHelper.GetContext());
+        _platformRepository = new Repository<Platform>(_dbHelper.GetContext());
+        _gamePlatformRepository = new Repository<GamePlatform>(_dbHelper.GetContext());
 
         _search1 = "Mario";
         _search2 = "Zelda";
         _search3 = "Sonic";
-
     }
 
     // Tests from Moshe (Sprint 2 & 3)
@@ -71,8 +88,7 @@ public class IgdbAPIServiceTests
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         // Create an instance of the IgdbService, passing in the mock HttpClientFactory and any other dependencies
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
-
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
         // --> Act
         // Call the method under test and capture the result
         var result = await igdbService.GetJsonStringFromEndpoint(_igdbBearerToken, searchUri, _igdbClientId, searchBody);
@@ -109,7 +125,7 @@ public class IgdbAPIServiceTests
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         // Create a new instance of the IgdbService using the mock HttpClientFactory
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
 
         // --> Act & Assert
         // Assert that calling the method with the mock HttpClient will throw an HttpRequestException
@@ -137,16 +153,16 @@ public class IgdbAPIServiceTests
         });
 
         // Instantiate a new instance of the IgdbService class and pass in the mocked HttpClientFactory
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
 
         // Set the credentials needed to access the IGDB API
-        igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
+        ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SetCredentials(_igdbClientId, _igdbBearerToken);
 
         // --> Act
         // Call the SearchGames method with three different search queries and capture the results in variables
-        var search1Games = await igdbService.SearchGames(_search1);
-        var search2Games = await igdbService.SearchGames(_search2);
-        var search3Games = await igdbService.SearchGames(_search3);
+        var search1Games = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames(_search1);
+        var search2Games = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames(_search2);
+        var search3Games = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames(_search3);
 
         // --> Assert
         // Check that each of the three search results contains exactly 10 games
@@ -162,18 +178,17 @@ public class IgdbAPIServiceTests
         var mockHttpClientFactory = new Mock<IHttpClientFactory>();
         var httpClient = new HttpClient();
         mockHttpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
-        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo);
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
 
 
-        igdbService.SetCredentials(_igdbClientId, _igdbBearerToken);
+        ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SetCredentials(_igdbClientId, _igdbBearerToken);
 
         // --> Act
-        var result = await igdbService.SearchGames("");
+        var result = await ((Team121GBCapstoneProject.Services.Abstract.IIgdbService)igdbService).SearchGames("");
 
         // --> Assert
         Assert.IsEmpty(result);
     }
-
 
 
     //[Test]
