@@ -280,7 +280,7 @@ public class IgdbService : IIgdbService
                                                 platform,
                                                 genre,
                                                 esrbRating);
-            return gamesToReturn;
+            return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
         }
 
         var gamesFromSearch = await SearchGames(query);
@@ -295,7 +295,7 @@ public class IgdbService : IIgdbService
                                                 platform,
                                                 genre,
                                                 esrbRating);
-        return gamesToReturn;
+        return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
     }
     public bool CheckForGame(List<Game> gamesToCheck, string title)
     {

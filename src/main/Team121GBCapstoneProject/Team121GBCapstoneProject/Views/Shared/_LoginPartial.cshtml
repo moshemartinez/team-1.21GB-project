@@ -72,8 +72,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello
-                @UserManager.GetUserAsync(User).Result?.FirstName!</a>
+            <a class="nav-link" id="HelloLink" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
         </li>
 
         <li class="nav-item dropdown">
@@ -105,9 +104,8 @@
                     <hr class="dropdown-divider" />
                 </li>
                 <li>
-                    <form accesskeyclass="form-inline" asp-area="Identity" asp-page="/Account/Logout"
-                        asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="dropdown-item">Log Out</button>
+                    <form accesskeyclass="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button id="logoutBtn" type="submit" class="dropdown-item">Log Out</button>
                     </form>
                 </li>
             </ul>

@@ -22,7 +22,7 @@ namespace Team121GB_BDD_Test.StepDefinitions
             //Nothing to Do!!
         }
 
-        [When(@"I am on the ""([^""]*)"" page")]
+        [Given(@"I am on the ""([^""]*)"" page"), When(@"I am on the ""([^""]*)"" page")]
         public void WhenIAmOnThePage(string pageName)
         {
             _homePage.GoTo(pageName);
@@ -48,6 +48,24 @@ namespace Team121GB_BDD_Test.StepDefinitions
             _homePage.RegisterButton.Displayed.Should().BeTrue();
         }
 
+        [Then(@"I can save cookies")]
+        public void ThenICanSaveCookies()
+        {
+            _homePage.SaveAllCookies().Should().BeTrue();
+        }
+
+        [When(@"I load previously saved cookies")]
+        public void WhenILoadPreviouslySavedCookies()
+        {
+            _homePage.LoadAllCookies().Should().BeTrue();
+        }
+
+        [Given(@"I logout"), When(@"I logout")]
+        public void GivenILogout()
+        {
+            _homePage.GoTo();
+            _homePage.Logout();
+        }
 
     }
 }
