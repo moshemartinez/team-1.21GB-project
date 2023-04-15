@@ -14,17 +14,17 @@ describe("GameDto data validation tests", () => {
     });
     test("empty list GameDto fails validation", () => {
         console.log("empty list GameDto fails validation");
-        const gameDto = new GameDto("", "title", "source")
-        expect(validateGameDtoData(gameDto)).toBe(true);
+        const gameDto = new GameDto("", "title", "source", 1232)
+        expect(validateGameDtoData(gameDto)).toBe(false);
     });
     test("empty title GameDto fails validation", () => {
         console.log("empty title GameDto fails validation");
-        const gameDto = new GameDto("list", "", "source");
+        const gameDto = new GameDto("list", "", "source", 1232);
         expect(validateGameDtoData(gameDto)).toBe(false);
     });
     test("empty imageSrc GameDto fails validation", () => {
         console.log("empty imageSrc GameDto fails validation");
-        const gameDto = new GameDto("list", "title", "");
+        const gameDto = new GameDto("list", "title", "", 1232);
         expect(validateGameDtoData(gameDto)).toBe(false);
     });
     test("string igdbId GameDto fails validation", () => {
