@@ -30,6 +30,7 @@ function displaySearchResults(query, platform, genre, esrbRating) {
                                     <td><a class="btn btn-primary" href="${game.gameWebsite}">IGDB Page</a></td>
                                     <td><p>${game.gameDescription}</p></td>
                                     <td><p>${game.firstReleaseDate}</p></td>
+                                    <td><p>${game.esrbRating}</p></td>
                                     <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
                                     <td style="display: none">${game.id}</td>
                                </tr>`;
@@ -46,7 +47,7 @@ function displaySearchResults(query, platform, genre, esrbRating) {
                                     <td><p>${game.gameDescription}</p></td>
                                     <td><p>${game.firstReleaseDate}</p></td>
                                     <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
-                                    <td class="hidden">${game.id}</td>
+                                    <td style="display: none">${game.id}</td>
                                </tr>`;
                             $("#gameTableBody").append(row);
                         }
