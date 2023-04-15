@@ -20,6 +20,9 @@ public class IgdbService : IIgdbService
     private readonly IRepository<Esrbrating> _esrbRatingRepository;
     private readonly IRepository<GameGenre> _gameGenreRepository;
     private readonly IRepository<Genre> _genreRepository;
+    private readonly IRepository<Platform> _platformRepository;
+    private readonly IRepository<GamePlatform> _gamePlatformRepository;
+
 
     private string _bearerToken;
     private string _clientId;
@@ -29,7 +32,9 @@ public class IgdbService : IIgdbService
                        IRepository<Game> genericGameRepo,
                        IRepository<Esrbrating> esrbRatingRepository,
                        IRepository<GameGenre> gameGenreRepository,
-                       IRepository<Genre> genreRepository)
+                       IRepository<Genre> genreRepository, 
+                       IRepository<GamePlatform> gamePlatformRepository, 
+                       IRepository<Platform> platformRepository)
     {
         _httpClientFactory = httpClientFactory;
         _gameRepository = gameRepository;
@@ -37,6 +42,8 @@ public class IgdbService : IIgdbService
         _esrbRatingRepository = esrbRatingRepository;
         _gameGenreRepository = gameGenreRepository;
         _genreRepository = genreRepository;
+        _gamePlatformRepository = gamePlatformRepository;
+        _platformRepository = platformRepository;
     }
 
     public async Task<string> GetJsonStringFromEndpoint(string token, string uri, string clientId, string rawBody)
@@ -253,11 +260,6 @@ public class IgdbService : IIgdbService
                 Debug.WriteLine(e);
             }
         }
-        // ! add filtering logic here I think
-        // gamesToReturn = ApplyFiltersForNewGames(gamesToReturn, 
-        //                                         platform, 
-        //                                         genre, 
-        //                                         esrbRating);
     }
 
     public async Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames,
@@ -308,23 +310,52 @@ public class IgdbService : IIgdbService
     public void AddGameGenreForNewGames(IgdbGame gameFromApi, Game addedGame)
     {
         List<Genre> allGenres = _genreRepository.GetAll().ToList();
-        List<GameGenre> gameGenresToAddForNewGames = gameFromApi.Genres
-                                                                .Select(genre => allGenres.FirstOrDefault(g => g.Name == genre))// ! Returns a list of genres and matches their name and sets all others to null
-                                                                .Where(genre => genre != null)
-                                                                .Select(genre => new GameGenre
-                                                                {
-                                                                    GameId = addedGame.Id,
-                                                                    Game = addedGame,
-                                                                    GenreId = genre.Id,
-                                                                    Genre = genre
-                                                                })
-                                                                .ToList();
-        gameGenresToAddForNewGames.ForEach(gg =>
+        if (gameFromApi.Genres != null)
         {
-            _gameGenreRepository.AddOrUpdate(gg);
-        });
-    }
 
+            List<GameGenre> gameGenresToAddForNewGames = gameFromApi.Genres
+                .Select(genre =>
+                    allGenres.FirstOrDefault(g =>
+                        g.Name == genre)) // ! Returns a list of genres and matches their name and sets all others to null
+                .Where(genre => genre != null)
+                .Select(genre => new GameGenre
+                {
+                    GameId = addedGame.Id,
+                    Game = addedGame,
+                    GenreId = genre.Id,
+                    Genre = genre
+                })
+                .ToList();
+            gameGenresToAddForNewGames.ForEach(gg =>
+            {
+                _gameGenreRepository.AddOrUpdate(gg);
+            });
+        }
+    }
+    public void AddGamePlatformForNewGames(IgdbGame gameFromApi, Game addedGame)
+    {
+        List<Platform> allPlatforms = _platformRepository.GetAll().ToList();
+        if (gameFromApi.Platforms != null)
+        {
+            List<GamePlatform> gamePlatformsToAddForNewGames = gameFromApi.Platforms
+                .Select(platform =>
+                    allPlatforms.FirstOrDefault(g =>
+                        g.Name == platform)) // ! Returns a list of platforms and matches their name and sets all others to null
+                .Where(platform=> platform!= null)
+                .Select(platform=> new GamePlatform
+                {
+                    GameId = addedGame.Id,
+                    Game = addedGame,
+                    PlatformId = platform.Id,
+                    Platform = platform
+                })
+                .ToList();
+            gamePlatformsToAddForNewGames.ForEach(gp =>
+            {
+                _gamePlatformRepository.AddOrUpdate(gp); 
+            });
+        }
+    }
     public List<IgdbGame> ApplyFiltersForNewGames(List<IgdbGame> games,
                                         string platform,
                                         string genre,

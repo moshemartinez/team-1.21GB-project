@@ -20,6 +20,12 @@ public interface IIgdbService
     /// <param name="addedGame">Game object that was just added to the db</param>
     public void AddGameGenreForNewGames(IgdbGame gamesFromApi, Game addedGame);
     /// <summary>
+    /// Adds new GamePlatform to db after having added a new game to db
+    /// </summary>
+    /// <param name="gameFromApi">IGDB Game object used to add new Game to db</param>
+    /// <param name="addedGame">Game object that was just added to the db</param>
+    public void AddGamePlatformForNewGames(IgdbGame gameFromApi, Game addedGame);
+    /// <summary>
     /// Applies the filters provided by the client to the resulting games being returned
     /// </summary>
     /// <param name="games">The list of games made by AddGamesToDb</param>

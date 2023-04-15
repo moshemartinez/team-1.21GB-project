@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Moq;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
@@ -22,7 +23,9 @@ namespace Team121GBNUnitTest
         private readonly IRepository<Game> _genericGameRepo;
         private readonly IRepository<Esrbrating> _esrbratingRepo;
         private readonly IRepository<GameGenre> _gameGenreRepository;
-        private readonly IRepository<Genre> _genreRepository;   
+        private readonly IRepository<Genre> _genreRepository;
+        private readonly IRepository<Platform> _platformRepository;
+        private readonly IRepository<GamePlatform> _gamePlatformRepository;
 
         [Test]
         public void GPDBContextFinishGamesaListForViewSuccessShouldReturnTenGames()
@@ -34,9 +37,11 @@ namespace Team121GBNUnitTest
             Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
             Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo, gamePlatformRepository, platformRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
@@ -77,9 +82,11 @@ namespace Team121GBNUnitTest
             Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
             Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Yoshi's");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo, gamePlatformRepository, platformRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
@@ -120,9 +127,11 @@ namespace Team121GBNUnitTest
             Repository<Game> genericGameRepo = new Repository<Game>(context);
             Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
             Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo, gamePlatformRepository, platformRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
@@ -174,9 +183,11 @@ namespace Team121GBNUnitTest
             Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
             Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Yoshi's");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo, gamePlatformRepository, platformRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
@@ -228,9 +239,11 @@ namespace Team121GBNUnitTest
             Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
             Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo, gamePlatformRepository, platformRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
@@ -289,9 +302,11 @@ namespace Team121GBNUnitTest
             Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
             Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Gears Of War");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo, gamePlatformRepository, platformRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
@@ -327,9 +342,11 @@ namespace Team121GBNUnitTest
             Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
             Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
             Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Super Man");
-            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo);
+            IIgdbService igdbService = new IgdbService(_httpClientFactory, gameRepository, genericGameRepo, genericEsrbratingRepo, gameGenreRepo, genreRepo, gamePlatformRepository, platformRepo);
             foreach (var game in GamesFromPersonalDB)
             {
                 IgdbGame gameToAdd = new IgdbGame(1, game.Title, game.CoverPicture.ToString(), game.Igdburl, game.Description, game.YearPublished, game.AverageRating, game.EsrbratingId);
@@ -351,6 +368,92 @@ namespace Team121GBNUnitTest
 
             //Assert
             Assert.AreEqual(numberOfGames, gamesToReturn.Count());
+        }
+
+        //! Test written by Nathaniel --------------------------------------------------------------------------------------------------------------------
+        [Test]
+        public void IgdbService_AddGameGenreForNewGames()
+        {
+            // * Arrange 
+            using GPDbContext context = _dbHelper.GetContext();
+            GameRepository gameRepository = new GameRepository(context);
+            Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
+            Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
+            Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
+            Mock<IHttpClientFactory> mockHttpClientFactory = new Mock<IHttpClientFactory>();
+            Mock<HttpClient> httpClient = new Mock<HttpClient>(); // set up a mock httpclient and send that to the mocked httpClientFactory
+            var igdbService = new IgdbService(mockHttpClientFactory.Object, gameRepository, genericGameRepo,
+                                            genericEsrbratingRepo, gameGenreRepo, genreRepo,
+                                            gamePlatformRepository, platformRepo);
+            Game game = new Game
+            {
+                Title = "Title",
+                AverageRating = 100,
+                Description = "Description",
+                CoverPicture = "",
+                EsrbratingId = 1,
+                Esrbrating = genericEsrbratingRepo.FindById(1),
+                IgdbgameId = 1,
+                Igdburl = "",
+                YearPublished = 1000
+            };
+            IgdbGame igdbGame = new IgdbGame(1,
+                "Title", "Game cover art",
+                "Game website", "Description",
+                1000, 100, 1,
+                new List<string> { "Adventure" },
+                new List<string> { "PlayStation 5" });
+            // ! Act
+            genericGameRepo.AddOrUpdate(game);
+            igdbService.AddGameGenreForNewGames(igdbGame, game);
+            int count = gameGenreRepo.GetAll().Count(gg => gg.GameId == game.Id && gg.Genre.Name == igdbGame.Genres.First());
+            // ? Assert
+            Assert.That(count, Is.EqualTo(1));
+        }
+        [Test]
+        public void IgdbService_AddGamePlatformForNewGames()
+        {
+            // * Arrange 
+            using GPDbContext context = _dbHelper.GetContext();
+            GameRepository gameRepository = new GameRepository(context);
+            Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
+            Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
+            Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
+            Mock<IHttpClientFactory> mockHttpClientFactory = new Mock<IHttpClientFactory>();
+            Mock<HttpClient> httpClient = new Mock<HttpClient>(); // set up a mock httpclient and send that to the mocked httpClientFactory
+            var igdbService = new IgdbService(mockHttpClientFactory.Object, gameRepository, genericGameRepo,
+                                            genericEsrbratingRepo, gameGenreRepo, genreRepo,
+                                            gamePlatformRepository, platformRepo);
+            Game game = new Game
+            {
+                Title = "Title",
+                AverageRating = 100,
+                Description = "Description",
+                CoverPicture = "",
+                EsrbratingId = 1,
+                Esrbrating = genericEsrbratingRepo.FindById(1),
+                IgdbgameId = 1,
+                Igdburl = "",
+                YearPublished = 1000
+            };
+            IgdbGame igdbGame = new IgdbGame(1,
+                "Title", "Game cover art",
+                "Game website", "Description",
+                1000, 100, 1,
+                new List<string> { "Adventure" },
+                new List<string> { "PlayStation 5" });
+            // ! Act
+            genericGameRepo.AddOrUpdate(game);
+            igdbService.AddGamePlatformForNewGames(igdbGame, game);
+            int count = gamePlatformRepository.GetAll().Count(gp => gp.GameId == game.Id && gp.Platform.Name == igdbGame.Platforms.First());
+            // ? Assert
+            Assert.That(count, Is.EqualTo(1));
         }
     }
 }
