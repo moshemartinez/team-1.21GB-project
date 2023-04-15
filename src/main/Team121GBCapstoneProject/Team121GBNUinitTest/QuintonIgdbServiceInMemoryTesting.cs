@@ -455,5 +455,48 @@ namespace Team121GBNUnitTest
             // ? Assert
             Assert.That(count, Is.EqualTo(1));
         }
+        [TestCase("", "", 0, 2)]
+        [TestCase("Playstation", "", 0, 1)]
+        [TestCase("PC (Microsoft Windows)", "", 0, 2)]
+        [TestCase("", "", 11, 2)]
+        [TestCase("", "Strategy", 0, 1)]
+        [TestCase("Mac", "Role-Playing (RPG)", 11, 2)]
+        public void IgdbService_ApplyFiltersForNewGames(string platform, string genre, int esrbRating, int expectedCount)
+        {
+            // * Arrangeusing 
+            GPDbContext context = _dbHelper.GetContext();
+            GameRepository gameRepository = new GameRepository(context);
+            Repository<Game> genericGameRepo = new Repository<Game>(context);
+            Repository<Esrbrating> genericEsrbratingRepo = new Repository<Esrbrating>(context);
+            Repository<GameGenre> gameGenreRepo = new Repository<GameGenre>(context);
+            Repository<Genre> genreRepo = new Repository<Genre>(context);
+            Repository<Platform> platformRepo = new Repository<Platform>(context);
+            Repository<GamePlatform> gamePlatformRepository = new Repository<GamePlatform>(context);
+            Mock<IHttpClientFactory> mockHttpClientFactory = new Mock<IHttpClientFactory>();
+            Mock<HttpClient> httpClient = new Mock<HttpClient>(); // set up a mock httpclient and send that to the mocked httpClientFactory
+            var igdbService = new IgdbService(mockHttpClientFactory.Object, gameRepository, genericGameRepo,
+                                            genericEsrbratingRepo, gameGenreRepo, genreRepo,
+                                            gamePlatformRepository, platformRepo);
+            List<IgdbGame> games = new List<IgdbGame>
+            {
+                new IgdbGame(1, "Diablo", "",
+                             "", "Description", 1996,
+                             100, 6,
+                             new List<string>{ "Role-Playing (RPG)", "Strategy", },
+                             new List<string>{ "PC (Microsoft Windows)", "Playstation", "Mac"}),
+                new IgdbGame(1, "Diablo II", "",
+                             "", "Description", 2000,
+                             100, 6,
+                             new List<string>{ "Role-Playing (RPG)", "Hack and slash/Beat 'em up", },
+                             new List<string>{ "PC (Microsoft Windows)", "Mac"})
+            };
+            // ! Act
+            List<IgdbGame> filteredGames = igdbService.ApplyFiltersForNewGames(games, platform, genre, esrbRating);
+            // ? Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(filteredGames.Count, Is.EqualTo(expectedCount));
+            });
+        }
     }
 }

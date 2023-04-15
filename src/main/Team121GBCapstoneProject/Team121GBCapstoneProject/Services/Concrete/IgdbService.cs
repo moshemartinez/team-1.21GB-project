@@ -32,8 +32,8 @@ public class IgdbService : IIgdbService
                        IRepository<Game> genericGameRepo,
                        IRepository<Esrbrating> esrbRatingRepository,
                        IRepository<GameGenre> gameGenreRepository,
-                       IRepository<Genre> genreRepository, 
-                       IRepository<GamePlatform> gamePlatformRepository, 
+                       IRepository<Genre> genreRepository,
+                       IRepository<GamePlatform> gamePlatformRepository,
                        IRepository<Platform> platformRepository)
     {
         _httpClientFactory = httpClientFactory;
@@ -278,7 +278,7 @@ public class IgdbService : IIgdbService
         {
             gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
                                                 platform,
-                                                genre, 
+                                                genre,
                                                 esrbRating);
             return gamesToReturn;
         }
@@ -293,8 +293,8 @@ public class IgdbService : IIgdbService
                      esrbRating);
         gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
                                                 platform,
-                                                genre, 
-                                                esrbRating); 
+                                                genre,
+                                                esrbRating);
         return gamesToReturn;
     }
     public bool CheckForGame(List<Game> gamesToCheck, string title)
@@ -342,8 +342,8 @@ public class IgdbService : IIgdbService
                 .Select(platform =>
                     allPlatforms.FirstOrDefault(g =>
                         g.Name == platform)) // ! Returns a list of platforms and matches their name and sets all others to null
-                .Where(platform=> platform!= null)
-                .Select(platform=> new GamePlatform
+                .Where(platform => platform != null)
+                .Select(platform => new GamePlatform
                 {
                     GameId = addedGame.Id,
                     Game = addedGame,
@@ -353,7 +353,7 @@ public class IgdbService : IIgdbService
                 .ToList();
             gamePlatformsToAddForNewGames.ForEach(gp =>
             {
-                _gamePlatformRepository.AddOrUpdate(gp); 
+                _gamePlatformRepository.AddOrUpdate(gp);
             });
         }
     }
@@ -370,29 +370,11 @@ public class IgdbService : IIgdbService
          * Then checks if genres or platforms are null, and if not checks to see if they contain provided filters.
          * Then checks if esrbRating is 0 otherwise grab the games that have the rating requested.
          */
-        List<IgdbGame> filteredGames = games.Where(g =>
-                                                (string.IsNullOrEmpty(genre) || (g.Genres?.Any(x => x == genre) ?? false)) &&
-                                                (string.IsNullOrEmpty(platform) || (g.Platforms?.Any(x => x == platform) ?? false)) &&
-                                                (esrbRating == 0 || _esrbRatingRepository.FindById((int)g.ESRBRatingValue).IgdbratingValue == esrbRating))
-                                            .OrderByDescending(x => x.FirstReleaseDate)    
-                                            .ToList();
-
-
-        // var ratings = _esrbRatingRepository.GetAll().Where(r => r.IgdbratingValue == esrbRating).First().IgdbratingValue;
-        // foreach (var game in filteredGames)
-        // {
-        //     foreach (var rating in b)
-        //     {
-        //         if (rating.IgdbratingValue == esrbRating)
-        //         {
-        //         }
-        //     }
-        // }
-
-        //  = games.Where(g => g.ESRBRatingValue == _esrbRatingRepository.GetAll().First(g => g.Id == esrbRating).Id).ToList();
-//        .FirstOrDefault(esrbRating => esrbRating.IgdbratingValue == game.ESRBRatingValue)!
-        //var t = _esrbRatingRepository.GetAll().Where(x => x.IgdbratingValue == esrbRating).ToList();
-        return filteredGames;
+        return games.Where(g =>
+                          (string.IsNullOrEmpty(genre) || (g.Genres?.Any(x => x == genre) ?? false)) &&
+                          (string.IsNullOrEmpty(platform) || (g.Platforms?.Any(x => x == platform) ?? false)) &&
+                          (esrbRating == 0 || _esrbRatingRepository.FindById((int)g.ESRBRatingValue).IgdbratingValue == esrbRating))
+                    .OrderByDescending(x => x?.FirstReleaseDate)
+                    .ToList();
     }
 }
-//Role-Playing (RPG) Role-Playing (RPG)
