@@ -22,7 +22,7 @@ Scenario Outline: A Logged in user can navigate to their Library page
 	| Talia     | Games Lists | 
 
 
-
+@LoggedIn
 Scenario Outline: A Logged in user can see their default lists on their library page
 	Given I am a logged in user with Firstname '<FirstName>'
 	And I am on the '<Games Lists>' page 
