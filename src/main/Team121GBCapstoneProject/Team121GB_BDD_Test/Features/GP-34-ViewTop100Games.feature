@@ -8,5 +8,5 @@ This feature is about giving users a way to see the top rated games on our appli
 
 Scenario: A visitor can navigate to the Top 100 Games page
 	Given I am a visitor 
-	When When I click the Top 100 Games page button
-	Then I should be redirected to the Top 100 Games page
+	When When I click the "Top 100 Games Page" button
+	Then I should be redirected to the "Top 100 Games Page"
