@@ -158,10 +158,17 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("A Logged in user can see their default lists on their library page")]
+        [NUnit.Framework.CategoryAttribute("LoggedIn")]
         [NUnit.Framework.TestCaseAttribute("Talia", "Games Lists", null)]
         public virtual void ALoggedInUserCanSeeTheirDefaultListsOnTheirLibraryPage(string firstName, string page, string[] exampleTags)
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] @__tags = new string[] {
+                    "LoggedIn"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
