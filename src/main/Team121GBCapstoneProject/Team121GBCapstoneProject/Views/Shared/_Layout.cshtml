@@ -88,14 +88,32 @@
     </div>
 </header><!-- End Header -->
 
-@*<div class="container">
-    <main role="main" class="pb-3">
+
+@*<main id="main">
         @RenderBody()
-    </main>
-</div>*@
+</main>*@
+
 
 <main id="main">
-        @RenderBody()
+    <section class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Page</h2>
+                <ol>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li>Page</li>
+                </ol>
+            </div>
+
+        </div>
+    </section><!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+        <div class="container">>
+            @RenderBody()
+        </div>
+    </section>
 </main>
 
 <footer id="footer">
@@ -186,8 +204,9 @@
     <script src="~/lib/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="~/lib/assets/vendor/php-email-form/validate.js"></script>
 
-<!-- Template Main JS File -->
+    <!-- Template Main JS File -->
     <script src="~/lib/assets/js/main.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     
     <!-- Will run into error if this is not used -->  
     @await RenderSectionAsync("Scripts", required: false)
