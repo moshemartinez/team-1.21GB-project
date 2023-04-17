@@ -14,7 +14,7 @@ namespace Team121GB_BDD_Test.StepDefinitions
         public void GivenTheFirstNumberIs(int p0)
         {
             calculator.FirstNumber = p0;
-        }
+        } 
 
         [Given(@"the second number is (.*)")]
         public void GivenTheSecondNumberIs(int p0)

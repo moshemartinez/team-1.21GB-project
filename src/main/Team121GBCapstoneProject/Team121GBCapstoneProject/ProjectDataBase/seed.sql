@@ -123,15 +123,15 @@ INSERT INTO [Genre] ([Name]) VALUES ('Music');
 INSERT INTO [Genre] ([Name]) VALUES ('Platform');
 INSERT INTO [Genre] ([Name]) VALUES ('Puzzle');
 INSERT INTO [Genre] ([Name]) VALUES ('Racing');
-INSERT INTO [Genre] ([Name]) VALUES ('RTS');
-INSERT INTO [Genre] ([Name]) VALUES ('RPG');
+INSERT INTO [Genre] ([Name]) VALUES ('Real Time Strategy (RTS)');
+INSERT INTO [Genre] ([Name]) VALUES ('Role-Playing (RPG)');
 INSERT INTO [Genre] ([Name]) VALUES ('Simulator');
 INSERT INTO [Genre] ([Name]) VALUES ('Sport');
 INSERT INTO [Genre] ([Name]) VALUES ('Strategy');
 INSERT INTO [Genre] ([Name]) VALUES ('Turn-Based Strategy');
 INSERT INTO [Genre] ([Name]) VALUES ('Tactical');
 INSERT INTO [Genre] ([Name]) VALUES ('Quiz/Trivia');
-INSERT INTO [Genre] ([Name]) VALUES ('Hack and Slash/Beat em up');
+INSERT INTO [Genre] ([Name]) VALUES ('Hack and slash/Beat ''em up');
 INSERT INTO [Genre] ([Name]) VALUES ('Pinball');
 INSERT INTO [Genre] ([Name]) VALUES ('Adventure');
 INSERT INTO [Genre] ([Name]) VALUES ('Arcade');
@@ -141,7 +141,7 @@ INSERT INTO [Genre] ([Name]) VALUES ('Card & Board Game');
 INSERT INTO [Genre] ([Name]) VALUES ('MOBA');
 
 INSERT INTO [Platform] ([Name]) VALUES ('Mac'); --1
-INSERT INTO [Platform] ([Name]) VALUES ('PC'); --2
+INSERT INTO [Platform] ([Name]) VALUES ('PC (Microsoft Windows)'); --2
 INSERT INTO [Platform] ([Name]) VALUES ('Linux'); --3
 INSERT INTO [Platform] ([Name]) VALUES ('Xbox Series X|S'); --4
 INSERT INTO [Platform] ([Name]) VALUES ('PlayStation 5'); --5
@@ -544,3 +544,14 @@ INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (101, 18);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (101, 5);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 18);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 5);
+
+--seed ESRBRatings 
+--according to the devs on the IGDB discord server, you have to map
+--the value returned by the API to a name which is what the IGDBRatingValue column does
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('RP', 6);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('EC', 7);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('E', 8);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('E10', 9);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('T', 10);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('M', 11);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('AO', 12);

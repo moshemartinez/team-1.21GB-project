@@ -16,7 +16,6 @@ public partial class Game
     [StringLength(64)]
     public string Title { get; set; }
 
-    [StringLength(526)]
     public string Description { get; set; }
 
     public int? YearPublished { get; set; }
@@ -30,6 +29,13 @@ public partial class Game
 
     [Column("IGDBUrl")]
     public string Igdburl { get; set; }
+
+    [Column("IGDBGameID")]
+    public int? IgdbgameId { get; set; }
+
+    [ForeignKey("EsrbratingId")]
+    [InverseProperty("Games")]
+    public virtual Esrbrating Esrbrating { get; set; }
 
     [InverseProperty("Game")]
     public virtual ICollection<GameGenre> GameGenres { get; } = new List<GameGenre>();
