@@ -9,15 +9,23 @@ CREATE TABLE [Person] (
     [AuthorizationID] nvarchar(450)
 );
 
+CREATE TABLE [ESRBRating] (
+    [ID] INT PRIMARY KEY IDENTITY (1,1),
+    [ESRBRatingName] NVARCHAR(4),
+    [IGDBRatingValue] INT
+);
+
 CREATE TABLE [Game] (
     [ID]              INT           PRIMARY KEY IDENTITY(1, 1),
     [Title]           NVARCHAR(64),
-    [Description]     NVARCHAR(526),
+    [Description]     NVARCHAR(MAX),
     [YearPublished]   INT,
     [ESRBRatingID]    INT,
     [AverageRating]   FLOAT,
     [CoverPicture]    NVARCHAR(MAX),
-    [IGDBUrl]         NVARCHAR(MAX)
+    [IGDBUrl]         NVARCHAR(MAX),
+    [IGDBGameID]      INT,
+    CONSTRAINT [FK_ESRBRatingID] FOREIGN KEY ([ESRBRatingID]) REFERENCES [ESRBRating]([ID]),
 );
 
 CREATE TABLE [ListKind] (
@@ -32,6 +40,14 @@ CREATE TABLE [PersonList] (
     [ListKind] NVARCHAR(50),
     CONSTRAINT [FK_PersonID] FOREIGN KEY ([PersonID]) REFERENCES [Person]([ID]),
     CONSTRAINT [FK_ListKindID] FOREIGN KEY ([ListKindID]) REFERENCES [ListKind]([ID])
+);
+
+CREATE TABLE [PersonGame] (
+    [ID] INT PRIMARY KEY IDENTITY (1,1),
+    [PersonListID] INT NOT NULL,
+    [GameID] INT NOT NULL,
+    CONSTRAINT [FK_PersonListID] FOREIGN KEY ([PersonListID]) REFERENCES [PersonList] ([ID]),
+    CONSTRAINT [FK_GameID] FOREIGN KEY ([GameID]) REFERENCES [Game] ([ID])
 );
 
 CREATE TABLE [Genre] (
@@ -60,10 +76,3 @@ CREATE TABLE [GamePlatform] (
     CONSTRAINT [FK_PlatformID] FOREIGN KEY ([PlatformID]) REFERENCES [Platform]([ID])
 );
 
-CREATE TABLE [PersonGame] (
-    [ID] INT PRIMARY KEY IDENTITY (1,1),
-    [PersonListID] INT NOT NULL,
-    [GameID] INT NOT NULL,
-    CONSTRAINT [FK_PersonListID] FOREIGN KEY ([PersonListID]) REFERENCES [PersonList] ([ID]),
-    CONSTRAINT [FK_GameID] FOREIGN KEY ([GameID]) REFERENCES [Game] ([ID])
-);
