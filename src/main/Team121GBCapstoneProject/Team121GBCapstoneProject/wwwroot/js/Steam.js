@@ -29,7 +29,6 @@ function hideButton() {
 
 function steamLoad(steamId) {
     hideButton()
-    steamId = steamId - 8
     $.ajax({
         method: "GET",
         url: `/api/Steam/GetSteamUser?id=${steamId}`,
