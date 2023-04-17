@@ -27,7 +27,8 @@ function hideButton() {
 }
 
 
-function steamLoad(steamId) {
+function steamLoad() {
+    const steamId = BigInt(document.getElementById("steamId").value);
     hideButton()
     $.ajax({
         method: "GET",
