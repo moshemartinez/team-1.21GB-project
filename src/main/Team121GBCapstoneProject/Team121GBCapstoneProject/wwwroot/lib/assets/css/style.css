@@ -10,6 +10,17 @@
 /*--------------------------------------------------------------
 # Team 1.21GB CSS
 --------------------------------------------------------------*/
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: white;
+}
+
+
 .search {
     width: 100%;
     position: relative;
@@ -167,7 +178,7 @@ h6 {
   transition: all 0.5s;
   z-index: 997;
   padding: 15px 0;
-    background: #151515;
+    background: #151515; /*changed by moshe*/
 }
 
 #header.header-scrolled,

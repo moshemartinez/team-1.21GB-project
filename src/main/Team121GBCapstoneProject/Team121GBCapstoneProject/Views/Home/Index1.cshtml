@@ -73,3 +73,50 @@
 
     </div>
 </section><!-- End Hero -->
+
+<!-- ======= Games Section ======= -->
+<section id="clients" class="clients">
+    <div id="carouselExampleControls" class="carousel slide text-center" style="background-color: #FFF"
+         data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            @{
+                int i = 1;
+            }
+
+            @foreach (var game in Model.games)
+            {
+                gameInfo = null;
+                gameInfo += $"Release Year: {game.YearPublished}";
+                gameInfo += "\nGenres: ";
+                foreach (var genre in game.GameGenres)
+                {
+                    gameInfo += $"{genre.Genre.Name} ";
+                }
+                gameInfo += "\n| Platforms: ";
+                foreach (var platform in game.GamePlatforms)
+                {
+                    gameInfo += $"{platform.Platform.Name} ";
+                }
+                <div class="carousel-item @(i == 1? "active": "")">
+                    <span class="hovertext" data-hover="@gameInfo">
+                        <img src="@game.CoverPicture" style="width: 200px; height: 200px; margin-bottom: 175px; margin-top: 30px;">
+                    </span>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3 style="color: black; font-weight: bold;">@($"#{i++} - {game.Title}")</h3>
+                        <h4 style="color: #222222; font-weight: bold;">@game.Description</h4>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <button class="carousel-control-prev custom-control" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next custom-control" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </button>
+    </div>
+</section><!-- End Games Section -->
