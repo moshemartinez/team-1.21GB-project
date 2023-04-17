@@ -1,7 +1,7 @@
-﻿@*@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @using Team121GBCapstoneProject.Areas.Identity.Data
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager*@
+@inject UserManager<ApplicationUser> UserManager
 
 @model Team121GBCapstoneProject.Models.GameInfo;
 @{
@@ -17,30 +17,45 @@
         <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
             <div class="col-xl-6 col-lg-8">
                 <h1>Welcome to the Gaming Platform<span></span></h1>
-                <h2>Here are some of the services we provide</h2>
+                <h2>A site for organizing your game collection across all platforms</h2>
             </div>
         </div>
-
+        
         <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
             <div class="col-xl-2 col-md-4">
-                <div class="icon-box">
-                    <i class="ri-store-line"></i>
-                    <h3><a href="">Search Games</a></h3>
-                </div>
+                <a asp-area="Identity" asp-page="/Account/Register">
+                    <div class="icon-box">
+                        <i class="bi bi-person-add"></i>
+                        <h3>Create Account</h3>
+                    </div>
+                </a>
             </div>
-            <div class="col-xl-2 col-md-4">
-                <div class="icon-box">
-                    <i class="ri-bar-chart-box-line"></i>
-                    <h3><a href="">Ranking</a></h3>
+            
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="col-xl-2 col-md-4">
+                    <a asp-area="Identity" asp-page="/Account/Logout"
+                       asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <div class="icon-box">
+                            <i class="bi bi-box-arrow-in-left"></i>
+                            <h3>Log Out</h3>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-xl-2 col-md-4">
-                <div class="icon-box">
-                    <i class="ri-calendar-todo-line"></i>
-                    <h3><a href="">Game Library</a></h3>
+            }
+            else
+            {
+                <div class="col-xl-2 col-md-4">
+                    <a asp-area="Identity" asp-page="/Account/Login">
+                        <div class="icon-box">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <h3>Log In</h3>
+                        </div>
+                    </a>
                 </div>
-            </div>
-@*            <div class="col-xl-2 col-md-4">
+            }
+
+        @*            <div class="col-xl-2 col-md-4">
                 <div class="icon-box">
                     <i class="ri-paint-brush-line"></i>
                     <h3><a href="">Magni Dolores</a></h3>
