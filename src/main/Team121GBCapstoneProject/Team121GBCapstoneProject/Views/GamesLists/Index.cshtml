@@ -4,41 +4,59 @@
     ViewData["Title"] = "Games Lists";
 }
 
-<div class="row">
-    @* <div style="float: right;">
+<!-- ======= Breadcrumbs ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Game Lists</h2>
+            <ol>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li>Game Lists</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<section class="inner-page">
+<div class="container">
+
+    <div class="row">
+        @* <div style="float: right;">
     @* <button type="button" class="btn btn-primary" data-bs-toggle="modal"
     data-bs-target="#AddListForm">AddList</button>
     </div> *@
 
-    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
-    {
-        <div id="errorMsg">
-            <div class="card-body text-danger">
-                <span>
-                    <h2 style="display: inline-block">@ViewBag.ErrorMessage</h2>
-                </span>
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div id="errorMsg">
+                <div class="card-body text-danger">
+                    <span>
+                        <h2 style="display: inline-block">@ViewBag.ErrorMessage</h2>
+                    </span>
+                </div>
             </div>
-        </div>
-    }
-    else if (!string.IsNullOrEmpty(ViewBag.Message))
-    {
-        <div id="successMsg">
-            <div class="card-body text-success">
-                <span>
-                    <h2 style="display: inline-block">@ViewBag.Message</h2>
-                </span>
+        }
+        else if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div id="successMsg">
+                <div class="card-body text-success">
+                    <span>
+                        <h2 style="display: inline-block">@ViewBag.Message</h2>
+                    </span>
+                </div>
             </div>
-        </div>
-    }
-</div>
-<br>
-<!--for each lists construct view-->
-@foreach (PersonListVM listVm in @Model)
-{
-    <div class="row">
-        <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
-            <table>
-                <thead>
+        }
+    </div>
+    <br>
+    <!--for each lists construct view-->
+    @foreach (PersonListVM listVm in @Model)
+    {
+        <div class="row">
+            <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
+                <table>
+                    <thead>
                     <tr>
                         <td>
                             <h1>@listVm.ListKind</h1>
@@ -50,8 +68,8 @@
                             <th>Cover Picture</th>
                         </h2>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @foreach (PersonGame personGame in listVm.PersonGames)
                     {
                         <tr>
@@ -61,11 +79,15 @@
                         </tr>
                         <br/>
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-}
+    }
+
+</div>
+</section>
+
 @section Scripts
     {
     <script>
