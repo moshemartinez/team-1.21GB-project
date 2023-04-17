@@ -6,24 +6,25 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
+using Team121GBCapstoneProject.Models.DTO;
 
 namespace Team121GBCapstoneProject.Services.Concrete
 {
     public class SteamService : IsteamService
     {
         private string BaseSource { get; }
-        private IHttpClientFactory _httpClientFactory;
+        private string Token;
 
-        public SteamService(IHttpClientFactory httpClientFactory)
+        public SteamService(string token)
         {
+            Token = token;
             BaseSource =
-                "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=C53E34DF7E3C7A9ADC659511BD7B8EA6&steamids={0}";
-            _httpClientFactory = httpClientFactory;
+                "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}";
         }
 
         public async Task<string> GetJsonStringsFromEndpoint(string id)
         {
-            string source = string.Format(BaseSource, id);
+            string source = string.Format(BaseSource,Token, id);
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, source)
             {
                 Headers =
@@ -31,7 +32,7 @@ namespace Team121GBCapstoneProject.Services.Concrete
                     { HeaderNames.Accept, "application/json" }
                 }
             };
-            HttpClient httpClient = _httpClientFactory.CreateClient();
+            HttpClient httpClient = new HttpClient();
             HttpResponseMessage response = await httpClient.SendAsync(httpRequestMessage);
 
             if (response.IsSuccessStatusCode)
@@ -47,8 +48,14 @@ namespace Team121GBCapstoneProject.Services.Concrete
 
         public async Task<SteamUser> GetSteamUser(string id)
         {
-            string response =await GetJsonStringsFromEndpoint(id);
-            SteamUser user = JsonConvert.DeserializeObject<SteamUser>(response);
+            string response = await GetJsonStringsFromEndpoint(id);
+            Player deserialized = JsonConvert.DeserializeObject<Player>(response);
+            SteamUser user = new SteamUser()
+            {
+                AvatarURL = deserialized.avatarmedium,
+                ProfileURL = deserialized.profileurl,
+                Username = deserialized.personaname
+            };
             return user;
         }
     }

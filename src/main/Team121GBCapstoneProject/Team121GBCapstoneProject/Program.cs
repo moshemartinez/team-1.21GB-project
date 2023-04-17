@@ -25,6 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
 var reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
 var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
+var SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
 var SendGridKey = builder.Configuration["SendGridKey"];
 var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
 var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
@@ -46,6 +47,7 @@ builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha =>
 
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
+builder.Services.AddScoped<IsteamService, SteamService>( s => new SteamService(SteamSecretKey));
 
 var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
