@@ -15,13 +15,15 @@
 @if (Model.CurrentLogins?.Count > 0)
 {
     <h3>Registered Logins</h3>
-    <button onclick="steamLoad(@steamId)">pretestss</button>
     <table class="table">
         <tbody>
             @foreach (var login in Model.CurrentLogins)
             {
                 <tr>
-                    <td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>
+                    @*<td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>*@
+                    <td><button class="btn btn-primary" onclick="steamLoad(@steamId)" id="finalBtn">Display Info</button></td>
+                    <td id="profileImage"></td>
+                    <td id="profileName"></td>
                     <td>
                         @if (Model.ShowRemoveButton)
                         {
@@ -29,7 +31,7 @@
                                 <div>
                                     <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden"/>
                                     <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden"/>
-                                    <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">Remove</button>
+                                    <button type="submit" class="btn btn-danger" title="Remove this @login.ProviderDisplayName login from your account" onlcick="">Log out</button>
                                 </div>
                             </form>
                         }

@@ -1,6 +1,11 @@
 ﻿namespace Team121GBCapstoneProject.Models.DTO
 {
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    public class Root
+    {
+        public Response response { get; set; }
+    }
+
     public class Player
     {
         public string steamid { get; set; }
@@ -28,10 +33,7 @@
         public List<Player> players { get; set; }
     }
 
-    public class Root
-    {
-        public Response response { get; set; }
-    }
+    
 
 
 }
