@@ -21,5 +21,11 @@ namespace Team121GB_BDD_Test.PageObjects
             IWebElement navbarLogoutButton = _webDriver.FindElement(By.Id("logoutBtn"));
             navbarLogoutButton.Click();
         }
+
+        public void FindProfileNameButton()
+        {
+            IWebElement profileFirstNameButton = _webDriver.FindElement(By.Id("FirstName"));
+            IWebElement profileLastNameButton = _webDriver.FindElement(By.Id("LastName"));
+        }
     }
 }
