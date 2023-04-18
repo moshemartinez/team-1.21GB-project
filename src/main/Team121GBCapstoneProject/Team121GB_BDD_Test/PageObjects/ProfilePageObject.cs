@@ -49,7 +49,7 @@ namespace Team121GB_BDD_Test.PageObjects
 
         public void UploadPhoto()
         {
-            profilePictureButton.SendKeys("C:\\Users\\Test\\Documents\\NewWouCode\\CS461\\team-1.21GB-project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo15Percent.png");
+            profilePictureButton.SendKeys("C:\\Users\\natel\\Documents\\SeniorProject\\team-1.21GB-project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo15Percent.png");
 
         }
     }
