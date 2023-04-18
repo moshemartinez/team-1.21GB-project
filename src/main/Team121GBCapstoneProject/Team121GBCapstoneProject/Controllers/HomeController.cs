@@ -27,6 +27,13 @@ public class HomeController : Controller
         return View("Index", gameList);
     }
 
+    public IActionResult Index1()
+    {
+        GameInfo gameList = new GameInfo();
+        gameList.games = _gameRepository.GetTrendingGames(10);
+        return View("Index1", gameList);
+    }
+
     [Authorize]
     public IActionResult GenerateImage()
     {

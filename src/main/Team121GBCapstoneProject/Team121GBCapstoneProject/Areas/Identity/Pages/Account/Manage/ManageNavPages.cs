@@ -121,6 +121,3 @@ namespace  Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
         }
     }
 }
-
-
-
