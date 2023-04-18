@@ -1,4 +1,4 @@
---Down Script
+-- Down Script
 ALTER TABLE GameGenre DROP CONSTRAINT [FK_GameGenreID];
 ALTER TABLE GameGenre DROP CONSTRAINT [FK_GenreID];
 ALTER TABLE GamePlatform DROP CONSTRAINT [FK_PlatformID];

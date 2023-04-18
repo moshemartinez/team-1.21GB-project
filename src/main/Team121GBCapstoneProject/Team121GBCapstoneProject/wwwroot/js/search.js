@@ -6,11 +6,12 @@ function displaySearchResults(query, platform, genre, esrbRating) {
     $.ajax({
         type: "GET",
         url: "/api/Game",
-        data: { query: query,
-                platform: platform ,
-                genre: genre,
-                esrbRating: esrbRating
-            }, 
+        data: {
+            query: query,
+            platform: platform,
+            genre: genre,
+            esrbRating: esrbRating
+        },
         dataType: "json",
         success: function (data) {
             if (data.length === 0) {
@@ -23,14 +24,14 @@ function displaySearchResults(query, platform, genre, esrbRating) {
                         try {
                             // resize cover image
                             var resizedCoverArt = game.gameCoverArt.replace("thumb", "logo_med");
-                            
+
                             let platformArray = [];
                             $.each(game.platforms, (i, platform) => {
                                 platformArray.push(platform);
                             });
                             let genreArray = [];
                             $.each(game.genres, (i, genre) => {
-                               genreArray.push(genre); 
+                                genreArray.push(genre);
                             });
                             var row = `<tr>
                                     <td><img src="${resizedCoverArt}"></td>
@@ -47,7 +48,7 @@ function displaySearchResults(query, platform, genre, esrbRating) {
                         }
                         // for some reason there are situations where even when the image link has been cached it still 
                         //doesn't show up in the view so I added this to handle that edge case.
-                        catch { 
+                        catch {
                             // resize cover image
                             let noCover = "https://images.igdb.com/igdb/image/upload/t_thumb/nocover.png";
                             var resizedCoverArt = noCover.replace("thumb", "logo_med");
@@ -57,7 +58,7 @@ function displaySearchResults(query, platform, genre, esrbRating) {
                             });
                             let genreArray = [];
                             $.each(game.genres, (i, genre) => {
-                               genreArray.push(genre); 
+                                genreArray.push(genre);
                             });
                             var row = `<tr>
                                     <td><img src="${resizedCoverArt}"></td>

@@ -1,7 +1,7 @@
 --Note: Only Run The create database once and then comment it again. 
 --Uncomment, highight create database, then comment over and run query
 
---CREATE DATABASE [GamingPlatform]
+-- CREATE DATABASE [GamingPlatform]
 
 --Creating Person Table
 CREATE TABLE [Person] (
