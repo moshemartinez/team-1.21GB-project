@@ -1,4 +1,4 @@
---Down Script
+-- Down Script
 ALTER TABLE GameGenre DROP CONSTRAINT [FK_GameGenreID];
 ALTER TABLE GameGenre DROP CONSTRAINT [FK_GenreID];
 ALTER TABLE GamePlatform DROP CONSTRAINT [FK_PlatformID];
@@ -9,6 +9,8 @@ ALTER TABLE PersonList DROP CONSTRAINT FK_ListKindID;
 ALTER TABLE PersonGame DROP CONSTRAINT FK_PersonListID;
 ALTER TABLE PersonGame DROP CONSTRAINT FK_GameID;
 
+ALTER TABLE Game DROP CONSTRAINT FK_ESRBRatingID;
+
 DROP TABLE [PersonList];
 DROP TABLE [PersonGame];
 DROP TABLE [ListKind];
@@ -18,3 +20,4 @@ DROP TABLE [Genre];
 DROP TABLE [GameGenre];
 DROP TABLE [Platform];
 DROP TABLE [GamePlatform];
+DROP TABLE [ESRBRating];

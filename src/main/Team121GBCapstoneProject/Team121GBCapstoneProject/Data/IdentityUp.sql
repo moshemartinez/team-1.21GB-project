@@ -371,7 +371,7 @@ CREATE TABLE [AspNetUserTokens] (
 -- ALTER TABLE [AspNetUsers] ALTER COLUMN [FirstName] nvarchar(max) NULL;
 
 
--- ALTER TABLE [AspNetUsers] ADD [ProfileBio] nvarchar(max) NULL;
+ ALTER TABLE [AspNetUsers] ADD [ProfileBio] nvarchar(max) NULL;
 
 
 -- INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])

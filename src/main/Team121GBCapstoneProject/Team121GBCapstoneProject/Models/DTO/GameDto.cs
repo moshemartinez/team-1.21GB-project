@@ -8,4 +8,5 @@ public class GameDto
     public string GameTitle { get; set; }
     public string ImageSrc { get; set; }
     public string ListKind { get; set; }
+    public int? IgdbID { get; set; }
 }

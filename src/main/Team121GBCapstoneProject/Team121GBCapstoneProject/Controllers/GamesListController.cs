@@ -16,18 +16,21 @@ public class GamesListsController : Controller
     private readonly ILogger<GamesListsController> _logger;
     private IPersonRepository _personRepository;
     private IPersonListRepository _personListRepository;
+    private IGameRecommender _gameRecommender;
     IRepository<PersonGame> _personGameRepository;
     public GamesListsController(UserManager<ApplicationUser> userManager,
                                  ILogger<GamesListsController> logger,
                                  IPersonRepository personRepository,
                                  IPersonListRepository personListRepository,
-                                 IRepository<PersonGame> personGameRepository)
+                                 IRepository<PersonGame> personGameRepository,
+                                 IGameRecommender gameRecommender)
     {
         _userManager = userManager;
         _logger = logger;
         _personRepository = personRepository;
         _personListRepository = personListRepository;
         _personGameRepository = personGameRepository;
+        _gameRecommender = gameRecommender;
     }
 
     [Authorize]
@@ -43,6 +46,8 @@ public class GamesListsController : Controller
         List<PersonGame> personGames = _personGameRepository.GetAll()
                                                             .Where(pg => pg.PersonList.Person.AuthorizationId == authorizationId)
                                                             .ToList();
+
+        List<Game> curratedList = _gameRecommender.recommendGames(personGames,10);
 
         Dictionary<string, List<PersonGame>> personGamesByListKind = personGames.GroupBy(pg => pg.PersonList.ListKind)
                                                                                 .ToDictionary(g => g.Key, g => g.ToList());
@@ -61,6 +66,11 @@ public class GamesListsController : Controller
             PersonListVM temp = new PersonListVM(emptyList.ListKind, emptyList.PersonGames.ToList()); // ! converted PersonGames to a list because that is what the constructor expects.   
             personListVMList.Add(temp);
         }
+
+        //personListVMList.Add({ });
+        PersonListVM curratedListVM = new PersonListVM(curratedList);
+        personListVMList.Add(curratedListVM);
+
         return View("Index", personListVMList);
     }
 

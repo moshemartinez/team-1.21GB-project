@@ -46,7 +46,7 @@ INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[Cover
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('The Legend of Zelda: Oracle of Seasons','The Triforce calls out to Link from within Hyrule Castle. Link approaches it, and is transported to a dark forest where he encounters a traveling group led by a dancer named Din.', 2001, 10, 'https://images.igdb.com/igdb/image/upload/t_thumb/co2tw0.png', 'https://www.igdb.com/games/the-legend-of-zelda-oracle-of-seasons');
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('The Legend of Zelda: Oracle of Ages','The Triforce calls out to Link. Link is transported to a forest in the land of Labrynna, where he hears screaming. In a clearing, Link finds Impa, surrounded by monsters, but the monsters flee when they see Link.', 2001, 10, 'https://images.igdb.com/igdb/image/upload/t_thumb/co2tw1.png', 'https://www.igdb.com/games/the-legend-of-zelda-oracle-of-ages');
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('The Legend of Zelda: A Link Between Worlds','A power-hungry wizard named Yuga serves as the initial antagonist, spurring Link on a journey into Lorule after Yuga turns the Seven Sages into paintings, but not all is as it seems.', 2013, 9.4, 'https://images.igdb.com/igdb/image/upload/t_thumb/co3p0j.png', 'https://www.igdb.com/games/the-legend-of-zelda-a-link-between-worlds');
---INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('The Legend of Zelda: Triforce Heroes','Link arrives in the kingdom of Hytopia in the middle of a crisis surrounding its fashion obsession; its princess Styla has been cursed by "The Lady" to wear a brown jumpsuit.', 2005, 8.5, 'https://images.igdb.com/igdb/image/upload/t_thumb/co3p1a.png', 'https://www.igdb.com/games/the-legend-of-zelda-tri-force-heroes');
+INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('The Legend of Zelda: Triforce Heroes','Link arrives in the kingdom of Hytopia in the middle of a crisis surrounding its fashion obsession; its princess Styla has been cursed by "The Lady" to wear a brown jumpsuit.', 2005, 8.5, 'https://images.igdb.com/igdb/image/upload/t_thumb/co3p1a.png', 'https://www.igdb.com/games/the-legend-of-zelda-tri-force-heroes');
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('The Legend of Zelda','Link runs into Impa being attacked by Moblins and, after rescuing her, feels a burning sense of justice upon hearing of Zelda''s plight.', 1987, 8.0, 'https://images.igdb.com/igdb/image/upload/t_thumb/co1uii.png', 'https://www.igdb.com/games/the-legend-of-zelda');
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('Zelda II: The Adventure of Link','16-year-old Link notices a strange mark on the back of his left hand, exactly like the crest of Hyrule. He seeks out Impa, who takes him to the North Castle, where a door has been magically sealed for generations.', 1988, 8.5, 'https://images.igdb.com/igdb/image/upload/t_thumb/co1uje.png', 'https://www.igdb.com/games/zelda-ii-the-adventure-of-link'); --stop here
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl]) VALUES ('The Legend of Zelda: Majora''s Mask','Termina is a world that is trapped within a perpetual three day limbo, between the time when Link first enters Termina at the beginning of Majora''s Mask, and when a large falling moon crashes into the land causing its apocalyptic destruction and killing its inhabitants 72 hours later', 2000, 8.7, 'https://images.igdb.com/igdb/image/upload/t_thumb/co3pah.png', 'https://www.igdb.com/games/the-legend-of-zelda-majora-s-mask');
@@ -123,15 +123,15 @@ INSERT INTO [Genre] ([Name]) VALUES ('Music');
 INSERT INTO [Genre] ([Name]) VALUES ('Platform');
 INSERT INTO [Genre] ([Name]) VALUES ('Puzzle');
 INSERT INTO [Genre] ([Name]) VALUES ('Racing');
-INSERT INTO [Genre] ([Name]) VALUES ('RTS');
-INSERT INTO [Genre] ([Name]) VALUES ('RPG');
+INSERT INTO [Genre] ([Name]) VALUES ('Real Time Strategy (RTS)');
+INSERT INTO [Genre] ([Name]) VALUES ('Role-Playing (RPG)');
 INSERT INTO [Genre] ([Name]) VALUES ('Simulator');
 INSERT INTO [Genre] ([Name]) VALUES ('Sport');
 INSERT INTO [Genre] ([Name]) VALUES ('Strategy');
 INSERT INTO [Genre] ([Name]) VALUES ('Turn-Based Strategy');
 INSERT INTO [Genre] ([Name]) VALUES ('Tactical');
 INSERT INTO [Genre] ([Name]) VALUES ('Quiz/Trivia');
-INSERT INTO [Genre] ([Name]) VALUES ('Hack and Slash/Beat em up');
+INSERT INTO [Genre] ([Name]) VALUES ('Hack and slash/Beat ''em up');
 INSERT INTO [Genre] ([Name]) VALUES ('Pinball');
 INSERT INTO [Genre] ([Name]) VALUES ('Adventure');
 INSERT INTO [Genre] ([Name]) VALUES ('Arcade');
@@ -141,7 +141,7 @@ INSERT INTO [Genre] ([Name]) VALUES ('Card & Board Game');
 INSERT INTO [Genre] ([Name]) VALUES ('MOBA');
 
 INSERT INTO [Platform] ([Name]) VALUES ('Mac'); --1
-INSERT INTO [Platform] ([Name]) VALUES ('PC'); --2
+INSERT INTO [Platform] ([Name]) VALUES ('PC (Microsoft Windows)'); --2
 INSERT INTO [Platform] ([Name]) VALUES ('Linux'); --3
 INSERT INTO [Platform] ([Name]) VALUES ('Xbox Series X|S'); --4
 INSERT INTO [Platform] ([Name]) VALUES ('PlayStation 5'); --5
@@ -544,3 +544,14 @@ INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (101, 18);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (101, 5);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 18);
 INSERT INTO [GameGenre] ([GameID], GenreID) VALUES (102, 5);
+
+--seed ESRBRatings 
+--according to the devs on the IGDB discord server, you have to map
+--the value returned by the API to a name which is what the IGDBRatingValue column does
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('RP', 6);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('EC', 7);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('E', 8);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('E10', 9);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('T', 10);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('M', 11);
+INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('AO', 12);
