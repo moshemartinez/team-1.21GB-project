@@ -82,10 +82,10 @@
         </form>
     </li>
 
-    @*Moshe: Removing this since it takes up to much space*@
-@*    <li class="nav-item">
+    @*Moshe: Wanting to remove this since it takes up to much space*@
+    <li class="nav-item">
         <a class="nav-link" id="HelloLink" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
-    </li>*@
+    </li>
 
     <li class="nav-link dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -105,12 +105,12 @@
             </li>
             <li><hr class="dropdown-divider" /></li>
             <li>
-                <a class="dropdown-item" asp-controller="GamesLists" asp-action="Index" style="color: black">Game Lists</a>
+                <a id="gamesListButton" class="dropdown-item" asp-controller="GamesLists" asp-action="Index" style="color: black">Game Lists</a>
             </li>
             <li><hr class="dropdown-divider" /></li>
             <li>
                 <form accesskeyclass="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="dropdown-item">Log Out</button>
+                    <button id="logoutBtn" type="submit" class="dropdown-item">Log Out</button>
                 </form>
             </li>
         </ul>
