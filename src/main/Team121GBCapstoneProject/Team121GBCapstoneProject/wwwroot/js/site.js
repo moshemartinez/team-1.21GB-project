@@ -8,7 +8,7 @@
 $(document).ready(function () {
     $("#searchButton").click(function (event) {
 
-        console.log("Search button has been clicked")
+        console.log("Search button has been clicked");
 
         event.preventDefault(); // prevent the default form submission behavior
         var query = $("#searchInput").val(); // get the value from the search input field
