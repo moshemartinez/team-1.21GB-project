@@ -20,6 +20,9 @@
     background-color: white;
 }
 
+.card.redtoorange-gradient {
+    background-image: linear-gradient(red, orange);
+}
 
 .search {
     width: 100%;
