@@ -14,7 +14,7 @@ namespace Standups_BDD_Tests.Shared
         //https://gamingplatform.azurewebsites.net
 
         // File to store browser cookies in
-        public const string CookieFile = "..\\..\\..\\..\\..\\..\\..\\StandupsCookies.txt";
+        public const string CookieFile = "..\\..\\..\\..\\..\\..\\..\\..\\StandupsCookies.txt";
 
         // Page names that everyone should use
         // A handy way to look these up

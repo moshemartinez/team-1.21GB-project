@@ -25,6 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
 var reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
 var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
+var SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
 var SendGridKey = builder.Configuration["SendGridKey"];
 var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
 var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
@@ -46,6 +47,7 @@ builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha =>
 
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
+builder.Services.AddScoped<IsteamService, SteamService>( s => new SteamService(SteamSecretKey));
 
 var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -84,6 +86,17 @@ builder.Services.AddScoped<IDalleService, DalleService>();
 
 //var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
 //openAiService.SetDefaultModelId(Models.Davinci);
+builder.Services.AddAuthentication()
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Identity/Account/Login";
+        options.LogoutPath = "/Identity/Account/Logout";
+    })
+    .AddSteam(options =>
+    {
+        options.CorrelationCookie.SameSite = SameSiteMode.None;
+        options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+    });
 
 
 var app = builder.Build();
@@ -117,6 +130,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // If program says "Index Not Found" run: dotnet watch run (only on VS 2022)
