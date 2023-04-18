@@ -7,11 +7,19 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-link">
-        <form id="searchForm" action="/Search/Results/">
+        @*        <form id="searchForm" action="/Search/Results/">
             <input type="text" name="query" id="searchInput" placeholder="Search...">
             <button type="submit" id="searchButton" class="btn btn-outline-primary">
                 <i class="bi bi-search"></i>
             </button>
+        </form>*@
+        <form id="searchForm" action="/Search/Results/">
+            <div class="input-group rounded">
+                <input class="form-control rounded" type="text" name="query" id="searchInput" placeholder="Search..." aria-label="Search" aria-describedby="search-addon" />
+                    <button type="submit" id="searchButton" class="input-group-text border-0">
+                        <i class="bi bi-search"></i>
+                    </button>
+            </div>
         </form>
     </li>
 
