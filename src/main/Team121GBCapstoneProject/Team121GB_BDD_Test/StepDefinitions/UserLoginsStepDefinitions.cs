@@ -65,7 +65,7 @@ namespace Standups_BDD_Tests.StepDefinitions
             _scenarioContext["CurrentUser"] = u;
         }
 
-        [When(@"I login")]
+        [When(@"I login"), Given(@"I login")]
         public void WhenILogin()
         {
             // Go to the login page

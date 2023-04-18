@@ -20,27 +20,26 @@ namespace Team121GB_BDD_Test.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("GP-21-AccountPreferences")]
-    [NUnit.Framework.CategoryAttribute("Nathaniel")]
-    public partial class GP_21_AccountPreferencesFeature
+    [NUnit.Framework.DescriptionAttribute("ProfilePicture")]
+    [NUnit.Framework.CategoryAttribute("Cole")]
+    public partial class ProfilePictureFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Nathaniel"};
+                "Cole"};
         
-#line 1 "GP-21-AccountPreferences.feature"
+#line 1 "GP-14-ProfilePicture.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "GP-21-AccountPreferences", "** As a user, I want to be able to see my account preferences so that I can custo" +
-                    "mize my account ** \r\n\r\nThis feature ensures that user who is logged in can see a" +
-                    "nd customize their account preferences on a \r\ndedicated web page.", ProgrammingLanguage.CSharp, new string[] {
-                        "Nathaniel"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "ProfilePicture", @"A user would like to change their profile picture. Either they just made their account or would like to update their old one. Either way they would 
+navigate to their profile page and click on a button somewhere around their profile and have it open up the file explorer and let them choose an image.", ProgrammingLanguage.CSharp, new string[] {
+                        "Cole"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,65 +79,65 @@ namespace Team121GB_BDD_Test.Features
         
         public virtual void FeatureBackground()
         {
-#line 8
+#line 7
 #line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table7.AddRow(new string[] {
-                        "TaliaK",
-                        "BDDTesting1@gmail.com",
-                        "Talia",
-                        "Knott",
-                        "Password1!"});
-            table7.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "ZaydenC",
                         "BDDTesting2@gmail.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
-            table7.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "DavilaH",
                         "team121gigabytes@gmail.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
-#line 9
- testRunner.Given("the following users exist", ((string)(null)), table7, "Given ");
+            table3.AddRow(new string[] {
+                        "TaliaK",
+                        "BDDTesting1@gmail.com",
+                        "Talia",
+                        "Knott",
+                        "Password1!"});
+#line 8
+ testRunner.Given("the following users exist", ((string)(null)), table3, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table8.AddRow(new string[] {
+            table4.AddRow(new string[] {
                         "AndreC",
                         "colea@example.com",
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-            table8.AddRow(new string[] {
+            table4.AddRow(new string[] {
                         "JoannaV",
                         "valdezJ@example.com",
                         "Joanna",
                         "Valdez",
                         "d9u(*dsF4"});
-#line 14
- testRunner.And("the following users do not exist", ((string)(null)), table8, "And ");
+#line 13
+ testRunner.And("the following users do not exist", ((string)(null)), table4, "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Logged in user can click on their name in the navbar")]
+        [NUnit.Framework.DescriptionAttribute("Uploding Profile Picutre")]
         [NUnit.Framework.CategoryAttribute("LoggedIn")]
-        [NUnit.Framework.TestCaseAttribute("Talia", "Home", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Zayden", "Home", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Hareem", "Home", "Profile", null)]
-        public virtual void LoggedInUserCanClickOnTheirNameInTheNavbar(string firstName, string page, string profilePage, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("Zayden", "Profile", null)]
+        [NUnit.Framework.TestCaseAttribute("Hareem", "Profile", null)]
+        [NUnit.Framework.TestCaseAttribute("Talia", "Profile", null)]
+        public virtual void UplodingProfilePicutre(string firstName, string page, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "LoggedIn"};
@@ -150,9 +149,8 @@ namespace Team121GB_BDD_Test.Features
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
-            argumentsOfScenario.Add("ProfilePage", profilePage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged in user can click on their name in the navbar", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 20
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Uploding Profile Picutre", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -172,20 +170,23 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
+#line 7
 this.FeatureBackground();
 #line hidden
+#line 20
+ testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
 #line 21
- testRunner.Given(string.Format("I am a logged in user with Firstname \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 22
- testRunner.And(string.Format("I am on the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 23
- testRunner.When("I click my name in the navbar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I upload an image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 24
- testRunner.Then(string.Format("I should be redirected to the \'{0}\' page", profilePage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I should be able to select an image for my profile picture", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
