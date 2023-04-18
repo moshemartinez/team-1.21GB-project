@@ -20,140 +20,137 @@
 </section><!-- End Breadcrumbs -->
 
 <section class="inner-page">
-<div class="container">
+    <div class="container">
+        <div class="row">
+            @* <div style="float: right;">
+            @* <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#AddListForm">AddList</button>
+            </div> *@
 
-    <div class="row">
-        @* <div style="float: right;">
-    @* <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-    data-bs-target="#AddListForm">AddList</button>
-    </div> *@
-
-        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
-        {
-            <div id="errorMsg">
-                <div class="card-body text-danger">
-                    <span>
-                        <h2 style="display: inline-block">@ViewBag.ErrorMessage</h2>
-                    </span>
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <div id="errorMsg">
+                    <div class="card-body text-danger">
+                        <span>
+                            <h2 style="display: inline-block">@ViewBag.ErrorMessage</h2>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        }
-        else if (!string.IsNullOrEmpty(ViewBag.Message))
-        {
-            <div id="successMsg">
-                <div class="card-body text-success">
-                    <span>
-                        <h2 style="display: inline-block">@ViewBag.Message</h2>
-                    </span>
+            }
+            else if (!string.IsNullOrEmpty(ViewBag.Message))
+            {
+                <div id="successMsg">
+                    <div class="card-body text-success">
+                        <span>
+                            <h2 style="display: inline-block">@ViewBag.Message</h2>
+                        </span>
+                    </div>
                 </div>
-            </div>
+            }
+        </div>
+        <br>
+        <!--for each lists construct view-->
+        @foreach (PersonListVM listVm in @Model)
+        {
+            @if (listVm.ListKind != null)
+            {
+                <div class="row">
+                    @* <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;"> *@
+                    <div class="card redtoorange-gradient table-responsive">
+                        <table id="@listVm.ListKind Table">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <h1>@listVm.ListKind</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <h2>
+                                    <th>Cover Picture</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Genres</th>
+                                    <th>Platforms</th>
+                                    </h2>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (PersonGame personGame in listVm.PersonGames)
+                                {
+                                    <tr>
+                                        <td><img src="@personGame.Game.CoverPicture" alt="@personGame.Game.Title Cover Image"></td>
+                                        <td><h4>@personGame.Game.Title</h4></td>
+                                        <td><p>@personGame.Game.Description</p></td>
+                                        @if (personGame.Game.GamePlatforms.Count > 0)
+                                        {
+                                            <td>
+                                                @foreach (GamePlatform platform in personGame.Game.GamePlatforms)
+                                                {
+                                                    <p>@platform.Platform.Name</p>
+                                                }
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        @if (personGame.Game.GameGenres.Count > 0)
+                                        {
+                                            <td>
+                                                @foreach (GameGenre genre in personGame.Game.GameGenres)
+                                                {
+                                                    <p>@genre.Genre.Name</p>
+                                                }
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        <td><a class="btn btn-dark" href="@personGame.Game.Igdburl" role="button">Igdb Page</a></td>
+                                    </tr>
+                                    <br />
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            @if (listVm.CurratedList != null)
+            {
+                <div class="row">
+                    <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <h1>Game Recommendations</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <h2>
+                                    <th>Title</th>
+                                    <th>Cover Picture</th>
+                                    </h2>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Game game in listVm.CurratedList)
+                                {
+                                    <tr>
+                                        <td><h2>@game.Title</h2></td>
+                                        <td><img src="@game.CoverPicture" alt="@game.Title Cover Image"></td>
+                                        <td><a class="btn btn-dark" href="@game.Igdburl" role="button">Igdb Page</a></td>
+                                    </tr>
+                                    <br />
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
         }
     </div>
-
-<br>
-<!--for each lists construct view-->
-@foreach (PersonListVM listVm in @Model)
-{
-    @if (listVm.ListKind != null)
-    {
-        <div class="row">
-            @* <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;"> *@
-            <div class="card redtoorange-gradient table-responsive">
-                <table id="@listVm.ListKind Table">
-                    <thead>
-                        <tr>
-                            <td>
-                                <h1>@listVm.ListKind</h1>
-                            </td>
-                        </tr>
-                        <tr>
-                            <h2>
-                                <th>Cover Picture</th>
-                                <th>Title</th>             
-                                <th>Description</th>
-                                <th>Genres</th>
-                                <th>Platforms</th>                   
-                            </h2>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (PersonGame personGame in listVm.PersonGames)
-                        {
-                            <tr>
-                                <td><img src="@personGame.Game.CoverPicture" alt="@personGame.Game.Title Cover Image"></td>
-                                <td><h4>@personGame.Game.Title</h4></td>
-                                <td><p>@personGame.Game.Description</p></td>
-                                @if (personGame.Game.GamePlatforms.Count > 0)
-                                { 
-                                    <td>
-                                            @foreach (GamePlatform platform in personGame.Game.GamePlatforms)
-                                            {
-                                                <p>@platform.Platform.Name</p>
-                                            }
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                } 
-                                @if (personGame.Game.GameGenres.Count > 0)
-                                {
-                                    <td>
-                                            @foreach (GameGenre genre in personGame.Game.GameGenres)
-                                            {
-                                                <p>@genre.Genre.Name</p>
-                                            }
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                <td><a class="btn btn-dark" href="@personGame.Game.Igdburl" role="button">Igdb Page</a></td>
-                            </tr>
-                            <br/>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    }
-    @if (listVm.CurratedList != null)
-    {
-        <div class="row">
-            <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <td>
-                                <h1>Game Recommendations</h1>
-                            </td>
-                        </tr>
-                        <tr>
-                            <h2>
-                            <th>Title</th>
-                            <th>Cover Picture</th>
-                            </h2>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (Game game in listVm.CurratedList)
-                        {
-                            <tr>
-                                <td><h2>@game.Title</h2></td>
-                                <td><img src="@game.CoverPicture" alt="@game.Title Cover Image"></td>
-                                <td><a class="btn btn-dark" href="@game.Igdburl" role="button">Igdb Page</a></td>
-                            </tr>
-                            <br />
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    }
-}
-
-</div>
 </section>
 
 @section Scripts
@@ -173,6 +170,8 @@
 
     </script>
 }
+
+@*Nathaniel's old code*@
 
 @* <div class="modal fade" id="AddListForm" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
 <div class="modal-dialog">
