@@ -4,8 +4,8 @@ namespace Team121GBCapstoneProject.DAL.Abstract
 {
     public interface ISpeedSearch
     {
-        public List<Game> SpeedSearching(string input);
-        public Game GetFirstSearchResult(string title);
+        public Task<IEnumerable<IgdbGame>> SpeedSearchingAsync(string input);
+        public Task<IgdbGame> GetFirstSearchResultAsync(string title);
         public List<string> TitleParse(string input);
     }
 }

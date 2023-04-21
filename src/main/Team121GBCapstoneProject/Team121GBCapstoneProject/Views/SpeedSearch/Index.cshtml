@@ -1,0 +1,46 @@
+﻿@using Team121GBCapstoneProject.Models;
+@model Team121GBCapstoneProject.Models.SpeedSearchQuery;
+@{
+    ViewData["Title"] = "SpeedSearch";
+}
+
+<section class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Speed Search</h2>
+            <ol>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li>Speed Search</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<section class="inner-page">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-4" style="font-weight: bolder;">Speed Search</h1>
+            <p>To get started please type into the text box the list of games you would like to search for.
+                Make sure each game starts with a * 
+            </p>
+            <br />
+            <p>Example: *Dark Souls</p>
+            <br />
+            <p>Once you are finished please click the Submit button and we will start searching for you.</p>
+            <div style="vertical-align: center; text-align: center;">
+                <form asp-controller="Game" asp-action="SpeedSearchForGames" method="post">
+                    <label for="GameEntry">Games: </label>
+                    <br>
+                    <textarea id="GameEntry" rows="5" cols="100" name="GameEntry" asp-for=@Model.query></textarea>
+                    <br />
+                    <input id="games-submit" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
