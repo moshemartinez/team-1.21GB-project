@@ -81,8 +81,8 @@ namespace Team121GBCapstoneProject.Controllers
             return Ok(searchResult);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchForGames(SpeedSearchQuery GameEntry)
+        [HttpPost("SpeedSearch")]
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchForGames(string query)
         {
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
             _clientId = _config["GamingPlatform:igdbClientId"];
@@ -91,7 +91,7 @@ namespace Team121GBCapstoneProject.Controllers
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
 
-            var resultOfSearch = await _speedSearch.SpeedSearchingAsync(GameEntry.query);
+            var resultOfSearch = await _speedSearch.SpeedSearchingAsync(query);
 
             if (resultOfSearch is null)
             {

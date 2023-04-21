@@ -1,6 +1,6 @@
 ﻿@using Team121GBCapstoneProject.Models;
-@model Team121GBCapstoneProject.Models.SpeedSearchQuery;
-@{
+@*@model Team121GBCapstoneProject.Models.SpeedSearchQuery;
+*@@{
     ViewData["Title"] = "SpeedSearch";
 }
 
@@ -31,9 +31,9 @@
             <p>Once you are finished please click the Submit button and we will start searching for you.</p>
             <div style="vertical-align: center; text-align: center;">
                 <form asp-controller="Game" asp-action="SpeedSearchForGames" method="post">
-                    <label for="GameEntry">Games: </label>
+                    <label>Games: </label>
                     <br>
-                    <textarea id="GameEntry" rows="5" cols="100" name="GameEntry" asp-for=@Model.query></textarea>
+                    <textarea id="GameEntry" rows="5" cols="100" name="GameEntry"></textarea>
                     <br />
                     <input id="games-submit" type="submit" value="Submit">
                 </form>
@@ -41,6 +41,10 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script src="~/js/SpeedSearch.js"></script>
+}
 
 
 
