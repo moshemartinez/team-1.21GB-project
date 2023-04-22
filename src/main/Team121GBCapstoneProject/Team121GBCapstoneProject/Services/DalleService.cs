@@ -46,4 +46,9 @@ class DalleService : IDalleService
             throw;
         }
     }
+
+    public Task<string> SetImageToProfilePicure(string imageURL)
+    {
+        throw new NotImplementedException();
+    }
 }

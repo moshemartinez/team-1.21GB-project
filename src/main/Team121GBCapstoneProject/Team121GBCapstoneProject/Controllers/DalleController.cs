@@ -32,19 +32,38 @@ namespace Team121GBCapstoneProject.Controllers
                 //Debug.Assert(gRecaptchaResponse != null);
                 if (gRecaptchaResponse == null) return BadRequest();
                 if (!_reCaptchaService.IsValid(gRecaptchaResponse, _url).Result) return BadRequest();
-
+                string image = "";
                 if (prompt != null)
                 {
-                    return Ok(_dalleService.GetImages(prompt).Result);
+                    image = _dalleService.GetImages(prompt).Result;
                 }
-
-                throw new Exception("Prompt Invalid");
+                return Ok(image);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                Debug.WriteLine(e.Message);
+                return BadRequest();
             }
+        }
+        [HttpPost("SetImageToProfilePicure")]
+        public async Task<string> SetImageToProfilePicure(string imageURL)
+        {
+            try
+            {
+                if (imageURL != null)
+                {
+                    return await _dalleService.SetImageToProfilePicure(imageURL);
+                }
+                return "";
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return "";
+            }
+        }
+    }
+}
 
             //DalleVM dalleVM = new DalleVM();
             //if (prompt != null)
@@ -58,6 +77,3 @@ namespace Team121GBCapstoneProject.Controllers
             //}
 
             //return Ok(dalleVM);
-        }
-    }
-}
