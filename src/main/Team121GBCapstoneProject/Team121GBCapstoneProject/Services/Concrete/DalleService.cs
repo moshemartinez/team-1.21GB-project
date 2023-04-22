@@ -8,7 +8,7 @@ using Team121GBCapstoneProject.Services.Abstract;
 
 namespace Team121GBCapstoneProject.Services.Concrete;
 
-class DalleService : IDalleService
+public class DalleService : IDalleService
 {
     private readonly IOpenAIService _openAiService;
 
