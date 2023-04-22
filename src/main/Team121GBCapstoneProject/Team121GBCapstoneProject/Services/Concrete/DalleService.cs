@@ -3,8 +3,10 @@ using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
 using Microsoft.AspNetCore.Identity;
 using OpenAI.GPT3.Interfaces;
+using Team121GBCapstoneProject.Services.Abstract;
 
-namespace Team121GBCapstoneProject.Services;
+
+namespace Team121GBCapstoneProject.Services.Concrete;
 
 class DalleService : IDalleService
 {
@@ -48,6 +50,11 @@ class DalleService : IDalleService
     }
 
     public Task<string> SetImageToProfilePicure(string imageURL)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> TurnImageUrlIntoByteArray(string imageURL)
     {
         throw new NotImplementedException();
     }
