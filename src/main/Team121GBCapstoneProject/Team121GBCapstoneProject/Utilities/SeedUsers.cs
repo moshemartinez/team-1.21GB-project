@@ -38,29 +38,19 @@ public class SeedUsers
                         AuthorizationId = identityID, 
                         DallECredits = u.DalleCreditsCount
                     };
-                    //ApplicationUser applicationUser = new ApplicationUser { FirstName = u.FirstName, LastName = u.LastName };
-                    if (!context.People.Any(x => x.AuthorizationId == identityID))
+                    bool checkIfPersonExists = context.People.Any(x => x.AuthorizationId == identityID);
+                    if (!checkIfPersonExists)
                     {
                         // Doesn't already exist, so add a new user
                         context.Add(person);
                         await context.SaveChangesAsync();
-
-                        //person = await context.People.FirstOrDefaultAsync(p => p.AuthorizationId == identityID);
-                        //person.DallECredits = u.DalleCreditsCount;
-                        //context.People.Update(person);
+                        // ! add lists for person on creation
                         foreach (var list in u.ListKindNames)
                         {
                             list.Person = person;
                             list.PersonId = person.Id;
-                            Console.WriteLine(list);
                             context.Add(list);
                         }
-                        //PersonList pl = new PersonList
-                        //{
-                        //    Person = person,
-                        //    PersonId = person.Id
-                        //};
-                        //context.PersonLists.Add();
                     }
                 }
             }
