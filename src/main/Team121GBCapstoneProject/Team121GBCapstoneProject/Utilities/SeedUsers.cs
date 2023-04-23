@@ -26,22 +26,41 @@ public class SeedUsers
             using (var context = new GPDbContext(serviceProvider.GetRequiredService<DbContextOptions<GPDbContext>>()))
             {
                 // Get the Identity user manager
-                var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
                 foreach (var u in seedData)
                 {
                     // Ensure this user exists or is newly created (Email is used for username since that is the default in Register and Login -- change those and then use username here if you want it different than email
-                    var identityID = await EnsureUser(userManager, testUserPw, u.Email, u.Email, u.EmailConfirmed);
-                    // Create a new FujiUser if this one doesn't already exist
-                    ApplicationUser applicationUser = new ApplicationUser { FirstName = u.FirstName, LastName = u.LastName };
+                    var identityID = await EnsureUser(userManager, testUserPw, u.Email, u.Email, u.EmailConfirmed, u.FirstName, u.LastName);
+                    // Create a new Person if this one doesn't already exist
+                    Person person = new Person
+                    {
+                        AuthorizationId = identityID, 
+                        DallECredits = u.DalleCreditsCount
+                    };
+                    //ApplicationUser applicationUser = new ApplicationUser { FirstName = u.FirstName, LastName = u.LastName };
                     if (!context.People.Any(x => x.AuthorizationId == identityID))
                     {
                         // Doesn't already exist, so add a new user
-                        context.Add(applicationUser);
+                        context.Add(person);
                         await context.SaveChangesAsync();
 
-                        Person person = await context.People.FirstOrDefaultAsync(p => p.AuthorizationId == identityID);
-                        person.DallECredits = u.DalleCreditsCount;
+                        //person = await context.People.FirstOrDefaultAsync(p => p.AuthorizationId == identityID);
+                        //person.DallECredits = u.DalleCreditsCount;
+                        //context.People.Update(person);
+                        foreach (var list in u.ListKindNames)
+                        {
+                            list.Person = person;
+                            list.PersonId = person.Id;
+                            Console.WriteLine(list);
+                            context.Add(list);
+                        }
+                        //PersonList pl = new PersonList
+                        //{
+                        //    Person = person,
+                        //    PersonId = person.Id
+                        //};
+                        //context.PersonLists.Add();
                     }
                 }
             }
@@ -53,6 +72,7 @@ public class SeedUsers
             throw new Exception("Failed to initialize user seed data, service provider did not have the correct service");
         }
     }
+
     /// <summary>
     /// Helper method to ensure that the Identity user exists or has been newly created.  Modified from
     /// <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-5.0#create-the-test-accounts-and-update-the-contacts">create the test accounts and update the contacts (in Contoso University example)</a>
@@ -62,17 +82,22 @@ public class SeedUsers
     /// <param name="username"></param>
     /// <param name="email"></param>
     /// <param name="emailConfirmed"></param>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
     /// <returns>The Identity ID of the user</returns>
-    private static async Task<string> EnsureUser(UserManager<IdentityUser> userManager, string password, string username, string email, bool emailConfirmed)
+    private static async Task<string> EnsureUser(UserManager<ApplicationUser> userManager, string password, string username
+                                                , string email, bool emailConfirmed, string firstName, string lastName)
     {
         var user = await userManager.FindByNameAsync(username);
         if (user == null)
         {
-            user = new IdentityUser
+            user = new ApplicationUser()
             {
                 UserName = username,
                 Email = email,
-                EmailConfirmed = emailConfirmed
+                EmailConfirmed = emailConfirmed,
+                FirstName = firstName,
+                LastName = lastName
             };
             await userManager.CreateAsync(user, password);
         }

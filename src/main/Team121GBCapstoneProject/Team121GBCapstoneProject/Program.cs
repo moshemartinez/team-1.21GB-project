@@ -17,6 +17,8 @@ using OpenAI.GPT3.ObjectModels;
 using OpenAI.GPT3;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Http;
+using Team121GBCapstoneProject.Utilities;
+using Team121GBCapstoneProject.ProjectDataBase;
 using Team121GBCapstoneProject.Services;
 
 
@@ -40,10 +42,6 @@ builder.Services.AddScoped<IReCaptchaService, ReCaptchaV2Service>(recaptcha => n
 builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha => 
                                                                     new ReCaptchaV3Service(reCAPTCHAV3SecretKey, 
                                                                     recaptcha.GetRequiredService<IHttpClientFactory>()));
-
-// Add Swagger middleware
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
@@ -100,7 +98,22 @@ builder.Services.AddAuthentication()
 
 
 var app = builder.Build();
-
+// ! Seed users
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        //This only works locally not on azure
+        string testUserPW = builder.Configuration["SeedUserPW"];
+        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+        throw new Exception("Couldn't seed users.");
+    }
+}
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();

@@ -1,4 +1,7 @@
-﻿namespace Team121GBCapstoneProject.ProjectDataBase;
+﻿using Humanizer;
+using Team121GBCapstoneProject.Models;
+
+namespace Team121GBCapstoneProject.ProjectDataBase;
 
 /// <summary>
 /// Helper class to hold information we need for users in our project databases.
@@ -11,6 +14,24 @@ public class UserInfoData
     public string LastName { get; set; }
     public bool EmailConfirmed { get; set; } = true;
     public int DalleCreditsCount { get; set; } = 5;
+    public List<PersonList> ListKindNames { get; set; } = new List<PersonList>
+    {
+        new PersonList
+        {
+            ListKind = "Currently Playing",
+            ListKindId = 1
+        },
+        new PersonList
+        {
+            ListKind = "Completed",
+            ListKindId = 2
+        },
+        new PersonList
+        {
+            ListKind = "Want to Play",
+            ListKindId = 3
+        }
+    };
 }
 public class SeedData
 {
