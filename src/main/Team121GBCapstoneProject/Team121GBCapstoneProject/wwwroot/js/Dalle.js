@@ -1,5 +1,36 @@
 ﻿//import { onClick } from "./reCAPTCHAV3.js";
 
+$(document).ready(() => {
+	const baseUrl = $(location).attr("origin");
+	$.ajax({
+		method: "GET",
+		url: `${baseUrl}/api/Dalle/UpdateCreditsForView`,
+		contentType: "json",
+		success: successGettingCreditCount,
+		errorOnAjax: errorGettingCreditCount
+	});
+});
+
+function successGettingCreditCount(data) {
+	console.log('succeeded getting credit count');
+	if (data === 0) {
+		$('#creditsCounter').empty()
+			.text(`Credits remaining: ${data} You've use all of your free credits.`);
+		$('#userPrompt').prop('disabled', true);
+		$('#submitPromptButton').prop('disabled', true);
+		return;
+	}
+	$('#creditsCounter').empty()
+		.text(`Credits remaining: ${data}`);
+
+}
+
+function errorGettingCreditCount(data) {
+	console.log('failed getting credit count');
+	//$('#creditsCounter').empty()
+	//	.text(`Credits remaining: ${data}`);
+}
+
 function dalleModalOpen() {
 	$('#DalleModal').modal('show');
 }
