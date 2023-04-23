@@ -1,4 +1,5 @@
 using System;
+using System.Security.Policy;
 using AngleSharp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -66,102 +67,102 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
         _homePage.NavBarHelloLink.Click();
         _profilePage.generateDalleImageButton.Click();
         _generateImagePage.GetTitle().Should().Be("Dalle Page");
-
     }
 
     [Then(@"I should see a counter telling me how many image credits I have")]
     public void ThenIShouldSeeACounterTellingMeHowManyImageCreditsIHave()
     {
-        throw new PendingStepException();
+        _generateImagePage.CreditsCounter.Should().NotBeNull();
     }
 
     [Then(@"I input a prompt")]
     public void ThenIInputAPrompt()
     {
-        throw new PendingStepException();
+        string prompt = "Super Cool Prompt";
+        _generateImagePage.EnterPrompt(prompt);
     }
 
     [Then(@"click the Generate Image Button my credits will decrease by (.*)")]
-    public void ThenClickTheGenerateImageButtonMyCreditsWillDecreaseBy(int p0)
+    public void ThenClickTheGenerateImageButtonMyCreditsWillDecreaseBy(int one)
     {
-        throw new PendingStepException();
-    }
+        _generateImagePage.SubmitPromptButton.Click();
 
-    [Given(@"I a logged in user")]
-    public void GivenIALoggedInUser()
-    {
-        throw new PendingStepException();
+        _generateImagePage.CreditsCounter.Text.Should().Be(one.ToString()); // This is not going to work currently need to come back  and fix this.
+        
     }
 
     [Given(@"I am on the image generator page")]
     public void GivenIAmOnTheImageGeneratorPage()
     {
-        throw new PendingStepException();
+        _generateImagePage.GetTitle().Should().Be("Dalle Page");
+        ThenIShouldSeeACounterTellingMeHowManyImageCreditsIHave();
     }
 
     [Given(@"I have no image credits left")]
     public void GivenIHaveNoImageCreditsLeft()
     {
-        throw new PendingStepException();
+        _generateImagePage.CreditsCounter.Text.Should().Be("0"); // This is not going to work currently need to come back  and fix this.
     }
 
     [Given(@"I try and generate an image")]
     public void GivenITryAndGenerateAnImage()
     {
-        throw new PendingStepException();
+        _generateImagePage.SubmitPromptButton.Click();
     }
 
     [Then(@"I will be told that I can't generate any more images")]
     public void ThenIWillBeToldThatICantGenerateAnyMoreImages()
     {
+        //set some text to you don't have any credits and can't generate an image etc.
         throw new PendingStepException();
-    }
-
-    [Given(@"I am logged in user on the image generator page")]
-    public void GivenIAmLoggedInUserOnTheImageGeneratorPage()
-    {
-        throw new PendingStepException();
+        //assert that the text was set
     }
 
     [Given(@"I've generated an image")]
     public void GivenIveGeneratedAnImage()
     {
-        throw new PendingStepException();
+        // Not sure that I need to anything here 
     }
 
     [When(@"I click the button for setting it as my profile picture")]
     public void WhenIClickTheButtonForSettingItAsMyProfilePicture()
     {
+        //trigger the controller method
         throw new PendingStepException();
     }
 
     [Then(@"my profile picture will be updated to display the new profile image")]
     public void ThenMyProfilePictureWillBeUpdatedToDisplayTheNewProfileImage()
     {
+        //Not really sure how to assert this one yet
         throw new PendingStepException();
     }
 
     [Given(@"I am a logged in user on the image generator page")]
     public void GivenIAmALoggedInUserOnTheImageGeneratorPage()
     {
-        throw new PendingStepException();
+        _userLoginsStepDefinitions.GivenIAmAUserWithFirstName("Talia");
+        _userLoginsStepDefinitions.WhenILogin();
+        _generateImagePage.GoTo("Dalle Page");
+        _generateImagePage.GetTitle().Should().Be("Dalle Page");
     }
 
     [Given(@"I've enterred a prompt")]
     public void GivenIveEnterredAPrompt()
     {
-        throw new PendingStepException();
+        ThenIInputAPrompt();
+        ThenClickTheGenerateImageButtonMyCreditsWillDecreaseBy(1);
     }
 
     [Given(@"the image generation failed")]
     public void GivenTheImageGenerationFailed()
     {
-        throw new PendingStepException();
+        //Do nothing the nothing to assert yet
     }
 
     [Then(@"I should be notified that something went wrong\.")]
     public void ThenIShouldBeNotifiedThatSomethingWentWrong_()
     {
-        throw new PendingStepException();
+        _generateImagePage.StatusNotificationDiv.Text.Should().Be("Something went wrong...");
     }
 }

@@ -1,4 +1,5 @@
-﻿Feature: GP-85-SetDalleImageToProfilePicture
+﻿@Nathaniel
+Feature: GP-85-SetDalleImageToProfilePicture
 
 **As a user, I would like the ability to set my AI generated image as my profile picture in the app so that  I don't have to manually upload my image.**
 
@@ -24,15 +25,14 @@ Scenario: A logged in user can access the Dalle Image generation page and enter 
 
 @LoggedIn
 Scenario: A logged in user can access the Dalle Image generation page but if they have no credits they cannot generate an image
-	Given I a logged in user
-	And I am on the image generator page
+	Given I am a logged in user on the image generator page
 	And I have no image credits left
 	And I try and generate an image
 	Then I will be told that I can't generate any more images
 
 @LoggedIn
 Scenario: A logged in user can access the Dalle Image generation page and set their profile image to the Dalle generated image
-	Given I am logged in user on the image generator page
+	Given I am a logged in user on the image generator page
 	And I've generated an image
 	When I click the button for setting it as my profile picture
 	Then my profile picture will be updated to display the new profile image

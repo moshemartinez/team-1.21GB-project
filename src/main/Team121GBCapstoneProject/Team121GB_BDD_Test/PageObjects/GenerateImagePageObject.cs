@@ -15,4 +15,13 @@ public class GenerateImagePageObject : PageObject
     }
 
     public IWebElement SubmitPromptButton =>_webDriver.FindElement(By.Id("submitPromptButton"));
+    public IWebElement UserPrompt => _webDriver.FindElement(By.Id("userPrompt"));
+    public IWebElement CreditsCounter => _webDriver.FindElement(By.Id("creditsCounter"));
+    public IWebElement StatusNotificationDiv => _webDriver.FindElement(By.Id("statusNotificationDiv"));
+    public void EnterPrompt(string prompt)
+    {
+        UserPrompt.Clear();
+        UserPrompt.SendKeys(prompt);
+    }
+
 }
