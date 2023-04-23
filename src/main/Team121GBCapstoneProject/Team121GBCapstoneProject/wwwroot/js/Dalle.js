@@ -8,9 +8,11 @@ function dalleModalClose() {
 }
 
 function displayImage(data) {
+	displayStatusToClient();
 	console.log("Successfully made image with dalle: " + data);
 
 	let temp = document.createElement("img");
+	$("img").attr("id", "dalleImage");
 	temp.src = `${data.responseText}`;
 	temp.style.display = "block";
 	temp.style.marginLeft = "auto";
@@ -27,6 +29,15 @@ function displayImage(data) {
 
 	//document.getElementById("imageHere").removeAttribute("hidden");
 	//document.getElementById("imageHere").setAttribute("src", `${data.responseText}`)
+
+}
+
+function displayStatusToClient() {
+	const notification = `<div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <h1>Successfully made image with DALL-E!</h1>
+                          </div>`;
+	$("#statusNotificationDiv").append(notification);
 }
 
 function errorOnAjax(data) {

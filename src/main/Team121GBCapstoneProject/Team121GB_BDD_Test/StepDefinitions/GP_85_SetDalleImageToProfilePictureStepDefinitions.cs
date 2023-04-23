@@ -86,9 +86,7 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     public void ThenClickTheGenerateImageButtonMyCreditsWillDecreaseBy(int one)
     {
         _generateImagePage.SubmitPromptButton.Click();
-
         _generateImagePage.CreditsCounter.Text.Should().Be(one.ToString()); // This is not going to work currently need to come back  and fix this.
-        
     }
 
     [Given(@"I am on the image generator page")]

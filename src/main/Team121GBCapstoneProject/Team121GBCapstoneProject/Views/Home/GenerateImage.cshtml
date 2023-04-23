@@ -14,20 +14,17 @@
             <h3>
                 <ul>
                     <li>Enter a prompt such as: "Dog chasing cat in the ocean."</li>
-                    <br/>
                     <li>Submit the prompt by clicking the Generate Images button.</li>
-                    <br />
                     <li>Wait for your Image to be finished!</li>
                 </ul>
             </h3>
             <br />
             <h2> Rules: </h2>
-            <h3>
+            <h3 class="text-danger">
                 <ul>
                     <li>
                         <b>No public figure or celebrities as prompts</b>
                     </li>
-                    <br />
                     <li>
                         <b>No violent or sexually explicit prompts</b>
                     </li>
@@ -37,6 +34,7 @@
             <b>These break the terms of service with OpenAI and will return an empty result.</b>
             <br />
             <br />
+            <h2 id="creditsCounter">Credits remaining: Add a data object</h2>
             <form id="promptForm">
                 <div class="form-floating mb-3">
                     <input id="userPrompt" asp-for="@Model.Prompt" class="form-control"
@@ -58,6 +56,9 @@
         <br/>
         <br />
         <div class="row">
+            <div id="statusNotificationDiv">
+                @*<!--Filled in by javascript<-->*@
+            </div>
             <div id="imageHere"></div>
             <button id="applyProfilePhoto" hidden="" class="btn btn-primary center" onclick="dalleModalOpen()">
                 Apply To
