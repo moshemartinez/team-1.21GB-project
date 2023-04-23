@@ -14,7 +14,7 @@ public partial class Person
     public int Id { get; set; }
 
     [Column("DALL-E_Credits")]
-    public int DallECredits { get; set; }
+    public int? DallECredits { get; set; }
 
     [Column("AuthorizationID")]
     [StringLength(450)]

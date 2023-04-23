@@ -36,31 +36,25 @@ public partial class GPDbContext : DbContext
     public virtual DbSet<Platform> Platforms { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer("Name=GPConnection");
-        }
-        optionsBuilder.UseLazyLoadingProxies();
-    }
+        => optionsBuilder.UseSqlServer("Name=GPConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Esrbrating>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ESRBRati__3214EC27DEDDAAB0");
+            entity.HasKey(e => e.Id).HasName("PK__ESRBRati__3214EC27CC59E8F7");
         });
 
         modelBuilder.Entity<Game>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Game__3214EC279711AD79");
+            entity.HasKey(e => e.Id).HasName("PK__Game__3214EC27C6369DF4");
 
             entity.HasOne(d => d.Esrbrating).WithMany(p => p.Games).HasConstraintName("FK_ESRBRatingID");
         });
 
         modelBuilder.Entity<GameGenre>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__GameGenr__3214EC2799EA5E65");
+            entity.HasKey(e => e.Id).HasName("PK__GameGenr__3214EC270A0E8F7D");
 
             entity.HasOne(d => d.Game).WithMany(p => p.GameGenres).HasConstraintName("FK_GameGenreID");
 
@@ -69,7 +63,7 @@ public partial class GPDbContext : DbContext
 
         modelBuilder.Entity<GamePlatform>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__GamePlat__3214EC2792141F96");
+            entity.HasKey(e => e.Id).HasName("PK__GamePlat__3214EC2715161ADF");
 
             entity.HasOne(d => d.Game).WithMany(p => p.GamePlatforms).HasConstraintName("FK_GamePlatformID");
 
@@ -78,22 +72,22 @@ public partial class GPDbContext : DbContext
 
         modelBuilder.Entity<Genre>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Genre__3214EC2723DC79EA");
+            entity.HasKey(e => e.Id).HasName("PK__Genre__3214EC27F1B145E9");
         });
 
         modelBuilder.Entity<ListKind>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ListKind__3214EC2733134BA5");
+            entity.HasKey(e => e.Id).HasName("PK__ListKind__3214EC273D8220B2");
         });
 
         modelBuilder.Entity<Person>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Person__3214EC270039F942");
+            entity.HasKey(e => e.Id).HasName("PK__Person__3214EC27760587BE");
         });
 
         modelBuilder.Entity<PersonGame>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PersonGa__3214EC275C579122");
+            entity.HasKey(e => e.Id).HasName("PK__PersonGa__3214EC273337EDE0");
 
             entity.HasOne(d => d.Game).WithMany(p => p.PersonGames)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -106,7 +100,7 @@ public partial class GPDbContext : DbContext
 
         modelBuilder.Entity<PersonList>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PersonLi__3214EC27CF7257A9");
+            entity.HasKey(e => e.Id).HasName("PK__PersonLi__3214EC27FF51327B");
 
             entity.HasOne(d => d.ListKindNavigation).WithMany(p => p.PersonLists).HasConstraintName("FK_ListKindID");
 
@@ -117,7 +111,7 @@ public partial class GPDbContext : DbContext
 
         modelBuilder.Entity<Platform>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Platform__3214EC27AD612749");
+            entity.HasKey(e => e.Id).HasName("PK__Platform__3214EC27D9FD30F2");
         });
 
         OnModelCreatingPartial(modelBuilder);
