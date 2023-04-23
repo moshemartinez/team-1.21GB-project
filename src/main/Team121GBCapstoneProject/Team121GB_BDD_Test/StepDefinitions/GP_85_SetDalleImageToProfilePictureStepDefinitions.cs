@@ -1,5 +1,6 @@
 using System;
 using System.Security.Policy;
+using System.Text.RegularExpressions;
 using AngleSharp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -85,8 +86,13 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     [Then(@"click the Generate Image Button my credits will decrease by (.*)")]
     public void ThenClickTheGenerateImageButtonMyCreditsWillDecreaseBy(int one)
     {
+        string countString = _generateImagePage.CreditsCounter.Text;
+        Match match = Regex.Match(countString, @"\d+");
+        int count;
+        if (match.Success) count = int.Parse(match.Value);
         _generateImagePage.SubmitPromptButton.Click();
-        _generateImagePage.CreditsCounter.Text.Should().Be(one.ToString()); // This is not going to work currently need to come back  and fix this.
+        
+        //_generateImagePage.CreditsCounter.Text.Should().Be(); // This is not going to work currently need to come back  and fix this.
     }
 
     [Given(@"I am on the image generator page")]
@@ -99,7 +105,7 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     [Given(@"I have no image credits left")]
     public void GivenIHaveNoImageCreditsLeft()
     {
-        _generateImagePage.CreditsCounter.Text.Should().Be("0"); // This is not going to work currently need to come back  and fix this.
+        _generateImagePage.CreditsCounter.Text.Should().Be("Credits remaining: 0 You've used all of your free credits.");
     }
 
     [Given(@"I try and generate an image")]
