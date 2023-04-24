@@ -79,6 +79,54 @@ makes a user have to download the image and then manualy upload the image. This 
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 9
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "UserName",
+                        "Email",
+                        "FirstName",
+                        "LastName",
+                        "Password"});
+            table9.AddRow(new string[] {
+                        "TaliaK",
+                        "knott@example.com",
+                        "Talia",
+                        "Knott",
+                        "Password1!"});
+            table9.AddRow(new string[] {
+                        "ZaydenC",
+                        "clark@example.com",
+                        "Zayden",
+                        "Clark",
+                        "Password1!"});
+            table9.AddRow(new string[] {
+                        "DavilaH",
+                        "hareem@example.com",
+                        "Hareem",
+                        "Davila",
+                        "Password1!"});
+#line 10
+ testRunner.Given("the following users exist", ((string)(null)), table9, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                        "UserName",
+                        "Email",
+                        "FirstName",
+                        "LastName",
+                        "Password"});
+            table10.AddRow(new string[] {
+                        "AndreC",
+                        "colea@example.com",
+                        "Andre",
+                        "Cole",
+                        "0a9dfi3.a"});
+#line 15
+ testRunner.And("the following users do not exist", ((string)(null)), table10, "And ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("A visitor cannot access the Dalle Image generation page")]
         [NUnit.Framework.CategoryAttribute("notLoggedIn")]
@@ -88,7 +136,7 @@ makes a user have to download the image and then manualy upload the image. This 
                     "notLoggedIn"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A visitor cannot access the Dalle Image generation page", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 11
+#line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,16 +156,19 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 12
+#line 9
+this.FeatureBackground();
+#line hidden
+#line 21
  testRunner.Given("I am not logged in", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 13
+#line 22
  testRunner.And("I am on the home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 14
+#line 23
  testRunner.And("I attempt to access the image generator page,", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 15
+#line 24
  testRunner.Then("I should be ask to login before accessing the page.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -127,65 +178,19 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("A logged in user can access the Dalle Image generation page and enter a prompt")]
         [NUnit.Framework.CategoryAttribute("LoggedIn")]
-        public virtual void ALoggedInUserCanAccessTheDalleImageGenerationPageAndEnterAPrompt()
+        [NUnit.Framework.TestCaseAttribute("Talia", null)]
+        public virtual void ALoggedInUserCanAccessTheDalleImageGenerationPageAndEnterAPrompt(string firstName, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "LoggedIn"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("FirstName", firstName);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged in user can access the Dalle Image generation page and enter a prompt", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 18
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 19
- testRunner.Given("I am a logged in user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 20
- testRunner.And("I am on the home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 21
- testRunner.And("I navigate to the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 22
- testRunner.Then("I should see a counter telling me how many image credits I have", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 23
- testRunner.And("I input a prompt", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 24
- testRunner.And("click the Generate Image Button my credits will decrease by 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("A logged in user can access the Dalle Image generation page but if they have no c" +
-            "redits they cannot generate an image")]
-        [NUnit.Framework.CategoryAttribute("LoggedIn")]
-        public virtual void ALoggedInUserCanAccessTheDalleImageGenerationPageButIfTheyHaveNoCreditsTheyCannotGenerateAnImage()
-        {
-            string[] tagsOfScenario = new string[] {
-                    "LoggedIn"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged in user can access the Dalle Image generation page but if they have no c" +
-                    "redits they cannot generate an image", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 27
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -206,16 +211,88 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 9
+this.FeatureBackground();
+#line hidden
 #line 28
- testRunner.Given("I am a logged in user on the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("I am a logged in user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 29
- testRunner.And("I have no image credits left", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 30
- testRunner.And("I try and generate an image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I navigate to the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 31
+ testRunner.Then("I should see a counter telling me how many image credits I have", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 32
+ testRunner.And("I input a prompt", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 33
+ testRunner.And("click the Generate Image Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 34
+ testRunner.Then("My credits will decrease by 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("A logged in user can access the Dalle Image generation page but if they have no c" +
+            "redits they cannot generate an image")]
+        [NUnit.Framework.CategoryAttribute("LoggedIn")]
+        [NUnit.Framework.TestCaseAttribute("Zayden", null)]
+        public virtual void ALoggedInUserCanAccessTheDalleImageGenerationPageButIfTheyHaveNoCreditsTheyCannotGenerateAnImage(string firstName, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "LoggedIn"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("FirstName", firstName);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged in user can access the Dalle Image generation page but if they have no c" +
+                    "redits they cannot generate an image", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 40
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 9
+this.FeatureBackground();
+#line hidden
+#line 41
+ testRunner.Given(string.Format("I am a logged in user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 42
+ testRunner.And("I am on the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 43
+ testRunner.And("I have no image credits left", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 44
+ testRunner.And("I try and generate an image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 45
  testRunner.Then("I will be told that I can\'t generate any more images", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -233,7 +310,7 @@ this.ScenarioInitialize(scenarioInfo);
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged in user can access the Dalle Image generation page and set their profile" +
                     " image to the Dalle generated image", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 34
+#line 51
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -253,16 +330,19 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 35
+#line 9
+this.FeatureBackground();
+#line hidden
+#line 52
  testRunner.Given("I am a logged in user on the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 36
+#line 53
  testRunner.And("I\'ve generated an image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 54
  testRunner.When("I click the button for setting it as my profile picture", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 38
+#line 55
  testRunner.Then("my profile picture will be updated to display the new profile image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -280,7 +360,7 @@ this.ScenarioInitialize(scenarioInfo);
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged in user can access the Dalle Image generation page but there was an erro" +
                     "r and they are notified", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 41
+#line 58
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -300,16 +380,19 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 42
+#line 9
+this.FeatureBackground();
+#line hidden
+#line 59
  testRunner.Given("I am a logged in user on the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 43
+#line 60
  testRunner.And("I\'ve enterred a prompt", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 44
+#line 61
  testRunner.But("the image generation failed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
 #line hidden
-#line 45
+#line 62
  testRunner.Then("I should be notified that something went wrong.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
