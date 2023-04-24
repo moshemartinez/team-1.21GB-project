@@ -24,7 +24,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             try
             {
                 var igdbGame = await _idgbService.SearchGameWithCachingAsync(1, "", "", 0, title);
-                IgdbGame gameToReturn = igdbGame.FirstOrDefault();
+                IgdbGame gameToReturn = igdbGame.FirstOrDefault(game => game.GameTitle == title);
                 return gameToReturn;
             }
             catch (Exception ex) 

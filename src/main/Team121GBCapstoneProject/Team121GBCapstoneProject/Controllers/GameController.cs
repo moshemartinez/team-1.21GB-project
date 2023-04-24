@@ -81,6 +81,12 @@ namespace Team121GBCapstoneProject.Controllers
             return Ok(searchResult);
         }
 
+        [HttpGet("DisplaySpeedSearch")]
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query)
+        {
+            return Ok();
+        }
+
         [HttpPost("SpeedSearch")]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchForGames(string query)
         {

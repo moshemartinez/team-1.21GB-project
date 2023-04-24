@@ -22,22 +22,41 @@
     <div class="container">
         <div class="text-center">
             <h1 class="display-4" style="font-weight: bolder;">Speed Search</h1>
-            <p>To get started please type into the text box the list of games you would like to search for.
-                Make sure each game starts with a * 
-            </p>
-            <br />
-            <p>Example: *Dark Souls</p>
-            <br />
-            <p>Once you are finished please click the Submit button and we will start searching for you.</p>
-            <div style="vertical-align: center; text-align: center;">
-                <form asp-controller="Game" asp-action="SpeedSearchForGames" method="post">
-                    <label>Games: </label>
-                    <br>
-                    <textarea id="GameEntry" rows="5" cols="100" name="GameEntry"></textarea>
-                    <br />
-                    <input id="games-submit" type="submit" value="Submit">
-                </form>
+            <div>
+                <h2>What is this?</h2>
+                <p>Speed Search allows you to be able to search mulitple games at once. This will save you time compared to 
+                    searching each individual game. Once you have submitted your searches we will do our best to find those 
+                    games and present them to you. Then you may add them to your own Games Lists from there. I hope you enjoy, 
+                    but before you search please look at the instruction below.
+                </p>
             </div>
+
+            <div class="card text-center">
+                 <div class="card-body">
+                    <h2>How do I get started?</h2>
+                    <p>Please type the games you would like to search in the text box below, however there are some rules you must follow.</p>
+                    <h3><strong>The Rules</strong></h3>
+                    <p>Each game must start with a * symbol</p>
+                    <p>Each game must be spelt correctly including any special symbols</p>
+                    <p>Titles are case sensitive</p>
+                    <h3>Below are some examples of correct searches</h3>
+                    <p>*Super Mario 64</p>
+                    <p>*Dark Souls</p>
+                    <p>*Halo: Combat Evolved</p>
+                    <h5>Once you are done typing please click the submit button.</h5>
+                    
+                    <div style="vertical-align: center; text-align: center;">
+                        <form asp-controller="Game" asp-action="SpeedSearchForGames" method="post">
+                            <label>Games: </label>
+                            <br>
+                            <textarea id="GameEntry" rows="5" cols="100" name="GameEntry"></textarea>
+                            <br />
+                            <input id="games-submit" type="submit" value="Submit">
+                        </form>
+                    </div>
+                 </div>
+            </div>
+           
         </div>
     </div>
 </section>

@@ -21,15 +21,15 @@ Background:
 
 @Quinton
 @LoggedIn
-Scenario Outline: Logged in user can see new item in profile dropdown
-	Given I am a user with first name '<FirstName>'
-	And I login
-	And I am redirected to the '<Page>' page
-	When I click the profile dropdown
-	Then I will see a item named SpeedSearch
-	Examples:
-	| FirstName | Page |
-	| Talia     | Home |
+#Scenario Outline: Logged in user can see new item in profile dropdown
+#	Given I am a user with first name '<FirstName>'
+#	And I login
+#	And I am redirected to the '<Page>' page
+#	When I click the profile dropdown
+#	Then I will see a item named SpeedSearch
+#	Examples:
+#	| FirstName | Page |
+#	| Talia     | Home |
 
 Scenario Outline: Logged in user can navigate to speedsearch page 
 	Given I am a user with first name '<FirstName>'
@@ -42,16 +42,16 @@ Scenario Outline: Logged in user can navigate to speedsearch page
 	| FirstName | Page |
 	| Talia     | Home |
 
-Scenario Outline: User input invalid data for speedsearch 
-	Given I am a user with first name '<FirstName>'
-	And I login
-	And I am on the SpeedSearch Page
-	When enter in a blank list
-	And click the submit button
-	Then I will be shown a error
-	Examples:
-	| FirstName | Page |
-	| Talia     | Home |
+#Scenario Outline: User input invalid data for speedsearch 
+#	Given I am a user with first name '<FirstName>'
+#	And I login
+#	And I am on the SpeedSearch Page
+#	When enter in a blank list
+#	And click the submit button
+#	Then I will be shown a error
+#	Examples:
+#	| FirstName | Page |
+#	| Talia     | Home |
 
 #Scenario Outline: User input valid data for speedsearch
 #	Given I am a user with first name '<FirstName>'

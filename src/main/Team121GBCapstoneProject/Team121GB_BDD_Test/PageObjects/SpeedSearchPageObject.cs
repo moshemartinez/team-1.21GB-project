@@ -16,7 +16,8 @@ namespace Team121GB_BDD_Test.PageObjects
             _pageName = "SpeedSearch";
         }
 
-        public IWebElement GamesInput => _webDriver.FindElement(By.Id("GameEntry"));
+        public IWebElement GamesInput => _webDriver.FindElement(By.Id("GameEntry")); 
+
         public IWebElement GamesSubmitButton => _webDriver.FindElement(By.Id("games-submit"));
 
         public void EnterGames(string Games)
