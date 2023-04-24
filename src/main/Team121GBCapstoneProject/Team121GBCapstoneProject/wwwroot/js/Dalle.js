@@ -1,21 +1,24 @@
 ﻿//import { onClick } from "./reCAPTCHAV3.js";
 
 $(document).ready(() => {
+	getCreditCount();
+});
+
+function getCreditCount() {
 	const baseUrl = $(location).attr("origin");
 	$.ajax({
 		method: "GET",
-		url: `${baseUrl}/api/Dalle/UpdateCreditsForView`,
+		url: `${baseUrl}/api/Dalle/GetCreditsForView`,
 		contentType: "json",
 		success: successGettingCreditCount,
 		errorOnAjax: errorGettingCreditCount
 	});
-});
-
+}
 function successGettingCreditCount(data) {
 	console.log('succeeded getting credit count');
 	if (data === 0) {
 		$('#creditsCounter').empty()
-			.text(`Credits remaining: ${data} You've use all of your free credits.`);
+			.text(`Credits remaining: ${data} You've used all of your free credits.`);
 		$('#userPrompt').prop('disabled', true);
 		$('#submitPromptButton').prop('disabled', true);
 		return;
@@ -39,6 +42,7 @@ function dalleModalClose() {
 }
 
 function displayImage(data) {
+	getCreditCount(); //update the number of credits a user has on the view.
 	displayStatusToClient();
 	console.log("Successfully made image with dalle: " + data);
 
@@ -64,6 +68,14 @@ function displayImage(data) {
 }
 
 function displayStatusToClient() {
+	const notification = `<div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <h1>Successfully made image with DALL-E!</h1>
+                          </div>`;
+	$("#statusNotificationDiv").append(notification);
+}
+
+function displayErrorStatusToClient() {
 	const notification = `<div class="alert alert-success alert-dismissible" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             <h1>Successfully made image with DALL-E!</h1>
@@ -109,7 +121,7 @@ function dalleClick() {
 			url: `/api/Dalle/GetImages?prompt=${userPrompt.value}&gRecaptchaResponse=${recaptcha}`,
 			dataType: "json",					// data type expected in response
 			success: displayImage,
-			error: displayImage
+			error: displayErrorStatusToClient
 		});
 	};
 };

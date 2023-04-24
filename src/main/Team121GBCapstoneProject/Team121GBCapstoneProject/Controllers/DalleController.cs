@@ -44,6 +44,17 @@ namespace Team121GBCapstoneProject.Controllers
                 {
                     image = _dalleService.GetImages(prompt).Result;
                 }
+                //update user credits
+                string authorizationId = _userManager.GetUserId(User);
+                Person person = _genericPersonRepository.GetAll()
+                                                        .FirstOrDefault(p => p.AuthorizationId == authorizationId)!;
+                if (person != null)
+                {
+                    person.DallECredits -= 1;
+                    person = _genericPersonRepository.AddOrUpdate(person);
+                    Debug.WriteLine(person);
+                }
+
                 return Ok(image);
             }
             catch (Exception e)
@@ -70,15 +81,23 @@ namespace Team121GBCapstoneProject.Controllers
             }
         }
 
-        [HttpGet("UpdateCreditsForView")]
+        [HttpGet("GetCreditsForView")]
         public int GetUserCredits()
         {
-            string authorizationId = _userManager.GetUserId(User);
-            int? creditCount = _genericPersonRepository.GetAll()
-                                                       .FirstOrDefault( p => p.AuthorizationId == authorizationId)!
-                                                       .DallECredits;
-            if (creditCount != null) return (int) creditCount;
-            else return 0;
+            try
+            {
+                string authorizationId = _userManager.GetUserId(User);
+                int? creditCount = _genericPersonRepository.GetAll()
+                    .FirstOrDefault(p => p.AuthorizationId == authorizationId)!
+                    .DallECredits;
+                if (creditCount != null) return (int)creditCount;
+                else return 0;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return 0;
+            }
         }
     }
 }
