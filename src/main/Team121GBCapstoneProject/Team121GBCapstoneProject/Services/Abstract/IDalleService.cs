@@ -4,6 +4,6 @@
     {
         public Task<string> GetImages(string prompt);
         public Task<string> SetImageToProfilePicure(string imageURL);
-        public Task<string> TurnImageUrlIntoByteArray(string imageURL);
+        public Task<byte[]> TurnImageUrlIntoByteArray(string imageURL);
     }
 }

@@ -4,7 +4,7 @@ using OpenAI.GPT3.ObjectModels;
 using Microsoft.AspNetCore.Identity;
 using OpenAI.GPT3.Interfaces;
 using Team121GBCapstoneProject.Services.Abstract;
-
+using System.Net;
 
 namespace Team121GBCapstoneProject.Services.Concrete;
 
@@ -54,8 +54,24 @@ public class DalleService : IDalleService
         throw new NotImplementedException();
     }
 
-    public Task<string> TurnImageUrlIntoByteArray(string imageURL)
+    public async Task<byte[]> TurnImageUrlIntoByteArray(string imageURL)
     {
-        throw new NotImplementedException();
+        if (imageURL == null)
+        {
+            return null;
+        }
+        if (imageURL == "")
+        {
+            return null;
+        }
+        byte[] imageBytes;
+        using (var client = new HttpClient())
+        {
+            using (var response = await client.GetAsync(imageURL))
+            {
+                imageBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            }
+        }
+        return imageBytes;
     }
 }
