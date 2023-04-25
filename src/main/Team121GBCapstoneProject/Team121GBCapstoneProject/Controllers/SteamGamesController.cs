@@ -24,7 +24,7 @@ namespace Team121GBCapstoneProject.Controllers
         public IActionResult Index()
         {
             SteamHelper _steamHelper = new SteamHelper(_userManager);
-            string? userId = _userManager.GetUserId(User);
+            //string? userId = _userManager.GetUserId(User);
             var steamAccount = _steamHelper.GetSteamId(User);
             if (steamAccount == null)
             {

@@ -114,6 +114,7 @@ namespace Team121GBCapstoneProject.Services.Concrete
             }
             else
             {
+                //wrap in try catch
                return System.Text.Json.JsonSerializer.Deserialize<SteamGamesDTO>(jsonReponse);
             }
             

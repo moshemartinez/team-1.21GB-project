@@ -30,6 +30,9 @@ namespace Team121GBCapstoneProject.Utilities
             return steamId;
         }
 
+        //Create method to do items in the controller instead
+
+
 /*        public SteamGamesDTO GetSteamGames(ClaimsPrincipal user)
         {
             //string? userId = _userManager.GetUserId(user);
