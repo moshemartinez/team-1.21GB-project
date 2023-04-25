@@ -50,7 +50,9 @@ public class SeedUsers
                             list.Person = person;
                             list.PersonId = person.Id;
                             context.Add(list);
+                            await context.SaveChangesAsync();
                         }
+                        //add a save changes here
                     }
                 }
             }
