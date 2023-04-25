@@ -23,26 +23,26 @@ Scenario: A visitor cannot access the Dalle Image generation page
 	And I attempt to access the image generator page,
 	Then I should be ask to login before accessing the page.
 
-@LoggedIn
-Scenario: A logged in user can access the Dalle Image generation page and enter a prompt
+# make sure Talia has at least one credit for this test to pass
+@LoggedIn 
+Scenario: Talia can access the Dalle Image generation page and enter a prompt
 	Given I am a logged in user with first name '<FirstName>'
 	And I am on the home page
 	And I navigate to the image generator page
-	Then I should see a counter telling me how many image credits I have
+	And I should see a counter telling me how many image credits I have that is 'Credits remaining: '
 	And I input a prompt
-	And click the Generate Image Button
+	When I click the Generate Image Button
 	Then My credits will decrease by 1
 	Examples:
 	| FirstName | 
 	| Talia |
 
 @LoggedIn
-Scenario: A logged in user can access the Dalle Image generation page but if they have no credits they cannot generate an image
+Scenario: Zayden can access the Dalle Image generation page but Zayden has no credits so they cannot generate an image
 	Given I am a logged in user with first name '<FirstName>'
 	And I am on the image generator page
-	And I have no image credits left
-	And I try and generate an image
-	Then I will be told that I can't generate any more images
+	And I should see a counter telling me how many image credits I have that is 'Credits remaining: 0 You have used all of your free credits.'
+	Then I will not be able click the Generate Image Button
 	Examples:
 	| FirstName | 
 	| Zayden |
@@ -54,9 +54,10 @@ Scenario: A logged in user can access the Dalle Image generation page and set th
 	When I click the button for setting it as my profile picture
 	Then my profile picture will be updated to display the new profile image
 
+#This prompt is violent on purpose so we can test the behavior the should be expected
 @LoggedIn
 Scenario: A logged in user can access the Dalle Image generation page but there was an error and they are notified
 	Given I am a logged in user on the image generator page
-	And I've enterred a prompt
-	But the image generation failed
+	And I have  entered a prompt that is totally inappropriate 'Master chief brutally killing younglings in the jedi temple' 
+	When I click the Generate Image Button
 	Then I should be notified that something went wrong.

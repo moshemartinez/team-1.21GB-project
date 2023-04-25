@@ -176,10 +176,10 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("A logged in user can access the Dalle Image generation page and enter a prompt")]
+        [NUnit.Framework.DescriptionAttribute("Talia can access the Dalle Image generation page and enter a prompt")]
         [NUnit.Framework.CategoryAttribute("LoggedIn")]
         [NUnit.Framework.TestCaseAttribute("Talia", null)]
-        public virtual void ALoggedInUserCanAccessTheDalleImageGenerationPageAndEnterAPrompt(string firstName, string[] exampleTags)
+        public virtual void TaliaCanAccessTheDalleImageGenerationPageAndEnterAPrompt(string firstName, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "LoggedIn"};
@@ -190,8 +190,8 @@ this.FeatureBackground();
             string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged in user can access the Dalle Image generation page and enter a prompt", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 27
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Talia can access the Dalle Image generation page and enter a prompt", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 28
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -214,25 +214,26 @@ this.ScenarioInitialize(scenarioInfo);
 #line 9
 this.FeatureBackground();
 #line hidden
-#line 28
+#line 29
  testRunner.Given(string.Format("I am a logged in user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 29
+#line 30
  testRunner.And("I am on the home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 30
+#line 31
  testRunner.And("I navigate to the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 31
- testRunner.Then("I should see a counter telling me how many image credits I have", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
 #line 32
- testRunner.And("I input a prompt", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I should see a counter telling me how many image credits I have that is \'Credits " +
+                        "remaining: \'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 33
- testRunner.And("click the Generate Image Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I input a prompt", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 34
+ testRunner.When("I click the Generate Image Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 35
  testRunner.Then("My credits will decrease by 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -240,11 +241,11 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("A logged in user can access the Dalle Image generation page but if they have no c" +
-            "redits they cannot generate an image")]
+        [NUnit.Framework.DescriptionAttribute("Zayden can access the Dalle Image generation page but Zayden has no credits so th" +
+            "ey cannot generate an image")]
         [NUnit.Framework.CategoryAttribute("LoggedIn")]
         [NUnit.Framework.TestCaseAttribute("Zayden", null)]
-        public virtual void ALoggedInUserCanAccessTheDalleImageGenerationPageButIfTheyHaveNoCreditsTheyCannotGenerateAnImage(string firstName, string[] exampleTags)
+        public virtual void ZaydenCanAccessTheDalleImageGenerationPageButZaydenHasNoCreditsSoTheyCannotGenerateAnImage(string firstName, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "LoggedIn"};
@@ -255,9 +256,9 @@ this.FeatureBackground();
             string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged in user can access the Dalle Image generation page but if they have no c" +
-                    "redits they cannot generate an image", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 40
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Zayden can access the Dalle Image generation page but Zayden has no credits so th" +
+                    "ey cannot generate an image", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 41
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -280,20 +281,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line 9
 this.FeatureBackground();
 #line hidden
-#line 41
+#line 42
  testRunner.Given(string.Format("I am a logged in user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 42
+#line 43
  testRunner.And("I am on the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 43
- testRunner.And("I have no image credits left", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
 #line 44
- testRunner.And("I try and generate an image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I should see a counter telling me how many image credits I have that is \'Credits " +
+                        "remaining: 0 You have used all of your free credits.\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 45
- testRunner.Then("I will be told that I can\'t generate any more images", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I will not be able click the Generate Image Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -360,7 +359,7 @@ this.FeatureBackground();
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged in user can access the Dalle Image generation page but there was an erro" +
                     "r and they are notified", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 58
+#line 59
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -383,16 +382,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 9
 this.FeatureBackground();
 #line hidden
-#line 59
+#line 60
  testRunner.Given("I am a logged in user on the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 60
- testRunner.And("I\'ve enterred a prompt", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
 #line 61
- testRunner.But("the image generation failed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
+ testRunner.And("I have  entered a prompt that is totally inappropriate \'Master chief brutally kil" +
+                        "ling younglings in the jedi temple\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 62
+ testRunner.When("I click the Generate Image Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 63
  testRunner.Then("I should be notified that something went wrong.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

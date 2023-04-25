@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using AngleSharp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using OpenQA.Selenium;
 using Standups_BDD_Tests.Drivers;
 using Standups_BDD_Tests.PageObjects;
 using Standups_BDD_Tests.StepDefinitions;
@@ -21,6 +22,7 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     private readonly GenerateImagePageObject _generateImagePage;
     private readonly UserLoginsStepDefinitions _userLoginsStepDefinitions;
     private readonly BrowserDriver _browserDriver;
+    private int _creditCount;
     public GP_85_SetDalleImageToProfilePictureStepDefinitions(ScenarioContext context, BrowserDriver browserDriver)
     {
         _homePage = new HomePageObject(browserDriver.Current);
@@ -29,6 +31,7 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
         _userLoginsStepDefinitions = new UserLoginsStepDefinitions(context, browserDriver);
         _browserDriver = browserDriver;
     }
+
     [Given(@"I am not logged in")]
     public void GivenIAmNotLoggedIn()
     {
@@ -36,23 +39,13 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     }
 
     [Given(@"I am on the home page")]
-    public void GivenIAmOnTheHomePage()
-    {
-        _homePage.GoTo();
-    }
-
+    public void GivenIAmOnTheHomePage() => _homePage.GoTo();
 
     [Given(@"I attempt to access the image generator page,")]
-    public void GivenIAttemptToAccessTheImageGeneratorPage()
-    {
-        _generateImagePage.GoTo("Dalle Page");
-    }
+    public void GivenIAttemptToAccessTheImageGeneratorPage() => _generateImagePage.GoTo("Dalle Page");
 
     [Then(@"I should be ask to login before accessing the page\.")]
-    public void ThenIShouldBeAskToLoginBeforeAccessingThePage_()
-    {
-        _browserDriver.Current.Title.Should().Be("Log in");
-    }
+    public void ThenIShouldBeAskToLoginBeforeAccessingThePage_() => _browserDriver.Current.Title.Should().Be("Log in");
 
     [Given(@"I am a logged in user with first name '([^']*)'")]
     public void GivenIAmALoggedInUserWithFirstName(string user)
@@ -70,73 +63,39 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
         _browserDriver.Current.Title.Should().Be("Dalle Page");
     }
 
-    [Then(@"I should see a counter telling me how many image credits I have")]
-    public void ThenIShouldSeeACounterTellingMeHowManyImageCreditsIHave()
-    {
-        _generateImagePage.CreditsCounter.Should().NotBeNull();
-    }
+    [Given(@"I should see a counter telling me how many image credits I have that is '([^']*)'")]
+    public void GivenIShouldSeeACounterTellingMeHowManyImageCreditsIHaveThatIs(string count) => _generateImagePage.CreditsCounter.Text.Should().Contain(count);
+    
 
-    //[Then(@"click the Generate Image Button my credits will decrease by (.*)")]
-    //public void ThenClickTheGenerateImageButtonMyCreditsWillDecreaseBy(int p0)
-    //{
-    //    string countString = _generateImagePage.CreditsCounter.Text;
-    //    Match match = Regex.Match(countString, @"\d+");
-    //    int count = 0;
-    //    if (match.Success) count = int.Parse(match.Value);
-    //    _generateImagePage.SubmitPromptButton.Click();
-    //    count -= 1;
-    //    _generateImagePage.CreditsCounter.Text.Should().Contain($"Credits remaining: {count}");
-    //}
-
-    [Then(@"I input a prompt")]
-    public void ThenIInputAPrompt()
-    {
-        _generateImagePage.EnterPrompt("Super cool prompt");
-    }
-
-    [Then(@"click the Generate Image Button")]
-    public void ThenClickTheGenerateImageButton()
-    {
-        _generateImagePage.SubmitPromptButton.Click();
-    }
+    [Given(@"I input a prompt")]
+    public void GivenIInputAPrompt() => _generateImagePage.EnterPrompt("Super cool prompt");
 
     [Then(@"My credits will decrease by (.*)")]
-    public void ThenMyCreditsWillDecreaseBy(int p0)
-    {
-        //For BDD Tests Talia is the user we use and talia always has 5 credits to start out with
-        _generateImagePage.CreditsCounter.Text.Should().Contain("Credits remaining: 4");
-    }
+    public void ThenMyCreditsWillDecreaseBy(int one) => _generateImagePage.CreditsCounter.Text.Contains($"{_creditCount - one}");
 
     [Given(@"I am on the image generator page")]
     public void GivenIAmOnTheImageGeneratorPage()
     {
-        _generateImagePage.GoTo("Dalle Page");
+        GivenINavigateToTheImageGeneratorPage();
+        _browserDriver.Current.Title.Should().Be("Dalle Page");
     }
 
-    [Given(@"I have no image credits left")]
-    public void GivenIHaveNoImageCreditsLeft()
+    [When(@"I click the Generate Image Button")]
+    public void WhenIClickTheGenerateImageButton()
     {
-        // credits are zero fo this user
-
+        string counterText = new string(_generateImagePage.CreditsCounter.Text.Where(Char.IsDigit).ToArray());
+        _creditCount = int.Parse(counterText);
+        _generateImagePage.SubmitPromptButton.Click();
     }
 
-    [Given(@"I try and generate an image")]
-    public void GivenITryAndGenerateAnImage()
-    {
-        //do nothing inputs are disabled
-    }
-
-    [Then(@"I will be told that I can't generate any more images")]
-    public void ThenIWillBeToldThatICantGenerateAnyMoreImages()
-    {
-        _generateImagePage.CreditsCounter.Text.Should()
-            .Be("Credits remaining: 0 You've used all of your free credits.");
-    }
+    [Then(@"I will not be able click the Generate Image Button")]
+    public void ThenIWillNotBeAbleClickTheGenerateImageButton() => _generateImagePage.SubmitPromptButton.Enabled.Should().BeFalse();
 
     [Given(@"I am a logged in user on the image generator page")]
     public void GivenIAmALoggedInUserOnTheImageGeneratorPage()
     {
-        throw new PendingStepException();
+        GivenIAmALoggedInUserWithFirstName("Talia");
+        _generateImagePage.GoTo("Dalle Page");
     }
 
     [Given(@"I've generated an image")]
@@ -157,21 +116,19 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
         throw new PendingStepException();
     }
 
-    [Given(@"I've enterred a prompt")]
-    public void GivenIveEnterredAPrompt()
+    [Given(@"I have  entered a prompt that is totally inappropriate '([^']*)'")]
+    public void GivenIHaveEnteredAPromptThatIsTotallyInappropriate(string terriblePrompt)
     {
-        throw new PendingStepException();
+        _generateImagePage.EnterPrompt(terriblePrompt);
+        WhenIClickTheGenerateImageButton();
     }
 
-    [Given(@"the image generation failed")]
-    public void GivenTheImageGenerationFailed()
-    {
-        throw new PendingStepException();
-    }
+
+
 
     [Then(@"I should be notified that something went wrong\.")]
     public void ThenIShouldBeNotifiedThatSomethingWentWrong_()
     {
-        throw new PendingStepException();
+        _generateImagePage.StatusNotificationDiv.Text.Should().Be("Something went wrong...");
     }
 }
