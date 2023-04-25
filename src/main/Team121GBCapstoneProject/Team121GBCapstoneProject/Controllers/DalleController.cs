@@ -99,6 +99,25 @@ namespace Team121GBCapstoneProject.Controllers
                 return 0;
             }
         }
+
+        [HttpPost("UpdateProfilePicture")]
+        public async Task UpdateProfilePicture(string imageURL)
+        {
+            try
+            {
+                if (imageURL != null)
+                {
+                    await _dalleService.TurnImageUrlIntoByteArray(imageURL);
+                    await _dalleService.SetImageToProfilePicure(imageURL);
+                    return;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
     }
 }
 

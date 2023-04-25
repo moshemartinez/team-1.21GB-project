@@ -2,6 +2,24 @@
 
 $(document).ready(() => {
 	getCreditCount();
+	$('#submitPromptButton').on('click', () => {
+		const userPrompt = document.getElementById("userPrompt")
+		const recaptcha = $("#dalleRecaptcha").val();
+		if (userPrompt.value != "") {
+			console.log(userPrompt);
+			console.log(recaptcha);
+			$.ajax({
+				method: "GET",
+				url: `/api/Dalle/GetImages?prompt=${userPrompt.value}&gRecaptchaResponse=${recaptcha}`,
+				dataType: "json",					// data type expected in response
+				success: displayImage,
+				error: displayErrorStatusToClient
+			});
+		};
+	});
+	$('#applyProfilePhoto').on('click', () => {
+		applyProfilePhoto();
+	});
 });
 
 function getCreditCount() {
@@ -18,7 +36,7 @@ function successGettingCreditCount(data) {
 	console.log('succeeded getting credit count');
 	if (data === 0) {
 		$('#creditsCounter').empty()
-			.text(`Credits remaining: ${data} You've used all of your free credits.`);
+			.text(`Credits remaining: ${data} You have used all of your free credits.`);
 		$('#userPrompt').prop('disabled', true);
 		$('#submitPromptButton').prop('disabled', true);
 		return;
@@ -68,6 +86,7 @@ function displayImage(data) {
 }
 
 function displayStatusToClient() {
+	$("#statusNotificationDiv").empty();
 	const notification = `<div class="alert alert-success alert-dismissible" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             <h1>Successfully made image with DALL-E!</h1>
@@ -76,9 +95,10 @@ function displayStatusToClient() {
 }
 
 function displayErrorStatusToClient() {
-	const notification = `<div class="alert alert-success alert-dismissible" role="alert">
+	$("#statusNotificationDiv").empty();
+	const notification = `<div class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <h1>Successfully made image with DALL-E!</h1>
+                            <h1>Something went wrong...</h1>
                           </div>`;
 	$("#statusNotificationDiv").append(notification);
 }
@@ -91,37 +111,41 @@ $(function () {
 	$("#promptForm").submit(function (event) {
 		// prevent automatic submission of the form from button press or typing enter
 		event.preventDefault();
-	})
-
-//	document.getElementById("submitPromptButton").setAttribute("aria-disabled", "true");
-
-//	$("#submitPromptButton").click(function () {
-//		const userPrompt = document.getElementById("userPrompt")
-//		if (userPrompt.value != "") {
-//			console.log(userPrompt);
-//			$.ajax({
-//				method: "GET",
-//				url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
-//				dataType: "json",					// data type expected in response
-//				success: displayImage,
-//				error: displayImage
-//			});
-//		};
-//	});
+	});
 });
 
-function dalleClick() {
-	const userPrompt = document.getElementById("userPrompt")
-	const recaptcha = $("#dalleRecaptcha").val();
-	if (userPrompt.value != "") {
-		console.log(userPrompt);
-		console.log(recaptcha);
-		$.ajax({
-			method: "GET",
-			url: `/api/Dalle/GetImages?prompt=${userPrompt.value}&gRecaptchaResponse=${recaptcha}`,
-			dataType: "json",					// data type expected in response
-			success: displayImage,
-			error: displayErrorStatusToClient
-		});
-	};
-};
+function successUpdatingProfilePicture(data) {
+	alert("success updating profile picture");
+}
+
+function errorUpdatingProfilePicture(data) {
+	alert("error updating profile picture");
+}
+
+function applyProfilePhoto() {
+	const imageUrl = $('#dalleImage').attr('src');	
+	console.log("image url: " + imageUrl);
+	$.ajax({
+		method: "POST",
+		url: "/api/Dalle/UpdateProfilePicture",
+		data: { imageUrl: imageUrl },
+		success: successUpdatingProfilePicture,
+		error: errorUpdatingProfilePicture
+	});
+}
+
+// function dalleClick() {
+// 	const userPrompt = document.getElementById("userPrompt")
+// 	const recaptcha = $("#dalleRecaptcha").val();
+// 	if (userPrompt.value != "") {
+// 		console.log(userPrompt);
+// 		console.log(recaptcha);
+// 		$.ajax({
+// 			method: "GET",
+// 			url: `/api/Dalle/GetImages?prompt=${userPrompt.value}&gRecaptchaResponse=${recaptcha}`,
+// 			dataType: "json",					// data type expected in response
+// 			success: displayImage,
+// 			error: displayErrorStatusToClient
+// 		});
+// 	};
+// };
