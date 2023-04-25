@@ -22,7 +22,7 @@ namespace Team121GB_BDD_Test.StepDefinitions
             _scenarioContext = context;
         }
 
-        [When(@"I navigate to the '([^']*)' page")]
+        [When(@"I navigate to the '([^']*)' page"), Given(@"I navigate to the '([^']*)' page")]
         public void WhenINavigateToThePage(string page)
         {
             _profilePage.GoTo();

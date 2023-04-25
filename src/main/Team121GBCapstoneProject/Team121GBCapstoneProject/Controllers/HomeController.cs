@@ -40,6 +40,12 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize]
+    public IActionResult FindFriends()
+    {
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();

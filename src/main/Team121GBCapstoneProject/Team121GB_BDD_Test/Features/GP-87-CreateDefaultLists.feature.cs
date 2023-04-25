@@ -83,20 +83,20 @@ These three lists are Currently Playing, Completed, Want To Play", ProgrammingLa
         {
 #line 8
 #line hidden
-            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table9.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "TaliaK",
                         "BDDTesting1@gmail.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
 #line 9
- testRunner.Given("the following users exist", ((string)(null)), table9, "Given ");
+ testRunner.Given("the following users exist", ((string)(null)), table11, "Given ");
 #line hidden
         }
         
