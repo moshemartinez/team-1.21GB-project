@@ -1,7 +1,8 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.Areas.Identity.Data;
-
+using Team121GBCapstoneProject.Models.DTO;
+using Team121GBCapstoneProject.Services.Abstract;
 
 namespace Team121GBCapstoneProject.Utilities
 {
@@ -28,5 +29,13 @@ namespace Team121GBCapstoneProject.Utilities
 
             return steamId;
         }
+
+/*        public SteamGamesDTO GetSteamGames(ClaimsPrincipal user)
+        {
+            //string? userId = _userManager.GetUserId(user);
+            var steamId = GetSteamId(user);
+
+            return _steamService.GetGames(steamId);
+        }*/
     }
 }

@@ -20,8 +20,7 @@ namespace Team121GBCapstoneProject.Services.Concrete
         public SteamService(string token)
         {
             Token = token;
-            BaseSource =
-                "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}";
+            BaseSource = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}";
         }
 
         public string GetJsonStringsFromEndpoint(string id)
@@ -65,6 +64,27 @@ namespace Team121GBCapstoneProject.Services.Concrete
             //}
         }
 
+        public string GetJsonStringFromEndpoint(string uri)
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            var response = client.Send(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Note there is only an async version of this so to avoid forcing you to use all async I'm waiting for the result manually
+                string responseText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                return responseText;
+            }
+            else
+            {
+                // What to do if failure? 401? Should throw and catch specific exceptions that explain what happened
+                return null;
+            }
+
+        }
+
         public async Task<SteamUser> GetSteamUser(string id)
         {
             string response = GetJsonStringsFromEndpoint(id);
@@ -82,5 +102,24 @@ namespace Team121GBCapstoneProject.Services.Concrete
 
            throw new HttpRequestException();
         }
+
+        public SteamGamesDTO GetGames(string steamId)
+        {
+            string source = string.Format("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={0}&steamid={1}&format=json&include_appinfo=1",Token,steamId);
+            string jsonReponse = GetJsonStringFromEndpoint(source);
+
+            if(jsonReponse == null)
+            {
+                return null;
+            }
+            else
+            {
+               return System.Text.Json.JsonSerializer.Deserialize<SteamGamesDTO>(jsonReponse);
+            }
+            
+        }
+
+
+
     }
 }
