@@ -2,7 +2,8 @@
 
 $(document).ready(() => {
 	getCreditCount();
-	$('#submitPromptButton').on('click', () => {
+	$('#submitPromptButton').on('click', (event) => {
+		event.preventDefault();
 		const userPrompt = document.getElementById("userPrompt")
 		const recaptcha = $("#dalleRecaptcha").val();
 		if (userPrompt.value != "") {
@@ -48,8 +49,6 @@ function successGettingCreditCount(data) {
 
 function errorGettingCreditCount(data) {
 	console.log('failed getting credit count');
-	//$('#creditsCounter').empty()
-	//	.text(`Credits remaining: ${data}`);
 }
 
 function dalleModalOpen() {
@@ -60,29 +59,34 @@ function dalleModalClose() {
 }
 
 function displayImage(data) {
-	getCreditCount(); //update the number of credits a user has on the view.
-	displayStatusToClient();
-	console.log("Successfully made image with dalle: " + data);
+	try {
 
-	let temp = document.createElement("img");
-	$("img").attr("id", "dalleImage");
-	temp.src = `${data.responseText}`;
-	temp.style.display = "block";
-	temp.style.marginLeft = "auto";
-	temp.style.marginRight = "auto";
-	document.getElementById("applyProfilePhoto").removeAttribute("hidden");
-	document.getElementById("imageHere").removeAttribute("hidden");
+		getCreditCount(); //update the number of credits a user has on the view.
+		displayStatusToClient();
+		console.log("Successfully made image with dalle: " + data);
 
-	document.getElementById("imageHere").innerHTML = "";
-	//document.getElementById("imageHere").setAttribute("href", `${data.responseText}`)
-	//document.getElementById("imageHere").setAttribute("download", "DalleGeneratedImage")
-	document.getElementById("imageHere").appendChild(temp);
-	document.getElementById("submitPromptButton").setAttribute("aria-disabled", "false");
-	
+		let temp = document.createElement("img");
+		$("img").attr("id", "dalleImage");
+		temp.src = `${data.responseText}`;
+		temp.style.display = "block";
+		temp.style.marginLeft = "auto";
+		temp.style.marginRight = "auto";
+		document.getElementById("applyProfilePhoto").removeAttribute("hidden");
+		document.getElementById("imageHere").removeAttribute("hidden");
 
-	//document.getElementById("imageHere").removeAttribute("hidden");
-	//document.getElementById("imageHere").setAttribute("src", `${data.responseText}`)
+		document.getElementById("imageHere").innerHTML = "";
+		//document.getElementById("imageHere").setAttribute("href", `${data.responseText}`)
+		//document.getElementById("imageHere").setAttribute("download", "DalleGeneratedImage")
+		document.getElementById("imageHere").appendChild(temp);
+		document.getElementById("submitPromptButton").setAttribute("aria-disabled", "false");
 
+
+		//document.getElementById("imageHere").removeAttribute("hidden");
+		//document.getElementById("imageHere").setAttribute("src", `${data.responseText}`)
+
+	} catch (e) {
+		console.log('error in displayImage ', e.message);
+	}
 }
 
 function displayStatusToClient() {
@@ -94,7 +98,8 @@ function displayStatusToClient() {
 	$("#statusNotificationDiv").append(notification);
 }
 
-function displayErrorStatusToClient() {
+function displayErrorStatusToClient(data) {
+	console.log(data);
 	$("#statusNotificationDiv").empty();
 	const notification = `<div class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -107,12 +112,12 @@ function errorOnAjax(data) {
 	console.log("Error in AJAX call" + data.url);
 }
 
-$(function () {
-	$("#promptForm").submit(function (event) {
-		// prevent automatic submission of the form from button press or typing enter
-		event.preventDefault();
-	});
-});
+// $(function () {
+// 	$("#promptForm").submit(function (event) {
+// 		// prevent automatic submission of the form from button press or typing enter
+// 		event.preventDefault();
+// 	});
+// });
 
 function successUpdatingProfilePicture(data) {
 	alert("success updating profile picture");
@@ -123,11 +128,11 @@ function errorUpdatingProfilePicture(data) {
 }
 
 function applyProfilePhoto() {
-	const imageUrl = $('#dalleImage').attr('src');	
+	const imageUrl = $('#dalleImage').attr('src');
 	console.log("image url: " + imageUrl);
 	$.ajax({
 		method: "POST",
-		url: "/api/Dalle/UpdateProfilePicture",
+		url: "/api/Dalle/SetImageToProfilePicure",
 		data: { imageUrl: imageUrl },
 		success: successUpdatingProfilePicture,
 		error: errorUpdatingProfilePicture

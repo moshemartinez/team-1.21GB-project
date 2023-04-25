@@ -1,14 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OpenAI.GPT3.Managers;
-using OpenAI.GPT3.ObjectModels.RequestModels;
-using OpenAI.GPT3.ObjectModels;
-using Microsoft.Extensions.DependencyInjection;
-using OpenAI.GPT3.Interfaces;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.DAL.Abstract;
-using Team121GBCapstoneProject.Services;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Services.Abstract;
 
@@ -44,40 +38,51 @@ namespace Team121GBCapstoneProject.Controllers
                 {
                     image = _dalleService.GetImages(prompt).Result;
                 }
-                //update user credits
-                string authorizationId = _userManager.GetUserId(User);
-                Person person = _genericPersonRepository.GetAll()
-                                                        .FirstOrDefault(p => p.AuthorizationId == authorizationId)!;
-                if (person != null)
-                {
-                    person.DallECredits -= 1;
-                    person = _genericPersonRepository.AddOrUpdate(person);
-                    Debug.WriteLine(person);
-                }
+                //! temporarily turned off
+                //update user credits 
+                // string authorizationId = _userManager.GetUserId(User);
+                // Person person = _genericPersonRepository.GetAll()
+                //                                         .FirstOrDefault(p => p.AuthorizationId == authorizationId)!;
+                // if (person != null)
+                // {
+                //     person.DallECredits -= 1;
+                //     person = _genericPersonRepository.AddOrUpdate(person);
+                //     Debug.WriteLine(person);
+                // }
 
                 return Ok(image);
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                return BadRequest();
+                return BadRequest(e);
             }
         }
         [HttpPost("SetImageToProfilePicure")]
-        public async Task<string> SetImageToProfilePicure(string imageURL)
+        public ActionResult SetImageToProfilePicure(string imageURL)
         {
             try
             {
                 if (imageURL != null)
                 {
-                    return await _dalleService.SetImageToProfilePicure(imageURL);
+                    byte[] imageByteArray = _dalleService.TurnImageUrlIntoByteArray(imageURL).Result;
+                    if (imageByteArray.Length == 0)
+                    {
+                        return BadRequest("Some thing went wrong turning the image into a byte array");
+                    }
+                    var userManager = _userManager.UpdateAsync(new ApplicationUser
+                    {
+                        Id = _userManager.GetUserId(User),
+                        ProfilePicture = imageByteArray
+                    }).Result;
+                    return Ok();
                 }
-                return "";
+                return BadRequest("");
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                return "";
+                return BadRequest("");
             }
         }
 
@@ -100,24 +105,24 @@ namespace Team121GBCapstoneProject.Controllers
             }
         }
 
-        [HttpPost("UpdateProfilePicture")]
-        public async Task UpdateProfilePicture(string imageURL)
-        {
-            try
-            {
-                if (imageURL != null)
-                {
-                    await _dalleService.TurnImageUrlIntoByteArray(imageURL);
-                    await _dalleService.SetImageToProfilePicure(imageURL);
-                    return;
-                }
+        //[HttpPost("UpdateProfilePicture")]
+        //public async Task UpdateProfilePicture(string imageURL)
+        //{
+        //    try
+        //    {
+        //        if (imageURL != null)
+        //        {
+        //            await _dalleService.TurnImageUrlIntoByteArray(imageURL);
+        //            //await _dalleService.SetImageToProfilePicure(imageURL);
+        //            return;
+        //        }
 
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.WriteLine(e.Message);
+        //    }
+        //}
     }
 }
 

@@ -34,12 +34,6 @@ public class DalleService : IDalleService
             {
                 finalImage = image.Url;
             }
-
-            //if (imageResult.Error == null)
-            //{
-            //    throw new Exception("Error processing result");
-            //}
-
             return finalImage;
         }
         catch (Exception e)
@@ -49,10 +43,12 @@ public class DalleService : IDalleService
         }
     }
 
-    public Task<string> SetImageToProfilePicure(string imageURL)
-    {
-        throw new NotImplementedException();
-    }
+    //public byte[] SetImageToProfilePicure(byte[] imageArray)
+    //{
+    //    if (imageArray == null) return Array.Empty<byte>();
+    //    if (imageArray.Length == 0) return Array.Empty<byte>();
+        
+    //}
 
     public async Task<byte[]> TurnImageUrlIntoByteArray(string imageURL)
     {

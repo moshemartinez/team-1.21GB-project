@@ -15,7 +15,7 @@ using OpenAI.GPT3.Managers;
 
 
 namespace Team121GBNUnitTest;
-
+#nullable enable
 public class DalleServiceTests
 {
     private IConfigurationRoot _configuration;
@@ -72,4 +72,43 @@ public class DalleServiceTests
         Assert.That(result, Is.Not.Null);
     }
     //[TestCase("https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg")] // good image link
+
+    //[TestCase(null)]
+    //[TestCase(new byte[0])]
+    //public void SetImageToProfilePicture_BadInputs(byte[]? input)
+    //{
+    //    // * Arrange
+    //    string key = _configuration["OpenAIServiceOptions:ApiKey"];
+    //    OpenAIService openAiService = new OpenAIService(new OpenAiOptions()
+    //    {
+    //        ApiKey = key
+    //    });
+    //    DalleService dalleService = new DalleService(openAiService);
+    //    // ! Act
+    //    byte[] result = dalleService.SetImageToProfilePicure(input);
+    //    // ? Assert
+    //    Assert.That(result, Is.Empty);
+    //}
+
+    //[Test]
+    //public void SetImageToProfilePicture_Success()
+    //{
+    //    // * Arrange
+    //    string key = _configuration["OpenAIServiceOptions:ApiKey"];
+    //    OpenAIService openAiService = new OpenAIService(new OpenAiOptions()
+    //    {
+    //        ApiKey = key
+    //    });
+    //    DalleService dalleService = new DalleService(openAiService);
+    //    string imageURL = "https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg";
+    //    // ! Act
+    //    byte[] input = dalleService.TurnImageUrlIntoByteArray(imageURL).Result;
+    //    byte[] result = dalleService.SetImageToProfilePicure(input);
+    //    // ? Assert
+    //    Assert.Multiple( () =>
+    //    {
+    //        Assert.That(result, Is.Not.Empty);
+    //        Assert.That(result, Is.EqualTo(input));
+    //    });
+    //}
 }

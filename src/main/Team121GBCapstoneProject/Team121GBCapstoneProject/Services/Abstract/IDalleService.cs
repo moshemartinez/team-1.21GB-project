@@ -3,7 +3,7 @@
     public interface IDalleService
     {
         public Task<string> GetImages(string prompt);
-        public Task<string> SetImageToProfilePicure(string imageURL);
+        //public byte[] SetImageToProfilePicure(byte[] imageArray);
         public Task<byte[]> TurnImageUrlIntoByteArray(string imageURL);
     }
 }
