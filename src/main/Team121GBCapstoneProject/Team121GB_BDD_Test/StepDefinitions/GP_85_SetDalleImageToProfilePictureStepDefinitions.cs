@@ -129,6 +129,6 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     [Then(@"I should be notified that something went wrong\.")]
     public void ThenIShouldBeNotifiedThatSomethingWentWrong_()
     {
-        _generateImagePage.StatusNotificationDiv.Text.Should().Be("Something went wrong...");
+        _generateImagePage.StatusNotificationDiv.Text.Should().Be("Inappropriate prompt.");
     }
 }

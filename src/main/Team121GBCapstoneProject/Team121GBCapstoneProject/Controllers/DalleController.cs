@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OpenAI.GPT3.Interfaces;
+using OpenAI.GPT3.ObjectModels.RequestModels;
+using OpenAI.GPT3.ObjectModels.ResponseModels;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.Models;
@@ -16,14 +19,21 @@ namespace Team121GBCapstoneProject.Controllers
         private readonly IDalleService _dalleService;
         private readonly IReCaptchaV3Service _reCaptchaService;
         private readonly IRepository<Person> _genericPersonRepository;
+        private readonly IOpenAIService _openAiService;
         private readonly string _url = "https://www.google.com/recaptcha/api/siteverify";
-        public DalleController(UserManager<ApplicationUser> userManager, IDalleService dalleService, IReCaptchaV3Service reCaptchaService, IRepository<Person> genericPersonRepository)
+        public DalleController(UserManager<ApplicationUser> userManager, 
+                               IDalleService dalleService, 
+                               IReCaptchaV3Service reCaptchaService, 
+                               IRepository<Person> genericPersonRepository,
+                               IOpenAIService openAiService)
         {
             _userManager = userManager;
             _dalleService = dalleService;
             _reCaptchaService = reCaptchaService;
             _genericPersonRepository = genericPersonRepository;
+            _openAiService = openAiService;
         }
+        private async Task<CreateModerationResponse> PromptModerationTask (string prompt) =>  await _openAiService.Moderation.CreateModeration(new CreateModerationRequest() {Input = prompt} );
 
         [HttpGet("GetImages")]
         public ActionResult<string> GetImages(string prompt, string gRecaptchaResponse)
@@ -34,21 +44,26 @@ namespace Team121GBCapstoneProject.Controllers
                 if (gRecaptchaResponse == null) return BadRequest();
                 if (!_reCaptchaService.IsValid(gRecaptchaResponse, _url).Result) return BadRequest();
                 string image = "";
-                if (prompt != null)
+                if (String.IsNullOrEmpty(prompt) is false)
                 {
+                    CreateModerationResponse moderationResponse = PromptModerationTask(prompt).Result;
+                    if (moderationResponse.Results.FirstOrDefault()!.Flagged is true)
+                    {
+                        return BadRequest("Inappropriate prompt.");
+                    }
                     image = _dalleService.GetImages(prompt).Result;
                 }
                 // ! temporarily turned off
                 // * update user credits 
-                // string authorizationId = _userManager.GetUserId(User);
-                // Person person = _genericPersonRepository.GetAll()
-                //                                         .FirstOrDefault(p => p.AuthorizationId == authorizationId)!;
-                // if (person != null)
-                // {
-                //     person.DallECredits -= 1;
-                //     person = _genericPersonRepository.AddOrUpdate(person);
-                //     Debug.WriteLine(person);
-                // }
+                //string authorizationId = _userManager.GetUserId(User);
+                //Person person = _genericPersonRepository.GetAll()
+                //                                        .FirstOrDefault(p => p.AuthorizationId == authorizationId)!;
+                //if (person != null)
+                //{
+                //    person.DallECredits -= 1;
+                //    person = _genericPersonRepository.AddOrUpdate(person);
+                //    Debug.WriteLine(person);
+                //}
 
                 return Ok(image);
             }
