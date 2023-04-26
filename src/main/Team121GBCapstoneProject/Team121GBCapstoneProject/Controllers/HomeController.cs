@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OpenQA.Selenium.Interactions;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.DAL.Abstract;
@@ -13,11 +14,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private IGameRepository _gameRepository;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public HomeController(ILogger<HomeController> logger, IGameRepository gameRepo)
+    public HomeController(ILogger<HomeController> logger, IGameRepository gameRepo, UserManager<ApplicationUser> userManager)
     {
         _logger = logger;
         _gameRepository = gameRepo;
+        _userManager = userManager;
     }
 
     public IActionResult Index()
@@ -44,6 +47,24 @@ public class HomeController : Controller
     public IActionResult FindFriends()
     {
         return View();
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult FindFriends(string email)
+    {
+        ApplicationUser foundUser = _userManager.FindByEmailAsync(email).Result;
+        FindFriendsVM friendVM = new FindFriendsVM();
+        if (foundUser != null)
+        {
+            friendVM.User = foundUser;
+        }
+        else
+        {
+            friendVM.PersonNotFound = true;
+        }
+        
+        return View("FindFriends", friendVM);
     }
 
     public IActionResult Privacy()

@@ -1,8 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.ModelBinding
 @using Team121GBCapstoneProject.Areas.Identity.Data
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@model FindFriendsVM
 @{
+
 }
 
 <!-- ======= Breadcrumbs ======= -->
@@ -18,22 +21,61 @@
         </div>
 
     </div>
-</section><!-- End Breadcrumbs -->
+</section>
+<!-- End Breadcrumbs -->
 
 
 <section class="inner-page">
     <div class="container">
-        <form id="findFriendsForm" method="post">
-            <div class="row">
+
+        <div class="row">
             <div class="col-md-6">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating mb-3">
-                    <input id="FirstName" asp-for="@UserManager" class="form-control" placeholder="Please enter a name" required />
-                    <label asp-for="Input.FirstName" class="form-label"></label>
-                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-                </div>
+                <form id="findFriendsForm" method="post">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating mb-3">
+                        <input name="email" asp-for="@Model.User.Email" id="FirstName" class="form-control" placeholder="Please enter an email" required/>
+                        <label asp-for="@Model.User.Email" class="form-label"></label>
+                        <span asp-validation-for="@Model.User.Email" class="text-danger"></span>
+            
+                    </div>
+                    <button id="submitFindFriends" style="padding: 10px;" type="submit" class="btn btn btn-primary">Search</button>
+                </form>
             </div>
+
+            <div class="col-md-6 align-content-end">
+                @*Add nobody found*@
+                @if (Model != null)
+                {
+                    @if (Model.PersonNotFound)
+                    {
+                        <h1>Person Not Found</h1>
+                    }
+                    else
+                    {
+                        @if (Model.User.ProfilePicture != null)
+                        {
+                            <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.User.ProfilePicture))">
+                        }
+                        else
+                        {
+                            <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="https://img.icons8.com/ios/256/test-account.png">
+                        }
+                        <br />
+                        <h2>@Model.User.FirstName @Model.User.LastName</h2>
+                        @if (@Model.User.ProfileBio != null)
+                        {
+                            <p>@Model.User.ProfileBio</p>
+                        }
+
+
+                    }
+                }
             </div>
-        </form>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br />
     </div>
 </section>
