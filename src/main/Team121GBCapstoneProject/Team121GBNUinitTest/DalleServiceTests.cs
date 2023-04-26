@@ -12,7 +12,8 @@ using Moq.Contrib.HttpClient;
 using OpenAI.GPT3;
 using OpenAI.GPT3.Interfaces;
 using OpenAI.GPT3.Managers;
-
+using Moq.Protected;
+using System.Net;
 
 namespace Team121GBNUnitTest;
 #nullable enable
@@ -30,12 +31,6 @@ public class DalleServiceTests
     {
         var builder = new ConfigurationBuilder().AddUserSecrets<DalleServiceTests>();
         _configuration = builder.Build();
-        // string validImgUrl = "https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg";
-        // using (var client = new WebClient())
-        // {
-        //     _expectedResultForValidImgUrl = client.DownloadData(validImgUrl);
-        // }
-        // //_expectedResultForValidImgUrl = client.DownloadData("https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg");
     }
 
     [TestCase("", null)]
@@ -49,7 +44,8 @@ public class DalleServiceTests
         {
             ApiKey = key
         });
-        DalleService dalleService = new DalleService(openAiService);
+        HttpClient httpClient = new HttpClient();
+        DalleService dalleService = new DalleService(openAiService, httpClient);
         // ! Act
         byte[] result = dalleService.TurnImageUrlIntoByteArray(imageURL).Result;
         // ? Assert
@@ -64,12 +60,13 @@ public class DalleServiceTests
         {
             ApiKey = key
         });
-        DalleService dalleService = new DalleService(openAiService);
+        HttpClient httpClient = new HttpClient();
+        DalleService dalleService = new DalleService(openAiService, httpClient);
         string imageURL = "https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg";
         // ! Act
         byte[] result = dalleService.TurnImageUrlIntoByteArray(imageURL).Result;
         // ? Assert
-        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.Not.Null.And.Not.Empty);
     }
     //[TestCase("https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg")] // good image link
 
