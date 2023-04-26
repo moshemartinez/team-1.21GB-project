@@ -11,10 +11,12 @@ namespace Team121GBCapstoneProject.Services.Concrete;
 public class DalleService : IDalleService
 {
     private readonly IOpenAIService _openAiService;
+    private readonly HttpClient _httpClient;
 
-    public DalleService(IOpenAIService openAiService)
+    public DalleService(IOpenAIService openAiService, HttpClient httpClient)
     {
         _openAiService = openAiService;
+        _httpClient = httpClient;
     }
 
     public async Task<string> GetImages(string prompt)
@@ -61,9 +63,9 @@ public class DalleService : IDalleService
             return null;
         }
         byte[] imageBytes;
-        using (var client = new HttpClient())
+        using (_httpClient) // ! make sure to dependecy inject this in the constructor
         {
-            using (var response = await client.GetAsync(imageURL))
+            using(HttpResponseMessage response = await _httpClient.GetAsync(imageURL))
             {
                 imageBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             }
