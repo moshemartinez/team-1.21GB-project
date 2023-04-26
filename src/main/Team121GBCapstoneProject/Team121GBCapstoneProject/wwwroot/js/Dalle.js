@@ -54,7 +54,7 @@ function displayImage(data) {
 		getCreditCount(); //update the number of credits a user has on the view.
 		displayStatusToClient();
 		$('#loadingAnimation').attr("hidden", "true"); // hide the loading animation
-		console.log("Successfully made image with dalle: " + data);
+		console.log(data);
 		console.log(typeof(data));
 		let temp = document.createElement("img");
 		temp.setAttribute("id", "dalleImage");
@@ -90,11 +90,19 @@ function displayErrorStatusToClient(data) {
 }
 
 function successUpdatingProfilePicture(data) {
-	alert("success updating profile picture");
+	console.log(data);
+	$("#statusNotificationDiv").empty();
+	const notification = `<div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <h1>Successfully updated profile picutre!</h1>
+                          </div>`;
+	$("#statusNotificationDiv").append(notification);
+    const imageUrl = $('#dalleImage').attr('src');
+	$("#profilePicInNavbar").attr("src", imageUrl);
 }
 
 function errorUpdatingProfilePicture(data) {
-	alert("error updating profile picture");
+	console.log("error updating profile picture");
 }
 
 function applyProfilePhoto() {
@@ -107,4 +115,5 @@ function applyProfilePhoto() {
 		success: successUpdatingProfilePicture,
 		error: errorUpdatingProfilePicture
 	});
+	$("#profilePicInNavbar").attr("src", imageUrl);
 }
