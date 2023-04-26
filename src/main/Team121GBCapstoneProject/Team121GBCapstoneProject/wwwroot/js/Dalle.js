@@ -103,6 +103,13 @@ function successUpdatingProfilePicture(data) {
 
 function errorUpdatingProfilePicture(data) {
 	console.log("error updating profile picture");
+	console.log(data);
+	$("#statusNotificationDiv").empty();
+	const notification = `<div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <h1>Failed to update profile picutre...</h1>
+                          </div>`;
+	$("#statusNotificationDiv").append(notification);
 }
 
 function applyProfilePhoto() {
