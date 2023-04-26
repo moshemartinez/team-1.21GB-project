@@ -24,7 +24,8 @@ namespace Standups_BDD_Tests.Shared
             { "Home" , "/" },
             { "Login", "/Identity/Account/Login" },
             { "Profile", "/Identity/Account/Manage/account%20preferences"},
-            { "SpeedSearch", "/Views/SpeedSearch/Index"}
+            { "SpeedSearch", "/Views/SpeedSearch"},
+            { "Steam Games", "/SteamGames" }
         };
 
         public static string PathFor(string pathName) => Paths[pathName];

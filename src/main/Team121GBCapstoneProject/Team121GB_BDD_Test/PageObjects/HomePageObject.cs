@@ -19,6 +19,7 @@ namespace Standups_BDD_Tests.PageObjects
         public IWebElement NavbarBarDropDownLoggedIn => _webDriver.FindElement(By.Id("navbarDropdownMenuLink"));
         public IWebElement GamesListButtonLoggedIn => _webDriver.FindElement(By.Id("gamesListButton"));
         public IWebElement SpeedSearchButtonLoggedIn => _webDriver.FindElement(By.Id("speedSearchButton"));
+        public IWebElement SteamGamesButtonLoggedIn => _webDriver.FindElement(By.Id("steamGamesButton"));
         public string NavbarWelcomeText()
         {
             return NavBarHelloLink.Text;
