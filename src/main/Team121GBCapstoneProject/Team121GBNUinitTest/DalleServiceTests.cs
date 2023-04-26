@@ -24,7 +24,6 @@ public class DalleServiceTests
     private string _dallePublicKey;
     private IOpenAIService _openAiService;
     private InMemoryDbHelper<GPDbContext> _dbHelper;
-    // private readonly byte[] _expectedResultForValidImgUrl = { client.DownloadData("https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg") };
 
     [SetUp]
     public void Setup()
@@ -35,7 +34,6 @@ public class DalleServiceTests
 
     [TestCase("", null)]
     [TestCase(null, null)]
-    // [TestCase("https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg", null)] // good image link
     public void TurnImageUrlIntoByteArray(string imageURL, byte[] expectedResult)
     {
         // * Arrange
@@ -68,44 +66,4 @@ public class DalleServiceTests
         // ? Assert
         Assert.That(result, Is.Not.Null.And.Not.Empty);
     }
-    //[TestCase("https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg")] // good image link
-
-    //[TestCase(null)]
-    //[TestCase(new byte[0])]
-    //public void SetImageToProfilePicture_BadInputs(byte[]? input)
-    //{
-    //    // * Arrange
-    //    string key = _configuration["OpenAIServiceOptions:ApiKey"];
-    //    OpenAIService openAiService = new OpenAIService(new OpenAiOptions()
-    //    {
-    //        ApiKey = key
-    //    });
-    //    DalleService dalleService = new DalleService(openAiService);
-    //    // ! Act
-    //    byte[] result = dalleService.SetImageToProfilePicure(input);
-    //    // ? Assert
-    //    Assert.That(result, Is.Empty);
-    //}
-
-    //[Test]
-    //public void SetImageToProfilePicture_Success()
-    //{
-    //    // * Arrange
-    //    string key = _configuration["OpenAIServiceOptions:ApiKey"];
-    //    OpenAIService openAiService = new OpenAIService(new OpenAiOptions()
-    //    {
-    //        ApiKey = key
-    //    });
-    //    DalleService dalleService = new DalleService(openAiService);
-    //    string imageURL = "https://content.codecademy.com/courses/web-101/web101-image_brownbear.jpg";
-    //    // ! Act
-    //    byte[] input = dalleService.TurnImageUrlIntoByteArray(imageURL).Result;
-    //    byte[] result = dalleService.SetImageToProfilePicure(input);
-    //    // ? Assert
-    //    Assert.Multiple( () =>
-    //    {
-    //        Assert.That(result, Is.Not.Empty);
-    //        Assert.That(result, Is.EqualTo(input));
-    //    });
-    //}
 }
