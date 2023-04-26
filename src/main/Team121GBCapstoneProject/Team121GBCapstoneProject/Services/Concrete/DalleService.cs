@@ -41,7 +41,7 @@ public class DalleService : IDalleService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            throw new Exception("Error in GetImages method in DalleService", e);
         }
     }
 
@@ -63,7 +63,7 @@ public class DalleService : IDalleService
             return null;
         }
         byte[] imageBytes;
-        using (_httpClient) // ! make sure to dependecy inject this in the constructor
+        using (_httpClient)
         {
             using(HttpResponseMessage response = await _httpClient.GetAsync(imageURL))
             {
@@ -72,4 +72,6 @@ public class DalleService : IDalleService
         }
         return imageBytes;
     }
+
+    
 }

@@ -58,15 +58,15 @@ namespace Team121GBCapstoneProject.Controllers
                 return BadRequest(e);
             }
         }
-        [HttpPost("SetImageToProfilePicure")]// Q: why is imageURL null?
-        // a: because the image is not being passed in the body of the request
-        // Q: how do we pass the image in the body of the request?
-        // a: we need to use a form data object
-        public ActionResult SetImageToProfilePicure(string imageUrl)
+        [HttpPost("SetImageToProfilePicure")]
+        public ActionResult SetImageToProfilePicure()
         {
-            // ! get existing user and update them to avaid newing up errors
             try
             {
+                // ! trying to get the image url from the form data as a parameter was not working for me 
+                // ! so I am getting it from the request body instead
+                HttpRequest httpRequest = HttpContext.Request;
+                string imageUrl = httpRequest.Form["imageUrl"].ToString();
                 if (imageUrl != null)
                 {
                     byte[] imageByteArray = _dalleService.TurnImageUrlIntoByteArray(imageUrl).Result;
