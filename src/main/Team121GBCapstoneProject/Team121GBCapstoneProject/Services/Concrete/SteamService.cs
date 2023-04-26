@@ -103,6 +103,7 @@ namespace Team121GBCapstoneProject.Services.Concrete
            throw new HttpRequestException();
         }
 
+        //Used from Justin From SIN team. Was unit tested heavily from them.
         public SteamGamesDTO GetGames(string steamId)
         {
             string source = string.Format("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={0}&steamid={1}&format=json&include_appinfo=1",Token,steamId);

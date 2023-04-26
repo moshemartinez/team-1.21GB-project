@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Models.DTO;
 using Team121GBCapstoneProject.Services.Abstract;
+using Team121GBCapstoneProject.Services.Concrete;
+using Team121GBCapstoneProject.Services.Abstract;
+using static OpenAI.GPT3.ObjectModels.SharedModels.IOpenAiModels;
+using Team121GBCapstoneProject.Services.Concrete;
 
 namespace Team121GBCapstoneProject.Utilities
 {
@@ -26,7 +30,6 @@ namespace Team121GBCapstoneProject.Utilities
                 if(external.LoginProvider != "Steam") continue;
                 steamId = external.ProviderKey.Split("/")[5];
             }
-
             return steamId;
         }
 
