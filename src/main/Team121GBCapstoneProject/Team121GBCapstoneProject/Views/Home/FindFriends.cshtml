@@ -15,7 +15,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <h2>Find Friends</h2>
             <ol>
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-area="Identity" asp-page="/Acount/Manage/Index">Profile</a></li>
                 <li>Find Friends</li>
             </ol>
         </div>
@@ -34,7 +34,7 @@
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-floating mb-3">
-                        <input name="email" asp-for="@Model.User.Email" id="FirstName" class="form-control" placeholder="Please enter an email" required/>
+                        <input name="email" asp-for="@Model.User.Email" id="EmailInput" class="form-control" placeholder="Please enter an email" required/>
                         <label asp-for="@Model.User.Email" class="form-label"></label>
                         <span asp-validation-for="@Model.User.Email" class="text-danger"></span>
             
@@ -49,7 +49,7 @@
                 {
                     @if (Model.PersonNotFound)
                     {
-                        <h1>Person Not Found</h1>
+                        <h1 id="notFound">Person Not Found</h1>
                     }
                     else
                     {
@@ -73,9 +73,13 @@
                 }
             </div>
         </div>
-        <br/>
-        <br/>
-        <br/>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <br />
     </div>
 </section>

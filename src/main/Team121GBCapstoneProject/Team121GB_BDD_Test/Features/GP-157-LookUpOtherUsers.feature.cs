@@ -195,9 +195,9 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("User can look up other users")]
-        [NUnit.Framework.TestCaseAttribute("Talia", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Zayden", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Hareem", "Profile", null)]
+        [NUnit.Framework.TestCaseAttribute("Talia", "Friend", null)]
+        [NUnit.Framework.TestCaseAttribute("Zayden", "Friend", null)]
+        [NUnit.Framework.TestCaseAttribute("Hareem", "Friend", null)]
         public virtual void UserCanLookUpOtherUsers(string firstName, string page, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -249,9 +249,9 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("User can look up invlaid users and have nothing be returned")]
-        [NUnit.Framework.TestCaseAttribute("Talia", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Zayden", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Hareem", "Profile", null)]
+        [NUnit.Framework.TestCaseAttribute("Talia", "Friend", null)]
+        [NUnit.Framework.TestCaseAttribute("Zayden", "Friend", null)]
+        [NUnit.Framework.TestCaseAttribute("Hareem", "Friend", null)]
         public virtual void UserCanLookUpInvlaidUsersAndHaveNothingBeReturned(string firstName, string page, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -295,7 +295,7 @@ this.FeatureBackground();
  testRunner.When("I look up an invalid user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 50
- testRunner.Then("I will not see their information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I will see an \"Person Not Found\" error", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

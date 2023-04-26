@@ -13,11 +13,13 @@ namespace Team121GB_BDD_Test.StepDefinitions
         private readonly ScenarioContext _scenarioContext;
         private readonly LoginPageObject _loginPage;
         private readonly ProfilePageObject _profilePage;
+        private readonly FriendPageObject _friendPage;
 
         public GP_157_LookUpOtherUsersStepDefinitions(ScenarioContext context, BrowserDriver browserDriver)
         {
             _loginPage = new LoginPageObject(browserDriver.Current);
             _profilePage = new ProfilePageObject(browserDriver.Current);
+            _friendPage = new FriendPageObject(browserDriver.Current);
             _scenarioContext = context;
         }
 
@@ -39,25 +41,29 @@ namespace Team121GB_BDD_Test.StepDefinitions
         [When(@"I look up a valid user")]
         public void WhenILookUpAValidUser()
         {
-            throw new PendingStepException();
+            _friendPage.InputEmail.SendKeys("BDDTesting1@gmail.com");
         }
 
         [Then(@"I will see their information")]
         public void ThenIWillSeeTheirInformation()
         {
-            throw new PendingStepException();
+            _friendPage.Picture.Should().NotBeNull();
+            _friendPage.Picture.Displayed.Should().BeTrue();
         }
 
         [When(@"I look up an invalid user")]
         public void WhenILookUpAnInvalidUser()
         {
-            throw new PendingStepException();
+            _friendPage.InputEmail.SendKeys("ThisIsNotAnEmail@NotAnEmail.NotCom");
         }
 
-        [Then(@"I will not see their information")]
-        public void ThenIWillNotSeeTheirInformation()
+        [Then(@"I will see an ""([^""]*)"" error")]
+        public void ThenIWillSeeAnError(string p0)
         {
-            throw new PendingStepException();
+            _friendPage.NotFoundError.Should().NotBeNull();
+            _friendPage.NotFoundError.Displayed.Should().BeTrue();
+            _friendPage.NotFoundError.Text.Should().Be(p0);
         }
+
     }
 }

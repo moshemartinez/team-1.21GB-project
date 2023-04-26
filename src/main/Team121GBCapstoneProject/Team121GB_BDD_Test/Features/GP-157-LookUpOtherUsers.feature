@@ -38,18 +38,18 @@ Scenario Outline: User can look up other users
 	Then I will see their information
 Examples:
 	| FirstName | Page |
-	| Talia     | Profile |
-	| Zayden    | Profile |
-	| Hareem    | Profile |
+	| Talia     | Friend |
+	| Zayden    | Friend |
+	| Hareem    | Friend |
 
 Scenario Outline: User can look up invlaid users and have nothing be returned
 	Given I am a user with first name '<FirstName>'
 	And I login
 	And I navigate to the '<Page>' page
 	When I look up an invalid user
-	Then I will not see their information
+	Then I will see an "Person Not Found" error
 Examples:
 	| FirstName | Page |
-	| Talia     | Profile |
-	| Zayden    | Profile |
-	| Hareem    | Profile |
+	| Talia     | Friend |
+	| Zayden    | Friend |
+	| Hareem    | Friend |

@@ -22,7 +22,8 @@ namespace Standups_BDD_Tests.Shared
         {
             { "Home" , "/" },
             { "Login", "/Identity/Account/Login" },
-            { "Profile", "/Identity/Account/Manage/account%20preferences"}
+            { "Profile", "/Identity/Account/Manage/account%20preferences"},
+            { "Friend", "/Home/FindFriends" }
         };
 
         public static string PathFor(string pathName) => Paths[pathName];
