@@ -4,6 +4,7 @@ $(document).ready(() => {
 	getCreditCount();
 	$('#submitPromptButton').on('click', (event) => {
 		event.preventDefault();
+		$('#loadingAnimation').removeAttr("hidden"); // show the loading animation
 		const userPrompt = document.getElementById("userPrompt")
 		const recaptcha = $("#dalleRecaptcha").val();
 		if (userPrompt.value != "") {
@@ -52,6 +53,7 @@ function errorGettingCreditCount(data) {
 function displayImage(data) {
 		getCreditCount(); //update the number of credits a user has on the view.
 		displayStatusToClient();
+		$('#loadingAnimation').attr("hidden", "true"); // hide the loading animation
 		console.log("Successfully made image with dalle: " + data);
 		console.log(typeof(data));
 		let temp = document.createElement("img");
