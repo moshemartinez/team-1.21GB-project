@@ -37,6 +37,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
 
         public List<string> TitleParse(string input)
         {
+            //Check if input is null or empty
             List<string> parsedTitles = input.Split('*').ToList();
             parsedTitles.RemoveAt(0);
 
