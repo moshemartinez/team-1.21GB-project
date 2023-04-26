@@ -126,6 +126,40 @@ namespace Team121GBNUnitTest
             Assert.AreEqual(expected, result);
         }
 
+        [Test]
+        public void TitleParseGivenAValidInputWithTwoStarsBeforeTitleShouldReturnListOfCount1()
+        {
+            //Arrange
+            using GPDbContext context = _dbHelper.GetContext();
+            _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
+
+            SpeedSearch speedSearch = new SpeedSearch(context, _igdbService);
+            List<string> listToCheck = new List<string>();
+
+            //Act
+            listToCheck = speedSearch.TitleParse("**Super Mario Brothers");
+
+            //Assert
+            Assert.AreEqual(1, listToCheck.Count());
+        }
+
+        [Test]
+        public void TitleParseGivenAValidInputWithTwoStarsAndSpaceBetweenBeforeTitleShouldReturnListOfCount1()
+        {
+            //Arrange
+            using GPDbContext context = _dbHelper.GetContext();
+            _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
+
+            SpeedSearch speedSearch = new SpeedSearch(context, _igdbService);
+            List<string> listToCheck = new List<string>();
+
+            //Act
+            listToCheck = speedSearch.TitleParse("**Super Mario Brothers");
+
+            //Assert
+            Assert.AreEqual(1, listToCheck.Count());
+        }
+
         //Testing GetFirstSearchResult
         [Test]
         public async Task GetFirstSearchResultWithSuperMarioBrosAsQueryShouldNotBeNullAsync()

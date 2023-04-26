@@ -53,7 +53,7 @@ namespace Team121GB_BDD_Test.StepDefinitions
         [Then(@"I will go to the SpeedSearch Page")]
         public void ThenIWillGoToTheSpeedSearchPage()
         {
-            _speedSearchPageObject.GetTitle().Should().ContainEquivalentOf("SpeedSearch", AtLeast.Once());
+            _speedSearchPageObject.GetTitle().Should().ContainEquivalentOf("Speed Search", AtLeast.Once());
         }
 
         [Given(@"I am on the SpeedSearch Page")]

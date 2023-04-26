@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
 using Team121GBCapstoneProject.Areas.Identity.Data;
@@ -46,11 +47,13 @@ namespace Team121GBCapstoneProject.Controllers
             _config = configuration;
             _speedSearch = speedSearch;
         }
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchResults(string GameEntry)
         {

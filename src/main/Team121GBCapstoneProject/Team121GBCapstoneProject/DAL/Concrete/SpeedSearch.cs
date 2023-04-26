@@ -45,6 +45,10 @@ namespace Team121GBCapstoneProject.DAL.Concrete
 
             foreach (var s in parsedTitles)
             {
+                if (s == "")
+                {
+                    continue;
+                }
                 string stringToAdd = s.Trim();
                 listToReturn.Add(stringToAdd);
             }
@@ -53,6 +57,10 @@ namespace Team121GBCapstoneProject.DAL.Concrete
 
         public async Task<IEnumerable<IgdbGame>> SpeedSearchingAsync(string input)
         {
+            if (input == "" || input is null || input.Contains("*") is false)
+            {
+                return null;
+            }
             List<string> Titles = TitleParse(input);
             List<IgdbGame> speedSearchResults = new List<IgdbGame>();
 
