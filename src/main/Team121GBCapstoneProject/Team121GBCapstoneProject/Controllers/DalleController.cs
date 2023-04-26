@@ -38,8 +38,8 @@ namespace Team121GBCapstoneProject.Controllers
                 {
                     image = _dalleService.GetImages(prompt).Result;
                 }
-                //! temporarily turned off
-                //update user credits 
+                // ! temporarily turned off
+                // * update user credits 
                 // string authorizationId = _userManager.GetUserId(User);
                 // Person person = _genericPersonRepository.GetAll()
                 //                                         .FirstOrDefault(p => p.AuthorizationId == authorizationId)!;
@@ -58,31 +58,34 @@ namespace Team121GBCapstoneProject.Controllers
                 return BadRequest(e);
             }
         }
-        [HttpPost("SetImageToProfilePicure")]
-        public ActionResult SetImageToProfilePicure(string imageURL)
+        [HttpPost("SetImageToProfilePicure")]// Q: why is imageURL null?
+        // a: because the image is not being passed in the body of the request
+        // Q: how do we pass the image in the body of the request?
+        // a: we need to use a form data object
+        public ActionResult SetImageToProfilePicure(string imageUrl)
         {
+            // ! get existing user and update them to avaid newing up errors
             try
             {
-                if (imageURL != null)
+                if (imageUrl != null)
                 {
-                    byte[] imageByteArray = _dalleService.TurnImageUrlIntoByteArray(imageURL).Result;
+                    byte[] imageByteArray = _dalleService.TurnImageUrlIntoByteArray(imageUrl).Result;
                     if (imageByteArray.Length == 0)
                     {
                         return BadRequest("Some thing went wrong turning the image into a byte array");
                     }
-                    var userManager = _userManager.UpdateAsync(new ApplicationUser
-                    {
-                        Id = _userManager.GetUserId(User),
-                        ProfilePicture = imageByteArray
-                    }).Result;
-                    return Ok();
+                    ApplicationUser loggedInUser= _userManager.GetUserAsync(User).Result;
+                    loggedInUser.ProfilePicture = imageByteArray;
+                    var check = _userManager.UpdateAsync(loggedInUser).Result;
+
+                    return Ok("Successfully updated profile picture");
                 }
-                return BadRequest("");
+                return BadRequest("Could not update profile picture");
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                return BadRequest("");
+                return BadRequest("Something went wrong updating the profile picture");
             }
         }
 
