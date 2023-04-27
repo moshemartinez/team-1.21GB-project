@@ -18,5 +18,6 @@ namespace Team121GB_BDD_Test.PageObjects
         public IWebElement InputEmail => _webDriver.FindElement(By.Id("EmailInput"));
         public IWebElement Picture => _webDriver.FindElement(By.Id("profilePicture"));
         public IWebElement NotFoundError => _webDriver.FindElement(By.Id("notFound"));
+        public IWebElement FriendButton => _webDriver.FindElement(By.Id("submitFindFriends"));
     }
 }

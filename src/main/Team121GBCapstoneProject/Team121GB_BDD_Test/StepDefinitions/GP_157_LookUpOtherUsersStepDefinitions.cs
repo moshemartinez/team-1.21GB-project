@@ -42,6 +42,7 @@ namespace Team121GB_BDD_Test.StepDefinitions
         public void WhenILookUpAValidUser()
         {
             _friendPage.InputEmail.SendKeys("BDDTesting1@gmail.com");
+            _friendPage.FriendButton.Click();
         }
 
         [Then(@"I will see their information")]
@@ -55,6 +56,7 @@ namespace Team121GB_BDD_Test.StepDefinitions
         public void WhenILookUpAnInvalidUser()
         {
             _friendPage.InputEmail.SendKeys("ThisIsNotAnEmail@NotAnEmail.NotCom");
+            _friendPage.FriendButton.Click();
         }
 
         [Then(@"I will see an ""([^""]*)"" error")]
