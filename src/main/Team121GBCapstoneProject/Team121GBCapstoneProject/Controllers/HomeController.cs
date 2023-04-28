@@ -13,11 +13,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private IGameRepository _gameRepository;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public HomeController(ILogger<HomeController> logger, IGameRepository gameRepo)
+    public HomeController(ILogger<HomeController> logger, IGameRepository gameRepo, UserManager<ApplicationUser> userManager)
     {
         _logger = logger;
         _gameRepository = gameRepo;
+        _userManager = userManager;
     }
 
     public IActionResult Index()
@@ -37,7 +39,11 @@ public class HomeController : Controller
     [Authorize]
     public IActionResult GenerateImage()
     {
-        return View();
+        string authorizationId = _userManager.GetUserId(User);
+
+        //int creditsCount = ?? 0;
+        DalleVM dalleVM= new DalleVM();
+        return View("GenerateImage", dalleVM);
     }
 
     public IActionResult Privacy()
