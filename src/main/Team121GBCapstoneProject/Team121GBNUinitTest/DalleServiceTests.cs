@@ -1,19 +1,9 @@
-using NUnit.Framework;
 using Team121GBCapstoneProject.Services.Concrete;
 using Team121GBCapstoneProject.Models;
-using Team121GBNUnitTest;
-using OpenAI.GPT3.ObjectModels.RequestModels;
-using OpenAI.GPT3.ObjectModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Moq;
-using Moq.Contrib.HttpClient;
 using OpenAI.GPT3;
 using OpenAI.GPT3.Interfaces;
 using OpenAI.GPT3.Managers;
-using Moq.Protected;
-using System.Net;
 
 namespace Team121GBNUnitTest;
 #nullable enable
