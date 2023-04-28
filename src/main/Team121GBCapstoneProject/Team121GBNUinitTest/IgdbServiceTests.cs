@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using Moq.Contrib.HttpClient;
 using Team121GBCapstoneProject.Models;
@@ -20,6 +21,7 @@ public class IgdbAPIServiceTests
 {
     private string _igdbClientId;
     private string _igdbBearerToken;
+    private IConfigurationRoot _configuration;
 
     private IGameRepository _gameRepository;
     private IRepository<Game> _genericGameRepo;
@@ -44,9 +46,10 @@ public class IgdbAPIServiceTests
     [SetUp]
     public void SetUp()
     {
-        _igdbClientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
-        _igdbBearerToken = "llrnvo5vfowcyr0ggecl445q5dunyl";
-
+        IConfigurationBuilder builder = new ConfigurationBuilder().AddUserSecrets<IgdbAPIServiceTests>();
+        _configuration = builder.Build();
+        _igdbClientId = _configuration["GamingPlatform:igdbClientId"];
+        _igdbBearerToken = _configuration["GamingPlatform:igdbBearerToken"];
         _dbHelper = new InMemoryDbHelper<GPDbContext>(null, DbPersistence.OneDbPerTest);
         _gameRepository = new GameRepository(_dbHelper.GetContext());
         _esrbratingRepo = new Repository<Esrbrating>(_dbHelper.GetContext());

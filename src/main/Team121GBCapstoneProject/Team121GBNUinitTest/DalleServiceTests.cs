@@ -18,7 +18,7 @@ public class DalleServiceTests
     [SetUp]
     public void Setup()
     {
-        var builder = new ConfigurationBuilder().AddUserSecrets<DalleServiceTests>();
+        IConfigurationBuilder builder = new ConfigurationBuilder().AddUserSecrets<DalleServiceTests>();
         _configuration = builder.Build();
     }
 
