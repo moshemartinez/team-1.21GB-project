@@ -39,16 +39,20 @@ public class GamesListsController : Controller
     {
         string authorizationId = _userManager.GetUserId(User);
         
+        // gets all of the users lists
         IQueryable<PersonList> userLists = _personListRepository.GetAll()
                                                                 .Join(_personRepository.GetAll(), pl => pl.PersonId, p => p.Id, (pl, p) => new { pl, p })
                                                                 .Where(x => x.p.AuthorizationId == authorizationId)
                                                                 .Select(x => x.pl);
+        // gets all of the users games from every lists
         List<PersonGame> personGames = _personGameRepository.GetAll()
                                                             .Where(pg => pg.PersonList.Person.AuthorizationId == authorizationId)
                                                             .ToList();
 
-        List<Game> curratedList = _gameRecommender.recommendGames(personGames,10);
+        // game recommendation
+        List<Game> curatedList = _gameRecommender.recommendGames(personGames,10);
 
+        // creates dictionary where key is name of list and value is a list of games (multi
         Dictionary<string, List<PersonGame>> personGamesByListKind = personGames.GroupBy(pg => pg.PersonList.ListKind)
                                                                                 .ToDictionary(g => g.Key, g => g.ToList());
 
@@ -68,8 +72,8 @@ public class GamesListsController : Controller
         }
 
         //personListVMList.Add({ });
-        PersonListVM curratedListVM = new PersonListVM(curratedList);
-        personListVMList.Add(curratedListVM);
+        PersonListVM curatedListVM = new PersonListVM(curatedList);
+        personListVMList.Add(curatedListVM);
 
         return View("Index", personListVMList);
     }
