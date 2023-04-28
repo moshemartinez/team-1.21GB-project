@@ -83,7 +83,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://user-images.githubusercontent.com/63754407/235043679-ba09db9d-2d06-49d4-80df-38f2c471103f.png)
+![Gaming Platform](https://user-images.githubusercontent.com/63754407/235043679-ba09db9d-2d06-49d4-80df-38f2c471103f.png)
 
 <!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `moshemartinez`, `team-1.21GB-project`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
 
