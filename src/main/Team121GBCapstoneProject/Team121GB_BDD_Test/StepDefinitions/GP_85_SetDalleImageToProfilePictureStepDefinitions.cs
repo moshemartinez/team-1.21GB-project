@@ -1,16 +1,9 @@
-using System;
-using System.Security.Policy;
-using System.Text.RegularExpressions;
 using AngleSharp;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using OpenQA.Selenium;
 using Standups_BDD_Tests.Drivers;
 using Standups_BDD_Tests.PageObjects;
 using Standups_BDD_Tests.StepDefinitions;
 using Team121GB_BDD_Test.PageObjects;
-using TechTalk.SpecFlow;
-using static System.Net.WebRequestMethods;
 
 namespace Team121GB_BDD_Test.StepDefinitions;
 
@@ -23,6 +16,8 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     private readonly UserLoginsStepDefinitions _userLoginsStepDefinitions;
     private readonly BrowserDriver _browserDriver;
     private int _creditCount;
+
+    private IConfigurationRoot Configuration { get; }
     public GP_85_SetDalleImageToProfilePictureStepDefinitions(ScenarioContext context, BrowserDriver browserDriver)
     {
         _homePage = new HomePageObject(browserDriver.Current);
@@ -30,6 +25,8 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
         _generateImagePage = new GenerateImagePageObject(browserDriver.Current);
         _userLoginsStepDefinitions = new UserLoginsStepDefinitions(context, browserDriver);
         _browserDriver = browserDriver;
+        IConfigurationBuilder builder = new ConfigurationBuilder().AddUserSecrets<GP_85_SetDalleImageToProfilePictureStepDefinitions>();
+        Configuration = builder.Build();
     }
 
     [Given(@"I am not logged in")]
@@ -119,6 +116,7 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     [Given(@"I have  entered a prompt that is totally inappropriate '([^']*)'")]
     public void GivenIHaveEnteredAPromptThatIsTotallyInappropriate(string terriblePrompt)
     {
+        terriblePrompt = Configuration["TerriblePrompt"];
         _generateImagePage.EnterPrompt(terriblePrompt);
         WhenIClickTheGenerateImageButton();
     }
@@ -129,6 +127,7 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     [Then(@"I should be notified that something went wrong\.")]
     public void ThenIShouldBeNotifiedThatSomethingWentWrong_()
     {
+        _generateImagePage.WaitForJavascriptToUpdateDom();
         _generateImagePage.StatusNotificationDiv.Text.Should().Be("Inappropriate prompt.");
     }
 }

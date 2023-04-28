@@ -58,6 +58,6 @@ Scenario: A logged in user can access the Dalle Image generation page and set th
 @LoggedIn
 Scenario: A logged in user can access the Dalle Image generation page but there was an error and they are notified
 	Given I am a logged in user on the image generator page
-	And I have  entered a prompt that is totally inappropriate 'Master chief brutally killing younglings in the jedi temple' 
+	And I have  entered a prompt that is totally inappropriate 'InappropriatePrompt' 
 	When I click the Generate Image Button
 	Then I should be notified that something went wrong.

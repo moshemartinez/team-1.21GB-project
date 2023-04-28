@@ -386,8 +386,7 @@ this.FeatureBackground();
  testRunner.Given("I am a logged in user on the image generator page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 61
- testRunner.And("I have  entered a prompt that is totally inappropriate \'Master chief brutally kil" +
-                        "ling younglings in the jedi temple\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I have  entered a prompt that is totally inappropriate \'InappropriatePrompt\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 62
  testRunner.When("I click the Generate Image Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

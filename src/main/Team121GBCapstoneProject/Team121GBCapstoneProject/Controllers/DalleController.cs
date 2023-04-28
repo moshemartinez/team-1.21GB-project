@@ -40,31 +40,27 @@ namespace Team121GBCapstoneProject.Controllers
         {
             try
             {
-                //Debug.Assert(gRecaptchaResponse != null);
-                if (gRecaptchaResponse == null) return BadRequest();
-                if (!_reCaptchaService.IsValid(gRecaptchaResponse, _url).Result) return BadRequest();
+                if (gRecaptchaResponse == null) return BadRequest("recaptcha is null");
+                if (!_reCaptchaService.IsValid(gRecaptchaResponse, _url).Result) return BadRequest("Recaptcha is not valid");
                 string image = "";
                 if (String.IsNullOrEmpty(prompt) is false)
                 {
+                    // * verify the prompt does not break content moderation by OpenAI
                     CreateModerationResponse moderationResponse = PromptModerationTask(prompt).Result;
-                    if (moderationResponse.Results.FirstOrDefault()!.Flagged is true)
-                    {
-                        return BadRequest("Inappropriate prompt.");
-                    }
+                    if (moderationResponse.Results.FirstOrDefault()!.Flagged) return BadRequest("Inappropriate prompt.");
+                    //If we got to this point send the prompt.
                     image = _dalleService.GetImages(prompt).Result;
                 }
-                // ! temporarily turned off
-                // * update user credits 
-                //string authorizationId = _userManager.GetUserId(User);
-                //Person person = _genericPersonRepository.GetAll()
-                //                                        .FirstOrDefault(p => p.AuthorizationId == authorizationId)!;
-                //if (person != null)
-                //{
-                //    person.DallECredits -= 1;
-                //    person = _genericPersonRepository.AddOrUpdate(person);
-                //    Debug.WriteLine(person);
-                //}
-
+                // * update user credits
+                string authorizationId = _userManager.GetUserId(User);
+                Person person = _genericPersonRepository.GetAll()
+                                                        .FirstOrDefault(p => p.AuthorizationId == authorizationId)!;
+                if (person != null)
+                {
+                    person.DallECredits -= 1;
+                    person = _genericPersonRepository.AddOrUpdate(person);
+                    Debug.WriteLine(person);
+                }
                 return Ok(image);
             }
             catch (Exception e)
@@ -73,6 +69,7 @@ namespace Team121GBCapstoneProject.Controllers
                 return BadRequest(e);
             }
         }
+
         [HttpPost("SetImageToProfilePicure")]
         public ActionResult SetImageToProfilePicure()
         {

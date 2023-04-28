@@ -80,14 +80,15 @@ function displayStatusToClient() {
 
 function displayErrorStatusToClient(data) {
 	console.log(data);
-	if (data === "Inapproriate prompt.") {
+	if (data.responseText === "Inappropriate prompt.") {
 		$('#loadingAnimation').attr("hidden", "true"); // hide the loading animation
-		$("#statusNotificationDiv").empty();
+		$("#statusNotificationDiv").empty();	
 		const notification = `<div class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <h1>${data}</h1>
+                            <h1>${data.responseText}</h1>
                           </div>`;
 		$("#statusNotificationDiv").append(notification);
+		return;
 	}
 	console.log(typeof (data.responseText));
 	$('#loadingAnimation').attr("hidden", "true"); // hide the loading animation
