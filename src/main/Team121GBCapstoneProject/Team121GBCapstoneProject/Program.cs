@@ -75,6 +75,7 @@ builder.Services.AddOpenAIService(settings =>
 });
 builder.Services.AddScoped<IOpenAIService, OpenAIService>();
 builder.Services.AddScoped<IDalleService, DalleService>();
+builder.Services.AddScoped<IChatGptService, ChatGptService>();
 
 //var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
 //openAiService.SetDefaultModelId(Models.Davinci);
