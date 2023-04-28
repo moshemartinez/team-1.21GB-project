@@ -6,5 +6,7 @@ namespace Team121GBCapstoneProject.Models
     {
         public ApplicationUser User { get; set; }
         public bool PersonNotFound { get; set; } = false;
+        public List<PersonGame> Games { get; set; }
     }
+
 }
