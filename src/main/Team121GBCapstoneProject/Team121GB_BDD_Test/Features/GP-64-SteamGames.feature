@@ -13,13 +13,12 @@ they have on steam.
 Background:
 	Given the following users exist
 	  | UserName   | Email                          | FirstName | LastName | Password   |
-	  | TaliaK     | BDDTesting1@gmail.com          | Talia     | Knott    | Password1! |
-	  | ZaydenC    | BDDTesting2@gmail.com          | Zayden    | Clark    | Password1! |
-	  | DavilaH    | team121gigabytes@gmail.com     | Hareem    | Davila   | Password1! |
+	  | TaliaK     | knott@example.com          | Talia     | Knott    | Password1! |
+	  | ZaydenC    | clark@example.com          | Zayden    | Clark    | Password1! |
+	  | DavilaH    | hareem@example.com     | Hareem    | Davila   | Password1! |
 	And the following users do not exist
 	  | UserName | Email               | FirstName | LastName | Password  |
 	  | AndreC   | colea@example.com   | Andre     | Cole     | 0a9dfi3.a |
-	  | JoannaV  | valdezJ@example.com | Joanna    | Valdez   | d9u(*dsF4 |
 
 @Quinton
 @LoggedIn

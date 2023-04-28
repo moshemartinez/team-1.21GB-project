@@ -1,4 +1,5 @@
-﻿using Humanizer;
+﻿using System.Diagnostics.CodeAnalysis;
+using Humanizer;
 using Team121GBCapstoneProject.Models;
 
 namespace Team121GBCapstoneProject.ProjectDataBase;
@@ -6,6 +7,7 @@ namespace Team121GBCapstoneProject.ProjectDataBase;
 /// <summary>
 /// Helper class to hold information we need for users in our project databases.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class UserInfoData
 {
     public string UserName { get; set; }
@@ -33,6 +35,7 @@ public class UserInfoData
         }
     };
 }
+[ExcludeFromCodeCoverage]
 public class SeedData
 {
     /// <summary>

@@ -93,19 +93,19 @@ they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
                         "Password"});
             table9.AddRow(new string[] {
                         "TaliaK",
-                        "BDDTesting1@gmail.com",
+                        "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
             table9.AddRow(new string[] {
                         "ZaydenC",
-                        "BDDTesting2@gmail.com",
+                        "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
             table9.AddRow(new string[] {
                         "DavilaH",
-                        "team121gigabytes@gmail.com",
+                        "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
@@ -124,12 +124,6 @@ they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-            table10.AddRow(new string[] {
-                        "JoannaV",
-                        "valdezJ@example.com",
-                        "Joanna",
-                        "Valdez",
-                        "d9u(*dsF4"});
 #line 19
  testRunner.And("the following users do not exist", ((string)(null)), table10, "And ");
 #line hidden
@@ -156,7 +150,7 @@ they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can navigate to new steam games page", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 26
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -179,19 +173,19 @@ this.ScenarioInitialize(scenarioInfo);
 #line 13
 this.FeatureBackground();
 #line hidden
-#line 27
+#line 26
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 28
+#line 27
  testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 29
+#line 28
  testRunner.When("I click on the dropdown menu in the nav bar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 30
+#line 29
  testRunner.And("I click on the Steam Games button in the navbar dropdown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 31
+#line 30
  testRunner.Then("I am redirected to the \'Steam Games\' page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

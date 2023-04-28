@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenAI.GPT3.Extensions;
 using Team121GBCapstoneProject.Areas.Identity.Data;
@@ -13,7 +15,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Team121GBCapstoneProject.Utilities;
 using Team121GBCapstoneProject.ProjectDataBase;
 using Team121GBCapstoneProject.Services;
-
 
 var builder = WebApplication.CreateBuilder(args);
 

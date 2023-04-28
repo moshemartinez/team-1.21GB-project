@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Team121GBCapstoneProject.ProjectDataBase;
 using Team121GBCapstoneProject.Models;
@@ -6,6 +7,7 @@ using Team121GBCapstoneProject.Areas.Identity.Data;
 
 
 namespace Team121GBCapstoneProject.Utilities;
+[ExcludeFromCodeCoverage]
 public class SeedUsers
 {
     /// <summary>
