@@ -40,9 +40,9 @@ public class SeedData
     /// </summary>
     public static readonly UserInfoData[] UserSeedData = new UserInfoData[]
     {
-            new UserInfoData { UserName = "TaliaK", Email = "knott@example.com", FirstName = "Talia", LastName = "Knott" },
+            new UserInfoData { UserName = "TaliaK", Email = "knott@example.com", FirstName = "Talia", LastName = "Knott", DalleCreditsCount = 100},
             new UserInfoData { UserName = "ZaydenC", Email = "clark@example.com", FirstName = "Zayden", LastName = "Clark", DalleCreditsCount = 0},
-            new UserInfoData { UserName = "DavilaH", Email = "hareem@example.com", FirstName = "Hareem", LastName = "Davila" },
+            new UserInfoData { UserName = "DavilaH", Email = "  ", FirstName = "Hareem", LastName = "Davila" },
             new UserInfoData { UserName = "KrzysztofP", Email = "krzysztof@example.com", FirstName = "Krzysztof", LastName = "Ponce" }
     };
 }

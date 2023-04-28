@@ -92,7 +92,7 @@
        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
             {
-                <img src="https://img.icons8.com/ios/50/null/user--v1.png" width="25" height="25" class="rounded-circle">
+                <img id="profilePicInNavbar" src="https://img.icons8.com/ios/50/null/user--v1.png" width="25" height="25" class="rounded-circle">
             }
             else
             {

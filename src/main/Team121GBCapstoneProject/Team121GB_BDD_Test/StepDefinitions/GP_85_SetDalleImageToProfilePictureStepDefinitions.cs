@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using AngleSharp;
 using Microsoft.Extensions.Configuration;
 using Standups_BDD_Tests.Drivers;
@@ -16,6 +18,8 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     private readonly UserLoginsStepDefinitions _userLoginsStepDefinitions;
     private readonly BrowserDriver _browserDriver;
     private int _creditCount;
+    //private SHA256 _originalProfilePicHash;
+    private byte[] _originalProfilePictureHash;
 
     private IConfigurationRoot Configuration { get; }
     public GP_85_SetDalleImageToProfilePictureStepDefinitions(ScenarioContext context, BrowserDriver browserDriver)
@@ -98,19 +102,48 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     [Given(@"I've generated an image")]
     public void GivenIveGeneratedAnImage()
     {
-        throw new PendingStepException();
+        //GivenIAmALoggedInUserWithFirstName("Talia");
+        //GivenINavigateToTheImageGeneratorPage();
+        string profilePictureData = _generateImagePage.ProfilePictureData.GetAttribute("src");
+        using (SHA256 profileHash = SHA256.Create())
+        {
+            _originalProfilePictureHash = profileHash.ComputeHash(Encoding.UTF8.GetBytes(profilePictureData));
+        }
+        GivenIInputAPrompt();
+        WhenIClickTheGenerateImageButton();
+        _generateImagePage.WaitForImageToLoad();
     }
 
     [When(@"I click the button for setting it as my profile picture")]
     public void WhenIClickTheButtonForSettingItAsMyProfilePicture()
     {
-        throw new PendingStepException();
+        _generateImagePage.ApplyImageToProfilePicture.Click();
     }
 
     [Then(@"my profile picture will be updated to display the new profile image")]
     public void ThenMyProfilePictureWillBeUpdatedToDisplayTheNewProfileImage()
     {
-        throw new PendingStepException();
+        string newProfilePictureData = _generateImagePage.ProfilePictureData.GetAttribute("src");
+        byte[] newProfilePictureHash;
+        using (SHA256 profileHash = SHA256.Create())
+        {
+             newProfilePictureHash = profileHash.ComputeHash(Encoding.UTF8.GetBytes(newProfilePictureData));
+        }
+        bool check = _originalProfilePictureHash.Equals(newProfilePictureHash);
+        check.Should().BeFalse();
+        //_originalProfilePictureHash.Should().NotEqual(newProfilePictureHash);
+        // ! CHECK ON ACCOUNT PREFERENCES PAGE ALSO
+        _profilePage.GoTo();
+        string newProfilePictureDataOnAccountPreferencesPage = _generateImagePage.ProfilePictureData.GetAttribute("src");
+        byte[] newProfilePictureOnAccountPreferencesPageHash;
+        using (SHA256 profileHash = SHA256.Create())
+        {
+            newProfilePictureOnAccountPreferencesPageHash = profileHash.ComputeHash(Encoding.UTF8.GetBytes(newProfilePictureDataOnAccountPreferencesPage));
+        }
+
+        check = _originalProfilePictureHash.Equals(newProfilePictureOnAccountPreferencesPageHash);
+        check.Should().BeFalse();
+        //_originalProfilePictureHash.Should().NotEqual(newProfilePictureOnAccountPreferencesPageHash);
     }
 
     [Given(@"I have  entered a prompt that is totally inappropriate '([^']*)'")]
@@ -127,7 +160,7 @@ public class GP_85_SetDalleImageToProfilePictureStepDefinitions
     [Then(@"I should be notified that something went wrong\.")]
     public void ThenIShouldBeNotifiedThatSomethingWentWrong_()
     {
-        _generateImagePage.WaitForJavascriptToUpdateDom();
+        _generateImagePage.WaitForJavascriptToUpdateStatusDiv();
         _generateImagePage.StatusNotificationDiv.Text.Should().Be("Inappropriate prompt.");
     }
 }
