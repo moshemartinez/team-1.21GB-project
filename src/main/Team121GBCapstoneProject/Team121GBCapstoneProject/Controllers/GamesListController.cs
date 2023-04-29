@@ -52,17 +52,21 @@ public class GamesListsController : Controller
         // game recommendation
         List<Game> curatedList = _gameRecommender.recommendGames(personGames,10);
 
-        // creates dictionary where key is name of list and value is a list of games (multi
+        // creates dictionary where key is name of list and value is a list of games (should have 3 object that could contain more than one value)
         Dictionary<string, List<PersonGame>> personGamesByListKind = personGames.GroupBy(pg => pg.PersonList.ListKind)
                                                                                 .ToDictionary(g => g.Key, g => g.ToList());
 
         List<PersonListVM> personListVMList = new List<PersonListVM>();
 
+        // will loop through the dictionary and add to the list of view models an PersonListVM object (there should be 3 items in the list by default)
+        // this will essentially be very similar to the dictionary but it will wrap items up in a view model object
         foreach (var kvp in personGamesByListKind)
         {
             PersonListVM temp = new PersonListVM(kvp.Key, kvp.Value);
             personListVMList.Add(temp);
         }
+
+        // if any lists are empty there will still be PersonListVM to add to the main list to send to the view
         List<PersonList> emptyListCheck = userLists.Where(l => l.PersonGames.Count == 0)
                                                     .ToList();
         foreach (var emptyList in emptyListCheck)
@@ -71,10 +75,11 @@ public class GamesListsController : Controller
             personListVMList.Add(temp);
         }
 
-        //personListVMList.Add({ });
+        // add the curated list to the main personListVMList
         PersonListVM curatedListVM = new PersonListVM(curatedList);
         personListVMList.Add(curatedListVM);
 
+        // return the main list that holds the View Model lists
         return View("Index", personListVMList);
     }
 

@@ -1,6 +1,7 @@
-﻿namespace Team121GBCapstoneProject.DAL.Abstract
+﻿using Team121GBCapstoneProject.Models;
+namespace Team121GBCapstoneProject.DAL.Abstract;
+
+public interface IPersonGameRepository : IRepository<PersonGame>
 {
-    public class IPersonGameRepository
-    {
-    }
+    public PersonGame RemovePersonGame(Person person, PersonList personList, PersonGame personGame);
 }
