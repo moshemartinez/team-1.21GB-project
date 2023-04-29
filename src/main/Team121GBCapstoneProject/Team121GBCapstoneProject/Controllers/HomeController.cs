@@ -46,6 +46,8 @@ public class HomeController : Controller
         return View("GenerateImage", dalleVM);
     }
 
+    [Authorize]
+    public IActionResult ChatGpt () => View("ChatGpt");
     public IActionResult Privacy()
     {
         return View();
