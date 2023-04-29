@@ -33,7 +33,7 @@ public class ChatGptService : IChatGptService
             });
             Debug.Assert(chatResult.Choices.Any());
             if (chatResult.Choices is not null or { Count: 0 })
-                return chatResult.Choices.First().Message.ToString();
+                return chatResult.Choices.First().Message.Content;
             return "No response from GPT-3";
         }
         catch (Exception e)
