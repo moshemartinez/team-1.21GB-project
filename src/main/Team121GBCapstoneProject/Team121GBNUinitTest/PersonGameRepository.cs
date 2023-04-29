@@ -69,66 +69,66 @@ public class PersonGameRepositoryTests
                                                                 .ToList();
             // PersonListVM personListVM = new PersonListVM("Currently Playing", personGames);
 
-
             // ? Assert
             Assert.Multiple(() =>
             {
                 Assert.That(personGames.FirstOrDefault(), Is.EqualTo(personGame));
                 Assert.That(personGames.Count, Is.EqualTo(1));
-
             });
         }
     }
 
     [Test]
-    public void GPDbContext_CreateDefaultLists_Failure_PersonIsNull_ShouldReturnFalse()
+    public void GPDbContext_DeleteGame_Success_ShouldReturnTrue()
     {
-        //// * Arrange 
-        //using GPDbContext context = _dbHelper.GetContext();
-        //PersonListRepository personListRepository = new PersonListRepository(context);
-        //ListKindRepository listKindRepository = new ListKindRepository(context);
-        //List<ListKind> listKinds = listKindRepository.GetAll().ToList();
-        //Person person = null;
-        //// ! Act
-        //bool result = personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
-        //int count = personListRepository.GetAll().Count();
-        //// ? Assert
-        //Assert.Multiple(() =>
-        //{
-        //    Assert.That(result, Is.EqualTo(false));
-        //    Assert.That(count, Is.EqualTo(0));
-        //});
+        // * Arrange 
+        using GPDbContext context = _dbHelper.GetContext();
+        PersonListRepository personListRepository = new PersonListRepository(context);
+        PersonRepository personRepository = new PersonRepository(context);
+        ListKindRepository listKindRepository = new ListKindRepository(context);
+        Repository<PersonGame> personGameRepository = new Repository<PersonGame>(context);
+        string authorizationId = "some-String";
 
-        Assert.Fail();
+        // * add a valid person to db
+        personRepository.AddPersonToProjectDb(authorizationId);
+        // * Get the person that was added to db and pass it to default list method
+        Person person = personRepository.GetAll()
+                                        .FirstOrDefault(p => p.AuthorizationId == authorizationId);
+        List<ListKind> listKinds = listKindRepository.GetAll()
+                                                    .Where(lk => lk.Id < 4)
+                                                    .ToList();
+        // * add default lists for that person
+        foreach (var lk in listKinds)
+        {
+            personListRepository.AddOrUpdate(new PersonList
+            {
+                PersonId = person.Id,
+                ListKindId = lk.Id,
+                ListKind = lk.Kind,
+                Person = person
+            });
+        }
 
+        PersonGame personGame = new PersonGame
+        {
+            PersonListId = 1,
+            GameId = 1
+        };
+
+        personGameRepository.AddOrUpdate(personGame);
+        List<PersonGame> personGames = personGameRepository.GetAll()
+                                                            .Where(pg => pg.PersonListId == 1)
+                                                            .ToList();
+
+        // ! Act
+        personGameRepository.Delete(personGame);
+
+        // ? Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(personGameRepository.GetAll().Count(), Is.EqualTo(0));
+        });
     }
-    [Test]
-    public void GPDbContext_CreateDefaultLists_Failure_ListNameIsNull_ShouldReturnFalse()
-    {
-        //// * Arrange 
-        //using GPDbContext context = _dbHelper.GetContext();
-        //PersonListRepository personListRepository = new PersonListRepository(context);
-        //ListKindRepository listKindRepository = new ListKindRepository(context);
-        //List<ListKind> listKinds = null;
-        //PersonRepository personRepository = new PersonRepository(context);
-        //string authorizationId = "some-String";
-        ////add a valid person to db
-        //personRepository.AddPersonToProjectDb(authorizationId);
-        ////Get the person that was added to db and pass it to default list method
-        //Person person = personRepository.GetAll().FirstOrDefault(p => p.AuthorizationId == authorizationId);
 
-        //// ! Act
-        //bool result = personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
-        //int count = personListRepository.GetAll().Count();
-        //// ? Assert
-        //Assert.Multiple(() =>
-        //{
-        //    Assert.That(result, Is.EqualTo(false));
-        //    Assert.That(count, Is.EqualTo(0));
-        //});
-
-        Assert.Fail();
-
-    }
 }
 

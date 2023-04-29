@@ -4,6 +4,21 @@
 // Write your JavaScript code.
 
 
+// Remove game
+$(document).on('click', '.delete-person-game', function () {
+    var id = $(this).data('id');
+
+    console.log("PersonGame ID:", id);
+    //$.ajax({
+    //    url: '/person_game/' + id + '/delete',
+    //    type: 'DELETE',
+    //    success: function (result) {
+    //        // Update the page with the new data
+    //    }
+    //});
+});
+
+
 // Search Feature
 $(document).ready(function () {
     $("#searchButton").click(function (event) {
