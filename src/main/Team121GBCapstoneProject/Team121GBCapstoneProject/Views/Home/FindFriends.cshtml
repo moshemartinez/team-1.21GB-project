@@ -46,7 +46,7 @@
                 </form>
             </div>
 
-            <div class="col-md-6 align-content-end">
+            <div class="col-md-6 d-flex flex-column justify-content-end">
                 @*Add nobody found*@
                 @if (Model != null)
                 {
@@ -71,7 +71,7 @@
                             <p>@Model.User.ProfileBio</p>
                         }
 
-                        <div class="flex-container">
+                        <div class="d-flex flex-wrap">
                         @foreach (var game in Model.Games)
                         {
                                 <div class="flex-item" data-toggle="tooltip" title="@game.Game.Title" style="padding: 2px; position: relative">
