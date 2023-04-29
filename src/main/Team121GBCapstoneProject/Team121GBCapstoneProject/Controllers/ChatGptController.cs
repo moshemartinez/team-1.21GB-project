@@ -30,11 +30,11 @@ public class ChatGptController : Controller
     {
         try
         {
-            string response = "";
-            if (String.IsNullOrEmpty(prompt) is false)
-            {
-                response = await _chatGptService.GetChatResponse(prompt);
-            }
+            string response = "erfnbeojfbnefojnbefojnbefojnboefjnbefojneobjffffffffvbeffeonobnfoj       fefe";
+            // if (String.IsNullOrEmpty(prompt) is false)
+            // {
+            //     response = await _chatGptService.GetChatResponse(prompt);
+            // }
             return Ok(response);
         }
         catch (Exception e)
