@@ -1,68 +1,45 @@
 using System.Diagnostics;
 using OpenAI.GPT3.Interfaces;
+using OpenAI.GPT3.ObjectModels.RequestModels;
 using Team121GBCapstoneProject.Services.Abstract;
+using static OpenAI.GPT3.ObjectModels.Models;
 
 namespace Team121GBCapstoneProject.Services.Concrete;
 #nullable enable
 public class ChatGptService : IChatGptService
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IConfiguration _configuration;
-    private readonly IOpenAIService _openAiService;
-
-    public ChatGptService(IHttpClientFactory httpClientFactory, 
-                          IConfiguration configuration,
-                          IOpenAIService openAiService)
+    // private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IOpenAIService _openAiService;   
+    public ChatGptService(IOpenAIService openAiService)
     {
-        _httpClientFactory = httpClientFactory;
-        _configuration = configuration;
+        // _httpClientFactory = httpClientFactory;
         _openAiService = openAiService;
     }
-     public async Task<string> GetJsonStringFromEndpoint(string token, string uri, string clientId, string rawBody)
-    {
 
-        HttpClient httpClient = _httpClientFactory.CreateClient();
 
-        // Add Headers
-        // httpClient.BaseAddress = new Uri(uri);
-        // httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        // httpClient.DefaultRequestHeaders.Add("Client-ID", clientId);
-
-        // HttpResponseMessage response = await httpClient.PostAsync(uri, new StringContent(rawBody));
-
-        // // This is only a minimum version; make sure to cover all your bases here
-        // if (response.IsSuccessStatusCode)
-        // {
-        //     // This is blocking; use ReadAsStreamAsync instead
-        //     string responseText = await response.Content.ReadAsStringAsync();
-        //     return responseText;
-        // }
-        // else
-        // {
-        //     throw new HttpRequestException();
-        // }
-        return "test";
-    }
-    
-    public Task<string> GetChatResponse(string prompt)
+    public async Task<string> GetChatResponse(string prompt)
     {
         try
         {
-            
+            if (String.IsNullOrEmpty(prompt))
+                return "";
+            var chatResult = await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
+            {
+                Messages = new List<ChatMessage>
+                {
+                    ChatMessage.FromUser(prompt)
+                },
+                Model = ChatGpt3_5Turbo
+            });
+            Debug.Assert(chatResult.Choices.Any());
+            if (chatResult.Choices is not null or { Count: 0 })
+                return chatResult.Choices.First().Message.ToString();
+            return "No response from GPT-3";
         }
-        catch (HttpRequestException httpRequestException)
+        catch (Exception e)
         {
-            Debug.WriteLine(httpRequestException);
-            return Task.FromResult("httpRequestException");
+            Debug.WriteLine(e);
+            return e.Message;
         }
-        throw new NotImplementedException();
     }
-
-    // public async Task<string> GetChatResponse(string prompt)
-    // {
-    //     var response = await _httpClient.PostAsJsonAsync(_configuration["ChatGptUrl"], new { prompt = prompt });
-    //     var responseString = await response.Content.ReadAsStringAsync();
-    //     return responseString;
-    // }
 }
