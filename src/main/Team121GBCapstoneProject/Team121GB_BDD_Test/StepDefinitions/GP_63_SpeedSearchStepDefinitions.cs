@@ -84,13 +84,14 @@ namespace Team121GB_BDD_Test.StepDefinitions
         [When(@"I enter in valid data")]
         public void WhenIEnterInValidData()
         {
-            throw new PendingStepException();
+            string game = "*Super Mario 64 *Halo: Combat Evolved";
+            _speedSearchPageObject.EnterGames(game);
         }
 
         [Then(@"I will go the the Results page")]
         public void ThenIWillGoTheTheResultsPage()
         {
-            throw new PendingStepException();
+            _speedSearchPageObject.GetTitle().Should().ContainEquivalentOf("Speed Search Result", AtLeast.Once());
         }
     }
 }
