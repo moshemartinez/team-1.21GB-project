@@ -7,26 +7,38 @@
 @{
     ViewData["Title"] = "Chat GPT page";
 }
+@* <head>
+<link rel="stylesheet" href="~/css/ChatGpt.css" />
+</head> *@
 
 <section class="breadcrumbs">
     <div class="container">
-        <h1 class="text-primary">CHAT GPT</h1>
-        <div id="chatbot">
-            <div id="responses" class="card bluetodarkblue-gradient table-responsive"> 
-                @* q: there is not chat div *@
-                @* a: the div is in the js file *@
-                @* q : on what line? *@
-                @* a: line 10 *@
-                @* filled in by js *@
-            </div>
-            <div id="messages">
-                <input type="text" id="prompt">
-                <button class="btn btn-primary" id="send">Submit</button>
-            </div>
+         <h1 class="text-primary">CHAT GPT</h1>
+    <div id="chatbot">
+        @* <div id="responses" class="card" style="background-image: linear-gradient(#1099ff, blue);"> *@
+            <div id="responses" class="card" style="background-image: linear-gradient(#1099ff, blue);"> 
+            @* filled in by js *@
         </div>
+        <div id="messages">
+            <input type="text" id="prompt">
+            <button class="btn btn-primary" id="send">Submit</button>
+        </div>
+    </div>
     </div>
 </section><!-- End Breadcrumbs -->
 
+@* <section class="inner-page">
+    <h1 class="text-primary">CHAT GPT</h1>
+    <div id="chatbot">
+        <div id="responses" class="card" style="background-image: linear-gradient(#1099ff, blue);">
+            @* filled in by js 
+        </div>
+        <div id="messages">
+            <input type="text" id="prompt">
+            <button class="btn btn-primary" id="send">Submit</button>
+        </div>
+    </div>
+</section> *@
 
 @section Scripts {
     <script type="text/javascript" src="~/js/ChatGpt.js"></script>

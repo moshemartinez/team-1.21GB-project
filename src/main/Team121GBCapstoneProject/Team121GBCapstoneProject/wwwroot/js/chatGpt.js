@@ -22,13 +22,17 @@ function sendMessage(prompt) {
             prompt: prompt
         },
         success: sendMessageSuccess,
-        error: (error) => {
-            console.log(error);
-        }
+        error: sendMessageError
     });
 }
 
 function sendMessageSuccess(data) {
     console.log(data);
+    document.getElementById("responses").innerHTML += "<p>" + data + "</p>";
+}
+
+function sendMessageError(data) {
+    console.log(data);
+    // document.createElement("div");
     document.getElementById("responses").innerHTML += "<p>" + data + "</p>";
 }
