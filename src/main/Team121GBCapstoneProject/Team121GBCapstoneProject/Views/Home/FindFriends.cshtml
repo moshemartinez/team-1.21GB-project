@@ -71,14 +71,17 @@
                             <p>@Model.User.ProfileBio</p>
                         }
 
-                        <div class="d-flex flex-wrap">
-                        @foreach (var game in Model.Games)
+                        @if (@Model.Games != null)
                         {
-                                <div class="flex-item" data-toggle="tooltip" title="@game.Game.Title" style="padding: 2px; position: relative">
-                                    <img src="@game.Game.CoverPicture"/>
+                            <div class="d-flex flex-wrap">
+                                @foreach (var game in Model.Games)
+                                {
+                                    <div class="flex-item" data-toggle="tooltip" title="@game.Game.Title" style="padding: 2px; position: relative">
+                                        <img src="@game.Game.CoverPicture"/>
+                                    </div>
+                                }
                             </div>
                         }
-                        </div>
                     }
                 }
             </div>

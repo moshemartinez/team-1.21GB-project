@@ -15,17 +15,15 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private IGameRepository _gameRepository;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IPersonRepository _personRepository;
     private readonly IPersonListRepository _personListRepository;
     private readonly IRepository<PersonGame> _personGameRepository;
 
     public HomeController(ILogger<HomeController> logger, IGameRepository gameRepo, UserManager<ApplicationUser> userManager, 
-        IPersonRepository personRepository, IPersonListRepository personListRepository, IRepository<PersonGame> personGameRepository)
+         IPersonListRepository personListRepository, IRepository<PersonGame> personGameRepository)
     {
         _logger = logger;
         _gameRepository = gameRepo;
         _userManager = userManager;
-        _personRepository = personRepository;
         _personListRepository = personListRepository;
         _personGameRepository = personGameRepository;
     }
@@ -47,7 +45,11 @@ public class HomeController : Controller
     [Authorize]
     public IActionResult GenerateImage()
     {
-        return View();
+        string authorizationId = _userManager.GetUserId(User);
+
+        //int creditsCount = ?? 0;
+        DalleVM dalleVM= new DalleVM();
+        return View("GenerateImage", dalleVM);
     }
 
     [Authorize]
@@ -66,10 +68,17 @@ public class HomeController : Controller
         if (foundUser != null)
         {
             friendVM.User = foundUser;
-            PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl =>
-                pl.ListKind == "Currently Playing" && pl.Person.AuthorizationId == foundUser.Id);
-            friendVM.Games = _personGameRepository.GetAll().Where(gl => 
-                gl.PersonListId == personList.Id && gl.PersonList.Person.AuthorizationId == foundUser.Id).ToList();
+            try
+            {
+                PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl =>
+                    pl.ListKind == "Currently Playing" && pl.Person.AuthorizationId == foundUser.Id);
+                friendVM.Games = _personGameRepository.GetAll().Where(gl =>
+                    gl.PersonListId == personList.Id && gl.PersonList.Person.AuthorizationId == foundUser.Id).ToList();
+            }
+            catch (Exception e)
+            {
+                friendVM.Games = null;
+            }
         }
         else
         {
