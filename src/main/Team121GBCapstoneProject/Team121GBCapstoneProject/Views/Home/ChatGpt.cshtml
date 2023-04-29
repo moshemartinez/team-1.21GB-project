@@ -10,13 +10,30 @@
 
 <section class="breadcrumbs">
     <div class="container">
-        <h1 class="text-primary">CHAT GPT</h1>
+        <div class="card" style="background: #333333;">
+            <div class="card-header">
+                <h1 style="color: white;">ChatGPT</h1>
+            </div>
+            <div class="card-body text-primary">
+                <h3 style="color: white;">Dislclaimer</h3>
+                <ul style="color: white;">
+                    <li>This is chatbot is powerred by OpenAI's ChatGPT</li>
+                    <li>We strive to provide Accurate information but mistakes can and do happen.</li>
+                    <li>No sexually explicit or violent prompts: These break OpenAI's terms of service.</li>
+                    <li>For more information about ChatGPT please visit OpenAI's website: <a href="https://openai.com/blog/chatgpt">Introducing ChatGPT</a></li>
+                </ul>
+            </div>
+        </div>
+        <br>
         <div id="chatbot">
-            <div id="responses">
+            <div id="responses" style="overflow: auto;
+                                       height: 700px;">
                 @* filled in by js *@
             </div>
-            <div id="messages">
-                <input type="text" id="prompt">
+            <div id="messages" style="display: flex;
+                                      justify-content: center;
+                                      align-items: center;">
+                <input type="text" id="prompt" class="form-control">
                 <button class="btn btn-primary" id="send">Submit</button>
             </div>
         </div>
