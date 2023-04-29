@@ -1,24 +1,32 @@
 
 $(document).ready(function () {
     $('#send').on('click', function () {
-        addUserQueryToDOM($('#prompt').val());
-        sendMessage($('#prompt').val());
+        let $prompt = $('#prompt').val();
+        $prompt.trim();
+        if ($prompt === "" || $prompt === null || $prompt === undefined) {
+            sendMessageError("Please enter a prompt.");
+            return;
+        }
+        $('#prompt').val('');
+        addUserQueryToDOM($prompt);
+        sendMessage($prompt);
     });
-    // $('#prompt').on('keydown', function(event) {
-    //     if (event.keyCode === 13) { // 13 is the code for the Enter key
-    //         event.preventDefault(); // prevent the default behavior of the enter key
-    //         // $('#send').click(); // trigger the click event on the #send button
-    //         sendMessage($('#prompt').val());
-    //     }
-    // });
+    $("#prompt").keypress(function(event) {
+        if (event.keyCode === 13) {
+            let $prompt = $('#prompt').val();
+            $prompt.trim();
+            if ($prompt === "" || $prompt === null || $prompt === undefined) {
+                sendMessageError("Please enter a prompt.");
+                return;
+            }
+            $('#prompt').val('');
+            addUserQueryToDOM($prompt);
+            sendMessage($prompt);
+        }
+      });
 });
 
-
 function sendMessage(prompt) {
-    if (prompt === "" || prompt === null || prompt === undefined) {
-        sendMessageError("Please enter a prompt.");
-        return;
-    }
     $.ajax({
         url: '/api/ChatGpt/GetChatResponse',
         method: 'GET',
@@ -32,28 +40,23 @@ function sendMessage(prompt) {
 
 function sendMessageSuccess(data) {
     console.log(data);
-    // $('#responses').append('<div class="card" style="background-image: linear-gradient(#1099ff, blue);"></div>');
-    $('#responses').append('<div class="card text-white bg-primary"></div>');
-
+    $('#responses').append('<div class="card text-white bg-primary" style="max-width: 30rem; min-width: 15rem"></div>');
     typeLetter(data);
     $('#responses').append('<br/>');
 }
 
 function sendMessageError(data) {
     console.log(data);
-    $('#responses').append('<div class="card text-white bg-danger"></div>');
+    $('#responses').append('<div class="card text-white bg-danger" style="max-width: 15rem;"></div>');
     typeLetter(data);
     $('#responses').append('<br/>');
 }
+
 function typeLetter(data) {
     const text = data.split(' ');
-    const $responses = $('#responses').children().last();
+    let $responses = $('#responses').children().last();
     $responses.css('color', 'white');
-
-    // * format the chat to the size of the response
-    const contentWidth = formatDiv(data, $responses);
-    $responses.css('width', contentWidth);
-
+    // * typing animation
     $.each(text, function (i, letter) {
         setTimeout(function () {
             $responses.append(letter + ' ');
@@ -61,12 +64,39 @@ function typeLetter(data) {
     });
 }
 
-function formatDiv(data, $responses) {
-    const contentWidth = data.length * 10;
-    return contentWidth;
-}
-
 function addUserQueryToDOM(query) {
-    $('#responses').append(`<div class="card" style="background-image: linear-gradient(white, white);">${query}</div>`);
+    $('#responses').append(`<div class="card" style="background-image: linear-gradient(white, white); max-width: 30rem; min-width: 15rem;">${query}</div>`);
     $('#responses').append('<br/>');
 }
+
+
+// // function formatDiv($responses) {
+// //     $responses.css('width', 'auto');
+// //     // const contentWidth = data.length * 10;
+// //     // return contentWidth;
+// // }
+// function formatDiv($responses, data) {
+//     // create a temporary hidden element to measure dimensions
+//     const $temp = $('<span>').css({
+//       position: 'absolute',
+//       visibility: 'hidden',
+//       whiteSpace: 'nowrap'
+//     }).text(data);
+    
+//     // append the temporary element to the DOM
+//     $('body').append($temp);
+    
+//     // measure the dimensions of the temporary element
+//     const width = $temp.width();
+//     const height = $temp.height();
+    
+//     // remove the temporary element
+//     $temp.remove();
+    
+//     // set the dimensions of the div
+//     $responses.css({
+//       width: width + 'px',
+//       height: height + 'px'
+//     });
+//     return $responses;
+//   }
