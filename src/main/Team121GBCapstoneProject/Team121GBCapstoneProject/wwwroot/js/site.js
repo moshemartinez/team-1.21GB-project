@@ -9,13 +9,15 @@ $(document).on('click', '.delete-person-game', function () {
     var id = $(this).data('id');
 
     console.log("PersonGame ID:", id);
-    //$.ajax({
-    //    url: '/person_game/' + id + '/delete',
-    //    type: 'DELETE',
-    //    success: function (result) {
-    //        // Update the page with the new data
-    //    }
-    //});
+    $.ajax({
+        url: '/GamesLists/Delete/' + id,
+        type: 'POST',
+        data: { id: id },
+        success: function (result) {
+            // Update the page with the new data
+            console.log("Attempted to remove game...")
+        }
+    });
 });
 
 

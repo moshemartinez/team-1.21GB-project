@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Team121GBCapstoneProjects.Controllers;
@@ -83,7 +84,38 @@ public class GamesListsController : Controller
         return View("Index", personListVMList);
     }
 
-   
+    // POST: GamesLists/Delete/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var gameToDelete = await _personGameRepository.GetAll().FirstOrDefaultAsync(g => g.Id == id);
+
+        if (gameToDelete == null)
+        {
+            return NotFound();
+        }
+
+        //if (Person == null)
+        //{
+        //    return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+        //}
+
+        //var movie = await _context.Movie.FindAsync(id);
+        //_context.Movie.Remove(movie);
+
+        _personGameRepository.Delete(gameToDelete);
+       
+        //await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+
     // [HttpPost]
     // public IActionResult AddList(int userId, int listTypeId, string listName)
     // {
