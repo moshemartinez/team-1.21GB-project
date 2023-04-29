@@ -13,11 +13,7 @@ namespace Team121GBNUnitTest;
 public class ChatGptServiceTests
 {
     private IConfigurationRoot _configuration;
-    private string _dallePrivateKey;
-    private string _dallePublicKey;
-    private IOpenAIService _openAiService;
-    private InMemoryDbHelper<GPDbContext> _dbHelper;
-
+  
     [SetUp]
     public void SetUp()
     {
