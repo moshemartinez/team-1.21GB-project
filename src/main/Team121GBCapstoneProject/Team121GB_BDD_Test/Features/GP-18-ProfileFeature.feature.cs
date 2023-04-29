@@ -90,19 +90,19 @@ and have it open up the file explorer and let them choose an image.", Programmin
                         "Password"});
             table5.AddRow(new string[] {
                         "TaliaK",
-                        "BDDTesting1@gmail.com",
+                        "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
             table5.AddRow(new string[] {
                         "ZaydenC",
-                        "BDDTesting2@gmail.com",
+                        "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
             table5.AddRow(new string[] {
                         "DavilaH",
-                        "team121gigabytes@gmail.com",
+                        "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});

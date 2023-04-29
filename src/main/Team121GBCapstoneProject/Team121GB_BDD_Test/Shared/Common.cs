@@ -24,6 +24,8 @@ namespace Standups_BDD_Tests.Shared
             { "Home" , "/" },
             { "Login", "/Identity/Account/Login" },
             { "Profile", "/Identity/Account/Manage/account%20preferences"},
+            { "Steam Games", "/SteamGames" },
+            { "Dalle Page", "/Home/GenerateImage"}
             { "SpeedSearch", "/Views/SpeedSearch"},
             { "Steam Games", "/SteamGames" }
         };
