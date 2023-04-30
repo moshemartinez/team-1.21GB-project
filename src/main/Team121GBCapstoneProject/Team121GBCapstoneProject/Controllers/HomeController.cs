@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Team121GBCapstoneProject.Models;
 
 namespace Team121GBCapstoneProject.Controllers;
 
+[ExcludeFromCodeCoverage]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
