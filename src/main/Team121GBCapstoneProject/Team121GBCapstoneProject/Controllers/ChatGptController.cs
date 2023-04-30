@@ -17,25 +17,33 @@ public class ChatGptController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IChatGptService _chatGptService;
+    private readonly IOpenAIService _openAiService;
 
     public ChatGptController(UserManager<ApplicationUser> userManager,
-                                         IChatGptService chatGptService)
+                                         IChatGptService chatGptService,
+                                         IOpenAIService openAiService)
     {
         _userManager = userManager;
         _chatGptService = chatGptService;
+        _openAiService = openAiService;
     }
+
+    private async Task<CreateModerationResponse> PromptModerationTask (string prompt) =>  await _openAiService.Moderation.CreateModeration(new CreateModerationRequest() {Input = prompt} );
 
     [HttpGet("GetChatResponse")]
     public async Task<ActionResult<string>> GetChatResponse(string prompt)
     {
         try
         {
-            string response = "Bleh";
-            // Thread.Sleep(10000);
-            // if (String.IsNullOrEmpty(prompt) is false)
-            // {
-            //     response = await _chatGptService.GetChatResponse(prompt);
-            // }
+            
+            string response = "";
+            if (String.IsNullOrEmpty(prompt) is false)
+            {
+                CreateModerationResponse moderationResponse = PromptModerationTask(prompt).Result;
+                if (moderationResponse.Results.FirstOrDefault()!.Flagged) return BadRequest("Inappropriate prompt.");
+                //* If we got to this point send the prompt.
+                response = await _chatGptService.GetChatResponse(prompt);
+            }
             return Ok(response);
         }
         catch (Exception e)

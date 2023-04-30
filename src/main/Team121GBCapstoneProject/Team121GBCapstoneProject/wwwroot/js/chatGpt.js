@@ -28,13 +28,6 @@ $(document).ready(function () {
       });
 });
 
-//q: will this make the javascript wait till the ajax call returns?
-//a: no, it will not
-//q: why not?
-//a: because the ajax call is async
-//q: how can I make it wait for the ajax call to finsh?
-//a: use async: false in the ajax call
-
 async function sendMessage(prompt) {
     await $.ajax({
         url: '/api/ChatGpt/GetChatResponse',
@@ -58,14 +51,18 @@ async function sendMessageSuccess(data) {
 
 async function sendMessageError(data) {
     $('#loadingChatGif').attr('hidden', 'true');
-    console.log(data);
+    console.log(data.responseText);
+    if (data.responseText === 'Inappropriate prompt.') {
+        $('#prompt').prop('disabled', true);
+        $('#send').prop('disabled', true);
+    }
     let $responses = $('#responses');
     let $row = $('<div></div>').addClass('card text-white bg-danger');
     await $responses.append($row);
-    typeLetter(data);
+    await typeLetter(data.responseText);
 }
 
-function typeLetter(data) {
+async function typeLetter(data) {
     const text = data.split(' ');
     let $responses = $('#responses').children().last();
     $responses.css('color', 'white');
