@@ -108,6 +108,10 @@ public class GamesListsController : Controller
     //[ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
+        HttpRequest httpRequest = HttpContext.Request;
+        //int idInt = int.TryParse(httpRequest.QueryString["id"]);
+        string idStr = httpRequest.Form["id"].ToString(); 
+
         if (_personGameRepository.GetAll() == null)
         {
             return Problem("Entity set 'PersonGame' is null.");
@@ -125,7 +129,6 @@ public class GamesListsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
 
 
     // ** OLD **

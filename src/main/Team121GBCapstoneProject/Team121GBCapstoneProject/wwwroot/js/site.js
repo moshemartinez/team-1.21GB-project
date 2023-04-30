@@ -14,8 +14,9 @@ $(document).on('click', '.delete-person-game', function () {
     // Prompt the user to confirm the delete action
     if (confirm("Are you sure you want to delete this game?")) {
         $.ajax({
-            url: '/GamesLists/DeleteConfirmed/?id=' + id,
-            type: 'POST',
+            url: '/GamesLists/DeleteConfirmed/',
+            method: 'POST',
+            data: { id: id},
             success: function (result) {
                 // Update the page with the new data
                 console.log("Attempted to remove game...");
