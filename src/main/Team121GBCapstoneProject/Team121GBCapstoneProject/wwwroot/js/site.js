@@ -5,20 +5,46 @@
 
 
 // Remove game
+
 $(document).on('click', '.delete-person-game', function () {
     var id = $(this).data('id');
 
     console.log("PersonGame ID:", id);
-    $.ajax({
-        url: '/GamesLists/Delete/' + id,
-        type: 'POST',
-        data: { id: id },
-        success: function (result) {
-            // Update the page with the new data
-            console.log("Attempted to remove game...")
-        }
-    });
+
+    // Prompt the user to confirm the delete action
+    if (confirm("Are you sure you want to delete this game?")) {
+        $.ajax({
+            url: '/GamesLists/DeleteConfirmed/?id=' + id,
+            type: 'POST',
+            success: function (result) {
+                // Update the page with the new data
+                console.log("Attempted to remove game...");
+                window.location.href = "/GamesLists/Index"; // Redirect to the index page after successful deletion
+            },
+            error: function (xhr, status, error) {
+                // Handle any errors that may occur during the AJAX call
+                console.log(xhr.responseText);
+                console.log("Error in trying to send ID");
+            }
+        });
+    }
 });
+
+//$(document).on('click', '.delete-person-game', function () {
+//    var id = $(this).data('id');
+
+//    console.log("PersonGame ID:", id);
+
+//    $.ajax({
+//        url: '/GamesLists/Delete?id=' + id,
+//        type: 'POST',
+//        /*data: { id: id },*/
+//        success: function (result) {
+//            // Update the page with the new data
+//            console.log("Attempted to remove game...")
+//        }
+//    });
+//});
 
 
 // Search Feature

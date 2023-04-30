@@ -84,9 +84,7 @@ public class GamesListsController : Controller
         return View("Index", personListVMList);
     }
 
-    // POST: GamesLists/Delete/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
+    // GET: PersonGames/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -94,26 +92,73 @@ public class GamesListsController : Controller
             return NotFound();
         }
 
-        var gameToDelete = await _personGameRepository.GetAll().FirstOrDefaultAsync(g => g.Id == id);
+        var personGame = await _personGameRepository.GetAll().FirstOrDefaultAsync(g => g.Id == id);
 
-        if (gameToDelete == null)
+        if (personGame == null)
         {
             return NotFound();
         }
 
-        //if (Person == null)
-        //{
-        //    return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
-        //}
-
-        //var movie = await _context.Movie.FindAsync(id);
-        //_context.Movie.Remove(movie);
-
-        _personGameRepository.Delete(gameToDelete);
-       
-        //await _context.SaveChangesAsync();
+        //return View(personGame);
         return RedirectToAction(nameof(Index));
     }
+
+    // POST: PersonGames/Delete/5
+    [HttpPost, ActionName("Delete")]
+    //[ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        if (_personGameRepository.GetAll() == null)
+        {
+            return Problem("Entity set 'PersonGame' is null.");
+        }
+
+        var personGame = await _personGameRepository.GetAll().FirstOrDefaultAsync(g => g.Id == id);
+
+        if (personGame == null)
+        {
+            return NotFound();
+        }
+
+        _personGameRepository.Delete(personGame);
+        //await _personGameRepository.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+    }
+
+
+
+    // ** OLD **
+
+    //// POST: GamesLists/Delete/5
+    //[HttpPost]
+    //public async Task<IActionResult> Delete(int id)
+    //{
+    //    if (id == null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    var gameToDelete = await _personGameRepository.GetAll().FirstOrDefaultAsync(g => g.Id == id);
+
+    //    if (gameToDelete == null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    //if (Person == null)
+    //    //{
+    //    //    return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+    //    //}
+
+    //    //var movie = await _context.Movie.FindAsync(id);
+    //    //_context.Movie.Remove(movie);
+
+    //    _personGameRepository.Delete(gameToDelete);
+
+    //    //await _context.SaveChangesAsync();
+    //    return RedirectToAction(nameof(Index));
+    //}
 
 
     // [HttpPost]
