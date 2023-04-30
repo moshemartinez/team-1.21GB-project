@@ -1,29 +1,29 @@
 
 $(document).ready(function () {
-    $('#send').on('click', function () {
+    $('#send').on('click', async function () {
         $('#loadingChatGif').removeAttr("hidden"); 
         let $prompt = $('#prompt').val();
         $prompt.trim();
         if ($prompt === "" || $prompt === null || $prompt === undefined) {
-            sendMessageError("Please enter a prompt.");
+            await sendMessageError("Please enter a prompt.");
             return;
         }
         $('#prompt').val('');
-        addUserQueryToDOM($prompt);
-        sendMessage($prompt);
+        await addUserQueryToDOM($prompt);
+        await sendMessage($prompt);
     });
-    $("#prompt").keypress(function(event) {
+    $("#prompt").keypress(async function(event) {
         if (event.keyCode === 13) {
             $('#loadingChatGif').removeAttr("hidden"); 
             let $prompt = $('#prompt').val();
             $prompt.trim();
             if ($prompt === "" || $prompt === null || $prompt === undefined) {
-                sendMessageError("Please enter a prompt.");
+                await sendMessageError("Please enter a prompt.");
                 return;
             }
             $('#prompt').val('');
-            addUserQueryToDOM($prompt);
-            sendMessage($prompt);
+            await addUserQueryToDOM($prompt);
+            await sendMessage($prompt);
         }
       });
 });
@@ -53,6 +53,7 @@ async function sendMessageError(data) {
     $('#loadingChatGif').attr('hidden', 'true');
     console.log(data.responseText);
     if (data.responseText === 'Inappropriate prompt.') {
+        alert('ChatGPT does not respond to inappropriate prompts. The bot has been disabled for this session.');
         $('#prompt').prop('disabled', true);
         $('#send').prop('disabled', true);
     }
@@ -74,7 +75,7 @@ async function typeLetter(data) {
     });
 }
 
-function addUserQueryToDOM(prompt) {
+async function addUserQueryToDOM(prompt) {
     let $responses = $('#responses');
     let msg = $('<div>').html(prompt)
                         .addClass('card text-white bg-secondary');
