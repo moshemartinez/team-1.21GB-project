@@ -30,7 +30,8 @@ public class ChatGptController : Controller
     {
         try
         {
-            string response = "erfnbeojfbnefojnbefojnbefojnboefjnbefojneobjffffffffvbeffeonobnfoj       fefe";
+            string response = "Bleh";
+            // Thread.Sleep(10000);
             // if (String.IsNullOrEmpty(prompt) is false)
             // {
             //     response = await _chatGptService.GetChatResponse(prompt);
