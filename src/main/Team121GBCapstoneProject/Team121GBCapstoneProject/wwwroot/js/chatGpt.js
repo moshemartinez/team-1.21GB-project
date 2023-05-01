@@ -60,6 +60,10 @@ async function sendMessageError(data) {
     let $responses = $('#responses');
     let $row = $('<div></div>').addClass('card text-white bg-danger');
     await $responses.append($row);
+    if (data === 'Please enter a prompt.') {
+        await typeLetter(data);
+        return;
+    }
     await typeLetter(data.responseText);
 }
 
