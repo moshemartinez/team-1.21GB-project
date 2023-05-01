@@ -10,11 +10,11 @@ public class PersonGameRepository : Repository<PersonGame>, IPersonGameRepositor
     {
     }
 
+    // ** This is not being used right now **
     public PersonGame RemovePersonGame(Person person, PersonList personList, PersonGame personGame)
     {
 
         Delete(personGame);
-
         return personGame;
     }
 }

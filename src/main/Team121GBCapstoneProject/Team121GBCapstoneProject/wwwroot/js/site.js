@@ -8,7 +8,6 @@
 
 $(document).on('click', '.delete-person-game', function () {
     var id = $(this).data('id');
-    //var id = parseInt(dataId);
 
     console.log(`PersonGame ID: ${id}`);
 
@@ -17,11 +16,10 @@ $(document).on('click', '.delete-person-game', function () {
         $.ajax({
             url: `api/PersonGame/${id}`,
             method: 'DELETE',
-            /*data: { id: id},*/
             success: function (result) {
                 // Update the page with the new data
                 console.log("Successfully removed game");
-                window.location.href = "/GamesLists/Index"; // Redirect to the index page after successful deletion
+                window.location.reload();
             },
             error: function (xhr, status, error) {
                 // Handle any errors that may occur during the AJAX call
@@ -33,22 +31,6 @@ $(document).on('click', '.delete-person-game', function () {
         });
     }
 });
-
-//$(document).on('click', '.delete-person-game', function () {
-//    var id = $(this).data('id');
-
-//    console.log("PersonGame ID:", id);
-
-//    $.ajax({
-//        url: '/GamesLists/Delete?id=' + id,
-//        type: 'POST',
-//        /*data: { id: id },*/
-//        success: function (result) {
-//            // Update the page with the new data
-//            console.log("Attempted to remove game...")
-//        }
-//    });
-//});
 
 
 // Search Feature
