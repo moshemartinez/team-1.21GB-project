@@ -23,9 +23,8 @@ namespace Team121GBCapstoneProject.Services.Concrete
             BaseSource = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}";
         }
 
-        public string GetJsonStringsFromEndpoint(string id)
+        public string GetJsonStringsFromEndpoint(string source)
         {
-            string source = string.Format(BaseSource,Token, id);
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, source)
             {
                 Headers =
@@ -87,7 +86,8 @@ namespace Team121GBCapstoneProject.Services.Concrete
 
         public async Task<SteamUser> GetSteamUser(string id)
         {
-            string response = GetJsonStringsFromEndpoint(id);
+            string source = string.Format(BaseSource, Token, id);
+            string response = GetJsonStringsFromEndpoint(source);
             Root deserializedJson = JsonConvert.DeserializeObject<Root>(response);
             foreach (var deserialized in deserializedJson.response.players)
             {
@@ -101,6 +101,14 @@ namespace Team121GBCapstoneProject.Services.Concrete
             }
 
            throw new HttpRequestException();
+        }
+
+        public SteamAchievementsDTO GetSteamAchievements(string userID, string gameid)
+        {
+            string source = string.Format(
+                    "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={0}&key={1}&steamid={2}", gameid, Token, userID);
+            string response = GetJsonStringsFromEndpoint(source); 
+            return JsonConvert.DeserializeObject<SteamAchievementsDTO>(response);
         }
 
         //Used from Justin From SIN team. Was unit tested heavily from them.
@@ -120,8 +128,6 @@ namespace Team121GBCapstoneProject.Services.Concrete
             }
             
         }
-
-
 
     }
 }

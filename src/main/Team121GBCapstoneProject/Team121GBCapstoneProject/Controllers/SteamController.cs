@@ -1,5 +1,6 @@
 ﻿    using Microsoft.AspNetCore.Mvc;
     using Team121GBCapstoneProject.Models;
+    using Team121GBCapstoneProject.Models.DTO;
     using Team121GBCapstoneProject.Services.Abstract;
 
     namespace Team121GBCapstoneProject.Controllers
@@ -19,6 +20,12 @@
         public ActionResult<SteamUser> GetSteamUser(string id)
         {
             return Ok(_steamService.GetSteamUser(id));
+        }
+
+        [HttpGet("GetSteamAchievements")]
+        public ActionResult<SteamAchievementsDTO> GetSteamAchievements(string userID, string gameID)
+        {
+            return Ok(_steamService.GetSteamAchievements(userID, gameID));
         }
     }
 }
