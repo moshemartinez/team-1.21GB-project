@@ -124,12 +124,6 @@ they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-            table12.AddRow(new string[] {
-                        "JoannaV",
-                        "valdezJ@example.com",
-                        "Joanna",
-                        "Valdez",
-                        "d9u(*dsF4"});
 #line 19
  testRunner.And("the following users do not exist", ((string)(null)), table12, "And ");
 #line hidden
