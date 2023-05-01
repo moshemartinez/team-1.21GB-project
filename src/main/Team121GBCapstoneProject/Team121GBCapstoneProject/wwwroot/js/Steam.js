@@ -39,13 +39,4 @@ function steamLoad() {
     });
 }
 
-function steamModalOpen(gameID) {
-    let temp = document.createElement("p");
-    temp.innerHTML = "";
-    temp.innerHTML = `${gameID}`;
-    document.getElementById("here").append(temp);
-    $('#SteamModal').modal('show');
-}
-function steamModalClose() {
-    $('#SteamModal').modal('hide');
-}
+

@@ -103,12 +103,39 @@ namespace Team121GBCapstoneProject.Services.Concrete
            throw new HttpRequestException();
         }
 
-        public SteamAchievementsDTO GetSteamAchievements(string userID, string gameid)
+        public List<SteamAchievement> GetSteamAchievements(string userID, string gameID)
         {
+            List<SteamAchievement> Achievements = new List<SteamAchievement>();
             string source = string.Format(
-                    "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={0}&key={1}&steamid={2}", gameid, Token, userID);
+                    "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={0}&key={1}&steamid={2}", gameID, Token, userID);
             string response = GetJsonStringsFromEndpoint(source); 
-            return JsonConvert.DeserializeObject<SteamAchievementsDTO>(response);
+            SteamAchievementsDTO.Root deserialize = JsonConvert.DeserializeObject<SteamAchievementsDTO.Root>(response);
+
+            string source2 = string.Format(
+                "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?appid={0}&key={1}", gameID, Token);
+            string response2 = GetJsonStringsFromEndpoint(source2);
+            SteamAchievementsExtraDTO.Root deserialized = JsonConvert.DeserializeObject<SteamAchievementsExtraDTO.Root>(response2);
+
+            foreach (var achievement in deserialize.playerstats.achievements)
+            {
+                SteamAchievement temp = new SteamAchievement()
+                {
+                    Name = achievement.apiname,
+                    Achieved = achievement.achieved
+                };
+                Achievements.Add(temp);
+            }
+
+            int count = 0;
+            foreach (var achievement in deserialized.game.availableGameStats.achievements)
+            {
+                Achievements[count].DisplayName = achievement.displayName;
+                Achievements[count].Icon = achievement.icon;
+                Achievements[count].IconGrey = achievement.icongray;
+                count++;
+            }
+
+            return Achievements;
         }
 
         //Used from Justin From SIN team. Was unit tested heavily from them.

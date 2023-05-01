@@ -23,7 +23,7 @@
         }
 
         [HttpGet("GetSteamAchievements")]
-        public ActionResult<SteamAchievementsDTO> GetSteamAchievements(string userID, string gameID)
+        public ActionResult<List<SteamAchievement>> GetSteamAchievements(string userID, string gameID)
         {
             return Ok(_steamService.GetSteamAchievements(userID, gameID));
         }

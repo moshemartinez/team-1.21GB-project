@@ -52,8 +52,7 @@
                         foreach (var game in Model.response.games)
                         {
                             <div class="flex-item gameContainer" value="@game.appid" data-toggle="tooltip" title="@game.name" style="padding: 2px; position: relative">
-                                <button onclick="steamModalOpen()" class="btn">
-                                    <input type="hidden" id="gameID" value="@game.appid"/>
+                                <button onclick="steamModalOpen(@game.appid)" class="btn">
                                     <img src="@string.Format("https://steamcdn-a.akamaihd.net/steam/apps/{0}/header.jpg", @game.appid)" style="height: 200px"/><br>
                                 </button>
                             </div>
@@ -64,7 +63,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="steamModal" tabindex="-1" role="dialog" aria-labelledby="SteamModalTitle"
+    <div class="modal fade" id="SteamModal" tabindex="-1" role="dialog" aria-labelledby="SteamModalTitle"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -88,5 +87,5 @@
 
 @section scripts
 {
-    <script type="text/javascript" src="~/js/Steam.js"></script>
+    <script type="text/javascript" src="~/js/SteamAchievements.js"></script>
 }

@@ -7,6 +7,6 @@ namespace Team121GBCapstoneProject.Services.Abstract
     {
         Task<SteamUser> GetSteamUser(string id);
         public SteamGamesDTO GetGames(string steamId);
-        public SteamAchievementsDTO GetSteamAchievements(string userID, string gameid);
+        public List<SteamAchievement> GetSteamAchievements(string userID, string gameid);
     }
 }
