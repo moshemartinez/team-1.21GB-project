@@ -8,24 +8,27 @@
 
 $(document).on('click', '.delete-person-game', function () {
     var id = $(this).data('id');
+    //var id = parseInt(dataId);
 
-    console.log("PersonGame ID:", id);
+    console.log(`PersonGame ID: ${id}`);
 
     // Prompt the user to confirm the delete action
     if (confirm("Are you sure you want to delete this game?")) {
         $.ajax({
-            url: '/GamesLists/DeleteConfirmed/',
-            method: 'POST',
-            data: { id: id},
+            url: `api/PersonGame/${id}`,
+            method: 'DELETE',
+            /*data: { id: id},*/
             success: function (result) {
                 // Update the page with the new data
-                console.log("Attempted to remove game...");
+                console.log("Successfully removed game");
                 window.location.href = "/GamesLists/Index"; // Redirect to the index page after successful deletion
             },
             error: function (xhr, status, error) {
                 // Handle any errors that may occur during the AJAX call
+                console.log("XHR, Status, Error:");
                 console.log(xhr.responseText);
-                console.log("Error in trying to send ID");
+                console.log(status.responseText);
+                console.log(error.responseText);
             }
         });
     }

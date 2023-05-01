@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Team121GBCapstoneProject.Areas.Identity.Data;
+using Team121GBCapstoneProject.DAL.Abstract;
+using Team121GBCapstoneProject.Models;
+using Team121GBCapstoneProjects.Controllers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +13,15 @@ namespace Team121GBCapstoneProject.Controllers
     [ApiController]
     public class PersonGameController : ControllerBase
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        IRepository<PersonGame> _personGameRepository;
+
+        public PersonGameController(UserManager<ApplicationUser> userManager, IRepository<PersonGame> personGameRepository)
+        {
+            _userManager = userManager;
+            _personGameRepository = personGameRepository;
+        }
+
         // GET: api/<PersonGameController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -19,6 +33,7 @@ namespace Team121GBCapstoneProject.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
+            Console.WriteLine("Get PersonGame...");
             return "value";
         }
 
@@ -38,6 +53,18 @@ namespace Team121GBCapstoneProject.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            Console.WriteLine("Deleting PersonGame...");
+
+            var personGame = _personGameRepository.GetAll().FirstOrDefault(g => g.Id == id);
+
+            if (personGame == null)
+            {
+                Console.WriteLine("No game found");
+            }
+            else
+            {
+                _personGameRepository.Delete(personGame);
+            }
         }
     }
 }
