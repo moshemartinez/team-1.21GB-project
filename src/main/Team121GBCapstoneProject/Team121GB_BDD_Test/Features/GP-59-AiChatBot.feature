@@ -5,6 +5,15 @@ Feature: GP-59-AiChatBot
 
 This feature is about using the power of AI to help our users when they need help while gaming. It gives our users one more tool 
 at their disposal.
+Background:
+	Given the following users exist
+	  | UserName   | Email                          | FirstName | LastName | Password   |
+	  | TaliaK     | knott@example.com          | Talia     | Knott    | Password1! |
+	  | ZaydenC    | clark@example.com          | Zayden    | Clark    | Password1! |
+	  | DavilaH    | hareem@example.com     | Hareem    | Davila   | Password1! |
+	And the following users do not exist
+	  | UserName | Email               | FirstName | LastName | Password  |
+	  | AndreC   | colea@example.com   | Andre     | Cole     | 0a9dfi3.a |
 
 @notLoggedIn
 Scenario: A visitor cannot access the AI Chat bot page.
@@ -38,7 +47,7 @@ Scenario: A logged in user can submit a prompt on the Chat bot page
 Scenario: A logged in user can enter an inapprorate prompt
 	Given I am a logged in user
 	And I am on the chatbot page
-	When I enter an inappriate prompt
+	When I enter an inappropriate prompt
 	And I submit my prompt
 	Then I should be told my prompt was inappropriate
 	
