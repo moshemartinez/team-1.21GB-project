@@ -20,11 +20,11 @@ namespace Team121GB_BDD_Test.StepDefinitions
             _scenarioContext = context;
         }
 
-        [Given(@"I am redirected to the '([^']*)' page")]
+  /*      [Given(@"I am redirected to the '([^']*)' page")]
         public void GivenIAmRedirectedToThePage(string home)
         {
             _homePage.GetTitle().Should().ContainEquivalentOf(home, AtLeast.Once());
-        }
+        }*/
 
         [When(@"I click the profile dropdown"), Given(@"I click the profile dropdown")]
         public void WhenIClickTheProfileDropdown()

@@ -66,6 +66,7 @@ builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IPersonListRepository, PersonListRepository>();
 builder.Services.AddScoped<IListKindRepository, ListKindRepository>();
 builder.Services.AddScoped<IGameRecommender, GameRecommender>();
+builder.Services.AddScoped<IPersonGameRepository, PersonGameRepository>();
 builder.Services.AddScoped<ISpeedSearch, SpeedSearch>();
 
 builder.Services.AddSwaggerGen();
