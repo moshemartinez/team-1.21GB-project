@@ -20,26 +20,30 @@ namespace Team121GB_BDD_Test.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("ProfilePicture")]
-    [NUnit.Framework.CategoryAttribute("Cole")]
-    public partial class ProfilePictureFeature
+    [NUnit.Framework.DescriptionAttribute("GP-64-SteamGames")]
+    public partial class GP_64_SteamGamesFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "Cole"};
+        private string[] _featureTags = ((string[])(null));
         
-#line 1 "GP-14-ProfilePicture.feature"
+#line 1 "GP-64-SteamGames.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "ProfilePicture", @"A user would like to change their profile picture. Either they just made their account or would like to update their old one. Either way they would 
-navigate to their profile page and click on a button somewhere around their profile and have it open up the file explorer and let them choose an image.", ProgrammingLanguage.CSharp, new string[] {
-                        "Cole"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "GP-64-SteamGames", @"As a user I would like to have the ability to add games from my steam to the gaming platform.
+
+Most video game players have a steam account if they play on a personal computer, and it is 
+common for them to own games on it. However, it would be very tedious and time consuming for
+a user to add games to their list on our site manually. To help elevate this we want the user
+to be able to input their steam information and them automatically be able to to see all the
+games in their steam account. To do this we will need to user to be able to input their steam 
+account information to our site and then submit it, after that our site will display the games 
+they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -79,67 +83,63 @@ navigate to their profile page and click on a button somewhere around their prof
         
         public virtual void FeatureBackground()
         {
-#line 7
+#line 13
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table3.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "TaliaK",
                         "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
-            table3.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "ZaydenC",
                         "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
-            table3.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "DavilaH",
                         "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
-#line 8
- testRunner.Given("the following users exist", ((string)(null)), table3, "Given ");
+#line 14
+ testRunner.Given("the following users exist", ((string)(null)), table9, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table4.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "AndreC",
                         "colea@example.com",
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-            table4.AddRow(new string[] {
-                        "JoannaV",
-                        "valdezJ@example.com",
-                        "Joanna",
-                        "Valdez",
-                        "d9u(*dsF4"});
-#line 13
- testRunner.And("the following users do not exist", ((string)(null)), table4, "And ");
+#line 19
+ testRunner.And("the following users do not exist", ((string)(null)), table10, "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Uploding Profile Picutre")]
+        [NUnit.Framework.DescriptionAttribute("User can navigate to new steam games page")]
+        [NUnit.Framework.CategoryAttribute("Quinton")]
         [NUnit.Framework.CategoryAttribute("LoggedIn")]
-        [NUnit.Framework.TestCaseAttribute("Zayden", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Hareem", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Talia", "Profile", null)]
-        public virtual void UplodingProfilePicutre(string firstName, string page, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("Talia", "Home", null)]
+        [NUnit.Framework.TestCaseAttribute("Zayden", "Home", null)]
+        [NUnit.Framework.TestCaseAttribute("Hareem", "Home", null)]
+        public virtual void UserCanNavigateToNewSteamGamesPage(string firstName, string page, string[] exampleTags)
         {
             string[] @__tags = new string[] {
+                    "Quinton",
                     "LoggedIn"};
             if ((exampleTags != null))
             {
@@ -149,8 +149,8 @@ navigate to their profile page and click on a button somewhere around their prof
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Uploding Profile Picutre", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 19
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can navigate to new steam games page", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -170,23 +170,23 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 7
+#line 13
 this.FeatureBackground();
 #line hidden
-#line 20
+#line 26
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 21
- testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+ testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 22
- testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.When("I click on the dropdown menu in the nav bar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 23
- testRunner.When("I upload an image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 29
+ testRunner.And("I click on the Steam Games button in the navbar dropdown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 24
- testRunner.Then("I should be able to select an image for my profile picture", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 30
+ testRunner.Then("I am redirected to the \'Steam Games\' page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

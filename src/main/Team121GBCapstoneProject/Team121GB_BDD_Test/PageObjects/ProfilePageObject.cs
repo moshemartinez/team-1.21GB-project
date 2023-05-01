@@ -17,7 +17,7 @@ namespace Team121GB_BDD_Test.PageObjects
         public IWebElement lastNameError;
         public IWebElement profilePictureButton => _webDriver.FindElement(By.Id("Input_ProfilePicture"));
         public IWebElement profileUpload => _webDriver.FindElement(By.Id("profilePicture"));
-
+        public IWebElement generateDalleImageButton => _webDriver.FindElement(By.Id("generateImagePageRedirectButton")); 
         public string NavbarWelcomeText()
         {
             return NavBarHelloLink.Text;
