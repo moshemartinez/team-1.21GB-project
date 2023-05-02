@@ -41,7 +41,7 @@ builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha =>
 builder.Services.AddScoped<IIgdbService, IgdbService>();
 builder.Services.AddScoped<IsteamService, SteamService>( s => new SteamService(SteamSecretKey));
 
-var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("GPConnectionAuth") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -94,7 +94,7 @@ builder.Services.AddAuthentication()
 
 var app = builder.Build();
 // ! Seed users
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
@@ -108,7 +108,7 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(e);
         throw new Exception("Couldn't seed users.");
     }
-}
+}*/
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
