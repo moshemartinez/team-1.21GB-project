@@ -5,7 +5,7 @@
 @model Team121GBCapstoneProject.Models.DTO.SteamGamesDTO;
 @inject UserManager<ApplicationUser> UserManager
 @{
-    ViewData["Title"] = "Steam Games";
+    ViewData["Title"] = "Steam Library";
     SteamHelper helper = new SteamHelper(UserManager);
     string steamId = helper.GetSteamId(User);
 }
@@ -19,7 +19,7 @@
     <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-            <h2>Search</h2>
+            <h2>Steam Library</h2>
             <ol>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li>Steam Library</li>
