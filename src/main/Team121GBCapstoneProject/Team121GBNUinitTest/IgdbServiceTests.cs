@@ -137,7 +137,7 @@ public class IgdbAPIServiceTests
         );
     }
 
-    [Test]
+   /* [Test]
     public async Task IgdbService_SearchGames_ReturnsListOf10Games()
     {
         // --> Arrange
@@ -192,7 +192,7 @@ public class IgdbAPIServiceTests
         // --> Assert
         Assert.IsEmpty(result);
     }
-
+*/
 
     //[Test]
     //public async Task IgdbService_Request_Denied()

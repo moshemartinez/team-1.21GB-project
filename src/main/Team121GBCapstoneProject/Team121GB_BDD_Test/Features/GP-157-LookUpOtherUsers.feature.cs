@@ -20,9 +20,9 @@ namespace Team121GB_BDD_Test.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("GP-14")]
+    [NUnit.Framework.DescriptionAttribute("GP-157-LookUpOtherUsers")]
     [NUnit.Framework.CategoryAttribute("Cole")]
-    public partial class GP_14Feature
+    public partial class GP_157_LookUpOtherUsersFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
@@ -30,16 +30,16 @@ namespace Team121GB_BDD_Test.Features
         private string[] _featureTags = new string[] {
                 "Cole"};
         
-#line 1 "GP-18-ProfileFeature.feature"
+#line 1 "GP-157-LookUpOtherUsers.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "GP-14", @"A user would like to change their profile picture. Either they just made their account or would like to update their old one. 
-Either way they would navigate to their profile page and click on a button somewhere around their profile 
-and have it open up the file explorer and let them choose an image.", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "GP-157-LookUpOtherUsers", @"A user will be able to go to a page (either their profile page or a new page) and search for other users. 
+When they click on one of the names that were brought up they will be taken to the person's profile page and 
+should be able to see their first and last name, their bio, and a list of their games if they have any.", ProgrammingLanguage.CSharp, new string[] {
                         "Cole"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -80,65 +80,65 @@ and have it open up the file explorer and let them choose an image.", Programmin
         
         public virtual void FeatureBackground()
         {
-#line 9
+#line 8
 #line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table7.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "TaliaK",
-                        "knott@example.com",
+                        "BDDTesting1@gmail.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
-            table7.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "ZaydenC",
-                        "clark@example.com",
+                        "BDDTesting2@gmail.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
-            table7.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "DavilaH",
-                        "hareem@example.com",
+                        "team121gigabytes@gmail.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
-#line 10
- testRunner.Given("the following users exist", ((string)(null)), table7, "Given ");
+#line 9
+ testRunner.Given("the following users exist", ((string)(null)), table5, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table8.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "AndreC",
                         "colea@example.com",
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-            table8.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "JoannaV",
                         "valdezJ@example.com",
                         "Joanna",
                         "Valdez",
                         "d9u(*dsF4"});
-#line 15
- testRunner.And("the following users do not exist", ((string)(null)), table8, "And ");
+#line 14
+ testRunner.And("the following users do not exist", ((string)(null)), table6, "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Finding Profile Name Boxes")]
+        [NUnit.Framework.DescriptionAttribute("User can find button on page")]
         [NUnit.Framework.CategoryAttribute("LoggedIn")]
         [NUnit.Framework.TestCaseAttribute("Talia", "Profile", null)]
         [NUnit.Framework.TestCaseAttribute("Zayden", "Profile", null)]
         [NUnit.Framework.TestCaseAttribute("Hareem", "Profile", null)]
-        public virtual void FindingProfileNameBoxes(string firstName, string page, string[] exampleTags)
+        public virtual void UserCanFindButtonOnPage(string firstName, string page, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "LoggedIn"};
@@ -150,7 +150,7 @@ and have it open up the file explorer and let them choose an image.", Programmin
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Finding Profile Name Boxes", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can find button on page", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 21
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -171,38 +171,41 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 9
+#line 8
 this.FeatureBackground();
 #line hidden
 #line 22
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 23
- testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 24
  testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 25
- testRunner.Then("I should see a form with a text box to edit my profile name and a submit button.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I should see a button to find users", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 26
+ testRunner.And("I click on it it will take me to the \"/Home/FindFriends\" page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Changing Profile Name")]
-        [NUnit.Framework.TestCaseAttribute("Talia", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Zayden", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Hareem", "Profile", null)]
-        public virtual void ChangingProfileName(string firstName, string page, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("User can look up other users")]
+        [NUnit.Framework.TestCaseAttribute("Talia", "Friend", null)]
+        [NUnit.Framework.TestCaseAttribute("Zayden", "Friend", null)]
+        [NUnit.Framework.TestCaseAttribute("Hareem", "Friend", null)]
+        public virtual void UserCanLookUpOtherUsers(string firstName, string page, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Changing Profile Name", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 32
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can look up other users", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -222,43 +225,40 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 9
+#line 8
 this.FeatureBackground();
 #line hidden
-#line 33
+#line 34
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 34
- testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
 #line 35
- testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 36
- testRunner.And("the I type in valid input", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 37
- testRunner.And("I submit the form for editing my profile name.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I look up a valid user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 38
- testRunner.Then("I should see the change reflected on page reload.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I will see their information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Invalid Profile Name")]
-        [NUnit.Framework.TestCaseAttribute("Talia", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Zayden", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Hareem", "Profile", null)]
-        public virtual void InvalidProfileName(string firstName, string page, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("User can look up invlaid users and have nothing be returned")]
+        [NUnit.Framework.TestCaseAttribute("Talia", "Friend", null)]
+        [NUnit.Framework.TestCaseAttribute("Zayden", "Friend", null)]
+        [NUnit.Framework.TestCaseAttribute("Hareem", "Friend", null)]
+        public virtual void UserCanLookUpInvlaidUsersAndHaveNothingBeReturned(string firstName, string page, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid Profile Name", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can look up invlaid users and have nothing be returned", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 45
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -279,26 +279,23 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 9
+#line 8
 this.FeatureBackground();
 #line hidden
 #line 46
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 47
- testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 48
  testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 49
- testRunner.And("then I type in invalid input", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I look up an invalid user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 50
- testRunner.And("I submit the form for editing my profile name.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 51
- testRunner.Then("I should see a notification telling my the input is invalid.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I will see an \"Person Not Found\" error", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
