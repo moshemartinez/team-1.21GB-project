@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Razor.Compilation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,8 @@ namespace Standups_BDD_Tests.Shared
             { "Steam Games", "/SteamGames" },
             { "Dalle Page", "/Home/GenerateImage"},
             { "Friend", "/Home/FindFriends" },
-            { "ChatGPT page", "/Home/ChatGpt"}
+            { "ChatGPT page", "/Home/ChatGpt"},
+            { "SpeedSearch", "/Views/SpeedSearch"}
         };
 
         public static string PathFor(string pathName) => Paths[pathName];
