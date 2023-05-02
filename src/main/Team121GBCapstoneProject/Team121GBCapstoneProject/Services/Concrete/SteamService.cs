@@ -23,9 +23,8 @@ namespace Team121GBCapstoneProject.Services.Concrete
             BaseSource = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}";
         }
 
-        public string GetJsonStringsFromEndpoint(string id)
+        public string GetJsonStringsFromEndpoint(string source)
         {
-            string source = string.Format(BaseSource,Token, id);
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, source)
             {
                 Headers =
@@ -87,7 +86,8 @@ namespace Team121GBCapstoneProject.Services.Concrete
 
         public async Task<SteamUser> GetSteamUser(string id)
         {
-            string response = GetJsonStringsFromEndpoint(id);
+            string source = string.Format(BaseSource, Token, id);
+            string response = GetJsonStringsFromEndpoint(source);
             Root deserializedJson = JsonConvert.DeserializeObject<Root>(response);
             foreach (var deserialized in deserializedJson.response.players)
             {
@@ -101,6 +101,52 @@ namespace Team121GBCapstoneProject.Services.Concrete
             }
 
            throw new HttpRequestException();
+        }
+
+        public List<SteamAchievement> GetSteamAchievements(string userID, string gameID)
+        {
+            List<SteamAchievement> Achievements = new List<SteamAchievement>();
+            string source = string.Format(
+                    "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={0}&key={1}&steamid={2}", gameID, Token, userID);
+            string source2 = string.Format(
+                "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?appid={0}&key={1}", gameID, Token);
+            string response = null;
+            string response2 = null;
+            try
+            {
+                 response = GetJsonStringsFromEndpoint(source);
+                 response2 = GetJsonStringsFromEndpoint(source2);
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex);
+                return Achievements;
+            }
+            
+            SteamAchievementsDTO.Root deserialize = JsonConvert.DeserializeObject<SteamAchievementsDTO.Root>(response);
+            SteamAchievementsExtraDTO.Root deserialized = JsonConvert.DeserializeObject<SteamAchievementsExtraDTO.Root>(response2);
+
+            foreach (var achievement in deserialize.playerstats.achievements)
+            {
+                SteamAchievement temp = new SteamAchievement()
+                {
+                    Name = achievement.apiname,
+                    Achieved = achievement.achieved
+                };
+                Achievements.Add(temp);
+            }
+
+            int count = 0;
+            foreach (var achievement in deserialized.game.availableGameStats.achievements)
+            {
+                Achievements[count].DisplayName = achievement.displayName;
+                Achievements[count].Icon = achievement.icon;
+                Achievements[count].IconGrey = achievement.icongray;
+                Achievements[count].Description = achievement.description;
+                count++;
+            }
+
+            return Achievements;
         }
 
         //Used from Justin From SIN team. Was unit tested heavily from them.
@@ -120,8 +166,6 @@ namespace Team121GBCapstoneProject.Services.Concrete
             }
             
         }
-
-
 
     }
 }

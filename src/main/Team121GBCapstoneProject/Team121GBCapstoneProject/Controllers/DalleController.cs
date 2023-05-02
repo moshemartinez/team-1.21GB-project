@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OpenAI.GPT3.Interfaces;
@@ -11,6 +12,7 @@ using Team121GBCapstoneProject.Services.Abstract;
 
 namespace Team121GBCapstoneProject.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [Route("api/[controller]")]
     [ApiController]
     public class DalleController : Controller
