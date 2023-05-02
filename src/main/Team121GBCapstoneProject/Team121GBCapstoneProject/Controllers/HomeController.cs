@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OpenQA.Selenium.Interactions;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.DAL.Abstract;
@@ -16,12 +17,17 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private IGameRepository _gameRepository;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IPersonListRepository _personListRepository;
+    private readonly IRepository<PersonGame> _personGameRepository;
 
-    public HomeController(ILogger<HomeController> logger, IGameRepository gameRepo, UserManager<ApplicationUser> userManager)
+    public HomeController(ILogger<HomeController> logger, IGameRepository gameRepo, UserManager<ApplicationUser> userManager, 
+         IPersonListRepository personListRepository, IRepository<PersonGame> personGameRepository)
     {
         _logger = logger;
         _gameRepository = gameRepo;
         _userManager = userManager;
+        _personListRepository = personListRepository;
+        _personGameRepository = personGameRepository;
     }
 
     public IActionResult Index()
@@ -46,6 +52,42 @@ public class HomeController : Controller
         //int creditsCount = ?? 0;
         DalleVM dalleVM= new DalleVM();
         return View("GenerateImage", dalleVM);
+    }
+
+    [Authorize]
+    public IActionResult FindFriends()
+    {
+        return View();
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult FindFriends(string email)
+    {
+        ApplicationUser foundUser = _userManager.FindByEmailAsync(email).Result;
+        FindFriendsVM friendVM = new FindFriendsVM();
+
+        if (foundUser != null)
+        {
+            friendVM.User = foundUser;
+            try
+            {
+                PersonList personList = _personListRepository.GetAll().FirstOrDefault(pl =>
+                    pl.ListKind == "Currently Playing" && pl.Person.AuthorizationId == foundUser.Id);
+                friendVM.Games = _personGameRepository.GetAll().Where(gl =>
+                    gl.PersonListId == personList.Id && gl.PersonList.Person.AuthorizationId == foundUser.Id).ToList();
+            }
+            catch (Exception e)
+            {
+                friendVM.Games = null;
+            }
+        }
+        else
+        {
+            friendVM.PersonNotFound = true;
+        }
+        
+        return View("FindFriends", friendVM);
     }
 
     [Authorize]

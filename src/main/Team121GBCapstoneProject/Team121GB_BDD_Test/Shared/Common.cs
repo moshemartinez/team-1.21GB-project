@@ -25,6 +25,7 @@ namespace Standups_BDD_Tests.Shared
             { "Profile", "/Identity/Account/Manage/account%20preferences"},
             { "Steam Games", "/SteamGames" },
             { "Dalle Page", "/Home/GenerateImage"},
+            { "Friend", "/Home/FindFriends" },
             { "ChatGPT page", "/Home/ChatGpt"}
         };
 
