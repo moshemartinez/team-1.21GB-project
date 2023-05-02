@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<IgdbGame>
-
+*@{
+    ViewData["Title"] = "Speed Search Results";
+}
 <!-- ======= Breadcrumbs ======= -->
 <section class="breadcrumbs">
     <div class="container">
@@ -20,24 +22,22 @@
 <section class="inner-page">
     <div class="container">
         <div id="statusMessage">
-
         </div>
         <h1 id="topOfPageHeader">Search Results</h1>
         <div class="table-responsive">
             <table class="table" id="gameTable">
                 <thead>
-                <tr>
-                    <th>Cover</th>
-                    <th>Name</th>
-                    <th>Website</th>
-                    <th>Description</th>
-                    <th>Release Year</th>
-                    <th>Platform</th>
-                    <th>Genre</th>
-                </tr>
+                    <tr>
+                        <th>Cover</th>
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Description</th>
+                        <th>Release Year</th>
+                        <th>Platform</th>
+                        <th>Genre</th>
+                    </tr>
                 </thead>
                 <tbody id="gameTableBody">
-
                 </tbody>
             </table>
         </div>
@@ -75,7 +75,6 @@
 @section Scripts{
     <script src="~/js/search.js"></script>
     <script src="~/js/site.js"></script>
-    <script src="~/js/SpeedSearch.js"></script>
     <script type="module" src="~/js/addGame.js"></script>
 }
 
