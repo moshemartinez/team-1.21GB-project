@@ -9,7 +9,7 @@ using Standups_BDD_Tests.PageObjects;
 
 namespace Team121GB_BDD_Test.PageObjects;
 
-public class AiChatBotPageObject : PageObject   
+public class AiChatBotPageObject : PageObject
 {
     public AiChatBotPageObject(IWebDriver webDriver) : base(webDriver)
     {
@@ -24,9 +24,57 @@ public class AiChatBotPageObject : PageObject
     {
         try
         {
-            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(15));
-            IReadOnlyCollection<IWebElement> responses = _webDriver.FindElements(By.ClassName("card text-white bg-primary"));
+            // Wait up to 10 seconds for the element to be present in the DOM
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            // Use the CSS selector to find the element
+            IReadOnlyCollection<IWebElement> responses = wait.Until(d => d.FindElements(By.CssSelector(".card.text-white.bg-primary")));
             responses.Should().NotBeNullOrEmpty();
+            return responses.Count();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return -1;
+        }
+    }
+
+    //public int CheckIfResponseForInappropriatePromptExists()
+    //{
+    //    try
+    //    {
+    //        // Wait up to 10 seconds for an alert to be present
+    //        WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+    //        IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
+    //        // Switch to the alert
+    //        _webDriver.SwitchTo().Alert();
+    //        // Dismiss the alert
+    //        alert.Dismiss();
+    //        // Wait up to 10 seconds for the element to be present in the DOM
+    //        IReadOnlyCollection<IWebElement> responses = wait.Until(d => d.FindElements(By.CssSelector(".card.text-white.bg-danger")));
+    //        responses.Count.Should().Be(1);
+    //        return responses.Count();
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Console.WriteLine(e);
+    //        return -1;
+    //    }
+    //}
+    public int CheckIfResponseForInappropriatePromptExists()
+    {
+        try
+        {
+            // Wait up to 10 seconds for the element to be present in the DOM
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+
+            wait.Until(driver => driver.SwitchTo().Alert());
+            IAlert alert = _webDriver.SwitchTo().Alert();
+            // Dismiss the alert
+            alert.Dismiss();
+            // Use the CSS selector to find the element
+            _webDriver.SwitchTo().DefaultContent();
+            IReadOnlyCollection<IWebElement> responses = wait.Until(d => d.FindElements(By.CssSelector(".card.text-white.bg-danger")));
+            responses.Count.Should().Be(1);
             return responses.Count();
         }
         catch (Exception e)

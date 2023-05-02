@@ -58,7 +58,11 @@ namespace Team121GB_BDD_Test.StepDefinitions
         public void ThenIShouldBeRedirectedToTheChatbotPage() => _browserDriver.Current.Title.Should().Be("ChatGPT page");
 
         [Given(@"I am on the chatbot page")]
-        public void GivenIAmOnTheChatbotPage() => _browserDriver.Current.Title.Should().Be("ChatGPT page");
+        public void GivenIAmOnTheChatbotPage()
+        {
+            _aiChatBotPage.GoTo();
+            _browserDriver.Current.Title.Should().Be("ChatGPT page");
+        }
 
         [When(@"I enter a prompt")]
         public void WhenIEnterAPrompt() => _aiChatBotPage.InputPrompt("Hello World!");
@@ -81,7 +85,10 @@ namespace Team121GB_BDD_Test.StepDefinitions
         [Then(@"I should be told my prompt was inappropriate")]
         public void ThenIShouldBeToldMyPromptWasInappropriate()
         {
-            throw new PendingStepException();
+            int check = _aiChatBotPage.CheckIfResponseForInappropriatePromptExists();
+            check.Should().Be(1);
+            _aiChatBotPage.SubmitPromptButton.Enabled.Should().BeFalse();
+            _aiChatBotPage.PromptInput.Enabled.Should().BeFalse();
         }
     }
 }
