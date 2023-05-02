@@ -1,4 +1,5 @@
-﻿    using Microsoft.AspNetCore.Mvc;
+﻿    using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
     using Team121GBCapstoneProject.Models;
     using Team121GBCapstoneProject.Models.DTO;
     using Team121GBCapstoneProject.Services.Abstract;
@@ -25,7 +26,17 @@
         [HttpGet("GetSteamAchievements")]
         public ActionResult<List<SteamAchievement>> GetSteamAchievements(string userID, string gameID)
         {
-            return Ok(_steamService.GetSteamAchievements(userID, gameID));
+            try
+            {
+                return Ok(_steamService.GetSteamAchievements(userID, gameID));
+
+            }
+            catch (HttpRequestException e)
+            {
+                Debug.WriteLine(e);
+                return Ok();
+            }
+           
         }
     }
 }

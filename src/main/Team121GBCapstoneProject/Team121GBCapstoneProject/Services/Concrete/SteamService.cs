@@ -108,12 +108,22 @@ namespace Team121GBCapstoneProject.Services.Concrete
             List<SteamAchievement> Achievements = new List<SteamAchievement>();
             string source = string.Format(
                     "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={0}&key={1}&steamid={2}", gameID, Token, userID);
-            string response = GetJsonStringsFromEndpoint(source); 
-            SteamAchievementsDTO.Root deserialize = JsonConvert.DeserializeObject<SteamAchievementsDTO.Root>(response);
-
             string source2 = string.Format(
                 "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?appid={0}&key={1}", gameID, Token);
-            string response2 = GetJsonStringsFromEndpoint(source2);
+            string response = null;
+            string response2 = null;
+            try
+            {
+                 response = GetJsonStringsFromEndpoint(source);
+                 response2 = GetJsonStringsFromEndpoint(source2);
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex);
+                return Achievements;
+            }
+            
+            SteamAchievementsDTO.Root deserialize = JsonConvert.DeserializeObject<SteamAchievementsDTO.Root>(response);
             SteamAchievementsExtraDTO.Root deserialized = JsonConvert.DeserializeObject<SteamAchievementsExtraDTO.Root>(response2);
 
             foreach (var achievement in deserialize.playerstats.achievements)
@@ -132,6 +142,7 @@ namespace Team121GBCapstoneProject.Services.Concrete
                 Achievements[count].DisplayName = achievement.displayName;
                 Achievements[count].Icon = achievement.icon;
                 Achievements[count].IconGrey = achievement.icongray;
+                Achievements[count].Description = achievement.description;
                 count++;
             }
 
