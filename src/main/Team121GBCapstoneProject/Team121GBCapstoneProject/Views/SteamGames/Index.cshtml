@@ -27,7 +27,7 @@
 
             <h1>Your Steam Library</h1>
 
-            @if (Model == null)
+            @if (Model == null || Model.response == null || Model.response.games.Count() == 0)
             {
                 <p>Sorry it appears you do not have a steam account linked. Please link your account.</p>
                 <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/ExternalLogins">Link Steam Account</a>

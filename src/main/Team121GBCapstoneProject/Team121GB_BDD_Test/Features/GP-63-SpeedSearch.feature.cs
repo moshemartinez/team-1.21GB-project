@@ -20,30 +20,28 @@ namespace Team121GB_BDD_Test.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("GP-64-SteamGames")]
-    public partial class GP_64_SteamGamesFeature
+    [NUnit.Framework.DescriptionAttribute("GP-63-SpeedSearch")]
+    public partial class GP_63_SpeedSearchFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = ((string[])(null));
         
-#line 1 "GP-64-SteamGames.feature"
+#line 1 "GP-63-SpeedSearch.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "GP-64-SteamGames", @"As a user I would like to have the ability to add games from my steam to the gaming platform.
-
-Most video game players have a steam account if they play on a personal computer, and it is 
-common for them to own games on it. However, it would be very tedious and time consuming for
-a user to add games to their list on our site manually. To help elevate this we want the user
-to be able to input their steam information and them automatically be able to to see all the
-games in their steam account. To do this we will need to user to be able to input their steam 
-account information to our site and then submit it, after that our site will display the games 
-they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "GP-63-SpeedSearch", @"Currently on the site a user can add games one at a time to their collection of games, but they will have to search 
+them manually one by one. This can take a lot of time and effort when either first setting up your account or updating 
+your collection after a long period of time. The way this can be prevented is to allow the user to type in their games 
+in a text box and we search the games for them. This would be done with a large textbox and the user will have to enter 
+in a list of games with each game being on a new line. Once they click the submit button they will then see a list of 
+games we got back as a result. The user can then add them in by clicking the button to add to a list similar to the search 
+feature.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,60 +81,64 @@ they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
         
         public virtual void FeatureBackground()
         {
-#line 13
+#line 11
 #line hidden
-            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table13.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "TaliaK",
                         "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
-            table13.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "ZaydenC",
                         "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
-            table13.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "DavilaH",
                         "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
-#line 14
- testRunner.Given("the following users exist", ((string)(null)), table13, "Given ");
+#line 12
+ testRunner.Given("the following users exist", ((string)(null)), table11, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table14.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "AndreC",
                         "colea@example.com",
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-#line 19
- testRunner.And("the following users do not exist", ((string)(null)), table14, "And ");
+            table12.AddRow(new string[] {
+                        "JoannaV",
+                        "valdezJ@example.com",
+                        "Joanna",
+                        "Valdez",
+                        "d9u(*dsF4"});
+#line 17
+ testRunner.And("the following users do not exist", ((string)(null)), table12, "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("User can navigate to new steam games page")]
+        [NUnit.Framework.DescriptionAttribute("Logged in user can navigate to speedsearch page")]
         [NUnit.Framework.CategoryAttribute("Quinton")]
         [NUnit.Framework.CategoryAttribute("LoggedIn")]
         [NUnit.Framework.TestCaseAttribute("Talia", "Home", null)]
-        [NUnit.Framework.TestCaseAttribute("Zayden", "Home", null)]
-        [NUnit.Framework.TestCaseAttribute("Hareem", "Home", null)]
-        public virtual void UserCanNavigateToNewSteamGamesPage(string firstName, string page, string[] exampleTags)
+        public virtual void LoggedInUserCanNavigateToSpeedsearchPage(string firstName, string page, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "Quinton",
@@ -149,8 +151,8 @@ they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can navigate to new steam games page", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 25
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged in user can navigate to speedsearch page", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -170,23 +172,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 13
+#line 11
 this.FeatureBackground();
 #line hidden
-#line 26
+#line 25
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 27
+#line 26
  testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 27
+ testRunner.And(string.Format("I am redirected to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
 #line 28
- testRunner.When("I click on the dropdown menu in the nav bar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I click the profile dropdown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 29
- testRunner.And("I click on the Steam Games button in the navbar dropdown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I click SpeedSearch", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 30
- testRunner.Then("I am redirected to the \'Steam Games\' page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I will go to the SpeedSearch Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
