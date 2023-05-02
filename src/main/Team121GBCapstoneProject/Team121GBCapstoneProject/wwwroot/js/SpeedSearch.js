@@ -76,12 +76,12 @@ function DisplaySpeedSearchResults(data) {
                         var row = `<tr>
                                     <td><img src="${resizedCoverArt}"></td>
                                     <td><b>${game.gameTitle}</b></td>
-                                    <td><a class="btn btn-primary" href="${game.gameWebsite}">IGDB Page</a></td>
+                                    <td><a class="btn btn-warning" href="${game.gameWebsite}">IGDB Page</a></td>
                                     <td><p>${game.gameDescription}</p></td>
                                     <td><p>${game.firstReleaseDate}</p></td>
                                     <td><p>${platformArray}</p></td>
                                     <td><p>${genreArray}</p></td>
-                                    <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
+                                    <td><button id="${i}" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
                                     <td style="display: none">${game.id}</td>
                                </tr>`;
                         $("#gameTableBody").append(row);
@@ -103,12 +103,12 @@ function DisplaySpeedSearchResults(data) {
                         var row = `<tr>
                                     <td><img src="${resizedCoverArt}"></td>
                                     <td><b>${game.gameTitle}</b></td>
-                                    <td><a class="btn btn-primary" href="${game.gameWebsite}">IGDB Page</a></td>
+                                    <td><a class="btn btn-warning" href="${game.gameWebsite}">IGDB Page</a></td>
                                     <td><p>${game.gameDescription}</p></td>
                                     <td><p>${game.firstReleaseDate}</p></td>
                                     <td><p>${platformArray}</p></td>
                                     <td><p>${genreArray}</p></td>
-                                    <td><button id="${i}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
+                                    <td><button id="${i}" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#AddGame">Add Game</button></td>
                                     <td style="display: none">${game.id}</td>
                                </tr>`;
                         $("#gameTableBody").append(row);

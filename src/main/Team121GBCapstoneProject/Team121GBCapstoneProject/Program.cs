@@ -77,9 +77,8 @@ builder.Services.AddOpenAIService(settings =>
 });
 builder.Services.AddScoped<IOpenAIService, OpenAIService>();
 builder.Services.AddScoped<IDalleService, DalleService>();
+builder.Services.AddScoped<IChatGptService, ChatGptService>(chatgpt => new ChatGptService(chatgpt.GetRequiredService<IOpenAIService>()));
 
-//var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
-//openAiService.SetDefaultModelId(Models.Davinci);
 builder.Services.AddAuthentication()
     .AddCookie(options =>
     {
@@ -120,7 +119,6 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "GP API V1");
 });
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

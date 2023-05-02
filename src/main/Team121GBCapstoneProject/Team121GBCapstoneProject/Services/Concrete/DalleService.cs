@@ -45,12 +45,6 @@ public class DalleService : IDalleService
         }
     }
 
-    //public byte[] SetImageToProfilePicure(byte[] imageArray)
-    //{
-    //    if (imageArray == null) return Array.Empty<byte>();
-    //    if (imageArray.Length == 0) return Array.Empty<byte>();
-        
-    //}
 
     public async Task<byte[]> TurnImageUrlIntoByteArray(string imageURL)
     {

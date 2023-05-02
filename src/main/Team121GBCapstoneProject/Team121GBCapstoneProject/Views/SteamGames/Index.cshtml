@@ -37,7 +37,7 @@
             @if (Model == null || Model.response == null || Model.response.games.Count() == 0)
             {
                 <p>Sorry it appears you do not have a steam account linked. Please link your account.</p>
-                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/ExternalLogins">Link Steam Account</a>
+                <a class="btn btn-warning" asp-area="Identity" asp-page="/Account/Manage/ExternalLogins">Link Steam Account</a>
                 <br />
                 <br />
                 <br />
@@ -60,7 +60,7 @@
                     }
                 </div>
             }
-        </div>
+        </div> 
     </div>
 
     <div class="modal fade" id="SteamModal" tabindex="-1" role="dialog" aria-labelledby="SteamModalTitle"

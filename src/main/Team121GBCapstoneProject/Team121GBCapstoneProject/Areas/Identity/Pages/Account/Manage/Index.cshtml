@@ -44,7 +44,7 @@
                 <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
             </div>
 
-            @*<button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>*@
+            @*<button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-warning">Save</button>*@
 
         </div>
         <div class="card col-md-6">
@@ -76,12 +76,12 @@ System.out.println(image);
                        onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
                 <span asp-validation-for="Input.ProfilePicture" class="text-danger"></span>
                 
-                <a id="generateImagePageRedirectButton" class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="GenerateImage">Generate Profile Picture with DALL-E</a>
+                <a id="generateImagePageRedirectButton" class="btn btn-warning" asp-area="" asp-controller="Home" asp-action="GenerateImage">Generate Profile Picture with DALL-E</a>
             </div>
         </div>
     </div>
      <br/> 
-    <button id="update-profile-bio-button" style="padding: 10px;" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+    <button id="update-profile-bio-button" style="padding: 10px;" type="submit" class="w-100 btn btn-lg btn-warning">Save</button>
 </form>
 
 

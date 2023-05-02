@@ -27,6 +27,7 @@ namespace Standups_BDD_Tests.Shared
             { "Steam Games", "/SteamGames" },
             { "Dalle Page", "/Home/GenerateImage"},
             { "Friend", "/Home/FindFriends" },
+            { "ChatGPT page", "/Home/ChatGpt"},
             { "SpeedSearch", "/Views/SpeedSearch"}
         };
 
