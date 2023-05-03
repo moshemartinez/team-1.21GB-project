@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using Standups_BDD_Tests.Shared;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Standups_BDD_Tests.PageObjects
 {
@@ -20,6 +21,22 @@ namespace Standups_BDD_Tests.PageObjects
         public IWebElement GamesListButtonLoggedIn => _webDriver.FindElement(By.Id("gamesListButton"));
         public IWebElement SpeedSearchButtonLoggedIn => _webDriver.FindElement(By.Id("speedSearchButton"));
         public IWebElement SteamGamesButtonLoggedIn => _webDriver.FindElement(By.Id("steamGamesButton"));
+        public IWebElement AiChatBotButtonLoggedIn => _webDriver.FindElement(By.Id("chatBotButton"));
+
+        public int CheckIfAiChatBotButtonExists()
+        {
+            try
+            {
+                var check = _webDriver.FindElement(By.Id("chatBotButton"));
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return -1;
+            }
+        }
+
         public string NavbarWelcomeText()
         {
             return NavBarHelloLink.Text;
