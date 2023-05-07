@@ -1,0 +1,94 @@
+﻿@page "account preferences"
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+@*<img src="@($"data:image/png;base64,{Convert.ToBase64String(Model.Input.ProfilePicture)}")"
+     style="width: 200px;"
+     class="rounded mx-auto d-block"
+     alt="ProfilePicture" />*@
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<form id="profile-form" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-3">
+                <input id="FirstName" asp-for="Input.FirstName" class="form-control" placeholder="Please enter your first name" required />
+                <label asp-for="Input.FirstName" class="form-label"></label>
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-floating mb-3">
+                <input id="LastName" asp-for="Input.LastName" class="form-control" placeholder="Please enter your last name" required />
+                <label asp-for="Input.LastName" class="form-label"></label>
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <br/>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ProfileBio" class="form-control" placeholder="@Model.Input.ProfileBio" maxlength="500" />
+                <label asp-for="Input.ProfileBio" class="form-label"></label>
+                <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
+            </div>
+
+            @*<button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-warning">Save</button>*@
+
+        </div>
+        <div class="card col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*<label asp-for="Input.ProfilePicture" style="width: 100%;"></label>*@
+                @if (Model.Input.ProfilePicture != null)
+                {
+                    // compute a hash of the original image
+                    // when image is changed, hash the new image and compare the two hashes
+                    // could be done in the step definition 
+                    // Selenium webdriver get image data
+                    /* java version
+                    WebElement div = driver.findElement(By.id("sc859"));
+String image =  div.findElement(By.className("alc-img")).getAttribute("src");
+
+System.out.println(image);
+                    */
+                    <label asp-for="Input.ProfilePicture"><img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.Input.ProfilePicture))"></label>
+                }
+                else
+                {
+                    <label asp-for="Input.ProfilePicture"><img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="https://img.icons8.com/ios/256/test-account.png"></label>
+                }
+                <input type="file"
+                       accept=".png,.jpg,.jpeg"
+                       asp-for="Input.ProfilePicture"
+                       style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
+                <span asp-validation-for="Input.ProfilePicture" class="text-danger"></span>
+                
+                <a id="generateImagePageRedirectButton" class="btn btn-warning" asp-area="" asp-controller="Home" asp-action="GenerateImage">Generate Profile Picture with DALL-E</a>
+            </div>
+        </div>
+    </div>
+     <br/> 
+    <button id="update-profile-bio-button" style="padding: 10px;" type="submit" class="w-100 btn btn-lg btn-warning">Save</button>
+</form>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript" src="~/js/site.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+    <script type="text/javascript" src="~/js/Steam.js"></script>
+}
