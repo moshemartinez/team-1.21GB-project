@@ -69,15 +69,6 @@ $(document).ready(function () {
     }
 });
 
-// DALLE
-function dalleModalOpen() {
-    $('#DalleModal').modal('show');
-}
-function dalleModalClose() {
-    $('#DalleModal').modal('hide');
-}
-
-
 
 //$('#dark-mode-toggle').click(function () {
 //    // toggle the dark mode
