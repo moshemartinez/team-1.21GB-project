@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Team121GBCapstoneProject.Areas.Identity.Data;
+using Team121GBCapstoneProject.Models;
+using Team121GBCapstoneProject.DAL.Abstract;
 
 namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
 {
@@ -30,13 +32,19 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IPersonRepository _personRepository;
+        private readonly IPersonListRepository _personListRepository;
+        private readonly IListKindRepository _listKindRepository;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IPersonRepository personRepository,
+            IPersonListRepository personListRepository,
+            IListKindRepository listKindRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -44,6 +52,9 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _logger = logger;
             _emailSender = emailSender;
+            _personRepository = personRepository;
+            _personListRepository = personListRepository;
+            _listKindRepository = listKindRepository;
         }
 
         /// <summary>
@@ -164,6 +175,15 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    // * add person to project db
+                    _personRepository.AddPersonToProjectDb(user.Id);
+                    // * give new person their lists
+                    Person person = _personRepository.GetAll()
+                        .FirstOrDefault(person => person.AuthorizationId == user.Id);
+                    List<ListKind> listKinds = _listKindRepository.GetAll()
+                        .Where(l => l.Id < 4)
+                        .ToList();// check that this is only the default lists, not custom
+                    _personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {

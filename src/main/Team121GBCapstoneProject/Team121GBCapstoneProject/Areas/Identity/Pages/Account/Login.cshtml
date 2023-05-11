@@ -47,7 +47,6 @@
                     </div>
                 </form>
                 <div class="col-md-6 col-md-offset-2">
-                    <section>
                         <h3>Or</h3>
                         <hr />
                         @{
@@ -68,14 +67,15 @@
                                             @foreach (var provider in Model.ExternalLogins!)
                                             {
                                                 if (provider.Name != "Google") continue;
-                                                <button type="submit" class="btn" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><img src="~/images/create-apple-google-signin-buttons-quick-dirty-way-google.png" style="height: 50px; width: 200px"/></button>
+                                                <button type="submit" class="btn" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                    <img src="~/images/create-apple-google-signin-buttons-quick-dirty-way-google.png" style="height: 50px; width: 200px"/>
+                                                </button>
                                             }
                                         </p>
                                     </div>
                                 </form>
                             }
                         }
-                    </section>
                 </div>
             </section>
         </div>
