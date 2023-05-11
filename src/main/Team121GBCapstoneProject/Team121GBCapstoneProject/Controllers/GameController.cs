@@ -60,25 +60,33 @@ namespace Team121GBCapstoneProject.Controllers
                                                                      string genre = "",
                                                                      int esrbRating = 0)
         {
-            _bearerToken = _config["GamingPlatform:igdbBearerToken"];
-            _clientId = _config["GamingPlatform:igdbClientId"];
-
-
-            // Set Credentials
-            _igdbService.SetCredentials(_clientId, _bearerToken);
-
-            var searchResult = await _igdbService.SearchGameWithCachingAsync(10,
-                                                                             platform,
-                                                                             genre,
-                                                                             esrbRating,
-                                                                             query);
-
-            if (searchResult is null)
+            try
             {
-                return NotFound();
-            }
+                _bearerToken = _config["GamingPlatform:igdbBearerToken"];
+                _clientId = _config["GamingPlatform:igdbClientId"];
 
-            return Ok(searchResult);
+
+                // Set Credentials
+                _igdbService.SetCredentials(_clientId, _bearerToken);
+
+                var searchResult = await _igdbService.SearchGameWithCachingAsync(10,
+                                                                                 platform,
+                                                                                 genre,
+                                                                                 esrbRating,
+                                                                                 query);
+
+                if (searchResult is null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(searchResult);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return BadRequest("Something went wrong. Please try again.");
+            }
         }
 
         [HttpGet("DisplaySpeedSearch")]
