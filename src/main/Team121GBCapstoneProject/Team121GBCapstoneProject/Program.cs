@@ -40,7 +40,6 @@ builder.Services.AddScoped<IReCaptchaService, ReCaptchaV2Service>(recaptcha => n
 builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha => 
                                                                     new ReCaptchaV3Service(reCAPTCHAV3SecretKey, 
                                                                     recaptcha.GetRequiredService<IHttpClientFactory>()));
-
 // Add Swagger middleware
 //builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
@@ -96,6 +95,11 @@ builder.Services.AddAuthentication()
     {
         options.CorrelationCookie.SameSite = SameSiteMode.None;
         options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
     });
 
 
