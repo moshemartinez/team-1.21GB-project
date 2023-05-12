@@ -17,8 +17,8 @@ namespace Team121GBCapstoneProject.Controllers
         public SteamGamesController(ILogger<SteamGamesController> logger, IsteamService steamService, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
-            _steamService= steamService;
-            _userManager= userManager;
+            _steamService = steamService;
+            _userManager = userManager;
         }
         [Authorize]
         public IActionResult Index()
@@ -33,5 +33,8 @@ namespace Team121GBCapstoneProject.Controllers
             var games = _steamService.GetGames(steamAccount);
             return View(games);
         }
+
+        [Authorize]
+        public IActionResult ChatGpt() => View("../Home/ChatGpt");
     }
 }
