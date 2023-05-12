@@ -455,12 +455,14 @@ namespace Team121GBNUnitTest
             // ? Assert
             Assert.That(count, Is.EqualTo(1));
         }
-        [TestCase("", "", 0, 2)]
-        [TestCase("Playstation", "", 0, 1)]
-        [TestCase("PC (Microsoft Windows)", "", 0, 2)]
-        [TestCase("", "", 11, 2)]
-        [TestCase("", "Strategy", 0, 1)]
-        [TestCase("Mac", "Role-Playing (RPG)", 11, 2)]
+        [TestCase("", "", 0, 3)] // * no filters
+        [TestCase("Playstation", "", 0, 1)] // * platform filter
+        [TestCase("PC (Microsoft Windows)", "", 0, 3)] // * platform filter
+        [TestCase("", "", 11, 3)] // * esrb filter
+        [TestCase("", "Strategy", 0, 1)] // * genre filter
+        [TestCase("Mac", "Role-Playing (RPG)", 11, 3)] // * platform, genre, esrb filter
+        [TestCase("", "Adventure", 11, 1)] // * genre, esrb filter
+        [TestCase("PC (Microsoft Windows)", "", 11, 3)] // * platform, esrb filter
         public void IgdbService_ApplyFiltersForNewGames(string platform, string genre, int esrbRating, int expectedCount)
         {
             // * Arrangeusing 
@@ -488,7 +490,12 @@ namespace Team121GBNUnitTest
                              "", "Description", 2000,
                              100, 6,
                              new List<string>{ "Role-Playing (RPG)", "Hack and slash/Beat 'em up", },
-                             new List<string>{ "PC (Microsoft Windows)", "Mac"})
+                             new List<string>{ "PC (Microsoft Windows)", "Mac"}),
+                new IgdbGame(1, "Diablo III", "",
+                             "", "Description", 2012,
+                             100, 6,
+                             new List<string>{ "Role-Playing (RPG)", "Hack and slash/Beat 'em up", "Adventure" },
+                             new List<string>{ "Xbox One", "Playstation 4", "PC (Microsoft Windows)", "Mac"})
             };
             // ! Act
             List<IgdbGame> filteredGames = igdbService.ApplyFiltersForNewGames(games, platform, genre, esrbRating);
