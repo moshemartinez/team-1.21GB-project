@@ -2,6 +2,7 @@ let mediaRecorder;
 let chunks = [];
 let mediaStream;
 
+
 console.log('Hello from whisper.js');
 
 // * turns on microphone and starts recording
@@ -60,9 +61,9 @@ const stopRecording = async () => {
 const successOnAjax = async (response) => {
     await mediaStream.getTracks().forEach(track => track.stop());
     console.log('success:', response);
-    alert(response);
+    // alert(response);
     //$('#chat').val($('#chat').val() + response);
-    $('#chat').val(response);
+    $('#prompt').val(response);
 }
 
 const errorOnAjax = async (xhr, status, error) => {
@@ -73,13 +74,31 @@ const errorOnAjax = async (xhr, status, error) => {
 }
 
 $().ready(() => {
-    $('#recordBtn').on('click', async () => {
-        await startRecording();
-    });
+    const recordBtn = $('#recordBtn');
+    const stopBtn = $('#stopBtn');
+    const sendBtn = $('#send');
 
-    $('#stopBtn').on('click', async () => {
+    recordBtn.on('click', async () => {
+        sendBtn.attr('disabled', 'true');
+        recordBtn.attr('disabled', 'true');
+        await startRecording();
+
+    });
+    stopBtn.on('click', async () => {
         console.log('Stop button clicked');
         await stopRecording();
         console.log('Stop should be done');
+        sendBtn.removeAttr('disabled');
+        recordBtn.removeAttr('disabled');
     });
+
+    // $('#recordBtn').on('click', async () => {
+    //     await startRecording();
+    // });
+
+    // $('#stopBtn').on('click', async () => {
+    //     console.log('Stop button clicked');
+    //     await stopRecording();
+    //     console.log('Stop should be done');
+    // });
 });
