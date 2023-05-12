@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Team121GBCapstoneProject.Services.Abstract;
 using OpenAI.GPT3.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using OpenAI.GPT3.ObjectModels.RequestModels;
+using OpenAI.GPT3.ObjectModels.ResponseModels;
 
 namespace Team121GBCapstoneProject.Controllers;
 
@@ -14,13 +16,15 @@ namespace Team121GBCapstoneProject.Controllers;
 public class WhisperController : ControllerBase
 {
     private readonly IWhisperService _whisperService;
-    private readonly IOpenAIService _openAIService;
+    private readonly IOpenAIService _openAiService;
 
     public WhisperController(IWhisperService whisperService, IOpenAIService openAIService)
     {
         _whisperService = whisperService;
-        _openAIService = openAIService;
+        _openAiService = openAIService;
     }
+    private async Task<CreateModerationResponse> PromptModerationTask (string prompt) =>  await _openAiService.Moderation.CreateModeration(new CreateModerationRequest() {Input = prompt} );
+
     [HttpPost("PostTextFromSpeech")]
     public async Task<ActionResult> Post(IFormFile file)
     {
@@ -32,6 +36,10 @@ public class WhisperController : ControllerBase
             await file.CopyToAsync(ms);
             byte[] fileBytes = ms.ToArray();            
             string resultText = await _whisperService.GetTextFromSpeech(fileBytes);
+            // * verify the prompt does not break content moderation by OpenAI
+            var moderationResponse = await PromptModerationTask(resultText);
+            if (moderationResponse.Results.FirstOrDefault()!.Flagged) return BadRequest("Inappropriate prompt.");
+            // * If we got to this point return the prompt.
             return Ok(resultText);
         }
         catch (Exception ex)
