@@ -1,11 +1,7 @@
-using Newtonsoft.Json;
-using System.Net;
-using Microsoft.Net.Http.Headers;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Services.Abstract;
 using System.Net.Http.Headers;
 using Team121GBCapstoneProject.Models.DTO;
-using Microsoft.DotNet.MSIdentity.Shared;
 using Team121GBCapstoneProject.DAL.Abstract;
 using System.Diagnostics;
 
@@ -144,7 +140,6 @@ public class IgdbService : IIgdbService
                         }
 
                         int? yearPublished = GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
-                        // Look into sending null or 0 instead of 1
                         IgdbGame gameToAdd = new IgdbGame(game.IgdbgameId,
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
@@ -153,7 +148,6 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
-                                                          //   game.IgdbgameId,
                                                           game.GameGenres
                                                               .Select(g => g.Genre.Name)
                                                               .ToList(),
@@ -184,7 +178,6 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
-                                                          //   game.IgdbgameId,
                                                           genres,
                                                           platforms);
                         gamesToReturn.Add(gameToAdd);
@@ -404,10 +397,6 @@ public class IgdbService : IIgdbService
          * Then checks if genres or platforms are null, and if not checks to see if they contain provided filters.
          * Then checks if esrbRating is 0 otherwise grab the games that have the rating requested.
          */
-        // games = games.Where(g => g.Genres?.Any(x => x == genre) ?? false)
-        //              .Where(g => g.Platforms?.Any(x => x == platform) ?? false)
-        //              .Where(g => _esrbRatingRepository.FindById((int)g.ESRBRatingValue).IgdbratingValue == esrbRating).ToList();
-        // return games;
         return games.Where(g =>
                           (string.IsNullOrEmpty(genre) || (g.Genres?.Any(x => x == genre) ?? false)) &&
                           (string.IsNullOrEmpty(platform) || (g.Platforms?.Any(x => x == platform) ?? false)) &&
@@ -430,18 +419,33 @@ public class IgdbService : IIgdbService
         return final;
     }
 
-    public async Task<List<IgdbGame>> SearchWithFiltersOnly(string platform = "",
+    public async Task<IEnumerable<IgdbGame>> SearchWithFiltersOnly(string platform = "",
                                                             string genre = "",
                                                             int esrbRating = 0)
     {
+        List<Game> games = _genericGameRepo.GetAll()
+                                           .ToList()
+                                           .Where(g =>
+                                                 (string.IsNullOrEmpty(genre) || (g.GameGenres?.Any(x => x.Genre.Name == genre) ?? false)) &&
+                                                 (string.IsNullOrEmpty(platform) || (g.GamePlatforms?.Any(x => x.Platform.Name == platform) ?? false)) &&
+                                                 (esrbRating == 0 || ( g.Esrbrating.IgdbratingValue == esrbRating)))
+                                           .ToList();
+        if (games.Count() == 0)
+        {
+            return Enumerable.Empty<IgdbGame>();
+        }
+        else
+        {
+            Random random = new Random();
+            games = games.OrderBy(x => random.Next())
+                         .ToList();
 
-        List<Game> gamesToReturn = new List<Game>();
-
-        //q: what will this line of code return?
-        //a: a list of games that match the filters provided by the client
-        gamesToReturn = _gameRepository.GetAll()
-                                       .Where(g => g.GamePlatforms.Any(x => x.Platform.Name == platform)).ToList();
-
-        return null;
+            IEnumerable<IgdbGame> gamesToReturn = games.Take(10)
+                                                       .Select(g => new IgdbGame(g.IgdbgameId, g.Title, g.CoverPicture.ToString(),
+                                                                                 g.Igdburl, g.Description, g.YearPublished, (double)g.AverageRating,
+                                                                                 g.EsrbratingId, g.GameGenres.Select(genre => genre.Genre.Name).ToList(),
+                                                                                 g.GamePlatforms.Select(platform => platform.Platform.Name).ToList()));
+            return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
+        }
     }
 }

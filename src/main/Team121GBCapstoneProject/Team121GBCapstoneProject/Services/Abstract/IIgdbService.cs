@@ -44,5 +44,5 @@ public interface IIgdbService
     /// <param name="platform">Filter provided by client</param>
     /// <param name="genre">Filter provided by client</param>
     /// <param name="esrbRating">Filter provided by client</param>
-    public Task<List<IgdbGame>> SearchWithFiltersOnly (string platform = "", string genre = "", int esrbRating = 0);
+    public Task<IEnumerable<IgdbGame>> SearchWithFiltersOnly (string platform = "", string genre = "", int esrbRating = 0);
 }
