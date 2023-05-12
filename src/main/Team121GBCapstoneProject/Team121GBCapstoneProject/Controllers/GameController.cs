@@ -65,22 +65,34 @@ namespace Team121GBCapstoneProject.Controllers
                 _bearerToken = _config["GamingPlatform:igdbBearerToken"];
                 _clientId = _config["GamingPlatform:igdbClientId"];
 
-
                 // Set Credentials
                 _igdbService.SetCredentials(_clientId, _bearerToken);
-
-                var searchResult = await _igdbService.SearchGameWithCachingAsync(10,
-                                                                                 platform,
-                                                                                 genre,
-                                                                                 esrbRating,
-                                                                                 query);
-
-                if (searchResult is null)
+                if (String.IsNullOrEmpty(query))
                 {
-                    return NotFound();
+                    var searchResult = await _igdbService.SearchWithFiltersOnly(platform,
+                                                                                 genre,
+                                                                                 esrbRating);
+                    if (searchResult is null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(searchResult);
+                }
+                else
+                {
+                    var searchResult = await _igdbService.SearchGameWithCachingAsync(10,
+                                                                                     platform,
+                                                                                     genre,
+                                                                                     esrbRating,
+                                                                                     query);
+                    if (searchResult is null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(searchResult);
                 }
 
-                return Ok(searchResult);
             }
             catch (Exception e)
             {
