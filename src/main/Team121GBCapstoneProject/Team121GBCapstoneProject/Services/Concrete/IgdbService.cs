@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Services.Abstract;
 using System.Net.Http.Headers;
@@ -423,13 +424,14 @@ public class IgdbService : IIgdbService
                                                             string genre = "",
                                                             int esrbRating = 0)
     {
-        List<Game> games = _genericGameRepo.GetAll()
-                                           .ToList()
-                                           .Where(g =>
-                                                 (string.IsNullOrEmpty(genre) || (g.GameGenres?.Any(x => x.Genre.Name == genre) ?? false)) &&
-                                                 (string.IsNullOrEmpty(platform) || (g.GamePlatforms?.Any(x => x.Platform.Name == platform) ?? false)) &&
-                                                 (esrbRating == 0 || ( g.Esrbrating.IgdbratingValue == esrbRating)))
-                                           .ToList();
+        List<Game> games = await _genericGameRepo.GetAll()
+                                           .ToListAsync();
+                                         
+        games = games.Where(g =>
+                                (string.IsNullOrEmpty(genre) || (g.GameGenres?.Any(x => x.Genre.Name == genre) ?? false)) &&
+                                (string.IsNullOrEmpty(platform) || (g.GamePlatforms?.Any(x => x.Platform.Name == platform) ?? false)) &&
+                                (esrbRating == 0 || ( g.Esrbrating.IgdbratingValue == esrbRating)))
+                                .ToList();
         if (games.Count() == 0)
         {
             return Enumerable.Empty<IgdbGame>();
@@ -439,7 +441,6 @@ public class IgdbService : IIgdbService
             Random random = new Random();
             games = games.OrderBy(x => random.Next())
                          .ToList();
-
             IEnumerable<IgdbGame> gamesToReturn = games.Take(10)
                                                        .Select(g => new IgdbGame(g.IgdbgameId, g.Title, g.CoverPicture.ToString(),
                                                                                  g.Igdburl, g.Description, g.YearPublished, (double)g.AverageRating,
