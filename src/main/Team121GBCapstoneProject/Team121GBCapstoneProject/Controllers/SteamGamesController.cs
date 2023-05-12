@@ -64,21 +64,25 @@ namespace Team121GBCapstoneProject.Controllers
             ApplicationUser currentUser = await _userManager.GetUserAsync(User); //use as well
 
             //Get all games from want to play
-            PersonList personList = _personListRepository.GetAll()
-                                                              .FirstOrDefault(pl => pl.ListKind == "Want to Play" && pl.Person.AuthorizationId == currentUser.Id);
+            /*PersonList personList = _personListRepository.GetAll()
+                                                              .FirstOrDefault(pl => pl.ListKind == "Want to Play" && pl.Person.AuthorizationId == currentUser.Id);*/
             foreach(var game in games.response.games)
             {
-                //add checker for dups
-                //check if checker is true if so continue of not do nothing.
-                bool check = false;
-                /*foreach (var gametoCheckDup in personList.PersonGames)
+                //Check if game it played.
+                PersonList personList;
+                if (game.playtime_forever > 0)
                 {
-                    if (gametoCheckDup.Game.Title == game.name)
-                    {
-                        check = true;
-                        break;
-                    }
-                }*/
+                    personList = _personListRepository.GetAll()
+                                                              .FirstOrDefault(pl => pl.ListKind == "Currently Playing" && pl.Person.AuthorizationId == currentUser.Id);
+                }
+                else
+                {
+                    personList = _personListRepository.GetAll()
+                                                              .FirstOrDefault(pl => pl.ListKind == "Want to Play" && pl.Person.AuthorizationId == currentUser.Id);
+                }
+
+
+                bool check = false;
 
                 check = _steamChecker.checkGameTitle(game.name, personList.PersonGames.ToList());
 
@@ -88,8 +92,7 @@ namespace Team121GBCapstoneProject.Controllers
                     continue;
                 }
 
-                //get game by title
-                await _igdbService.SearchGameWithCachingAsync(10,"","",0,game.name);
+                await _igdbService.SearchGameWithCachingAsync(10,"","",0,game.name); //getting games
 
                 var gameToAdd = _gameRepository.GetGamesByTitle(game.name).FirstOrDefault();
                 var personGames = personList.PersonGames.ToList();
@@ -98,17 +101,9 @@ namespace Team121GBCapstoneProject.Controllers
                 {
                     continue;
                 }
-                //Create new checker.
-                /*     foreach (var personGameCheck in personGames) 
-                     {
-                         if (personGameCheck.GameId == gameToAdd.Id)
-                         {
-                             check = true;
-                             break;
-                         }
-                     }*/
+
                 check = _steamChecker.checkGameId(gameToAdd.Id, personList.PersonGames.ToList());
-                //End of new checker
+
                 if (check == true)
                 {
                     check = false;
