@@ -395,6 +395,10 @@ public class IgdbService : IIgdbService
          * Then checks if genres or platforms are null, and if not checks to see if they contain provided filters.
          * Then checks if esrbRating is 0 otherwise grab the games that have the rating requested.
          */
+        // games = games.Where(g => g.Genres?.Any(x => x == genre) ?? false)
+        //              .Where(g => g.Platforms?.Any(x => x == platform) ?? false)
+        //              .Where(g => _esrbRatingRepository.FindById((int)g.ESRBRatingValue).IgdbratingValue == esrbRating).ToList();
+        // return games;
         return games.Where(g =>
                           (string.IsNullOrEmpty(genre) || (g.Genres?.Any(x => x == genre) ?? false)) &&
                           (string.IsNullOrEmpty(platform) || (g.Platforms?.Any(x => x == platform) ?? false)) &&
