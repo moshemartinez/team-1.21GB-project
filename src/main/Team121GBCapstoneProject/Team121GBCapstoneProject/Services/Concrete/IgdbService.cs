@@ -99,6 +99,15 @@ public class IgdbService : IIgdbService
         {
             try
             {
+                var checker = gamesJsonDTO.ToList();
+                foreach (var game in checker)
+                {
+                    if (game.first_release_date == null || game.age_ratings == null || game.genres == null)
+                    {
+                        checker.Remove(game);
+                    }
+                }
+                gamesJsonDTO = checker;
                 return gamesJsonDTO.Select(g => new IgdbGame(g.id,
                                                           g.name,
                                                           g.cover?.url?.ToString(),
@@ -144,7 +153,7 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
-                                                        //   game.IgdbgameId,
+                                                          //   game.IgdbgameId,
                                                           game.GameGenres
                                                               .Select(g => g.Genre.Name)
                                                               .ToList(),
@@ -175,7 +184,7 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
-                                                        //   game.IgdbgameId,
+                                                          //   game.IgdbgameId,
                                                           genres,
                                                           platforms);
                         gamesToReturn.Add(gameToAdd);
@@ -227,7 +236,6 @@ public class IgdbService : IIgdbService
                 gameToAdd.Description = game.GameDescription.ToString();
                 gameToAdd.YearPublished = game.FirstReleaseDate;
                 gameToAdd.AverageRating = ConvertRating(game.AverageRating.Value);
-                //gameToAdd.AverageRating = game.AverageRating;
                 gameToAdd.IgdbgameId = (int)game.Id;
 
                 // * This is here to make sure that esrbrating will always be null or an int.
@@ -252,12 +260,13 @@ public class IgdbService : IIgdbService
                     Game addedGame = _genericGameRepo.AddOrUpdate(gameToAdd);
                     AddGameGenreForNewGames(game, addedGame);
                     AddGamePlatformForNewGames(game, addedGame);
+                    gamesToReturn.Add(game);
+
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e);
                 }
-                gamesToReturn.Add(game);
             }
             catch (Exception e)
             {
@@ -419,5 +428,20 @@ public class IgdbService : IIgdbService
         double final = ones + numberToAddFinal;
 
         return final;
+    }
+
+    public async Task<List<IgdbGame>> SearchWithFiltersOnly(string platform = "",
+                                                            string genre = "",
+                                                            int esrbRating = 0)
+    {
+
+        List<Game> gamesToReturn = new List<Game>();
+
+        //q: what will this line of code return?
+        //a: a list of games that match the filters provided by the client
+        gamesToReturn = _gameRepository.GetAll()
+                                       .Where(g => g.GamePlatforms.Any(x => x.Platform.Name == platform)).ToList();
+
+        return null;
     }
 }

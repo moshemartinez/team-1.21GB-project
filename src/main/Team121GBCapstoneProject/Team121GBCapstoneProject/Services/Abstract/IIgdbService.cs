@@ -38,4 +38,11 @@ public interface IIgdbService
     public Task<IEnumerable<IgdbGame>> SpeedSearchAsync(int numberOfGames, string platform = "", string genre = "", int esrbRating = 0, string query = "");
 
     public double ConvertRating(double rating);
+    /// <summary>
+    /// Gets a little of games that match the filters provided by the client
+    /// </summary>
+    /// <param name="platform">Filter provided by client</param>
+    /// <param name="genre">Filter provided by client</param>
+    /// <param name="esrbRating">Filter provided by client</param>
+    public Task<List<IgdbGame>> SearchWithFiltersOnly (string platform = "", string genre = "", int esrbRating = 0);
 }
