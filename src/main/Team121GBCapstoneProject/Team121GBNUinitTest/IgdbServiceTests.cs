@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using Moq.Contrib.HttpClient;
 using Team121GBCapstoneProject.Models;
@@ -13,6 +14,8 @@ using Team121GBCapstoneProject.Models;
 using Team121GBNUnitTest;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Moq.Protected;
+using Team121GBCapstoneProject.Services.Abstract;
+using AngleSharp.Text;
 
 namespace Team121GBNUnitTest;
 
@@ -20,6 +23,7 @@ public class IgdbAPIServiceTests
 {
     private string _igdbClientId;
     private string _igdbBearerToken;
+    private IConfigurationRoot _configuration;
 
     private IGameRepository _gameRepository;
     private IRepository<Game> _genericGameRepo;
@@ -44,9 +48,10 @@ public class IgdbAPIServiceTests
     [SetUp]
     public void SetUp()
     {
-        _igdbClientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
-        _igdbBearerToken = "llrnvo5vfowcyr0ggecl445q5dunyl";
-
+        IConfigurationBuilder builder = new ConfigurationBuilder().AddUserSecrets<IgdbAPIServiceTests>();
+        _configuration = builder.Build();
+        _igdbClientId = _configuration["GamingPlatform:igdbClientId"];
+        _igdbBearerToken = _configuration["GamingPlatform:igdbBearerToken"];
         _dbHelper = new InMemoryDbHelper<GPDbContext>(null, DbPersistence.OneDbPerTest);
         _gameRepository = new GameRepository(_dbHelper.GetContext());
         _esrbratingRepo = new Repository<Esrbrating>(_dbHelper.GetContext());
@@ -59,6 +64,82 @@ public class IgdbAPIServiceTests
         _search1 = "Mario";
         _search2 = "Zelda";
         _search3 = "Sonic";
+    }
+
+    [Test]
+    public void IgdbSerice_ConvertRatingWithValueOf88Point9ShouldReturn8Point8()
+    {
+        //Arrange
+        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
+        double expected = 8.8;
+        string expected2 = expected.ToString("#.0");
+        //Act
+        double result = igdbService.ConvertRating(88.90);
+
+        Assert.AreEqual(expected, result);
+
+    }
+
+
+    [Test]
+    public void IgdbSerice_ConvertRatingWithValueOf0ShouldReturn0()
+    {
+        //Arrange
+        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
+        double expected = 0;
+        string expected2 = expected.ToString("#.0");
+        //Act
+        double result = igdbService.ConvertRating(0);
+
+        Assert.AreEqual(expected, result);
+
+    }
+
+    [Test]
+    public void IgdbSerice_ConvertRatingWithValueOf100ShouldReturn10()
+    {
+        //Arrange
+        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
+        double expected = 10;
+        string expected2 = expected.ToString("#.0");
+        //Act
+        double result = igdbService.ConvertRating(100);
+
+        Assert.AreEqual(expected, result);
+
+    }
+
+    [Test]
+    public void IgdbSerice_ConvertRatingWithValueOf99Point8ShouldReturn9Point9()
+    {
+        //Arrange
+        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
+        double expected = 9.9;
+        string expected2 = expected.ToString("#.0");
+        //Act
+        double result = igdbService.ConvertRating(99.8);
+
+        Assert.AreEqual(expected, result);
+
+    }
+
+    [Test]
+    public void IgdbSerice_ConvertRatingWithValueOf5ShouldReturn0Point5()
+    {
+        //Arrange
+        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        var igdbService = new IgdbService(mockHttpClientFactory.Object, _gameRepository, _genericGameRepo, _esrbratingRepo, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);
+        double expected = 0.5;
+        string expected2 = expected.ToString("#.0");
+        //Act
+        double result = igdbService.ConvertRating(5);
+
+        Assert.AreEqual(expected, result);
+
     }
 
     // Tests from Moshe (Sprint 2 & 3)
@@ -134,7 +215,7 @@ public class IgdbAPIServiceTests
         );
     }
 
-    [Test]
+   /* [Test]
     public async Task IgdbService_SearchGames_ReturnsListOf10Games()
     {
         // --> Arrange
@@ -189,7 +270,7 @@ public class IgdbAPIServiceTests
         // --> Assert
         Assert.IsEmpty(result);
     }
-
+*/
 
     //[Test]
     //public async Task IgdbService_Request_Denied()

@@ -27,7 +27,7 @@
                 @if (login.ProviderDisplayName != "Steam") continue;
                 <tr>
                     @*<td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>*@
-                    <td><button class="btn btn-primary" onclick="steamLoad()" id="finalBtn">Display Info</button></td>
+                    <td><button class="btn btn-warning" onclick="steamLoad()" id="finalBtn">Display Info</button></td>
                     <input id="steamId" type="hidden" value="@steamId"/>
                     <td id="profileImage"></td>
                     <td id="profileName"></td>

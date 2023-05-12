@@ -226,7 +226,8 @@ public class IgdbService : IIgdbService
                 gameToAdd.Igdburl = game.GameWebsite.ToString();
                 gameToAdd.Description = game.GameDescription.ToString();
                 gameToAdd.YearPublished = game.FirstReleaseDate;
-                gameToAdd.AverageRating = game.AverageRating;
+                gameToAdd.AverageRating = ConvertRating(game.AverageRating.Value);
+                //gameToAdd.AverageRating = game.AverageRating;
                 gameToAdd.IgdbgameId = (int)game.Id;
 
                 // * This is here to make sure that esrbrating will always be null or an int.
@@ -298,6 +299,28 @@ public class IgdbService : IIgdbService
                                                 genre,
                                                 esrbRating);
         return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
+    }
+
+    public async Task<IEnumerable<IgdbGame>> SpeedSearchAsync(int numberOfGames,
+                                                                        string platform = "",
+                                                                        string genre = "",
+                                                                        int esrbRating = 0,
+                                                                        string query = "")
+    {
+        List<IgdbGame> gamesToReturn = new List<IgdbGame>();
+
+        var gamesFromSearch = await SearchGames(query);
+        List<Game> gamesFromPersonalDb = _gameRepository.GetGamesByTitle(query);
+
+        AddGamesToDb(gamesFromPersonalDb, gamesFromSearch.ToList(), gamesToReturn, 10, "", "", -1);
+
+
+
+        /*  gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
+                                                  platform,
+                                                  genre,
+                                                  esrbRating);*/
+        return gamesFromSearch.OrderByDescending(x => x.FirstReleaseDate);
     }
     public bool CheckForGame(List<Game> gamesToCheck, string title)
     {
@@ -378,5 +401,19 @@ public class IgdbService : IIgdbService
                           (esrbRating == 0 || _esrbRatingRepository.FindById((int)g.ESRBRatingValue).IgdbratingValue == esrbRating))
                     .OrderByDescending(x => x?.FirstReleaseDate)
                     .ToList();
+    }
+
+    public double ConvertRating(double rating)
+    {
+        int ratingsFloored = (int)Math.Floor(rating);
+
+        double ones = ratingsFloored / 10;
+        double numbersAfterDecimal = (ratingsFloored % 10);
+        double numberToAddConvert = (int)Math.Ceiling(Math.Log10(numbersAfterDecimal));
+        double numberToAddFinal = numbersAfterDecimal / MathF.Pow(10, 1);
+
+        double final = ones + numberToAddFinal;
+
+        return final;
     }
 }
