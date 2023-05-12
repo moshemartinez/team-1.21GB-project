@@ -60,11 +60,10 @@ $(document).ready(function () {
         let esrbRating = urlParams.get('esrbRating');
 
         console.log("Search: ", query, "Platform: ", platform, "Genre: ", genre, "EsrbRating: ", esrbRating);
-
-        if (query != null) {
-            displaySearchResults(query, platform, genre, esrbRating);
-        } else {
+        if (query === "" && platform === "" && genre === "" && esrbRating === "0") {
             console.log("No search query provided");
+        } else if (query != null) {
+            displaySearchResults(query, platform, genre, esrbRating);
         }
     }
 });
