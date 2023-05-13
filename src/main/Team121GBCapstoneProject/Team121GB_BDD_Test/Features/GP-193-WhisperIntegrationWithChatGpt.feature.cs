@@ -20,9 +20,9 @@ namespace Team121GB_BDD_Test.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("GP-21-AccountPreferences")]
+    [NUnit.Framework.DescriptionAttribute("GP-193-WhisperIntegrationWithChatGpt")]
     [NUnit.Framework.CategoryAttribute("Nathaniel")]
-    public partial class GP_21_AccountPreferencesFeature
+    public partial class GP_193_WhisperIntegrationWithChatGptFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
@@ -30,16 +30,16 @@ namespace Team121GB_BDD_Test.Features
         private string[] _featureTags = new string[] {
                 "Nathaniel"};
         
-#line 1 "GP-21-AccountPreferences.feature"
+#line 1 "GP-193-WhisperIntegrationWithChatGpt.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "GP-21-AccountPreferences", "** As a user, I want to be able to see my account preferences so that I can custo" +
-                    "mize my account ** \r\n\r\nThis feature ensures that user who is logged in can see a" +
-                    "nd customize their account preferences on a \r\ndedicated web page.", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "GP-193-WhisperIntegrationWithChatGpt", @"** As user I would like to be able speak questions to the chat bot, so that I do not have to physically type questions by hand. **
+This feature will allow the user to speak to the chat bot and have the chat bot respond to the user's questions. It gives the user 
+another medium to be able to communicate with the chat bot.", ProgrammingLanguage.CSharp, new string[] {
                         "Nathaniel"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -80,79 +80,62 @@ namespace Team121GB_BDD_Test.Features
         
         public virtual void FeatureBackground()
         {
-#line 8
+#line 7
 #line hidden
-            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table11.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "TaliaK",
                         "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
-            table11.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "ZaydenC",
                         "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
-            table11.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "DavilaH",
                         "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
-#line 9
- testRunner.Given("the following users exist", ((string)(null)), table11, "Given ");
+#line 8
+ testRunner.Given("the following users exist", ((string)(null)), table9, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table12.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "AndreC",
                         "colea@example.com",
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-            table12.AddRow(new string[] {
-                        "JoannaV",
-                        "valdezJ@example.com",
-                        "Joanna",
-                        "Valdez",
-                        "d9u(*dsF4"});
-#line 14
- testRunner.And("the following users do not exist", ((string)(null)), table12, "And ");
+#line 13
+ testRunner.And("the following users do not exist", ((string)(null)), table10, "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Logged in user can click on their name in the navbar")]
+        [NUnit.Framework.DescriptionAttribute("A logged can click the start and stop button to start and stop the microphone")]
         [NUnit.Framework.CategoryAttribute("LoggedIn")]
-        [NUnit.Framework.TestCaseAttribute("Talia", "Home", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Zayden", "Home", "Profile", null)]
-        [NUnit.Framework.TestCaseAttribute("Hareem", "Home", "Profile", null)]
-        public virtual void LoggedInUserCanClickOnTheirNameInTheNavbar(string firstName, string page, string profilePage, string[] exampleTags)
+        public virtual void ALoggedCanClickTheStartAndStopButtonToStartAndStopTheMicrophone()
         {
-            string[] @__tags = new string[] {
+            string[] tagsOfScenario = new string[] {
                     "LoggedIn"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("FirstName", firstName);
-            argumentsOfScenario.Add("Page", page);
-            argumentsOfScenario.Add("ProfilePage", profilePage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged in user can click on their name in the navbar", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 20
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A logged can click the start and stop button to start and stop the microphone", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -172,20 +155,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
+#line 7
 this.FeatureBackground();
 #line hidden
+#line 19
+ testRunner.Given("I am a logged in user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 20
+ testRunner.And("I am on the home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
 #line 21
- testRunner.Given(string.Format("I am a logged in user with Firstname \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.When("I navigate to the chatbot page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 22
- testRunner.And(string.Format("I am on the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 23
- testRunner.When("I click my name in the navbar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 24
- testRunner.Then(string.Format("I should be redirected to the \'{0}\' page", profilePage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I should see buttons for using speech to text.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
