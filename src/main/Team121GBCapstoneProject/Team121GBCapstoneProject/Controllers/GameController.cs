@@ -126,8 +126,9 @@ namespace Team121GBCapstoneProject.Controllers
         {
             try
             {
-                ApplicationUser currentUser = await _userManager.GetUserAsync(User);
-                // *check if the already have the game in their list                            
+                ApplicationUser currentUser = await _userManager.GetUserAsync(User); //use as well
+                // *check if the already have the game in their list
+                // gets all games
                 bool check = _personListRepository.GetAll()
                                               .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind && pl.Person.AuthorizationId == currentUser.Id)
                                               .PersonGames.Any(pg => pg.Game.Title == gameDto.GameTitle && pg.Game.IgdbgameId == gameDto.IgdbID);
@@ -136,8 +137,9 @@ namespace Team121GBCapstoneProject.Controllers
                     return BadRequest($"You already have {gameDto.GameTitle} stored in {gameDto.ListKind}.");
                 }
                 // * if we have gotten to this point, we can now add the game
+                //Start here
                 PersonList personList = _personListRepository.GetAll()
-                                                              .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind && pl.Person.AuthorizationId == currentUser.Id);
+                                                              .FirstOrDefault(pl => pl.ListKind == gameDto.ListKind/*sub 3*/ && pl.Person.AuthorizationId == currentUser.Id);
 
                 Game game = _gameRepository.GetAll().FirstOrDefault(g => g.Title == gameDto.GameTitle && g.IgdbgameId == gameDto.IgdbID);
                 PersonGame newPersonGame = new PersonGame
@@ -149,6 +151,7 @@ namespace Team121GBCapstoneProject.Controllers
                 };
 
                 _personGameRepository.AddOrUpdate(newPersonGame);
+                //end here 
                 var response = new { message = "Success!" };
                 return Ok($"Succeeded in adding {gameDto.GameTitle} to {gameDto.ListKind}.");
             }
