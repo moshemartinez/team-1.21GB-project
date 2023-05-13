@@ -105,6 +105,7 @@ public class IgdbService : IIgdbService
                     }
                 }
                 gamesJsonDTO = checker;
+
                 return gamesJsonDTO.Select(g => new IgdbGame(g.id,
                                                           g.name,
                                                           g.cover?.url?.ToString(),
@@ -297,10 +298,13 @@ public class IgdbService : IIgdbService
                      platform,
                      genre,
                      esrbRating);
-        gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
-                                                platform,
-                                                genre,
-                                                esrbRating);
+    /*    if (esrbRating != -100)
+        {*/
+            gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
+                                                    platform,
+                                                    genre,
+                                                    esrbRating);
+        //}
         return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
     }
 
