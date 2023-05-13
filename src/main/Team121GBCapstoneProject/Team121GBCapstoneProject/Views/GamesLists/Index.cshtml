@@ -55,7 +55,6 @@
             @if (listVm.ListKind != null)
             {
                 <div class="row">
-                    @* <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;"> *@
                     <div class="card redtoorange-gradient table-responsive">
                         <table id="@listVm.ListKind Table">
                             <thead>
@@ -116,6 +115,7 @@
                         </table>
                     </div>
                 </div>
+                <br />
             }
             @if (listVm.CurratedList != null)
             {
@@ -157,7 +157,7 @@
 @section Scripts
     {
     <script>
-        $(document).ready(function () {
+        /* $(document).ready(function () {
             $("tr").hover(
                 function () {
                     $(this).css("background-color", "#FF3555");
@@ -167,8 +167,7 @@
                     $(this).css("background-color", "");
                     $(this).css("border-radius", "");
                 });
-        });
-
+        });*/
     </script>
 }
 
