@@ -92,6 +92,7 @@ namespace Team121GBCapstoneProject.Controllers
                     continue;
                 }
 
+                Thread.Sleep(100);
                 await _igdbService.SearchGameWithCachingAsync(10,"","",0,game.name); //getting games
 
                 var gameToAdd = _gameRepository.GetGamesByTitle(game.name).FirstOrDefault();
@@ -126,5 +127,8 @@ namespace Team121GBCapstoneProject.Controllers
 
             return View(games);
         }
+
+        [Authorize]
+        public IActionResult ChatGpt() => View("../Home/ChatGpt");
     }
 }

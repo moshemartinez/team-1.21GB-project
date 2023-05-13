@@ -83,47 +83,47 @@ makes a user have to download the image and then manualy upload the image. This 
         {
 #line 9
 #line hidden
-            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table17.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "TaliaK",
                         "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
-            table17.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "ZaydenC",
                         "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
-            table17.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "DavilaH",
                         "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
 #line 10
- testRunner.Given("the following users exist", ((string)(null)), table17, "Given ");
+ testRunner.Given("the following users exist", ((string)(null)), table19, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table18.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "AndreC",
                         "colea@example.com",
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
 #line 15
- testRunner.And("the following users do not exist", ((string)(null)), table18, "And ");
+ testRunner.And("the following users do not exist", ((string)(null)), table20, "And ");
 #line hidden
         }
         
