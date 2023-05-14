@@ -1,4 +1,4 @@
-name: Build, test and deploy Standups application to Azure
+name: Build, test and deploy Ultimate Gaming Hub to Azure
 
 on:
   push:
