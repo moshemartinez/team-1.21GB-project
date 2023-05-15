@@ -45,8 +45,8 @@ jobs:
     - name: Build unit test project
       run: dotnet build "${{ env.UNIT_TEST_PROJECT }}" --configuration "Debug" --no-restore
 
-    # - name: Run all unit tests, but exclude BDD tests
-    #   run: dotnet test --filter FullyQualifiedName\!~Features --no-restore
+    - name: Run all unit tests, but exclude BDD tests
+      run: dotnet test --filter FullyQualifiedName\!~Features --no-restore
 
     - name: Publish
       run: dotnet publish "${{ env.MAIN_PROJECT }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
