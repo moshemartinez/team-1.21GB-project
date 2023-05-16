@@ -45,7 +45,8 @@ async function sendMessageSuccess(data) {
     console.log(data);
     let $responses = $('#responses');
     let $row = $('<div></div>').addClass('card text-white bg-primary');
-    await $responses.append($row);
+    const $newDiv = await $responses.append($row);
+    $newDiv[0].scrollIntoView(true);
     typeLetter(data);
 }
 
