@@ -19,7 +19,7 @@ namespace Team121GBNUnitTest
         private List<Game> _game;
 
         //In Memory Setup
-        public static readonly string _seedFile = @"..\..\..\Data\updatedSeed.sql";
+        public static readonly string _seedFile = _seedFile = System.IO.Path.Combine("..", "..", "..", "Data", "updatedSeed.sql");/*@"..\..\..\Data\updatedSeed.sql";*/
         private InMemoryDbHelper<GPDbContext> _dbHelper = new InMemoryDbHelper<GPDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 
         private readonly IHttpClientFactory _httpClientFactory;
