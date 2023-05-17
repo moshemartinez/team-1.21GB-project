@@ -31,20 +31,26 @@ public class WhisperService : IWhisperService
         }
 
     }
-
+    
+    // look up how to create a file in c# 
+    // check that the incoming file is valid
+    
     public async Task<string> GetTextFromSpeech(byte[] audioMp3)
     {
-
+        //?look into windows temp files in c#
         if (audioMp3 is null or { Length: 0 }) throw new ArgumentNullException(nameof(audioMp3), "The audioMp3 byte array is null or empty.");
 
-        string fileName = "audio.mp3";
-        SaveByteArrayAsMp3(audioMp3, "temp/audio.mp3");
-        byte[] file = await File.ReadAllBytesAsync($"temp/{fileName}");
-        MemoryStream ms = new MemoryStream(file);
+        string fileName = Path.GetTempFileName();
+        // string fileName = "audio.mp3";
+        //SaveByteArrayAsMp3(audioMp3, fileName);
+        byte[] file = await File.ReadAllBytesAsync(fileName);
+        //fileName = await File.ReadAllBytesAsync(audioMp3);
+        //await File.ReadAllBytesAsync(fileName, audioMp3);
+        //MemoryStream ms = new MemoryStream(file);
         var audioResult = await _openAIService.Audio.CreateTranscription(new AudioCreateTranscriptionRequest()
         {
-            FileName = fileName,
-            File = file,
+            FileName = "recording.mp3",
+            File = audioMp3,
             Model = WhisperV1,
             ResponseFormat = StaticValues.AudioStatics.ResponseFormat.VerboseJson
         });
