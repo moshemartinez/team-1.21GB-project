@@ -6,7 +6,7 @@ on:
 
 env:
     DB_SERVER: 'gaminghubdeployserver.database.windows.net'
-    DB_SERVER_NAME: gaminghubdeployserver
+    DB_SERVER_NAME:   
     DB_NAME: ughdeployApp
     RESOURCE_GROUP: UltimateGamingHub
     # Need to manually set DB_USERNAME and DB_PASSWORD in the repo secrets settings
