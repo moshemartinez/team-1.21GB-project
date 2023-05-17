@@ -428,14 +428,21 @@ public class IgdbService : IIgdbService
                                                             string genre = "",
                                                             int esrbRating = 0)
     {
-        List<Game> games = await _genericGameRepo.GetAll()
-                                           .ToListAsync();
-                                         
-        games = games.Where(g =>
-                                (string.IsNullOrEmpty(genre) || (g.GameGenres?.Any(x => x.Genre.Name == genre) ?? false)) &&
-                                (string.IsNullOrEmpty(platform) || (g.GamePlatforms?.Any(x => x.Platform.Name == platform) ?? false)) &&
-                                (esrbRating == 0 || ( g.Esrbrating.IgdbratingValue == esrbRating)))
-                                .ToList();
+        IQueryable<Game> games =  _genericGameRepo.GetAll();
+        // var temp = games.Where
+        // var b = _genericGameRepo.GetAll().TakeWhile(x => x.GameGenres.Any(y => y.Genre.Name == genre));
+
+        //figure out a better way to spread out the work load
+        // var filteredGames = games.Where(g =>
+        //                         (string.IsNullOrEmpty(genre) || (g.GameGenres?.Any(x => x.Genre.Name == genre) ?? false)) && 
+        //                         (string.IsNullOrEmpty(platform) || (g.GamePlatforms?.Any(x => x.Platform.Name == platform) ?? false)) &&
+        //                         (esrbRating == 0 || ( g.Esrbrating.IgdbratingValue == esrbRating)))
+        //                         .ToList();
+        List<Games> filteredGames = games.Where(g =>
+        (string.IsNullOrEmpty(genre) || (g.GameGenres != null && g.GameGenres.Any(x => x.Genre != null && x.Genre.Name == genre))) &&
+        (string.IsNullOrEmpty(platform) || (g.GamePlatforms != null && g.GamePlatforms.Any(x => x.Platform != null && x.Platform.Name == platform))) &&
+        (esrbRating == 0 || (g.Esrbrating != null && g.Esrbrating.IgdbratingValue == esrbRating)))
+        .ToList();
         if (games.Count() == 0)
         {
             return Enumerable.Empty<IgdbGame>();
@@ -443,13 +450,13 @@ public class IgdbService : IIgdbService
         else
         {
             Random random = new Random();
-            games = games.OrderBy(x => random.Next())
+            filteredGames = filteredGames.OrderBy(x => random.Next())
                          .ToList();
-            IEnumerable<IgdbGame> gamesToReturn = games.Take(10)
-                                                       .Select(g => new IgdbGame(g.IgdbgameId, g.Title, g.CoverPicture.ToString(),
-                                                                                 g.Igdburl, g.Description, g.YearPublished, (double)g.AverageRating,
-                                                                                 g.EsrbratingId, g.GameGenres.Select(genre => genre.Genre.Name).ToList(),
-                                                                                 g.GamePlatforms.Select(platform => platform.Platform.Name).ToList()));
+            IEnumerable<IgdbGame> gamesToReturn = filteredGames.Take(10)
+                                                                .Select(g => new IgdbGame(g.IgdbgameId, g.Title, g.CoverPicture.ToString(),
+                                                                                            g.Igdburl, g.Description, g.YearPublished, (double)g.AverageRating,
+                                                                                            g.EsrbratingId, g.GameGenres.Select(genre => genre.Genre.Name).ToList(),
+                                                                                            g.GamePlatforms.Select(platform => platform.Platform.Name).ToList()));
             return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
         }
     }
