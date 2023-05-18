@@ -71,6 +71,7 @@ builder.Services.AddScoped<IListKindRepository, ListKindRepository>();
 builder.Services.AddScoped<IGameRecommender, GameRecommender>();
 builder.Services.AddScoped<IPersonGameRepository, PersonGameRepository>();
 builder.Services.AddScoped<ISpeedSearch, SpeedSearch>();
+builder.Services.AddScoped<ISteamChecker, SteamChecker>();
 
 builder.Services.AddSwaggerGen();
 
@@ -81,6 +82,7 @@ builder.Services.AddOpenAIService(settings =>
 builder.Services.AddScoped<IOpenAIService, OpenAIService>();
 builder.Services.AddScoped<IDalleService, DalleService>();
 builder.Services.AddScoped<IChatGptService, ChatGptService>(chatgpt => new ChatGptService(chatgpt.GetRequiredService<IOpenAIService>()));
+builder.Services.AddScoped<IWhisperService, WhisperService>(whisper => new WhisperService(whisper.GetRequiredService<IOpenAIService>()));
 
 builder.Services.AddAuthentication()
     .AddCookie(options =>

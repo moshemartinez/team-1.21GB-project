@@ -44,7 +44,9 @@
                                       justify-content: center;
                                       align-items: center;">
                 <input type="text" id="prompt" class="form-control">
-                <button class="btn btn-warning" id="send">Submit</button>
+                <button id="send" class="btn btn-warning">Submit</button>
+                <button id="recordBtn" class="btn btn-success">Record</button>
+                <button id="stopBtn" class="btn btn-danger">Stop</button>
             </div>
         </div>
     </div>
@@ -53,4 +55,5 @@
 
 @section Scripts {
     <script type="text/javascript" src="~/js/ChatGpt.js"></script>
+    <script type="text/javascript" src="~/js/whisper.js"></script>
 }
