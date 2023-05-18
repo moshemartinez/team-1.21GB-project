@@ -37,6 +37,9 @@ builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha =>
                                                                     new ReCaptchaV3Service(reCAPTCHAV3SecretKey, 
                                                                     recaptcha.GetRequiredService<IHttpClientFactory>()));
 
+// Add Swagger middleware
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
 builder.Services.AddScoped<IsteamService, SteamService>( s => new SteamService(SteamSecretKey));
@@ -91,26 +94,31 @@ builder.Services.AddAuthentication()
     {
         options.CorrelationCookie.SameSite = SameSiteMode.None;
         options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
     });
 
 
 var app = builder.Build();
 // ! Seed users
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        //This only works locally not on azure
-        string testUserPW = builder.Configuration["SeedUserPW"];
-        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e);
-        throw new Exception("Couldn't seed users.");
-    }
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    try
+//    {
+//        //This only works locally not on azure
+//        string testUserPW = builder.Configuration["SeedUserPW"];
+//        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
+//    }
+//    catch (Exception e)
+//    {
+//        Console.WriteLine(e);
+//        throw new Exception("Couldn't seed users.");
+//    }
+//}
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
