@@ -431,18 +431,18 @@ public class IgdbService : IIgdbService
         IQueryable<Game> games =  _genericGameRepo.GetAll();
         // var temp = games.Where
         // var b = _genericGameRepo.GetAll().TakeWhile(x => x.GameGenres.Any(y => y.Genre.Name == genre));
-
+        var checkDup = _genericGameRepo.GetAll().Where(x => x.Title == "Phantasy Star III: Generations of Doom").ToList();
         //figure out a better way to spread out the work load
         // var filteredGames = games.Where(g =>
         //                         (string.IsNullOrEmpty(genre) || (g.GameGenres?.Any(x => x.Genre.Name == genre) ?? false)) && 
         //                         (string.IsNullOrEmpty(platform) || (g.GamePlatforms?.Any(x => x.Platform.Name == platform) ?? false)) &&
         //                         (esrbRating == 0 || ( g.Esrbrating.IgdbratingValue == esrbRating)))
         //                         .ToList();
-        List<Games> filteredGames = games.Where(g =>
-        (string.IsNullOrEmpty(genre) || (g.GameGenres != null && g.GameGenres.Any(x => x.Genre != null && x.Genre.Name == genre))) &&
-        (string.IsNullOrEmpty(platform) || (g.GamePlatforms != null && g.GamePlatforms.Any(x => x.Platform != null && x.Platform.Name == platform))) &&
-        (esrbRating == 0 || (g.Esrbrating != null && g.Esrbrating.IgdbratingValue == esrbRating)))
-        .ToList();
+        var filteredGames = games.Where(g =>
+                                        (string.IsNullOrEmpty(genre) || (g.GameGenres != null && g.GameGenres.Any(x => x.Genre != null && x.Genre.Name == genre))) &&
+                                        (string.IsNullOrEmpty(platform) || (g.GamePlatforms != null && g.GamePlatforms.Any(x => x.Platform != null && x.Platform.Name == platform))) &&
+                                        (esrbRating == 0 || (g.Esrbrating != null && g.Esrbrating.IgdbratingValue == esrbRating)))
+                                 .ToList();
         if (games.Count() == 0)
         {
             return Enumerable.Empty<IgdbGame>();
@@ -452,7 +452,12 @@ public class IgdbService : IIgdbService
             Random random = new Random();
             filteredGames = filteredGames.OrderBy(x => random.Next())
                          .ToList();
-            IEnumerable<IgdbGame> gamesToReturn = filteredGames.Take(10)
+            int count = filteredGames.Count();
+            if (count > 10)
+            {
+                count = 10;
+            }
+            IEnumerable<IgdbGame> gamesToReturn = filteredGames.Take(count)
                                                                 .Select(g => new IgdbGame(g.IgdbgameId, g.Title, g.CoverPicture.ToString(),
                                                                                             g.Igdburl, g.Description, g.YearPublished, (double)g.AverageRating,
                                                                                             g.EsrbratingId, g.GameGenres.Select(genre => genre.Genre.Name).ToList(),
