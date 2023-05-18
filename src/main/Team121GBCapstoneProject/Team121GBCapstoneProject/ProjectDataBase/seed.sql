@@ -62,7 +62,7 @@ INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('M', 11);
 INSERT INTO [ESRBRating] ([ESRBRatingName], [IGDBRatingValue]) VALUES ('AO', 12);
 
 --Inserting Sample Data for Game
-
+-- need to add igdb ids
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl], [ESRBRatingID]) VALUES ('Gears Of War','The planet lies in ruin – cities crumbling, Man’s greatest works fallen. The Locust Horde has risen, and they won’t stop coming. They won’t stop killing. An inmate named Marcus Fenix, once left to die, is now charged with keeping humanity alive. He can take comfort in but one fact: The human race isn’t extinct. Yet.', 2006, 9.4, 'https://images.igdb.com/igdb/image/upload/t_thumb/co28gi.png', 'https://www.igdb.com/games/gears-of-war', 6);
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl], [ESRBRatingID]) VALUES ('Deep Rock Galatic','Deep Rock Galactic is a cooperative first-person shooter video game developed by Danish studio Ghost Ship Games and published by Coffee Stain Publishing. ', 2018, 9.0, 'https://images.igdb.com/igdb/image/upload/t_thumb/co48gx.png', 'https://www.igdb.com/games/deep-rock-galactic', 5);
 INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture],[IGDBUrl], [ESRBRatingID]) VALUES ('Minecraft','If you can dream it, you can build it. Put your imagination and limitless resources to work with Creative Mode.', 2011, 8.6, 'https://images.igdb.com/igdb/image/upload/t_thumb/co49x5.png', 'https://www.igdb.com/games/minecraft', 4);
