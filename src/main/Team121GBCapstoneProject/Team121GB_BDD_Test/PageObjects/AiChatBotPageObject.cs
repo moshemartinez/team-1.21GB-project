@@ -18,6 +18,8 @@ public class AiChatBotPageObject : PageObject
 
     public IWebElement PromptInput => _webDriver.FindElement(By.Id("prompt"));
     public IWebElement SubmitPromptButton => _webDriver.FindElement(By.Id("send"));
+    public IWebElement RecordAudioButton=> _webDriver.FindElement(By.Id("recordBtn"));
+    public IWebElement StopRecordingButton => _webDriver.FindElement(By.Id("stopBtn"));
     public void InputPrompt(string prompt) => PromptInput.SendKeys(prompt);
 
     public int CheckIfResponseExists()
