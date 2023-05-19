@@ -210,10 +210,19 @@ public class IgdbService : IIgdbService
                 {
                     break;
                 }
-                if (CheckForGame(GamesFromOurDB, game.GameTitle) == true)
+                // * check that a game doesn't already exist in db
+                if (CheckForGame(GamesFromOurDB, game.GameTitle, game.Id) == true)
                 {
                     continue;
                 }
+                
+                // // * check that a game doesn't already exist in db
+                // Game check = _genericGameRepo.GetAll()
+                //                              .FirstOrDefault(g => g.IgdbgameId == game.Id);
+                // if (check != null)
+                // {
+                //     continue;
+                // }
 
                 Game gameToAdd = new Game();
                 gameToAdd.Title = game.GameTitle.ToString();
@@ -329,11 +338,11 @@ public class IgdbService : IIgdbService
                                                   esrbRating);*/
         return gamesFromSearch.OrderByDescending(x => x.FirstReleaseDate);
     }
-    public bool CheckForGame(List<Game> gamesToCheck, string title)
+    public bool CheckForGame(List<Game> gamesToCheck, string title, int? igdbId)
     {
         foreach (var game in gamesToCheck)
         {
-            if (game.Title == title)
+            if (game.Title == title || game.IgdbgameId == igdbId)
             {
                 return true;
             }
