@@ -215,17 +215,9 @@ public class IgdbService : IIgdbService
                 {
                     continue;
                 }
-                
-                // // * check that a game doesn't already exist in db
-                // Game check = _genericGameRepo.GetAll()
-                //                              .FirstOrDefault(g => g.IgdbgameId == game.Id);
-                // if (check != null)
-                // {
-                //     continue;
-                // }
 
                 Game gameToAdd = new Game();
-                gameToAdd.Title = game.GameTitle.ToString();
+                gameToAdd.Title = game.GameTitle;
 
                 if (game.GameCoverArt == null)
                 {
@@ -233,11 +225,11 @@ public class IgdbService : IIgdbService
                 }
                 else
                 {
-                    gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+                    gameToAdd.CoverPicture = game.GameCoverArt;
                 }
 
-                gameToAdd.Igdburl = game.GameWebsite.ToString();
-                gameToAdd.Description = game.GameDescription.ToString();
+                gameToAdd.Igdburl = game.GameWebsite;
+                gameToAdd.Description = game.GameDescription;
                 gameToAdd.YearPublished = game.FirstReleaseDate;
                 gameToAdd.AverageRating = ConvertRating(game.AverageRating.Value);
                 gameToAdd.IgdbgameId = (int)game.Id;
@@ -338,17 +330,8 @@ public class IgdbService : IIgdbService
                                                   esrbRating);*/
         return gamesFromSearch.OrderByDescending(x => x.FirstReleaseDate);
     }
-    public bool CheckForGame(List<Game> gamesToCheck, string title, int? igdbId)
-    {
-        foreach (var game in gamesToCheck)
-        {
-            if (game.Title == title || game.IgdbgameId == igdbId)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    public bool CheckForGame(List<Game> gamesToCheck, string title, int? igdbId) => _genericGameRepo.GetAll().Any(game => game.Title == title || game.IgdbgameId == igdbId);
+    
     public void AddGameGenreForNewGames(IgdbGame gameFromApi, Game addedGame)
     {
         List<Genre> allGenres = _genreRepository.GetAll().ToList();
