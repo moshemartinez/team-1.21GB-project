@@ -14,15 +14,20 @@ public class WhisperService : IWhisperService
     private readonly IOpenAIService _openAIService;
     public WhisperService(IOpenAIService openAIService) => _openAIService = openAIService;
 
+    public async Task<byte[]> ReadBytesFromFile(IFormFile file)
+    {
+        MemoryStream ms = new MemoryStream();
+        await file.CopyToAsync(ms);
+        byte[] fileBytes = ms.ToArray();         
+        return fileBytes;
+    }
     public async Task<string> GetTextFromSpeech(IFormFile file)
     {
         if (file is null or { Length: 0 }) throw new ArgumentNullException(nameof(file), "The file is null or empty.");
 
         // * read out the file into a byte array
-        MemoryStream ms = new MemoryStream();
-        await file.CopyToAsync(ms);
-        byte[] fileBytes = ms.ToArray();         
-        
+        byte[] fileBytes = await ReadBytesFromFile(file);
+            
         // * send the byte array to the OpenAI API
         var audioResult = await _openAIService.Audio.CreateTranscription(new AudioCreateTranscriptionRequest()
         {
