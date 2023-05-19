@@ -9,19 +9,55 @@
     <li><a id="chatBotButton" class="nav-link scrollto" asp-asp-controller="Home" asp-action="ChatGpt">AI powered Chat</a></li>
 
     @*Moshe: I wanted to incorporate this search bar somehow because I spent like 3 hours on it*@
-    @* <li class="nav-link">
-<form id="searchForm" action="/Search/Results/">
-<div class="input-group rounded">
-<input class="form-control rounded" type="text" name="query" id="searchInput" placeholder="Search..."
-aria-label="Search" aria-describedby="search-addon" />
-<button type="submit" id="searchButton" class="input-group-text border-0">
-<i class="bi bi-search"></i>
-</button>
-</div>
-</form>
-</li>*@
+    <li class="nav-link">
+        <form id="searchForm" action="/Search/Results/">
+            <div class="input-group rounded">
+                <input class="form-control rounded" type="text" name="query" id="searchInput" placeholder="Search..."
+                       aria-label="Search" aria-describedby="search-addon" />
+                <button type="submit" id="searchButton" class="input-group-text border-0">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </li>
 
-    <li class="nav-item navbar order-last order-lg-0">
+    <li class="nav-link">
+        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" class="advanced">
+            Advance Search<i class="fa fa-angle-down"></i>
+        </a>
+    </li>
+
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+      
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <input type="text" placeholder="Property ID" class="form-control">
+            
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <input type="text" class="form-control" placeholder="Search by MAP">
+            
+                </div>
+         
+
+                <div class="col-md-4">
+
+                    <input type="text" class="form-control" placeholder="Search by Country">
+            
+                </div>
+         
+            </div>
+
+        </div>
+    </div>
+
+  @*  <li class="nav-item navbar order-last order-lg-0">
         <form id="searchForm" action="/Search/Results/" style="display: inline-flex">
             <input class="input-group rounded" type="text" name="query" id="searchInput" placeholder="Search...">
             <select id="platformSelectList">
@@ -83,13 +119,8 @@ aria-label="Search" aria-describedby="search-addon" />
                 <i class="bi bi-search"></i>
             </button>
         </form>
-    </li>
+    </li>*@
 
-    @*Moshe: Wanting to remove this since it takes up to much space*@
-    <li class="nav-item navbar order-last order-lg-0">
-        <a class="nav-link scrollto" id="HelloLink" asp-area="Identity" asp-page="/Account/Manage/Index"
-            title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
-    </li>
 
     <li class="nav-link dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
