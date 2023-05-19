@@ -24,6 +24,7 @@
         <tbody>
             @foreach (var login in Model.CurrentLogins)
             {
+                @if (login.ProviderDisplayName != "Steam") continue;
                 <tr>
                     @*<td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>*@
                     <td><button class="btn btn-warning" onclick="steamLoad()" id="finalBtn">Display Info</button></td>
