@@ -25,11 +25,6 @@ string SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
 string SendGridKey = builder.Configuration["SendGridKey"];
 string igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
 string igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
-//q: why are these null even though they exist in my secrets.json?
-//a: because I didn't add the : to the end of the key in the secrets.json
-//q: can you clarify what you meanby that?  
-//a: in the secrets.json file, the key is "Authentication:Google:ClientId" but in the code it's "Authentication:Google:ClientId:"
-//a: the : is missing in the code
 string googleClientId = builder.Configuration["Authentication:Google:ClientId"];
 string googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 
