@@ -202,7 +202,7 @@ namespace Team121GBNUnitTest
             bool result;
 
             //Act
-            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 2");
+            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 2", 1);
 
             //Assert
             Assert.IsTrue(result);
@@ -219,7 +219,7 @@ namespace Team121GBNUnitTest
             bool result;
 
             //Act
-            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5");
+            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5", 1);
 
             //Assert
             Assert.IsFalse(result);
@@ -236,7 +236,7 @@ namespace Team121GBNUnitTest
             bool result;
 
             //Act
-            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5");
+            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5", 1);
 
             //Assert
             Assert.IsFalse(result);
@@ -253,7 +253,7 @@ namespace Team121GBNUnitTest
             bool result;
 
             //Act
-            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5");
+            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5", 1);
 
             //Assert
             Assert.IsFalse(result);
