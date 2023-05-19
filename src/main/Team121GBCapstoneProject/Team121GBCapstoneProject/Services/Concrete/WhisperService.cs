@@ -31,26 +31,24 @@ public class WhisperService : IWhisperService
         }
 
     }
-    
-    // look up how to create a file in c# 
-    // check that the incoming file is valid
-    
-    public async Task<string> GetTextFromSpeech(byte[] audioMp3)
+    public async Task<string> GetTextFromSpeech(IFormFile file)
     {
         //?look into windows temp files in c#
-        if (audioMp3 is null or { Length: 0 }) throw new ArgumentNullException(nameof(audioMp3), "The audioMp3 byte array is null or empty.");
+        //if (audioMp3 is null or { Length: 0 }) throw new ArgumentNullException(nameof(audioMp3), "The audioMp3 byte array is null or empty.");
 
         string fileName = Path.GetTempFileName();
         // string fileName = "audio.mp3";
         //SaveByteArrayAsMp3(audioMp3, fileName);
-        byte[] file = await File.ReadAllBytesAsync(fileName);
+        //byte[] file = await File.ReadAllBytesAsync(fileName);
         //fileName = await File.ReadAllBytesAsync(audioMp3);
         //await File.ReadAllBytesAsync(fileName, audioMp3);
-        //MemoryStream ms = new MemoryStream(file);
+        MemoryStream ms = new MemoryStream();
+        await file.CopyToAsync(ms);
+        byte[] fileBytes = ms.ToArray();         
         var audioResult = await _openAIService.Audio.CreateTranscription(new AudioCreateTranscriptionRequest()
         {
-            FileName = "recording.mp3",
-            File = audioMp3,
+            FileName = file.FileName,
+            File = fileBytes,
             Model = WhisperV1,
             ResponseFormat = StaticValues.AudioStatics.ResponseFormat.VerboseJson
         });
@@ -69,4 +67,41 @@ public class WhisperService : IWhisperService
             throw new Exception(audioResult.Error.Message);
         }
     }
+    // look up how to create a file in c# 
+    // check that the incoming file is valid
+
+    //public async Task<string> GetTextFromSpeech(byte[] audioMp3)
+    //{
+    //    //?look into windows temp files in c#
+    //    if (audioMp3 is null or { Length: 0 }) throw new ArgumentNullException(nameof(audioMp3), "The audioMp3 byte array is null or empty.");
+
+    //    string fileName = Path.GetTempFileName();
+    //    // string fileName = "audio.mp3";
+    //    //SaveByteArrayAsMp3(audioMp3, fileName);
+    //    byte[] file = await File.ReadAllBytesAsync(fileName);
+    //    //fileName = await File.ReadAllBytesAsync(audioMp3);
+    //    //await File.ReadAllBytesAsync(fileName, audioMp3);
+    //    //MemoryStream ms = new MemoryStream(file);
+    //    var audioResult = await _openAIService.Audio.CreateTranscription(new AudioCreateTranscriptionRequest()
+    //    {
+    //        FileName = "recording.mp3",
+    //        File = audioMp3,
+    //        Model = WhisperV1,
+    //        ResponseFormat = StaticValues.AudioStatics.ResponseFormat.VerboseJson
+    //    });
+    //    if (audioResult.Successful)
+    //    {
+    //        Debug.WriteLine(string.Join("\n", audioResult.Text));
+    //        return audioResult.Text;
+    //    }
+    //    else
+    //    {
+    //        if (audioResult.Error == null)
+    //        {
+    //            throw new Exception("Unknown Error returned from OpenAI API.");
+    //        }
+    //        Debug.WriteLine($"{audioResult.Error.Code}: {audioResult.Error.Message}");
+    //        throw new Exception(audioResult.Error.Message);
+    //    }
+    //}
 }

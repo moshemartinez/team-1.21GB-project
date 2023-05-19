@@ -32,10 +32,11 @@ public class WhisperController : ControllerBase
         {
             if (file == null)
                 return BadRequest("No file selected");
-            MemoryStream ms = new MemoryStream();
-            await file.CopyToAsync(ms);
-            byte[] fileBytes = ms.ToArray();            
-            string resultText = await _whisperService.GetTextFromSpeech(fileBytes);
+            //MemoryStream ms = new MemoryStream();
+            //await file.CopyToAsync(ms);
+            //byte[] fileBytes = ms.ToArray();            
+            //string resultText = await _whisperService.GetTextFromSpeech(fileBytes);
+            string resultText = await _whisperService.GetTextFromSpeech(file);
             // * verify the prompt does not break content moderation by OpenAI
             var moderationResponse = await PromptModerationTask(resultText);
             if (moderationResponse.Results.FirstOrDefault()!.Flagged) return BadRequest("Inappropriate prompt.");
