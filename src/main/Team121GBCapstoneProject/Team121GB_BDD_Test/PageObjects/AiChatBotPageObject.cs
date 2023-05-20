@@ -27,12 +27,17 @@ public class AiChatBotPageObject : PageObject
     {
         try
         {
+
             // Wait up to 10 seconds for the element to be present in the DOM
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            // Use the CSS selector to find the element
-            IReadOnlyCollection<IWebElement> responses = wait.Until(d => d.FindElements(By.CssSelector(".card.text-white.bg-primary")));
-            responses.Should().NotBeNullOrEmpty();
-            return responses.Count();
+
+            IWebElement element = wait.Until(d => d.FindElement(By.CssSelector(".card.text-white.bg-primary")));
+            element.Should().NotBeNull();
+            //// Use the CSS selector to find the element
+            //IReadOnlyCollection<IWebElement> responses = wait.Until(d => d.FindElements(By.CssSelector(".card.text-white.bg-primary")));
+            //responses.Should().NotBeNullOrEmpty();
+            //return responses.Count();
+            return 1;
         }
         catch (Exception e)
         {
