@@ -41,12 +41,12 @@ INSERT INTO [Platform] ([Name]) VALUES ('Playstation 4'); --7
 INSERT INTO [Platform] ([Name]) VALUES ('Nintendo Switch'); --8
 INSERT INTO [Platform] ([Name]) VALUES ('Playstation 3'); --9
 INSERT INTO [Platform] ([Name]) VALUES ('Xbox 360'); --10
-INSERT INTO [Platform] ([Name]) VALUES ('SNES') --11
-INSERT INTO [Platform] ([Name]) VALUES ('Nintendo 3DS') --12
-INSERT INTO [Platform] ([Name]) VALUES ('Game boy') --13
-INSERT INTO [Platform] ([Name]) VALUES ('Nintendo 64') --14
-INSERT INTO [Platform] ([Name]) VALUES ('Nintendo GameCube') --15
-INSERT INTO [Platform] ([Name]) VALUES ('Wii') --16
+INSERT INTO [Platform] ([Name]) VALUES ('SNES'); --11
+INSERT INTO [Platform] ([Name]) VALUES ('Nintendo 3DS'); --12
+INSERT INTO [Platform] ([Name]) VALUES ('Game boy'); --13
+INSERT INTO [Platform] ([Name]) VALUES ('Nintendo 64'); --14
+INSERT INTO [Platform] ([Name]) VALUES ('Nintendo GameCube'); --15
+INSERT INTO [Platform] ([Name]) VALUES ('Wii'); --16
 
 
 
