@@ -96,21 +96,21 @@ builder.Services.AddAuthentication()
 
 var app = builder.Build();
 // ! Seed users
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        //This only works locally not on azure
-        string testUserPW = builder.Configuration["SeedUserPW"];
-        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e);
-        throw new Exception("Couldn't seed users.");
-    }
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    try
+//    {
+//        //This only works locally not on azure
+//        string testUserPW = builder.Configuration["SeedUserPW"];
+//        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
+//    }
+//    catch (Exception e)
+//    {
+//        Console.WriteLine(e);
+//        throw new Exception("Couldn't seed users.");
+//    }
+//}
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
