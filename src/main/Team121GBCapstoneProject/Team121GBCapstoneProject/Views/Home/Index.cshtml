@@ -24,15 +24,7 @@
         </div>
         
         <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
-            <div class="col-xl-2 col-md-4">
-                <a asp-area="Identity" asp-page="/Account/Register">
-                    <div class="icon-box">
-                        <i class="bi bi-person-add"></i>
-                        <h3>Create Account</h3>
-                    </div>
-                </a>
-            </div>
-            
+
             @if (SignInManager.IsSignedIn(User))
             {
                 <div class="col-xl-2 col-md-4">
@@ -47,6 +39,15 @@
             }
             else
             {
+                <div class="col-xl-2 col-md-4">
+                    <a asp-area="Identity" asp-page="/Account/Register">
+                        <div class="icon-box">
+                            <i class="bi bi-person-add"></i>
+                            <h3>Create Account</h3>
+                        </div>
+                    </a>
+                </div>
+
                 <div class="col-xl-2 col-md-4">
                     <a asp-area="Identity" asp-page="/Account/Login">
                         <div class="icon-box">
