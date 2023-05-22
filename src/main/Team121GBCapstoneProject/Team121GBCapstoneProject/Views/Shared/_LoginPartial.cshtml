@@ -6,9 +6,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li><a id="chatBotButton" class="nav-link scrollto" asp-asp-controller="Home" asp-action="ChatGpt">AI powered Chat</a></li>
 
-    @*Moshe: I wanted to incorporate this search bar somehow because I spent like 3 hours on it*@
     <li class="nav-link">
         <form id="searchForm" action="/Search/Results/">
             <div class="input-group rounded">
@@ -25,12 +23,12 @@
         @*        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" class="advanced">
             Advance Search<i class="fa fa-angle-down"></i>
         </a>*@
-        <button type="button" class="btn btn-link" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Advanced Search...">
+        <button type="button" id="advancedSearchButton" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Advanced Search...">
             Advanced Search
         </button>
     </li>
 
-    <div class="collapse" id="collapseExample">
+@*    <div class="collapse" id="collapseExample">
         <div class="card card-body">
       
             <div class="row">
@@ -58,7 +56,7 @@
             </div>
 
         </div>
-    </div>
+    </div>*@
 
   @*  <li class="nav-item navbar order-last order-lg-0">
         <form id="searchForm" action="/Search/Results/" style="display: inline-flex">

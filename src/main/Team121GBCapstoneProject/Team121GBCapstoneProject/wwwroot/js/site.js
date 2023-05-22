@@ -71,10 +71,10 @@ $(document).ready(function () {
 
 // Advanced Search
 $(document).ready(function () {
-    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'),
-        {
-            trigger: 'focus'
-        });
+    // Initialize popover
+    var advancedSearchButton = document.getElementById('advancedSearchButton');
+    var popover = new bootstrap.Popover(advancedSearchButton);
+    console.log("Advanced search popover activated/deactivated");
 });
 
 //$('#dark-mode-toggle').click(function () {
