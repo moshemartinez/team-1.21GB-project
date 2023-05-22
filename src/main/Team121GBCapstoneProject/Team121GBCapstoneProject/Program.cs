@@ -18,13 +18,13 @@ using Team121GBCapstoneProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
-var reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
-var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
-var SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
+var reCAPTCHASecretKey = builder.Configuration["GamingPlatformreCAPTCHASecretKey"];
+var reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatformreCAPTCHAV3SecretKey"];
+var DalleSecretKey = builder.Configuration["OpenAIServiceOptionsApiKey"];
+var SteamSecretKey = builder.Configuration["SteamIntegrationApiKey"];
 var SendGridKey = builder.Configuration["SendGridKey"];
-var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
-var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
+var igdbApiClientIdKey = builder.Configuration["GamingPlatformigdbClientId"];
+var igdbApiBearerTokenKey = builder.Configuration["GamingPlatformigdbBearerToken"];
 
 builder.Services.AddHttpClient();
 // Add services to the container.

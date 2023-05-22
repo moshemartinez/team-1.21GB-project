@@ -27,7 +27,7 @@ public class DalleServiceTests
     public void TurnImageUrlIntoByteArray(string imageURL, byte[] expectedResult)
     {
         //// * Arrange
-        //string key = _configuration["OpenAIServiceOptions:ApiKey"];
+        //string key = _configuration["OpenAIServiceOptionsApiKey"];
         //OpenAIService openAiService = new OpenAIService(new OpenAiOptions()
         //{
         //    ApiKey = key

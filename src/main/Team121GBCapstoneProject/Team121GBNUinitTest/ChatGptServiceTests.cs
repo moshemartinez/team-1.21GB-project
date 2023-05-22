@@ -46,7 +46,7 @@ public class ChatGptServiceTests
     public void GetChatResponse_Success()
     {
         //// * Arrange
-        //string key = _configuration["OpenAIServiceOptions:ApiKey"];
+        //string key = _configuration["OpenAIServiceOptionsApiKey"];
         //string somePrompt = "Hello World!";
         //OpenAI.GPT3.OpenAiOptions openAiOptions = new OpenAI.GPT3.OpenAiOptions()
         //{

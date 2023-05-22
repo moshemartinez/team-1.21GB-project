@@ -50,8 +50,8 @@ public class IgdbAPIServiceTests
     {
         IConfigurationBuilder builder = new ConfigurationBuilder().AddUserSecrets<IgdbAPIServiceTests>();
         _configuration = builder.Build();
-        _igdbClientId = _configuration["GamingPlatform:igdbClientId"];
-        _igdbBearerToken = _configuration["GamingPlatform:igdbBearerToken"];
+        _igdbClientId = _configuration["GamingPlatformigdbClientId"];
+        _igdbBearerToken = _configuration["GamingPlatformigdbBearerToken"];
         _dbHelper = new InMemoryDbHelper<GPDbContext>(null, DbPersistence.OneDbPerTest);
         _gameRepository = new GameRepository(_dbHelper.GetContext());
         _esrbratingRepo = new Repository<Esrbrating>(_dbHelper.GetContext());
