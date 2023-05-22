@@ -2,6 +2,10 @@ name: Update the authentication database
 
 on:
   # Trigger this one only manually
+  push:
+    branches: [ "integration" ]
+  pull_request:
+    branches: [ "integration" ]
   workflow_dispatch:
 
 env:
