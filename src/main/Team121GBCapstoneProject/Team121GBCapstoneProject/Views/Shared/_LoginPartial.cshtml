@@ -21,52 +21,90 @@
         </div>
         
         <div style="display: inline-block">
-        <button type="button" id="advancedSearchButton" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Advanced Search...">
-            Advanced Search
-        </button>
+            <button type="button" id="advancedSearchButton" class="btn btn-secondary" title="Advanced Search" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Filters">
+                <i class="bi bi-filter"></i>
+            </button>
         </div>
     </li>
 
-    <li class="nav-link">
-        @*        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" class="advanced">
-            Advance Search<i class="fa fa-angle-down"></i>
-        </a>*@
-@*        <button type="button" id="advancedSearchButton" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Advanced Search...">
-            Advanced Search
-        </button>*@
-    </li>
+    <section class="body-content">
+    <div hidden >
+        <div data-name="popover-content">
+            <div class="input-group">
+                <div class="card card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select class="form-select" id="platformSelectList">
+                                <option value="">Platform</option>
+                                <option value="PC (Microsoft Windows)">Windows</option>
+                                <option value="Linux">Linux</option>
+                                <option value="Xbox Series X|S">Xbox Series X|S</option>
+                                <option value="PlayStation 5">PlayStation 5</option>
+                                <option value="Xbox One">Xbox One</option>
+                                <option value="Playstation 4">Playstation 4</option>
+                                <option value="Nintendo Switch">Nintendo Switch</option>
+                                <option value="Mac">Mac</option>
+                                <option value="Playstation 3">Playstation 3</option>
+                                <option value="Xbox 360">Xbox 360</option>
+                                <option value="SNES">SNES</option>
+                                <option value="Nintendo 3DS">Nintendo 3DS</option>
+                                <option value="Game boy">Game boy</option>
+                                <option value="Nintendo 64">Nintendo 64</option>
+                                <option value="Nintendo GameCube">Nintendo GameCube</option>
+                                <option value="Wii">Wii</option>
+                            </select>
+                        </div>
 
-@*    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-      
-            <div class="row">
+                        <div class="col-md-4">
+                            <select class="form-select" id="genreSelectList">
+                                <option value="">Genre</option>
+                                <option value="Point and Click">Point and Click</option>
+                                <option value="Fighting">Fighting</option>
+                                <option value="Shooter">Shooter</option>
+                                <option value="Music">Music</option>
+                                <option value="Platform">Platform</option>
+                                <option value="Puzzle">Puzzle</option>
+                                <option value="Racing">Racing</option>
+                                <option value="Real Time Strategy (RTS)">Real Time Strategy (RTS)</option>
+                                <option value="Role-Playing (RPG)">Role-Playing (RPG)</option>
+                                <option value="Simulator">Simulator</option>
+                                <option value="Sport">Sport</option>
+                                <option value="Strategy">Strategy</option>
+                                <option value="Turn-Based Strategy">Turn-Based Strategy</option>
+                                <option value="Tactical">Tactical</option>
+                                <option value="Quiz/Trivia">Quiz/Trivia</option>
+                                <option value="Hack and slash/Beat 'em up">Hack and slash/Beat 'em up</option>
+                                <option value="Pinball">Pinball</option>
+                                <option value="Adventure">Adventure</option>
+                                <option value="Arcade">Arcade</option>
+                                <option value="Visual Novel">Visual Novel</option>
+                                <option value="Indie">Indie</option>
+                                <option value="Card & Board Game">Card & Board Game</option>
+                                <option value="MOBA">MOBA</option>
+                            </select>
+                        </div>
 
-                <div class="col-md-4">
-
-                    <input type="text" placeholder="Property ID" class="form-control">
-            
+                        <div class="col-md-4">
+                            <select class="form-select" id="esrbRatingSelectList">
+                                <option value="0">ESRB Rating</option>
+                                <option value="6">RP</option>
+                                <option value="7">EC</option>
+                                <option value="8">E</option>
+                                <option value="9">E10</option>
+                                <option value="10">T</option>
+                                <option value="11">M</option>
+                                <option value="12">AO</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-
-
-                <div class="col-md-4">
-
-                    <input type="text" class="form-control" placeholder="Search by MAP">
-            
-                </div>
-         
-
-                <div class="col-md-4">
-
-                    <input type="text" class="form-control" placeholder="Search by Country">
-            
-                </div>
-         
             </div>
-
         </div>
-    </div>*@
+    </div>
+    </section>
 
-  @*  <li class="nav-item navbar order-last order-lg-0">
+@*
+      <li class="nav-item navbar order-last order-lg-0">
         <form id="searchForm" action="/Search/Results/" style="display: inline-flex">
             <input class="input-group rounded" type="text" name="query" id="searchInput" placeholder="Search...">
             <select id="platformSelectList">

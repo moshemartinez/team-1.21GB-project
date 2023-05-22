@@ -71,11 +71,20 @@ $(document).ready(function () {
 
 // Advanced Search
 $(document).ready(function () {
-    // Initialize popover
-    var advancedSearchButton = document.getElementById('advancedSearchButton');
-    var popover = new bootstrap.Popover(advancedSearchButton);
+    var options = {
+        html: true,
+        title: "Advanced Search",
+        //html element
+        //content: $("#popover-content")
+        content: $('[data-name="popover-content"]')
+        //Doing below won't work. Shows title only
+        //content: $("#popover-content").html()
+
+    }
+    var advancedSearchEl = document.getElementById('advancedSearchButton');
+    var popover = new bootstrap.Popover(advancedSearchEl, options);
     console.log("Advanced search popover activated/deactivated");
-});
+})
 
 //$('#dark-mode-toggle').click(function () {
 //    // toggle the dark mode
