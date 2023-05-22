@@ -18,13 +18,15 @@ using Team121GBCapstoneProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
-var reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
-var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
-var SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
-var SendGridKey = builder.Configuration["SendGridKey"];
-var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
-var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
+string reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
+string reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
+string DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
+string SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
+string SendGridKey = builder.Configuration["SendGridKey"];
+string igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
+string igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
+string googleClientId = builder.Configuration["Authentication:Google:ClientId"];
+string googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 
 builder.Services.AddHttpClient();
 // Add services to the container.
@@ -97,28 +99,28 @@ builder.Services.AddAuthentication()
     })
     .AddGoogle(googleOptions =>
     {
-        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        googleOptions.ClientId = googleClientId;
+        googleOptions.ClientSecret = googleClientSecret;
     });
 
 
 var app = builder.Build();
 // ! Seed users
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    try
-//    {
-//        //This only works locally not on azure
-//        string testUserPW = builder.Configuration["SeedUserPW"];
-//        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
-//    }
-//    catch (Exception e)
-//    {
-//        Console.WriteLine(e);
-//        throw new Exception("Couldn't seed users.");
-//    }
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        //This only works locally not on azure
+        string testUserPW = builder.Configuration["SeedUserPW"];
+        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+        throw new Exception("Couldn't seed users.");
+    }
+}
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
