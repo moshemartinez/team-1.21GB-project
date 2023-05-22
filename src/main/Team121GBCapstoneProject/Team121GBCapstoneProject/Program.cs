@@ -100,8 +100,8 @@ using (var scope = app.Services.CreateScope())
     try
     {
         //This only works locally not on azure
-        string testUserPW = builder.Configuration["SeedUserPW"];
-        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
+        //string testUserPW = builder.Configuration["SeedUserPW"];
+        //SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
     }
     catch (Exception e)
     {
