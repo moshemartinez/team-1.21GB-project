@@ -55,9 +55,10 @@
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
                 <li><a class="nav-link scrollto active" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                @*<li><a id="chatBotButton" class="nav-link scrollto" asp-asp-controller="Home" asp-action="ChatGpt">AI powered Chat</a></li>*@
                 <li><a class="nav-link scrollto" id="Top100GamesButton" asp-area="" asp-controller="Top100Games" asp-action="Index">Top 100 Games</a></li>
-                <li><a id="chatBotButton" class="nav-link scrollto" asp-asp-controller="Home" asp-action="ChatGpt">AI Chat</a></li>
+                <li><a id="gamesListButton" class="dropdown-item" asp-controller="GamesLists" asp-action="Index">My Games</a></li>
+                <li><a id="chatBotButton" class="nav-link scrollto" asp-controller="Home" asp-action="ChatGpt">AI Chat</a></li>
+                <li><a id="speedSearchButton" class="nav-link scrollto" asp-controller="SpeedSearch" asp-action="Index">Speed Search</a></li>
                 @*                <li><a class="nav-link scrollto" href="#services">Services</a></li>
                 <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
                 <li><a class="nav-link scrollto" href="#team">Team</a></li>

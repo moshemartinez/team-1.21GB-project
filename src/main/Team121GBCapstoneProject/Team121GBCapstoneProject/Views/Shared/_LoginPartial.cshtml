@@ -172,41 +172,34 @@
             aria-haspopup="true" aria-expanded="false">
             @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
             {
-                <img id="profilePicInNavbar" src="https://img.icons8.com/ios/50/null/user--v1.png" width="25" height="25"
+                <img id="profilePicInNavbar" src="https://github.com/moshemartinez/team-1.21GB-project/assets/63754407/5ece7f0e-0a6d-46bf-b3fc-d052c29b9d32" width="35" height="35"
                     class="rounded-circle">
             }
             else
             {
                 <img id="profilePicInNavbar"
                     src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))"
-                    width="25" height="25" class="rounded-circle">
+                    width="35" height="35" class="rounded-circle">
             }
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
             <li>
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"
-                    style="color: black">Account Preferences</a>
+                   style="color: black">Account Preferences</a>
+            </li>
+            <li>
+                <hr class="dropdown-divider"/>
+            </li>
+            <li>
+                <a id="findFriendsButton" class="dropdown-item" asp-controller="Home" asp-action="FindFriends" style="color: black">Find Friends</a>
             </li>
             <li>
                 <hr class="dropdown-divider" />
             </li>
-            <li>
-                <a id="gamesListButton" class="dropdown-item" asp-controller="GamesLists" asp-action="Index"
-                    style="color: black">Game Lists</a>
-            </li>
-            <li>
-                <hr class="dropdown-divider" />
-            </li>
-            <li>
-                <a id="speedSearchButton" class="dropdown-item" asp-controller="SpeedSearch" asp-action="Index" style="color: black">Speed Search</a>
-            </li>
-              <li><hr class="dropdown-divider" /></li>
             <li>
                 <a id="steamGamesButton" class="dropdown-item" asp-controller="SteamGames" asp-action="SteamGamesBlank" style="color: black">Steam Games</a>
             </li>
-            <li><hr class="dropdown-divider" /></li>
             <li>
-                <a id="findFriendsButton" class="dropdown-item" asp-controller="Home" asp-action="FindFriends" style="color: black">Find Friends</a>
                 <hr class="dropdown-divider" />
             </li>
             <li>
