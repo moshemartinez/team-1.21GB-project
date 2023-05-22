@@ -29,7 +29,7 @@
     <link href="~/lib/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="~/lib/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     <link href="~/lib/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="~/lib/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/lib/assets/vendor/remixicon/remixicon.css" rel="stylesheet">lo
     <link href="~/lib/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
@@ -46,7 +46,7 @@
 
 <body>
     <header id="header" class="fixed-top ">
-        <div class="container d-flex align-items-center justify-content-lg-between">
+        <div class="container d-flex align-items-center justify-content-lg-between" style="height: 45px;">
 
             <h1 class="logo me-auto me-lg-0"><a asp-area="" asp-controller="Home" asp-action="Index">GP<span></span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
@@ -55,30 +55,10 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto active" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a class="nav-link scrollto" asp-area="" asp-controller="Top100Games" asp-action="Index">Top 100 Games</a></li>
-                    @*                <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-                    <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                    <li class="dropdown">
-                    <a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                    <ul>
-                    <li><a href="#">Drop Down 1</a></li>
-                    <li class="dropdown">
-                    <a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                    <ul>
-                    <li><a href="#">Deep Drop Down 1</a></li>
-                    <li><a href="#">Deep Drop Down 2</a></li>
-                    <li><a href="#">Deep Drop Down 3</a></li>
-                    <li><a href="#">Deep Drop Down 4</a></li>
-                    <li><a href="#">Deep Drop Down 5</a></li>
-                    </ul>
-                    </li>
-                    <li><a href="#">Drop Down 2</a></li>
-                    <li><a href="#">Drop Down 3</a></li>
-                    <li><a href="#">Drop Down 4</a></li>
-                    </ul>
-                    </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>*@
+                    <li><a class="nav-link scrollto" id="Top100GamesButton" asp-area="" asp-controller="Top100Games" asp-action="Index">Top 100 Games</a></li>
+                    <li><a id="gamesListButton" class="dropdown-item" asp-controller="GamesLists" asp-action="Index">My Games</a></li>
+                    <li><a id="chatBotButton" class="nav-link scrollto" asp-controller="Home" asp-action="ChatGpt">AI Chat</a></li>
+                    <li><a id="speedSearchButton" class="nav-link scrollto" asp-controller="SpeedSearch" asp-action="Index">Speed Search</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -141,7 +121,7 @@
                         <ul>
                             <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/moshemartinez">Moshe Martinez</a></li>
                             <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/Nathaniel-Kuga">Nathaniel Kuga</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/QuintonRoan">Quinton Roan</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/QuintonRoan64">Quinton Roan</a></li>
                             <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/ColeKrieske">Cole Krieske</a></li>
                         </ul>
                     </div>
