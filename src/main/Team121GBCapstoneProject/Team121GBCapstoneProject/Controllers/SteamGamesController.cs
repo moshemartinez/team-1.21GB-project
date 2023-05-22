@@ -42,6 +42,21 @@ namespace Team121GBCapstoneProject.Controllers
             _igdbService = igdbService;
             _steamChecker = steamChecker;
         }
+
+        [Authorize]
+        public IActionResult SteamGamesBlank()
+        {
+            SteamHelper _steamHelper = new SteamHelper(_userManager);
+            //string? userId = _userManager.GetUserId(User);
+            var steamAccount = _steamHelper.GetSteamId(User);
+            if (steamAccount == null)
+            {
+                return View("Index");
+            }
+            var games = _steamService.GetGames(steamAccount);
+            return View("Index", games);
+        }
+
         [Authorize]
         public async Task<IActionResult> Index()
         {
@@ -92,6 +107,7 @@ namespace Team121GBCapstoneProject.Controllers
                     continue;
                 }
 
+                Thread.Sleep(250);
                 await _igdbService.SearchGameWithCachingAsync(10,"","",0,game.name); //getting games
 
                 var gameToAdd = _gameRepository.GetGamesByTitle(game.name).FirstOrDefault();
@@ -101,7 +117,7 @@ namespace Team121GBCapstoneProject.Controllers
                 {
                     continue;
                 }
-
+                //already calling to list here.
                 check = _steamChecker.checkGameId(gameToAdd.Id, personList.PersonGames.ToList());
 
                 if (check == true)
@@ -126,5 +142,8 @@ namespace Team121GBCapstoneProject.Controllers
 
             return View(games);
         }
+
+        [Authorize]
+        public IActionResult ChatGpt() => View("../Home/ChatGpt");
     }
 }
