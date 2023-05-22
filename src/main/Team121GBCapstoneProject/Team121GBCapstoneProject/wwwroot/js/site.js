@@ -69,6 +69,14 @@ $(document).ready(function () {
 });
 
 
+// Advanced Search
+$(document).ready(function () {
+    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'),
+        {
+            trigger: 'focus'
+        });
+});
+
 //$('#dark-mode-toggle').click(function () {
 //    // toggle the dark mode
 //    $('body').toggleClass('dark-mode');
