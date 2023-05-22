@@ -55,10 +55,32 @@ namespace Team121GBCapstoneProject.Controllers
 
         [Authorize]
         [HttpPost]
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchOutput(string GameEntry)
+        {
+            _bearerToken = _config["GamingPlatformigdbBearerToken"];
+            _clientId = _config["GamingPlatformigdbClientId"];
+
+
+            // Set Credentials
+            _igdbService.SetCredentials(_clientId, _bearerToken);
+
+            var resultOfSearch = await _speedSearch.SpeedSearchingAsync(GameEntry);
+
+            if (resultOfSearch is null)
+            {
+                return NotFound();
+            }
+
+            return View("SpeedSearchOutput", resultOfSearch);
+
+        }
+
+        /*[Authorize]
+        [HttpPost]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchResults(string GameEntry)
         {
-            _bearerToken = _config["GamingPlatform:igdbBearerToken"];
-            _clientId = _config["GamingPlatform:igdbClientId"];
+            _bearerToken = _config["GamingPlatformigdbBearerToken"];
+            _clientId = _config["GamingPlatformigdbClientId"];
 
 
             // Set Credentials
@@ -73,6 +95,6 @@ namespace Team121GBCapstoneProject.Controllers
 
             return View("~/Views/Search/SearchResults.cshtml", resultOfSearch);
 
-        }
+        }*/
     }
 }

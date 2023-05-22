@@ -41,7 +41,7 @@ builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha =>
 builder.Services.AddScoped<IIgdbService, IgdbService>();
 builder.Services.AddScoped<IsteamService, SteamService>( s => new SteamService(SteamSecretKey));
 
-var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("ughAuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -56,7 +56,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 builder.Services.AddControllersWithViews();
 
-var GPconnectionString = builder.Configuration.GetConnectionString("GPConnection");
+var GPconnectionString = builder.Configuration.GetConnectionString("ughAppConnection");
 builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
                             .UseSqlServer(GPconnectionString));
@@ -94,21 +94,21 @@ builder.Services.AddAuthentication()
 
 var app = builder.Build();
 // ! Seed users
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        //This only works locally not on azure
-        string testUserPW = builder.Configuration["SeedUserPW"];
-        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e);
-        throw new Exception("Couldn't seed users.");
-    }
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    try
+//    {
+//        // This only works locally not on azure
+//        string testUserPW = builder.Configuration["SeedUserPW"];
+//        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
+//    }
+//    catch (Exception e)
+//    {
+//        Console.WriteLine(e);
+//        throw new Exception("Couldn't seed users.");
+//    }
+//}
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();

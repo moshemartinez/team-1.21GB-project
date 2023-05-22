@@ -60,8 +60,8 @@ namespace Team121GBCapstoneProject.Controllers
                                                                      string genre = "",
                                                                      int esrbRating = 0)
         {
-            _bearerToken = _config["GamingPlatform:igdbBearerToken"];
-            _clientId = _config["GamingPlatform:igdbClientId"];
+            _bearerToken = _config["GamingPlatformigdbBearerToken"];
+            _clientId = _config["GamingPlatformigdbClientId"];
 
 
             // Set Credentials
@@ -90,8 +90,8 @@ namespace Team121GBCapstoneProject.Controllers
         [HttpPost("SpeedSearch")]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchForGames(string query)
         {
-            _bearerToken = _config["GamingPlatform:igdbBearerToken"];
-            _clientId = _config["GamingPlatform:igdbClientId"];
+            _bearerToken = _config["GamingPlatformigdbBearerToken"];
+            _clientId = _config["GamingPlatformigdbClientId"];
 
 
             // Set Credentials
