@@ -14,37 +14,25 @@ public class WhisperService : IWhisperService
     private readonly IOpenAIService _openAIService;
     public WhisperService(IOpenAIService openAIService) => _openAIService = openAIService;
 
-
-    public void SaveByteArrayAsMp3(byte[] byteArray, string filePath)
+    public async Task<byte[]> ReadBytesFromFile(IFormFile file)
     {
-        try
-        {
-            using (FileStream fs = new FileStream(filePath, FileMode.Create))
-            {
-                fs.Write(byteArray, 0, byteArray.Length);
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-            throw new Exception(ex.Message);
-        }
-
+        MemoryStream ms = new MemoryStream();
+        await file.CopyToAsync(ms);
+        byte[] fileBytes = ms.ToArray();         
+        return fileBytes;
     }
-
-    public async Task<string> GetTextFromSpeech(byte[] audioMp3)
+    public async Task<string> GetTextFromSpeech(IFormFile file)
     {
+        if (file is null or { Length: 0 }) throw new ArgumentNullException(nameof(file), "The file is null or empty.");
 
-        if (audioMp3 is null or { Length: 0 }) throw new ArgumentNullException(nameof(audioMp3), "The audioMp3 byte array is null or empty.");
-
-        string fileName = "audio.mp3";
-        SaveByteArrayAsMp3(audioMp3, "temp/audio.mp3");
-        byte[] file = await File.ReadAllBytesAsync($"temp/{fileName}");
-        MemoryStream ms = new MemoryStream(file);
+        // * read out the file into a byte array
+        byte[] fileBytes = await ReadBytesFromFile(file);
+            
+        // * send the byte array to the OpenAI API
         var audioResult = await _openAIService.Audio.CreateTranscription(new AudioCreateTranscriptionRequest()
         {
-            FileName = fileName,
-            File = file,
+            FileName = file.FileName,
+            File = fileBytes,
             Model = WhisperV1,
             ResponseFormat = StaticValues.AudioStatics.ResponseFormat.VerboseJson
         });
