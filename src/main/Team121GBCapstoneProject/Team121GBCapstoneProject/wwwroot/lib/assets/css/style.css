@@ -1677,6 +1677,6 @@ section {
     color: #ffc107;
 }
 
-h3,h4,p {
+.toWhite {
     color: #fff
 }

@@ -292,11 +292,3 @@
 
 })()
 
-function tfaModalOpen() {
-    document.getElementById("tfaModal").modal('show')
-}
-
-function tfaModalClose() {
-    document.getElementById("tfaModal").modal.('hide')
-}
-
