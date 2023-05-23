@@ -58,6 +58,8 @@ async function sendMessageError(data) {
         alert('ChatGPT does not respond to inappropriate prompts. The bot has been disabled for this session.');
         $('#prompt').prop('disabled', true);
         $('#send').prop('disabled', true);
+        $('#recordBtn').prop('disabled', true);
+        $('#stopBtn').prop('disabled', true);
     }
     let $responses = $('#responses');
     let $row = $('<div></div>').addClass('card text-white bg-danger');
