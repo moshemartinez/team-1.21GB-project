@@ -26,7 +26,7 @@ CREATE TABLE [Game] (
     [CoverPicture]    NVARCHAR(MAX),
     [IGDBUrl]         NVARCHAR(MAX),
     [IGDBGameID]      INT,
-    CONSTRAINT [FK_ESRBRatingID] FOREIGN KEY ([ESRBRatingID]) REFERENCES [ESRBRating]([ID])
+    CONSTRAINT [FK_ESRBRatingID] FOREIGN KEY ([ESRBRatingID]) REFERENCES [ESRBRating]([ID]),
 );
 
 CREATE TABLE [ListKind] (
