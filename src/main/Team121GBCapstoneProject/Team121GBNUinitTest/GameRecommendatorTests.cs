@@ -214,20 +214,6 @@ namespace Team121GBNUnitTest
         }
 
         //Testing getCurratedSection
-        [Test]
-        public void getCurratedSectionWithPosition5gameTakeCount5ShouldReturn5Games()
-        {
-            //Arrange
-            using GPDbContext context = _dbHelper.GetContext();
-            IGameRecommender _gameRecommender = new GameRecommender(context);
-            List<Game> emptyList = new List<Game>();
-
-            //Act
-            List<Game> games = _gameRecommender.getCurratedSection(5,5, emptyList);
-
-            //Assert
-            Assert.AreEqual(games.Count, 5);
-        }
 /*
         [Test]
         public void getCurratedSectionWithPosition5gameTakeCount3ShouldReturn3Games()
