@@ -402,7 +402,7 @@ public class IgdbService : IIgdbService
                     .OrderByDescending(x => x?.FirstReleaseDate)
                     .ToList();
     }
-
+    //Minor change
     public double ConvertRating(double rating)
     {
         int ratingsFloored = (int)Math.Floor(rating);
