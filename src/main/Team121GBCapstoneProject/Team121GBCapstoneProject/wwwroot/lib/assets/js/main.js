@@ -297,6 +297,6 @@ function tfaModalOpen() {
 }
 
 function tfaModalClose() {
-    document.getElementById("tfaModal").modal.('hide')
+    document.getElementById("tfaModal").modal('hide')
 }
 
