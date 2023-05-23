@@ -55,13 +55,14 @@
 }
 @if (Model.OtherLogins?.Count > 0)
 {
-    <h4>Log in with:</h4>
+    <h4 class="toWhite">Log in with:</h4>
     <hr />
     <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="form-horizontal">
         <div id="socialLoginList">
             <p>
                 @foreach (var provider in Model.OtherLogins)
                 {
+                    @if (provider.DisplayName != "Steam") continue;
                     <button id="@($"link-login-button-{provider.Name}")" type="submit" value="@provider.DisplayName" class="img-fluid btn" name="provider" title="Log in using your @provider.DisplayName account"><img src="/images/steam_button_icon_151838.png" width="150px" height="50px" style="object-fit:cover" /></button>
                 }
             </p>
