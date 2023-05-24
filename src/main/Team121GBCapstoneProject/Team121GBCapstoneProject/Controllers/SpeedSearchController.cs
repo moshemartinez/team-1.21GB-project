@@ -57,8 +57,8 @@ namespace Team121GBCapstoneProject.Controllers
         [HttpPost]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchOutput(string GameEntry)
         {
-            _bearerToken = _config["GamingPlatformigdbBearerToken"];
-            _clientId = _config["GamingPlatformigdbClientId"];
+            _bearerToken = _config["GamingPlatform:igdbBearerToken"];
+            _clientId = _config["GamingPlatform:igdbClientId"];
 
 
             // Set Credentials
@@ -75,12 +75,14 @@ namespace Team121GBCapstoneProject.Controllers
 
         }
 
+        [Authorize]
+        public IActionResult ChatGpt() => View("../Home/ChatGpt");
         /*[Authorize]
         [HttpPost]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchResults(string GameEntry)
         {
-            _bearerToken = _config["GamingPlatformigdbBearerToken"];
-            _clientId = _config["GamingPlatformigdbClientId"];
+            _bearerToken = _config["GamingPlatform:igdbBearerToken"];
+            _clientId = _config["GamingPlatform:igdbClientId"];
 
 
             // Set Credentials
